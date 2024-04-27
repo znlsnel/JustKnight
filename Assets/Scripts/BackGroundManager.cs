@@ -36,13 +36,19 @@ public class BackGroundManager : MonoBehaviour
 	private void LateUpdate()
 	{
                 UpdateBackgroundPos();
-	}
+	} 
 
 	void UpdateBackgroundPos() 
         {
                 float camDir = CameraManager._camHorizonDir;
                  
-                Action<GameObject, float> updatePos = (GameObject gm, float speed) => gm.transform.position += new Vector3(camDir * speed * Time.deltaTime, 0.0f, 0.0f);
+                Action<GameObject, float> updatePos = (GameObject gm, float speed) => 
+                {
+                        if (gm == null)
+                                return;
+
+                        gm.transform.position += new Vector3(camDir * speed * Time.deltaTime, 0.0f, 0.0f);
+                };
 
                 updatePos(_firstBG, _firstBGSpeed);
                 updatePos(_secondBG, _secondBGSpeed);

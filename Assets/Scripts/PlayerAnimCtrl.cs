@@ -80,12 +80,12 @@ public class PlayerAnimCtrl : MonoBehaviour
 				break;
 			case PlayerState.Fall:
 				nextAnim = "Fall";
-				break;
+				break; 
 			case PlayerState.Jump: 
 				nextAnim = "Jump";
 				break;
 			case PlayerState.WallSlider:
-				nextAnim = "WallSlider";
+				nextAnim = "Wall Slide"; 
 				break;
 			case PlayerState.Hurt:
 				nextAnim = "Hurt";
@@ -96,11 +96,11 @@ public class PlayerAnimCtrl : MonoBehaviour
 			default: 
 				break; 
 		}
-		 
+		  
 		if (nextAnim != "" && curAnim != nextAnim)
 		{
 			curAnim = nextAnim;
-			anim.Play(curAnim);
+			anim.Play(curAnim); 
 			//anim.speed = 2.0f;
 		}
 	}

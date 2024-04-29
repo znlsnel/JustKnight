@@ -1,15 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using UnityEngine;
 using static PlayerAnimCtrl;
 
 public class PlayerController : MonoBehaviour
 {
 
-	[SerializeField] CircleCollider2D _sensorFrontTop;
-	[SerializeField] CircleCollider2D _sensorFrontBottom; 
-	[SerializeField] CircleCollider2D _sensorBackBottom; 
+	CircleCollider2D _sensorFrontTop;
+	CircleCollider2D _sensorFrontBottom; 
+	CircleCollider2D _sensorBackBottom;  
+	CircleCollider2D _sensorGround; 
 
 	[SerializeField] float _attackCoolTime = 0.2f;
 	[SerializeField] float _jumpCoolTime = 0.2f;
@@ -20,13 +22,14 @@ public class PlayerController : MonoBehaviour
 	  
 	Vector2 _moveDir = Vector2.zero;
 
-	float _xMoveDir = 0.0f;
+	 float _xMoveDir = 0.0f;
 
 	bool _isAttack = false;
 	bool _isJump = false;
 	bool _onSensorFrontTop = false;
 	bool _onSensorFrontBt = false; 
 	bool _onSensorBackBt = false;
+	bool _onSensorGround = false; 
 
 	private float _lastAttackTime = 100.0f;
 	private float _lastJumpTime = 100.0f;
@@ -38,6 +41,7 @@ public class PlayerController : MonoBehaviour
 		_sensorFrontTop = transform.Find("CollisionSensor_FrontTop").GetComponent<CircleCollider2D>();
 		_sensorFrontBottom = transform.Find("CollisionSensor_FrontBottom").GetComponent<CircleCollider2D>();
 		_sensorBackBottom = transform.Find("CollisionSensor_BackBottom").GetComponent<CircleCollider2D>();
+		_sensorGround = transform.Find("CollisionSensor_Ground").GetComponent<CircleCollider2D>();
 	}
 
 	void Start()
@@ -53,7 +57,7 @@ public class PlayerController : MonoBehaviour
 		 
 		_xMoveDir = Input.GetAxis("Horizontal");
 		_isAttack = Input.GetAxis("Fire1") > 0.9f && _lastAttackTime > _attackCoolTime;
-		_isJump = Input.GetAxis("Jump") > 0.9f && _lastJumpTime > _jumpCoolTime && rigid.velocity.y == 0;
+		_isJump = Input.GetAxis("Jump") > 0.9f && _lastJumpTime > _jumpCoolTime && _onSensorGround;
 
 		CheckSensor();
 
@@ -89,8 +93,24 @@ public class PlayerController : MonoBehaviour
 
 
     }
-	 
-	 void CheckSensor()
+
+	private void FixedUpdate() 
+	{
+		if (_animCtrl.state == PlayerState.Run)
+		{ 
+			float ySpd = _onSensorGround ? 0.0f : -2.0f; 
+			Vector2 curPos = rigid.position;
+			Vector2 nextPos = transform.position + new Vector3(_xMoveDir * _playerSpeed, ySpd, 0.0f) * Time.fixedDeltaTime;
+
+			rigid.MovePosition(nextPos); 
+
+
+			_moveDir = nextPos - curPos;
+			
+
+		}
+	}
+	void CheckSensor()
 	{
 		ContactFilter2D contactFilter = new ContactFilter2D();
 
@@ -110,15 +130,9 @@ public class PlayerController : MonoBehaviour
 		};
 
 		_onSensorFrontTop = check(_sensorFrontTop);
-		if (_onSensorFrontTop)
-		{
-			Debug.Log("_onSensorFrontTop : True");
-		} 
-		else
-			Debug.Log("_onSensorFrontTop : False");
-
 		_onSensorFrontBt = check(_sensorFrontBottom); 
 		_onSensorBackBt = check(_sensorBackBottom);
+		_onSensorGround = check(_sensorGround);
 	} 
 	
 	void OnIdle()
@@ -152,19 +166,21 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 
-		if (_isJump)
-		{
+		if (_isJump)   
+		{ 
 			_animCtrl.state = PlayerState.Jump; 
 			return;
 		}
 
 
+
+		 
 		if (Math.Abs(_xMoveDir) == 0)
 		{
 			_animCtrl.state = PlayerAnimCtrl.PlayerState.Idle;
 		}
 
-		Debug.Log(_xMoveDir);  
+
 
 		if (_xMoveDir > 0)
 		{
@@ -179,14 +195,12 @@ public class PlayerController : MonoBehaviour
 			temp.x = -Math.Abs(temp.x);
 			transform.localScale = temp;
 		}
+		 
+		//Vector2 curPos = rigid.position; 
+		//Vector2 nextPos = transform.position + new Vector3(_xMoveDir * _playerSpeed, 0.0f, 0.0f) * Time.deltaTime;
+		//rigid.MovePosition(nextPos); 
 
-		Vector2 curPos = rigid.position;
-		Vector2 nextPos = transform.position + new Vector3(_xMoveDir * _playerSpeed, 0.0f, 0.0f) * Time.deltaTime;
-		rigid.MovePosition(nextPos);
-		//rigid.
-		//transform.position = nextPos;
-
-		_moveDir = nextPos - curPos; 
+		//_moveDir = nextPos - curPos; 
 	}
 
 	void OnAttack()
@@ -198,7 +212,7 @@ public class PlayerController : MonoBehaviour
 
 
 		if (_attackCoolTime < 0.7f)
-			_animCtrl.anim.speed = 0.7f / _attackCoolTime;   
+			_animCtrl.anim.speed = 0.7f / _attackCoolTime;    
 		  
 		int temp = _animCtrl.attackCombo + 1;
 		if (temp > 3)
@@ -211,7 +225,6 @@ public class PlayerController : MonoBehaviour
 	{
 		_animCtrl.anim.speed = 1.0f;
 		_animCtrl.state = PlayerState.Idle;
-		Debug.Log(" END ATTACK");
 	}
 
 	  
@@ -220,8 +233,14 @@ public class PlayerController : MonoBehaviour
 
 		if (_lastJumpTime > _jumpCoolTime && _isJump) 
 		{
-			rigid.velocity = new Vector2(Math.Clamp(_moveDir.x, -1.0f, 1.0f) * _playerSpeed * 20, 8.0f);   
-			 
+			Vector3 tv = rigid.velocity;
+			tv.y = 0.0f;
+			rigid.velocity = tv; 
+
+			rigid.velocity += new Vector2(Math.Clamp(_moveDir.x, -1.0f, 1.0f) * _playerSpeed * 15.0f , 8.0f);  
+			//Vector2 t = new Vector2(Math.Clamp(_moveDir.x, -1.0f, 1.0f) * _playerSpeed * 15.0f , 8.0f);
+			//rigid.AddForce(t, ForceMode2D.Impulse); 
+			//rigid.AddForce(new Vector2(_moveDir.x * _playerSpeed, 8.0f)); 
 			_lastJumpTime = 0.0f; 
 		} 
 
@@ -235,6 +254,12 @@ public class PlayerController : MonoBehaviour
 			if (_onSensorFrontTop)
 			{
 				_animCtrl.state = PlayerState.WallSlider; 
+			}
+
+			if (_onSensorGround)
+			{
+				_animCtrl.state = PlayerState.Idle;
+				Debug.Log("TO IDLE");
 			}
 		}
 		else if (rigid.velocity.y > 0.0f)

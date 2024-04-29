@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.PackageManager;
@@ -26,11 +27,11 @@ public class PlayerAnimCtrl : MonoBehaviour
 
 		Death = 10,
 	}
+	 
 
-
-	public Animator anim;
-	public PlayerState state = PlayerState.Idle;
-	public int attackCombo = 1;
+	[NonSerialized] public Animator anim;
+	[NonSerialized] public PlayerState state = PlayerState.Idle;
+	[NonSerialized] public int attackCombo = 1; 
 	private string curAnim = "";
 
 	private void Awake()

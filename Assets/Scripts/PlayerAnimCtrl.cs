@@ -74,10 +74,11 @@ public class PlayerAnimCtrl : MonoBehaviour
 				}
 				break;
 			case PlayerState.IdleBlock:
-				nextAnim = "IdleBlock";
-				break;
+				nextAnim = "Idle Block";
+				break; 
 			case PlayerState.Block:
 				nextAnim = "Block";
+			//	nextAnim = "IdleBlock";
 				break;
 			case PlayerState.Fall:
 				nextAnim = "Fall";

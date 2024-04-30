@@ -15,7 +15,12 @@ public class PlayerController : MonoBehaviour
 
 	[SerializeField] float _attackCoolTime = 0.2f;
 	[SerializeField] float _jumpCoolTime = 0.2f;
+	[SerializeField] float _rollCoolTime = 1.0f;
+	[SerializeField] float _blockCoolTime = 1.0f;
+
 	[SerializeField] float _playerSpeed = 5.0f;
+
+	[SerializeField] GameObject _SlideDust; 
 
 	Rigidbody2D rigid; 
 	PlayerAnimCtrl _animCtrl;
@@ -24,15 +29,22 @@ public class PlayerController : MonoBehaviour
 
 	 float _xMoveDir = 0.0f;
 
-	bool _isAttack = false;
-	bool _isJump = false;
 	bool _onSensorFrontTop = false;
 	bool _onSensorFrontBt = false; 
-	bool _onSensorBackBt = false;
-	bool _onSensorGround = false; 
+	bool _onSensorBackBt = false; 
+	bool _onSensorGround = false;
 
-	private float _lastAttackTime = 100.0f;
+	bool _isAttack = false; 
+	bool _isJump = false;
+	bool _isRoll = false;
+	bool _isBlock = false;
+
+	bool _isAttackable = true;
+	 
+	private float _lastAttackTime = 100.0f; 
 	private float _lastJumpTime = 100.0f;
+	private float _lastRollTime = 100.0f;
+	private float _lastBlockTime = 100.0f;
 
 	private void Awake() 
 	{
@@ -52,13 +64,18 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		_lastAttackTime += Time.deltaTime;
+		if (_isAttackable) 
+			_lastAttackTime += Time.deltaTime;
 		_lastJumpTime += Time.deltaTime;
+		_lastRollTime += Time.deltaTime;
+		_lastBlockTime += Time.deltaTime; 
 		 
 		_xMoveDir = Input.GetAxis("Horizontal");
-		_isAttack = Input.GetAxis("Fire1") > 0.9f && _lastAttackTime > _attackCoolTime;
+		_isAttack = Input.GetAxis("Fire1") > 0.9f && _lastAttackTime > _attackCoolTime && _isAttackable;
 		_isJump = Input.GetAxis("Jump") > 0.9f && _lastJumpTime > _jumpCoolTime && _onSensorGround;
-
+		_isRoll = Input.GetAxis("Roll") > 0.9f && _lastRollTime > _rollCoolTime && _onSensorGround;
+		_isBlock = Input.GetAxis("Block") > 0.9f; 
+		   
 		CheckSensor();
 
 		switch (_animCtrl.state)
@@ -70,13 +87,16 @@ public class PlayerController : MonoBehaviour
 				OnRun();
 				break;
 			case PlayerState.Roll:
+				OnRoll();
 				break;
 			case PlayerState.Attack:
 				OnAttack();
 				break;
 			case PlayerState.IdleBlock:
+				OnIdleBlock();
 				break;
 			case PlayerState.Block:
+				OnBlock();
 				break;
 			case PlayerState.Fall:
 			case PlayerState.WallSlider:
@@ -90,9 +110,9 @@ public class PlayerController : MonoBehaviour
 			default:
 				break;
 		}
-
-
     }
+
+
 
 	private void FixedUpdate() 
 	{
@@ -138,17 +158,29 @@ public class PlayerController : MonoBehaviour
 	void OnIdle()
 	{
 		_moveDir = Vector2.zero;
-		if (_isAttack)
+		rigid.velocity = new Vector2(0.0f, 0.0f); 
+
+		if (_isBlock)
+		{
+			_animCtrl.state = PlayerState.Block;
+			return;
+		} 
+		else if (_isRoll)
+		{
+			_animCtrl.state = PlayerState.Roll;
+			return;
+		}
+		else if (_isAttack) 
 		{
 			_animCtrl.state = PlayerState.Attack;
 			return;
-		}
-
-		if (_isJump)
+		} 
+		else if (_isJump)
 		{
 			_animCtrl.state = PlayerState.Jump;  
 			return; 
 		}
+
 
 		if (Math.Abs(_xMoveDir) > 0)
 		{
@@ -157,9 +189,31 @@ public class PlayerController : MonoBehaviour
 
 	}
 
+	void OnRoll()
+	{
+		if (_lastRollTime <= _rollCoolTime)
+			return;
+
+		_lastRollTime = 0.0f;
+
+		rigid.velocity = new Vector2(transform.localScale.x * 10.0f, 0.0f);  
+		 
+	}
+	 
+	void AE_EndRoll()
+	{
+		_animCtrl.state = PlayerState.Idle;
+		//rigid.velocity = Vector
+
+	}
+
 	void OnRun()
 	{
-		 
+		if (_isRoll)
+		{
+			_animCtrl.state = PlayerState.Roll; 
+			return;
+		}
 		if (_isAttack)
 		{
 			_animCtrl.state = PlayerState.Attack;
@@ -208,22 +262,19 @@ public class PlayerController : MonoBehaviour
 		if (_lastAttackTime < _attackCoolTime) 
 			return;
 
-		_lastAttackTime = 0.0f;
+		_lastAttackTime = 0.0f; 
+		_isAttackable = false;
 
-
-		if (_attackCoolTime < 0.7f)
-			_animCtrl.anim.speed = 0.7f / _attackCoolTime;    
-		  
 		int temp = _animCtrl.attackCombo + 1;
 		if (temp > 3)
 			temp = 1;
 
-		_animCtrl.attackCombo = temp;
+		_animCtrl.attackCombo = temp; 
 	}
 	  
-	void EndAttack()
+	void AE_EndAttack()
 	{
-		_animCtrl.anim.speed = 1.0f;
+		_isAttackable = true; 
 		_animCtrl.state = PlayerState.Idle;
 	}
 
@@ -236,11 +287,8 @@ public class PlayerController : MonoBehaviour
 			Vector3 tv = rigid.velocity;
 			tv.y = 0.0f;
 			rigid.velocity = tv; 
-
+			  
 			rigid.velocity += new Vector2(Math.Clamp(_moveDir.x, -1.0f, 1.0f) * _playerSpeed * 15.0f , 8.0f);  
-			//Vector2 t = new Vector2(Math.Clamp(_moveDir.x, -1.0f, 1.0f) * _playerSpeed * 15.0f , 8.0f);
-			//rigid.AddForce(t, ForceMode2D.Impulse); 
-			//rigid.AddForce(new Vector2(_moveDir.x * _playerSpeed, 8.0f)); 
 			_lastJumpTime = 0.0f; 
 		} 
 
@@ -253,7 +301,11 @@ public class PlayerController : MonoBehaviour
 			_animCtrl.state = PlayerState.Fall;
 			if (_onSensorFrontTop)
 			{
-				_animCtrl.state = PlayerState.WallSlider; 
+				_animCtrl.state = PlayerState.WallSlider;  
+				Vector3 t = rigid.velocity;
+				t.x = 0.0f;
+				t.y *= 0.8f; 
+				rigid.velocity = t; 
 			}
 
 			if (_onSensorGround)
@@ -268,4 +320,40 @@ public class PlayerController : MonoBehaviour
 		}
 
 	} 
+
+	 
+	void AE_SlideDust()
+	{
+		//Transform t;
+		//t.position = _sensorFrontTop.gameObject.transform.position;
+
+		Instantiate(_SlideDust, _sensorFrontTop.gameObject.transform.position, new Quaternion()); 
+	}
+
+	void OnBlock()
+	{
+		if (_lastBlockTime <= _blockCoolTime)
+			return;
+
+		_lastBlockTime = 0.0f; 
+	}
+
+	void OnIdleBlock()
+	{
+		 if (_isBlock == false)
+			_animCtrl.state = PlayerState.Idle;
+		  
+	}
+
+	void AE_EndBlock()
+	{
+		if (_isBlock)
+		{
+			_animCtrl.state = PlayerState.IdleBlock;
+			return;
+		}
+
+		_animCtrl.state = PlayerState.Idle;
+		 
+	}
 }

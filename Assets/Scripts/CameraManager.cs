@@ -6,11 +6,8 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-        // Start is called before the first frame update
-       public static float _xDir = 0.0f;
-	[SerializeField] float _camSpeed = 2.0f;
+        // Start is called before the first frame update 
         [SerializeField] GameObject _player;
-
 	public static BackGroundManager _backGroundManager;
     void Start()
     {

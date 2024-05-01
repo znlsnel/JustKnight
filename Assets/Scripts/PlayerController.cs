@@ -180,7 +180,8 @@ public class PlayerController : MonoBehaviour
 	void OnIdle()
 	{
 		_moveDir = Vector2.zero;
-		rigid.velocity = new Vector2(0.0f, 0.0f); 
+		if (_onSensorGround)
+			rigid.velocity = new Vector2(0.0f, 0.0f);  
 
 		if (_isBlock)
 		{
@@ -361,12 +362,18 @@ public class PlayerController : MonoBehaviour
 		_animCtrl.state = PlayerState.WallSlider;
 		 
 		float jump = Input.GetAxis("Jump");
-		//float horizon = Input.GetAxis("Horizontal");
-		//float vertical = Input.GetAxis("Vertical");
+		float vertical = Input.GetAxis("Vertical");
 
 		if (jump > 0.0f)
 		{
-			rigid.velocity = new Vector2(transform.localScale.x * 8.0f, 15.0f);
+			if (vertical > 0.5f)
+				rigid.velocity = new Vector2(0.0f, 8.0f); 
+			else
+			{
+				float dir = transform.localScale.x < 0.0f ? 1.0f : -1.0f;
+				rigid.AddForce(new Vector2(dir * 5.0f, 8.0f), ForceMode2D.Impulse);  
+				//rigid.velocity = new Vector2;  
+			}
 
 		}
 	}

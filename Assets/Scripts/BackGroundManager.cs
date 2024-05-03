@@ -2,17 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class BackGroundManager : MonoBehaviour
 {
         // Start is called before the first frame update
-        [SerializeField] GameObject _firstBG;
-        [SerializeField] GameObject _secondBG;
-        [SerializeField] GameObject _thirdBG;
-        [SerializeField] GameObject _fourthBG;
-        [SerializeField] GameObject _bushBG;
-        [SerializeField] GameObject _vinesBG;
-        [SerializeField] GameObject _player;
+        GameObject _firstBG;
+        GameObject _secondBG;
+        GameObject _thirdBG;
+         GameObject _fourthBG;
+       GameObject _bushBG; 
+       GameObject _vinesBG;
+  
         [SerializeField]  float _firstBGSpeed = 0.8f;        
         [SerializeField]  float _secondBGSpeed = 0.5f;        
         [SerializeField]  float _thirdBGSpeed = 0.2f;        
@@ -20,22 +21,25 @@ public class BackGroundManager : MonoBehaviour
         [SerializeField]  float _bushBGSpeed = 0.8f;        
         [SerializeField]  float _vinesBGSpeed = 0.0f;
 
-
-        PlayerController _playerCtrl;
-
 	private void Awake()
-	{
-		_playerCtrl = _player.GetComponent<PlayerController>();
+	{ 
+                _firstBG = GameObject.Find("First");
+		_secondBG = GameObject.Find("Second");
+		_thirdBG = GameObject.Find("Third");
+		_fourthBG = GameObject.Find("Fourth");
+		_bushBG = GameObject.Find("BACKGROUND_Bush");
+		_vinesBG = GameObject.Find("Second_VINES");  
+                 
+
 		CameraManager._backGroundManager = this; 
 	}
 	void Start()
     {
 
+	}
 
-    }
-
-    // Update is called once per frame
-    void Update()
+	// Update is called once per frame
+	void Update()
     {
         //CameraManager._camHorizonDir
     }

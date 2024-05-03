@@ -7,16 +7,17 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
         // Start is called before the first frame update 
-        [SerializeField] GameObject _player;
+       GameObject _player;
 	public static BackGroundManager _backGroundManager;
     void Start()
     {
-        
+		_player = GameObject.FindWithTag("Player"); 
     }
 
     // Update is called once per frame
     void Update()
     {
+		 
 
 	}
 

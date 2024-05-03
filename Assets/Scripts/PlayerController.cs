@@ -21,7 +21,9 @@ public class PlayerController : MonoBehaviour
 
 	[SerializeField] float _playerSpeed = 5.0f;
 
-	[SerializeField] GameObject _SlideDust; 
+	[SerializeField] GameObject _SlideDust;
+
+	public Action _portalAction; 
 
 	Rigidbody2D rigid; 
 	PlayerAnimCtrl _animCtrl;
@@ -69,11 +71,24 @@ public class PlayerController : MonoBehaviour
     {
 		if (_isAttackable) 
 			_lastAttackTime += Time.deltaTime;
-		_lastJumpTime += Time.deltaTime;
+		_lastJumpTime += Time.deltaTime; 
 		_lastRollTime += Time.deltaTime;
 		_lastBlockTime += Time.deltaTime; 
 		 
 		_xMoveDir = Input.GetAxis("Horizontal");
+
+		if (_portalAction != null)
+		{ 
+			if (Input.GetAxis("OnPortal") > 0.0f)
+			{
+				if (_portalAction == null)
+					return;
+
+				_portalAction.Invoke();
+				_portalAction = null;
+			}
+		}
+
 		_isAttack = Input.GetAxis("Fire1") > 0.9f && _lastAttackTime > _attackCoolTime && _isAttackable;
 		_isJump = Input.GetAxis("Jump") > 0.9f && _lastJumpTime > _jumpCoolTime && (_onSensorGround);
 		_isRoll = Input.GetAxis("Roll") > 0.9f && _lastRollTime > _rollCoolTime && _onSensorGround;
@@ -355,18 +370,17 @@ public class PlayerController : MonoBehaviour
 		if (isAttachedLeftWall == false && isAttachedRightWall == false)
 			return;
 
+
 		Vector3 t = rigid.velocity;
 		t.x = 0.0f;
-		t.y *= 0.8f;
+		t.y = -0.1f;
 		rigid.velocity = t;
 		_animCtrl.state = PlayerState.WallSlider;
 		 
 		float jump = Input.GetAxis("Jump");
-		float vertical = Input.GetAxis("Vertical");
-
 		if (jump > 0.0f)
-		{
-			if (vertical > 0.5f)
+		{ 
+			if (Input.GetAxis("Vertical") > 0.5f)
 				rigid.velocity = new Vector2(0.0f, 8.0f); 
 			else
 			{

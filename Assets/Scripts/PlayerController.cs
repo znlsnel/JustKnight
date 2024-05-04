@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
 	[SerializeField] GameObject _SlideDust;
 
-	public Action _portalAction; 
+	public Action _onPortalEntered; 
 
 	Rigidbody2D rigid; 
 	PlayerAnimCtrl _animCtrl;
@@ -77,15 +77,15 @@ public class PlayerController : MonoBehaviour
 		 
 		_xMoveDir = Input.GetAxis("Horizontal");
 
-		if (_portalAction != null)
+		if (_onPortalEntered != null)
 		{ 
 			if (Input.GetAxis("OnPortal") > 0.0f)
 			{
-				if (_portalAction == null)
+				if (_onPortalEntered == null)
 					return;
 
-				_portalAction.Invoke();
-				_portalAction = null;
+				_onPortalEntered.Invoke();
+				_onPortalEntered = null;
 			}
 		}
 

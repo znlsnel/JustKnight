@@ -1800,7 +1800,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &951500024
 RectTransform:
@@ -2172,6 +2172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 5778157463277658190, guid: b56107f50002e7c48ae53349d3ad05eb, type: 3}
+  _fadePanelPrefab: {fileID: 2949697485122076752, guid: 4d58becfcc9f0b342a96142e3e49e130, type: 3}
 --- !u!4 &1579109737
 Transform:
   m_ObjectHideFlags: 0

@@ -8,40 +8,41 @@ public class GameManager : Singleton<GameManager>
 {
 	// Start is called before the first frame update
 	[SerializeField] GameObject _playerPrefab;
+	[SerializeField] GameObject _fadePanelPrefab;  
 	GameObject _player;
-	 
-	//public override void Awake() 
-	//{
-	//	player = Resources.Load<GameObject>("Characters/Player_Character");
-	//} 
-
+	GameObject _fadeCanvas;
+	FadePanelManager _fadePanelManager;
 
 	void Start() 
 	{
-		//instance.player 
-		_playerPrefab = Resources.Load<GameObject>("Characters/Player_Character");
-		
-	}
+		_fadeCanvas = Instantiate<GameObject>(_fadePanelPrefab);
+		_fadePanelManager = _fadeCanvas.transform.Find("FadePanel").GetComponent<FadePanelManager>();
+		DontDestroyOnLoad(_fadeCanvas); 
+	} 
 
 	private void InitGameScene(Scene scene, LoadSceneMode mode)
 	{
 		GameObject gen = GameObject.FindWithTag("PlayerGenPos");
-
-		if (_player == null)
-			_player = Instantiate<GameObject>(_playerPrefab);
-
-		_player.transform.position = gen.transform.position;
-		 
 		gen.GetComponent<SpriteRenderer>().sortingOrder = -1; 
 
-		Debug.Log("init ! ");
+		if (_player == null)
+		{
+			_player = Instantiate<GameObject>(_playerPrefab);
+			DontDestroyOnLoad(_player); 
+		}
+		_player.transform.position = gen.transform.position;
+		_fadePanelManager.PlayFadeIn(); 
 	}
 
 	public void LoadScene(string sceneName)
 	{
-                SceneManager.LoadScene(sceneName);
-		SceneManager.sceneLoaded += InitGameScene; 
-		
+		_fadePanelManager.PlayFadeOut();
+		_fadePanelManager._onFadeOutComplete = null; 
+		_fadePanelManager._onFadeOutComplete += () =>
+		{
+			SceneManager.LoadScene(sceneName);
+			SceneManager.sceneLoaded += InitGameScene; 
+		}; 
 	} 
 
 	// Update is called once per frame

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7978612419503376830}
   - component: {fileID: 4563842745108269640}
   - component: {fileID: 4844487391283342205}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CollisionSensor_Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 4770675092708667501}
   - component: {fileID: 136490770436477773}
   - component: {fileID: 761618775978589786}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CollisionSensor_FrontBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 3406196336212204021}
   - component: {fileID: 8216125984973058688}
   - component: {fileID: 7675052498933734081}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CollisionSensor_FrontTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 8793727334551286558}
   - component: {fileID: 2759767301786897038}
   - component: {fileID: 235038833911107431}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CollisionSensor_BackBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 7539274278724791016}
   - component: {fileID: 2175614857154085366}
   - component: {fileID: 7486128347301724719}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CollisionSensor_Ground2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -414,11 +414,15 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 2f308535df8656048bea09f0a9f99c9a, type: 2}
     - target: {fileID: 2954181336601895002, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       propertyPath: m_SortingOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6323719953710832613, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       propertyPath: m_Name
-      value: HeroKnight 1
+      value: Player_Character
+      objectReference: {fileID: 0}
+    - target: {fileID: 6323719953710832613, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8413529789942519730, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       propertyPath: m_LocalScale.x
@@ -471,6 +475,10 @@ PrefabInstance:
     - target: {fileID: 8413529789942519730, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8942925490989933264, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9117128348835321587, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}

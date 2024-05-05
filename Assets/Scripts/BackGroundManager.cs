@@ -52,10 +52,10 @@ public class BackGroundManager : MonoBehaviour
         {
                 float camDir = dx; 
                  
-                Action<GameObject, float> updatePos = (GameObject gm, float speed) => 
+                Action<GameObject, float> updatePos = (GameObject gm, float speed) =>
                 {
-                        if (gm == null)
-                                return; 
+                        if (gm == null ||  true)
+                                return;  
 
                         gm.transform.position += new Vector3(camDir * speed, 0.0f, 0.0f);
                 };

@@ -46,7 +46,7 @@ public class FadePanelManager : MonoBehaviour
  	}
 	void AE_EndFadeIn()
 	{
-
+		 
 		_anim.Play("Idle");
 		_canvas.sortingOrder = -1; 
 		Debug.Log("  EnD IN FADE"); 

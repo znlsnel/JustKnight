@@ -26,13 +26,13 @@ public class MonsterController : MonoBehaviour
         [SerializeField] float _moveSpeed = 1.0f;
 
         bool _isChasing = false;
-        bool _isAttackable = true; 
+
         bool _onFrontCollisionSensor = false;
         bool _isInPlayerAttackRange = false;
          
-        float _tracingIdleTime = 3.0f;
+        float _tracingIdleTime = 1.0f;
         float _tracingMoveTime = 2.0f;
-        float _attackCoolTime = 3.0f;  
+        float _attackCoolTime = 2.0f;  
          
         float _lastIdleTime = 0.0f;
         float _lastMoveTime = 0.0f; 
@@ -82,25 +82,18 @@ public class MonsterController : MonoBehaviour
     {
                 UpdateSensor();
 
-		_lastAttackTime += Time.deltaTime;
 
 		Vector3 MonsterToPlayer = _player.transform.position - transform.position; 
                 float DistanceToPlayer = MonsterToPlayer.magnitude;
 		
-		if (DistanceToPlayer < 3)
-                {
-                        if (MonsterToPlayer.x * transform.localScale.x  > 0.0f)
-                        {
-                                _isChasing = true;
-
-			}
-
-		}
-                else if (DistanceToPlayer > 5)
-                {
+		if (DistanceToPlayer < 5 && MonsterToPlayer.x * transform.localScale.x > 0.0f)
+                        _isChasing = true;
+		 
+                else if (DistanceToPlayer > 10)
                         _isChasing = false;
-                }
-
+                
+                Debug.Log("isChasing : " +  _isChasing);
+                 
                 if (_isChasing)
                 {
                         Vector3 t = transform.localScale;
@@ -110,11 +103,11 @@ public class MonsterController : MonoBehaviour
 		}
 
                 UpdateState();
-    }
+    } 
 
 	private void FixedUpdate()
 	{
-		if (_state == MonsterState.Move)
+		if (_state == MonsterState.Move && _onFrontCollisionSensor == false)
                 {  
                         Vector2 nextPos = transform.position + new Vector3(transform.localScale.x * _moveSpeed, -1.0f, 0.0f) * Time.fixedDeltaTime;
 			_rigid.MovePosition(nextPos);  
@@ -137,7 +130,6 @@ public class MonsterController : MonoBehaviour
 				break;
                         case MonsterState.Attack:
 				OnAttack();
-		                _animator.Play("Attack1");
 				break;
 			case MonsterState.Death:
 				OnDeath();
@@ -154,82 +146,83 @@ public class MonsterController : MonoBehaviour
 
         }
 
+
+
         void OnIdle()
         {
 		if (_isChasing == false)
-                {
+                { 
 			_lastIdleTime += Time.deltaTime;
+			if (_lastIdleTime < _tracingIdleTime)
+				return; 
 
-			if (_lastIdleTime > _tracingIdleTime)
-                        {
-                                _lastIdleTime = 0.0f;
-                                _state = MonsterState.Move;
+			_lastIdleTime = 0.0f;
+                        _state = MonsterState.Move;
 
-                                int nextDir = -1;
-
-                                if (_onFrontCollisionSensor == false)
-				        nextDir = UnityEngine.Random.Range(0, 2) == 0 ? -1 : 1;  
-                                 
-
-				Vector3 ts = transform.localScale; 
-				ts.x *= nextDir;
-				transform.localScale = ts;  
-			}
-
+                        int nextDir = _onFrontCollisionSensor ? -1 : (UnityEngine.Random.Range(0, 2) * 2) - 1;                           
+                          
+			Vector3 ts = transform.localScale; 
+			ts.x *= nextDir;
+			transform.localScale = ts;     
+                         
                         return;
+                } 
+                else
+                {
+		        _state = MonsterState.Move;  
                 }
-
-		if (_lastAttackTime < _attackCoolTime)
-		{
-			return;
-		}
-
-		_lastIdleTime = 0.0f;
-		_state = MonsterState.Move;  
 		
         }
         
         void OnMove() 
         {
-                if (_isChasing == false)
-                {
-                        _lastMoveTime += Time.deltaTime;
 
-                        if ( _lastMoveTime > _tracingMoveTime || _onFrontCollisionSensor)
-                        {
-                                _lastMoveTime = 0.0f; 
-                                _state = MonsterState.Idle;
-                        }
+		if (_isChasing == false)
+		{
+		        _lastMoveTime += Time.deltaTime;
+
+			if (_lastMoveTime < _tracingMoveTime && _onFrontCollisionSensor == false)
+				return;
+                         
+                        _lastMoveTime = 0.0f;
+			_state = MonsterState.Idle;
+
                         return;
                 }
 
-                if (_isInPlayerAttackRange)
-		{
-                        _state = MonsterState.Attack;
-                } 
-
-
-        }
-         
-        void OnAttack()
-        {
-                if (_lastAttackTime < _attackCoolTime)
-                {
-                        return;
+		if (_isInPlayerAttackRange)  
+		{    
+                        _animator.Play("Idle"); 
+		        _state = MonsterState.Attack;
 		}
 
-                _lastAttackTime = 0.0f;
                  
+	}
 
-		if (_isInPlayerAttackRange == false)
-                        _state = MonsterState.Idle;
+	void OnAttack()
+        {
+		_lastAttackTime += Time.deltaTime;
+                if (_lastAttackTime < _attackCoolTime)
+                        return; 
+                 
+		_lastAttackTime = 0.0f;
+
+		if (_isInPlayerAttackRange == false)  
+		{
+			_state = MonsterState.Idle;
+			return;
+		}
+                 
+		_animator.Play("Attack1"); 
+
+		
 	}
 
         void AE_EndAttack()
         {
-		_state = MonsterState.Idle;
+		_animator.Play("Idle"); 
 
-    }
+        }
 
 
 	void OnDeath()

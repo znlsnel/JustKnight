@@ -22,7 +22,7 @@ public class MonsterController : MonoBehaviour
                 Shield
         }
 	MonsterState _state = MonsterState.Idle;
-
+         
         [SerializeField] float _moveSpeed = 1.0f;
 
         bool _isChasing = false;
@@ -32,7 +32,7 @@ public class MonsterController : MonoBehaviour
          
         float _tracingIdleTime = 1.0f;
         float _tracingMoveTime = 2.0f;
-        float _attackCoolTime = 2.0f;  
+        float _attackCoolTime = 1.0f;  
          
         float _lastIdleTime = 0.0f;
         float _lastMoveTime = 0.0f; 
@@ -59,8 +59,8 @@ public class MonsterController : MonoBehaviour
 
 		_onFrontCollisionSensor = false;
                 _isInPlayerAttackRange = false;
-                 
-	       ContactFilter2D ft = new ContactFilter2D();
+
+	      ContactFilter2D ft = new ContactFilter2D();
                 Collider2D[] colliders = new Collider2D[4]; 
                  int count = Physics2D.OverlapCollider(_frontCollisionSensor, ft, colliders);
 
@@ -70,14 +70,14 @@ public class MonsterController : MonoBehaviour
                         if (colliders[i].gameObject != gameObject)
                         { 
                                 _onFrontCollisionSensor = true;
-                                _isInPlayerAttackRange = colliders[i].gameObject == _player; 
+                                _isInPlayerAttackRange = colliders[i].gameObject == _player;
+
 				break;
 			}
                 }
 	}
+        
 
-
-    // Update is called once per frame 
     void Update()
     {
                 UpdateSensor();
@@ -91,10 +91,9 @@ public class MonsterController : MonoBehaviour
 		 
                 else if (DistanceToPlayer > 10)
                         _isChasing = false;
-                
-                Debug.Log("isChasing : " +  _isChasing);
                  
-                if (_isChasing)
+                 
+                if (_isChasing && _state != MonsterState.Attack)
                 {
                         Vector3 t = transform.localScale;
                         float tx = Math.Abs(t.x);
@@ -199,30 +198,38 @@ public class MonsterController : MonoBehaviour
                  
 	}
 
-	void OnAttack()
+	void OnAttack() 
         {
 		_lastAttackTime += Time.deltaTime;
                 if (_lastAttackTime < _attackCoolTime)
                         return; 
-                 
-		_lastAttackTime = 0.0f;
 
-		if (_isInPlayerAttackRange == false)  
+		if (_isInPlayerAttackRange == false)   
 		{
 			_state = MonsterState.Idle;
 			return;
 		}
                  
-		_animator.Play("Attack1"); 
+		_lastAttackTime = 0.0f;
 
-		
+                 
+		_animator.Play("Attack1");  
 	}
 
-        void AE_EndAttack()
+        void AE_OnAttack()
         {
-		_animator.Play("Idle"); 
+                if (_isInPlayerAttackRange == false)
+                        return;
+                 
+                 _player.GetComponent<PlayerController>()?.OnHit(); 
 
-        }
+        } 
+
+        void AE_EndAttack()
+        { 
+		_lastAttackTime = 0.0f;
+		_animator.Play("Idle");
+	}
 
 
 	void OnDeath()

@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
 			case PlayerState.Jump: 
 				OnJump(); 
 				break;
-			case PlayerState.Hurt:
+			case PlayerState.Hurt: 
 				break;
 			case PlayerState.Death:
 				break;
@@ -425,5 +425,19 @@ public class PlayerController : MonoBehaviour
 
 		_animCtrl.state = PlayerState.Idle;
 		 
+	}
+
+
+	public void OnHit()
+	{
+		if (_animCtrl.state == PlayerState.Hurt)
+			return;
+
+		_animCtrl.state = PlayerState.Hurt;
+	}
+
+	void AE_EndHurt()
+	{
+		_animCtrl.state = PlayerState.Idle; 
 	}
 }

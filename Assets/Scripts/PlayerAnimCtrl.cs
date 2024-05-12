@@ -9,7 +9,7 @@ public class PlayerAnimCtrl : MonoBehaviour
 	// Start is called before the first frame update
 	public enum PlayerState : int
 	{
-		Idle = 0,
+		Idle = 0, 
 		Run = 1,
 		Roll = 2, 
 
@@ -20,7 +20,7 @@ public class PlayerAnimCtrl : MonoBehaviour
 
 		Jump = 6,
 		Fall = 7,
-
+		 
 		WallSlider = 8,
 
 		Hurt = 9,

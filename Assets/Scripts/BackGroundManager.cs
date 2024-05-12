@@ -29,9 +29,7 @@ public class BackGroundManager : MonoBehaviour
 		_fourthBG = GameObject.Find("Fourth");
 		_bushBG = GameObject.Find("BACKGROUND_Bush");
 		_vinesBG = GameObject.Find("Second_VINES");  
-                 
 
-		CameraManager._backGroundManager = this; 
 	}
 	void Start()
     {

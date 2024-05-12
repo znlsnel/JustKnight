@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
-
+ 
 public class GameManager : Singleton<GameManager>
 {
 	// Start is called before the first frame update
@@ -11,20 +11,28 @@ public class GameManager : Singleton<GameManager>
 	[SerializeField] GameObject _fadePanelPrefab;  
 	GameObject _player;
 	GameObject _fadeCanvas;
+	Camera _camera;
 	FadePanelManager _fadePanelManager;
 
 	void Start() 
 	{
 		_fadeCanvas = Instantiate<GameObject>(_fadePanelPrefab);
 		_fadePanelManager = _fadeCanvas.transform.Find("FadePanel").GetComponent<FadePanelManager>();
+		_camera = Camera.main;
 		DontDestroyOnLoad(_fadeCanvas); 
-	} 
+		DontDestroyOnLoad(_camera);   
+	}
+
+	public GameObject GetPlayer()
+	{
+		return _player;
+	}
 
 	private void InitGameScene(Scene scene, LoadSceneMode mode)
 	{
 		GameObject gen = GameObject.FindWithTag("PlayerGenPos");
 		gen.GetComponent<SpriteRenderer>().sortingOrder = -1; 
-
+		
 		if (_player == null)
 		{
 			_player = Instantiate<GameObject>(_playerPrefab);

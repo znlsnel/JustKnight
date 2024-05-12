@@ -9,10 +9,10 @@ public class PlayerController : MonoBehaviour
 {
 
 	Collider2D _sensorFrontTop;
-	Collider2D _sensorFrontBottom;  
-	Collider2D _sensorBackBottom;  
+	Collider2D _sensorFrontBottom;
+	Collider2D _sensorBackBottom;
 	Collider2D _sensorGround;
-	Collider2D _sensorGroundFar; 
+	Collider2D _sensorGroundFar;
 
 	[SerializeField] float _attackCoolTime = 0.2f;
 	[SerializeField] float _jumpCoolTime = 0.2f;
@@ -23,35 +23,35 @@ public class PlayerController : MonoBehaviour
 
 	[SerializeField] GameObject _SlideDust;
 
-	public Action _onPortalEntered; 
+	public Action _onPortalEntered;
 
-	Rigidbody2D rigid; 
+	Rigidbody2D rigid;
 	PlayerAnimCtrl _animCtrl;
-	  
+
 	Vector2 _moveDir = Vector2.zero;
 
-	 float _xMoveDir = 0.0f;
+	float _xMoveDir = 0.0f;
 
 	bool _onSensorFrontTop = false;
-	bool _onSensorFrontBt = false; 
-	bool _onSensorBackBt = false; 
+	bool _onSensorFrontBt = false;
+	bool _onSensorBackBt = false;
 	bool _onSensorGround = false;
 	bool _onSensorGroundFar = false;
 
-	bool _isAttack = false; 
-	bool _isJump = false; 
+	bool _isAttack = false;
+	bool _isJump = false;
 	bool _isRoll = false;
 	bool _isBlock = false;
 
 	bool _isAttackable = true;
-	 
-	private float _lastAttackTime = 100.0f; 
+
+	private float _lastAttackTime = 100.0f;
 	private float _lastJumpTime = 100.0f;
 	private float _lastRollTime = 100.0f;
 	private float _lastBlockTime = 100.0f;
 
-	private void Awake() 
-	{ 
+	private void Awake()
+	{
 		_animCtrl = GetComponent<PlayerAnimCtrl>();
 		rigid = GetComponent<Rigidbody2D>();
 		_sensorFrontTop = transform.Find("CollisionSensor_FrontTop").GetComponent<CircleCollider2D>();
@@ -63,22 +63,22 @@ public class PlayerController : MonoBehaviour
 
 	void Start()
 	{
-                
-	}  
 
-    // Update is called once per frame
-    void Update()
-    {
-		if (_isAttackable) 
+	}
+
+	// Update is called once per frame
+	void Update()
+	{
+		if (_isAttackable)
 			_lastAttackTime += Time.deltaTime;
-		_lastJumpTime += Time.deltaTime; 
+		_lastJumpTime += Time.deltaTime;
 		_lastRollTime += Time.deltaTime;
-		_lastBlockTime += Time.deltaTime; 
-		 
+		_lastBlockTime += Time.deltaTime;
+
 		_xMoveDir = Input.GetAxis("Horizontal");
 
 		if (_onPortalEntered != null)
-		{ 
+		{
 			if (Input.GetAxis("OnPortal") > 0.0f)
 			{
 				if (_onPortalEntered == null)
@@ -98,10 +98,10 @@ public class PlayerController : MonoBehaviour
 		{
 			if (_xMoveDir > 0)
 			{
-				Vector3 temp = transform.localScale; 
+				Vector3 temp = transform.localScale;
 				temp.x = Math.Abs(temp.x);
 				transform.localScale = temp;
-			} 
+			}
 			else if (_xMoveDir < 0)
 			{
 				Vector3 temp = transform.localScale;
@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
 				transform.localScale = temp;
 			}
 		}
-		 
+
 		CheckSensor();
 
 		switch (_animCtrl.state)
@@ -134,93 +134,93 @@ public class PlayerController : MonoBehaviour
 				break;
 			case PlayerState.Fall:
 			case PlayerState.WallSlider:
-			case PlayerState.Jump: 
-				OnJump(); 
+			case PlayerState.Jump:
+				OnJump();
 				break;
-			case PlayerState.Hurt: 
+			case PlayerState.Hurt:
 				break;
 			case PlayerState.Death:
 				break;
 			default:
 				break;
 		}
-    }
+	}
 
 
 
-	private void FixedUpdate()  
-	{ 
+	private void FixedUpdate()
+	{
 		if (_animCtrl.state == PlayerState.Run)
 		{
 			float speed = _playerSpeed;
 
-			float ySpd = _onSensorGround ? 0.0f : -2.0f; 
+			float ySpd = _onSensorGround ? 0.0f : -2.0f;
 			Vector2 curPos = rigid.position;
 			Vector2 nextPos = transform.position + new Vector3(_xMoveDir * speed, ySpd, 0.0f) * Time.fixedDeltaTime;
 
-			rigid.MovePosition(nextPos); 
+			rigid.MovePosition(nextPos);
 
 
 			_moveDir = nextPos - curPos;
-			
+
 
 		}
 	}
 	void CheckSensor()
 	{
 		ContactFilter2D contactFilter = new ContactFilter2D();
-		 
-		Func<Collider2D, bool> check = (Collider2D collider ) =>
+
+		Func<Collider2D, bool> check = (Collider2D collider) =>
 		{
 			bool returnVal = false;
 			Collider2D[] result = new Collider2D[2];
-			int count = Physics2D.OverlapCollider(collider, contactFilter, result); 
+			int count = Physics2D.OverlapCollider(collider, contactFilter, result);
 			for (int i = 0; i < count; i++)
 			{
 				returnVal = result[i].gameObject != gameObject;
 
-				if (returnVal)  
-					break; 
+				if (returnVal)
+					break;
 			}
-			return returnVal; 
+			return returnVal;
 		};
 
 		_onSensorFrontTop = check(_sensorFrontTop);
-		_onSensorFrontBt = check(_sensorFrontBottom); 
+		_onSensorFrontBt = check(_sensorFrontBottom);
 		_onSensorBackBt = check(_sensorBackBottom);
 		_onSensorGround = check(_sensorGround);
 		_onSensorGroundFar = check(_sensorGroundFar);
-	} 
-	
+	}
+
 	void OnIdle()
 	{
 		_moveDir = Vector2.zero;
 		if (_onSensorGround)
-			rigid.velocity = new Vector2(0.0f, 0.0f);  
+			rigid.velocity = new Vector2(0.0f, 0.0f);
 
 		if (_isBlock)
 		{
 			_animCtrl.state = PlayerState.Block;
 			return;
-		} 
+		}
 		else if (_isRoll)
 		{
 			_animCtrl.state = PlayerState.Roll;
 			return;
 		}
-		else if (_isAttack) 
+		else if (_isAttack)
 		{
 			_animCtrl.state = PlayerState.Attack;
 			return;
-		} 
+		}
 		else if (_isJump)
 		{
-			_animCtrl.state = PlayerState.Jump;  
-			return; 
+			_animCtrl.state = PlayerState.Jump;
+			return;
 		}
 
 
-		if (_onSensorGround == false) 
+		if (_onSensorGround == false)
 		{
 			//_animCtrl.state = PlayerState.Fall;
 			rigid.AddForce(new Vector2(0.0f, -1.0f), ForceMode2D.Impulse);
@@ -241,14 +241,14 @@ public class PlayerController : MonoBehaviour
 
 		_lastRollTime = 0.0f;
 
-		rigid.velocity = new Vector2(transform.localScale.x * 10.0f, 0.0f);   
-		 
+		rigid.velocity = new Vector2(transform.localScale.x * 10.0f, 0.0f);
+
 	}
-	 
+
 	void AE_EndRoll()
 	{
 		_animCtrl.state = PlayerState.Idle;
-		if (_lastJumpTime > _jumpCoolTime) 
+		if (_lastJumpTime > _jumpCoolTime)
 			_lastJumpTime = _jumpCoolTime - 0.1f;
 		//rigid.velocity = Vector
 
@@ -258,7 +258,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (_isRoll)
 		{
-			_animCtrl.state = PlayerState.Roll; 
+			_animCtrl.state = PlayerState.Roll;
 			return;
 		}
 		if (_isAttack)
@@ -266,17 +266,17 @@ public class PlayerController : MonoBehaviour
 			_animCtrl.state = PlayerState.Attack;
 			return;
 		}
-		 
-		if (_isJump)   
-		{ 
-			_animCtrl.state = PlayerState.Jump;  
+
+		if (_isJump)
+		{
+			_animCtrl.state = PlayerState.Jump;
 			return;
 		}
-		   
+
 		if (_onSensorGroundFar == false)
-		{ 
+		{
 			//_animCtrl.state = PlayerState.Fall;
-			Debug.Log(" dddd"); 
+			Debug.Log(" dddd");
 			rigid.AddForce(new Vector2(_xMoveDir * 3.0f, -1.0f), ForceMode2D.Impulse);
 			OnFalling();
 			return;
@@ -291,41 +291,41 @@ public class PlayerController : MonoBehaviour
 
 	void OnAttack()
 	{
-		if (_lastAttackTime < _attackCoolTime) 
+		if (_lastAttackTime < _attackCoolTime)
 			return;
 
-		_lastAttackTime = 0.0f; 
+		_lastAttackTime = 0.0f;
 		_isAttackable = false;
 
 		int temp = _animCtrl.attackCombo + 1;
 		if (temp > 3)
 			temp = 1;
 
-		_animCtrl.attackCombo = temp; 
+		_animCtrl.attackCombo = temp;
 	}
-	  
+
 	void AE_EndAttack()
 	{
-		_isAttackable = true; 
+		_isAttackable = true;
 		_animCtrl.state = PlayerState.Idle;
 	}
 
-	  
+
 	void OnJump()
 	{
-		if (_lastJumpTime > _jumpCoolTime && _isJump) 
+		if (_lastJumpTime > _jumpCoolTime && _isJump)
 		{
 			Vector3 tv = rigid.velocity;
 			tv.y = 0.0f;
-			rigid.velocity = tv; 
-			  
-			rigid.velocity += new Vector2(Math.Clamp(_moveDir.x, -1.0f, 1.0f) * _playerSpeed * 15.0f , 8.0f);  
-			_lastJumpTime = 0.0f; 
+			rigid.velocity = tv;
+
+			rigid.velocity += new Vector2(Math.Clamp(_moveDir.x, -1.0f, 1.0f) * _playerSpeed * 15.0f, 8.0f);
+			_lastJumpTime = 0.0f;
 		}
 
 		OnFalling();
 
-	} 
+	}
 
 	void OnFalling()
 	{
@@ -355,7 +355,7 @@ public class PlayerController : MonoBehaviour
 			_animCtrl.state = PlayerState.Jump;
 		}
 
-		 
+
 		if (_animCtrl.state != PlayerState.WallSlider)
 		{
 			rigid.AddForce(new Vector2(_xMoveDir * Time.deltaTime, 0.0f), ForceMode2D.Impulse);
@@ -376,16 +376,16 @@ public class PlayerController : MonoBehaviour
 		t.y = -0.1f;
 		rigid.velocity = t;
 		_animCtrl.state = PlayerState.WallSlider;
-		 
+
 		float jump = Input.GetAxis("Jump");
 		if (jump > 0.0f)
-		{ 
+		{
 			if (Input.GetAxis("Vertical") > 0.5f)
-				rigid.velocity = new Vector2(0.0f, 8.0f); 
+				rigid.velocity = new Vector2(0.0f, 8.0f);
 			else
 			{
 				float dir = transform.localScale.x < 0.0f ? 1.0f : -1.0f;
-				rigid.AddForce(new Vector2(dir * 5.0f, 8.0f), ForceMode2D.Impulse);  
+				rigid.AddForce(new Vector2(dir * 5.0f, 8.0f), ForceMode2D.Impulse);
 				//rigid.velocity = new Vector2;  
 			}
 
@@ -397,7 +397,7 @@ public class PlayerController : MonoBehaviour
 		//Transform t;
 		//t.position = _sensorFrontTop.gameObject.transform.position;
 
-		Instantiate(_SlideDust, _sensorFrontTop.gameObject.transform.position, new Quaternion()); 
+		Instantiate(_SlideDust, _sensorFrontTop.gameObject.transform.position, new Quaternion());
 	}
 
 	void OnBlock()
@@ -405,17 +405,17 @@ public class PlayerController : MonoBehaviour
 		if (_lastBlockTime <= _blockCoolTime)
 			return;
 
-		_lastBlockTime = 0.0f; 
+		_lastBlockTime = 0.0f;
 	}
 
 	void OnIdleBlock()
 	{
-		 if (_isBlock == false)
+		if (_isBlock == false)
 			_animCtrl.state = PlayerState.Idle;
-		  
+
 	}
 
-	void AE_EndBlock()
+	void AE_EndBlock() 
 	{
 		if (_isBlock)
 		{
@@ -424,14 +424,25 @@ public class PlayerController : MonoBehaviour
 		}
 
 		_animCtrl.state = PlayerState.Idle;
-		 
+
 	}
+	 
 
-
-	public void OnHit()
+	public void OnHit(GameObject monster)
 	{
-		if (_animCtrl.state == PlayerState.Hurt)
+		if (_animCtrl.state == PlayerState.Hurt || _animCtrl.state == PlayerState.Roll || _animCtrl.state == PlayerState.Block)  
 			return;
+		   
+
+
+
+		CameraManager cm = Camera.main.GetComponent<CameraManager>();
+
+		if (monster.transform.position.x < gameObject.transform.position.x)
+			cm?.ShakeCamera_Left(); 
+		else
+			cm?.ShakeCamera_Right(); 
+
 
 		_animCtrl.state = PlayerState.Hurt;
 	}

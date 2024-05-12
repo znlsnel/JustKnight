@@ -221,7 +221,7 @@ public class MonsterController : MonoBehaviour
                 if (_isInPlayerAttackRange == false)
                         return;
                  
-                 _player.GetComponent<PlayerController>()?.OnHit(); 
+                 _player.GetComponent<PlayerController>()?.OnHit(gameObject); 
 
         } 
 

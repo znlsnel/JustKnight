@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MonsterController : MonoBehaviour
@@ -71,13 +72,17 @@ public class MonsterController : MonoBehaviour
                 Collider2D[] colliders = new Collider2D[4]; 
                  int count = Physics2D.OverlapCollider(_frontCollisionSensor, ft, colliders);
                   
-		for (int i = 0; i < count; i++) {
+		for (int i = 0; i < count; i++) { 
                         if (colliders[i].gameObject != gameObject)
                         {  
-                                _onFrontCollisionSensor = colliders[i].GetComponent<MonsterController>() == null;
-                                _isInPlayerAttackRange = colliders[i].gameObject == _player;
+                                if (_onFrontCollisionSensor == false)
+                                         _onFrontCollisionSensor = colliders[i].GetComponent<MonsterController>() == null;
 
-				break;
+                                if (_isInPlayerAttackRange == false && colliders[i].gameObject == _player)
+                                {
+                                        _isInPlayerAttackRange = colliders[i].gameObject.GetComponent<PlayerAnimCtrl>()?.state != PlayerAnimCtrl.PlayerState.Death;
+				} 
+                                  
 			}
                 }
 	}
@@ -85,8 +90,8 @@ public class MonsterController : MonoBehaviour
 
     void Update()
     {
-                UpdateSensor();
-
+                UpdateSensor(); 
+                 
 
 		Vector3 MonsterToPlayer = _player.transform.position - transform.position; 
                 float DistanceToPlayer = MonsterToPlayer.magnitude;
@@ -94,30 +99,36 @@ public class MonsterController : MonoBehaviour
 		if (DistanceToPlayer < 5 && MonsterToPlayer.x * transform.localScale.x > 0.0f)
                         _isChasing = true;
 		 
-                else if (DistanceToPlayer > 10)
+                if (DistanceToPlayer > 10 || _player.GetComponent<PlayerAnimCtrl>()?.state == PlayerAnimCtrl.PlayerState.Death)
                         _isChasing = false;
                  
                  
-                if (_isChasing && _state != MonsterState.Attack)
+                if (_isChasing && _state == MonsterState.Move) 
                 {
-                        Vector3 t = transform.localScale;
-                        float tx = Math.Abs(t.x);
-                        t.x = MonsterToPlayer.x > 0.0f ? tx : -tx;
-                        transform.localScale = t;  
+                        if (Math.Abs(_player.transform.position.x - transform.position.x) > 0.1f) 
+                        {
+                                Vector3 t = transform.localScale;
+                                float tx = Math.Abs(t.x);
+                                t.x = MonsterToPlayer.x > 0.0f ? tx : -tx;
+                                transform.localScale = t;  
+
+                        }
+
 		}
 
                 UpdateState();
-    } 
+    }  
 
 	private void FixedUpdate()
 	{
-		if (_state == MonsterState.Move && _onFrontCollisionSensor == false)
-                {  
+                bool movable = _state == MonsterState.Move && _onFrontCollisionSensor == false;
+                
+		if (movable)
+                {   
                         Vector2 nextPos = transform.position + new Vector3(transform.localScale.x * _moveSpeed, -1.0f, 0.0f) * Time.fixedDeltaTime;
 			_rigid.MovePosition(nextPos);  
-                         
 		}
-	}
+	} 
 
 	void UpdateState()
         {
@@ -175,11 +186,13 @@ public class MonsterController : MonoBehaviour
                         return;
                 }
 
-		if (_isInPlayerAttackRange)
+
+		bool isClosePlayer = Math.Abs(_player.transform.position.x - transform.position.x) < 0.1f;
+		if (_isInPlayerAttackRange) 
 		{
 			_state = MonsterState.Attack;
 		}
-		else 
+		else if (isClosePlayer == false)
                 { 
 		        _state = MonsterState.Move;  
                 }
@@ -188,25 +201,30 @@ public class MonsterController : MonoBehaviour
         
         void OnMove() 
         {
-
 		if (_isChasing == false)
 		{
 		        _lastMoveTime += Time.deltaTime;
 
 			if (_lastMoveTime < _tracingMoveTime && _onFrontCollisionSensor == false)
 				return;
-                         
+                          
                         _lastMoveTime = 0.0f;
 			_state = MonsterState.Idle;
 
-                        return;
+                        return; 
                 } 
+                 
+		bool isClosePlayer = Math.Abs(_player.transform.position.x - transform.position.x) < 0.1f;
+		if (_isInPlayerAttackRange)
+		{
+			_animator.Play("Idle");
+			_state = MonsterState.Attack; 
+		}
+		else if (isClosePlayer)  
+		{
+			_state = MonsterState.Idle;
+		}
 
-		if (_isInPlayerAttackRange)  
-		{    
-                        _animator.Play("Idle");   
-		        _state = MonsterState.Attack;
-		} 
 	}
 
 	void OnAttack() 
@@ -231,22 +249,22 @@ public class MonsterController : MonoBehaviour
           
         public void OnHit(GameObject attacker)
         {
-                hp--;
-                if( hp >0)
-		        _state = MonsterState.Hit;
+                if (hp == 0)
+                        return;
 
-                else
-                {
-                        _state = MonsterState.Death;
-                }
-	}
+                hp--; 
+		_state = MonsterState.Hit;
+                _isChasing = true;
+	} 
 
         void AE_EndHit()
         {
                 _lastAttackTime = _attackCoolTime;
-                _state = MonsterState.Idle;
-
-
+                 
+                if (hp == 0)
+                        _state = MonsterState.Death;
+                else
+                        _state = MonsterState.Idle;
                  
 	}
         void AE_EndDeath()

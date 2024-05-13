@@ -12,6 +12,8 @@ public class CameraManager : MonoBehaviour
         // Start is called before the first frame update 
        GameObject _player;
 	Animator _anim;
+
+	[SerializeField] float yOffet = 2.0f;
 	private void Awake()
 	{
 		if (isAwake)
@@ -62,13 +64,10 @@ public class CameraManager : MonoBehaviour
 			return;
 		}
 		 
-		float nextPosX = _player.transform.position.x;
-		float curPosX = transform.position.x;
-		float dir = nextPosX - curPosX;
-		 
-		Vector3 curPos = transform.position; 
-		curPos.x = nextPosX; 
-		transform.position = curPos;	 
+		Vector3 nextPosX = _player.transform.position;
+		nextPosX.y -= yOffet;
+		nextPosX.z = -10.0f;
+		transform.position = nextPosX;	  
 	}
 
 

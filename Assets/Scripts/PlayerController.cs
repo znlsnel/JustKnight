@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
 
 	bool _isAttackable = true;
 
+	int hp = 3;
+
 	private float _lastAttackTime = 100.0f;
 	private float _lastJumpTime = 100.0f;
 	private float _lastRollTime = 100.0f;
@@ -436,7 +438,7 @@ public class PlayerController : MonoBehaviour
 
 		_lastBlockTime = 0.0f;
 	}
-
+	 
 	void OnIdleBlock()
 	{
 		if (_isBlock == false)
@@ -459,11 +461,16 @@ public class PlayerController : MonoBehaviour
 
 	public void OnHit(GameObject monster)
 	{
-		if (_animCtrl.state == PlayerState.Hurt || _animCtrl.state == PlayerState.Roll || _animCtrl.state == PlayerState.Block)  
+		if (_animCtrl.state == PlayerState.Hurt || _animCtrl.state == PlayerState.Roll || hp == 0)  
 			return;
+		if (_animCtrl.state == PlayerState.Block)
+		{
+			monster.GetComponent<MonsterController>()?.OnHit(gameObject);
+			return;
+		}
 
-
-
+			hp--;
+		Debug.Log(hp);
 		CancelAnim(); 
 		CameraManager cm = Camera.main.GetComponent<CameraManager>();
 
@@ -479,5 +486,11 @@ public class PlayerController : MonoBehaviour
 	void AE_EndHurt()
 	{
 		_animCtrl.state = PlayerState.Idle; 
+		
+		if (hp == 0)
+		{
+			_animCtrl.state = PlayerState.Death; 
+
+		}
 	}
 }

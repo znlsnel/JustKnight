@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 	Collider2D _sensorBackBottom;
 	Collider2D _sensorGround;
 	Collider2D _sensorGroundFar;
+	Collider2D _sensorAttack;
 
 	[SerializeField] float _attackCoolTime = 0.2f;
 	[SerializeField] float _jumpCoolTime = 0.2f;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
 	Vector2 _moveDir = Vector2.zero;
 
 	float _xMoveDir = 0.0f;
+
 
 	bool _onSensorFrontTop = false;
 	bool _onSensorFrontBt = false;
@@ -59,6 +61,7 @@ public class PlayerController : MonoBehaviour
 		_sensorBackBottom = transform.Find("CollisionSensor_BackBottom").GetComponent<CircleCollider2D>();
 		_sensorGround = transform.Find("CollisionSensor_Ground").GetComponent<Collider2D>();
 		_sensorGroundFar = transform.Find("CollisionSensor_Ground2").GetComponent<Collider2D>();
+		_sensorAttack = transform.Find("CollisionSensor_Attack").GetComponent<Collider2D>();
 	}
 
 	void Start()
@@ -190,8 +193,13 @@ public class PlayerController : MonoBehaviour
 		_onSensorBackBt = check(_sensorBackBottom);
 		_onSensorGround = check(_sensorGround);
 		_onSensorGroundFar = check(_sensorGroundFar);
-	}
+	} 
 
+	void CancelAnim()
+	{
+		_isAttackable = true;
+
+	}
 	void OnIdle()
 	{
 		_moveDir = Vector2.zero;
@@ -304,6 +312,27 @@ public class PlayerController : MonoBehaviour
 		_animCtrl.attackCombo = temp;
 	}
 
+	void AE_OnAttack()
+	{
+		Collider2D[] result = new Collider2D[100];
+		ContactFilter2D contactFilter = new ContactFilter2D();
+		Physics2D.OverlapCollider(_sensorAttack, contactFilter, result);
+
+		foreach (var c in result)
+		{
+			MonsterController mc = c.gameObject.GetComponent<MonsterController>();
+			if (mc != null)
+			{
+				mc.OnHit(gameObject);
+
+			}
+		}
+
+
+
+		
+
+	}
 	void AE_EndAttack()
 	{
 		_isAttackable = true;
@@ -432,10 +461,10 @@ public class PlayerController : MonoBehaviour
 	{
 		if (_animCtrl.state == PlayerState.Hurt || _animCtrl.state == PlayerState.Roll || _animCtrl.state == PlayerState.Block)  
 			return;
-		   
 
 
 
+		CancelAnim(); 
 		CameraManager cm = Camera.main.GetComponent<CameraManager>();
 
 		if (monster.transform.position.x < gameObject.transform.position.x)

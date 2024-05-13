@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerGenPos
   - BackGround
+  - MonsterGenerator
   layers:
   - Default
   - TransparentFX

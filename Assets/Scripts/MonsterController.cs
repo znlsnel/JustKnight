@@ -38,6 +38,13 @@ public class MonsterController : MonoBehaviour
         float _lastMoveTime = 0.0f; 
         float _lastAttackTime = 0.0f;
 
+        int hp = 3;
+
+        public void InitMonster() 
+        {
+                hp = 3;
+                _state = MonsterState.Idle; 
+        }
 
         void Start()
         { 
@@ -60,16 +67,14 @@ public class MonsterController : MonoBehaviour
 		_onFrontCollisionSensor = false;
                 _isInPlayerAttackRange = false;
 
-	      ContactFilter2D ft = new ContactFilter2D();
+	        ContactFilter2D ft = new ContactFilter2D();
                 Collider2D[] colliders = new Collider2D[4]; 
                  int count = Physics2D.OverlapCollider(_frontCollisionSensor, ft, colliders);
-
-
-
+                  
 		for (int i = 0; i < count; i++) {
                         if (colliders[i].gameObject != gameObject)
-                        { 
-                                _onFrontCollisionSensor = true;
+                        {  
+                                _onFrontCollisionSensor = colliders[i].GetComponent<MonsterController>() == null;
                                 _isInPlayerAttackRange = colliders[i].gameObject == _player;
 
 				break;
@@ -129,6 +134,9 @@ public class MonsterController : MonoBehaviour
 				break;
                         case MonsterState.Attack:
 				OnAttack();
+				break; 
+                        case MonsterState.Hit:
+				_animator.Play("Hit" );
 				break;
 			case MonsterState.Death:
 				OnDeath();
@@ -165,9 +173,14 @@ public class MonsterController : MonoBehaviour
 			transform.localScale = ts;     
                          
                         return;
-                } 
-                else
-                {
+                }
+
+		if (_isInPlayerAttackRange)
+		{
+			_state = MonsterState.Attack;
+		}
+		else 
+                { 
 		        _state = MonsterState.Move;  
                 }
 		
@@ -187,22 +200,22 @@ public class MonsterController : MonoBehaviour
 			_state = MonsterState.Idle;
 
                         return;
-                }
+                } 
 
 		if (_isInPlayerAttackRange)  
 		{    
-                        _animator.Play("Idle"); 
+                        _animator.Play("Idle");   
 		        _state = MonsterState.Attack;
-		}
-
-                 
+		} 
 	}
 
 	void OnAttack() 
         {
 		_lastAttackTime += Time.deltaTime;
                 if (_lastAttackTime < _attackCoolTime)
-                        return; 
+                {
+		        return; 
+		}
 
 		if (_isInPlayerAttackRange == false)   
 		{
@@ -215,6 +228,31 @@ public class MonsterController : MonoBehaviour
                  
 		_animator.Play("Attack1");  
 	}
+          
+        public void OnHit(GameObject attacker)
+        {
+                hp--;
+                if( hp >0)
+		        _state = MonsterState.Hit;
+
+                else
+                {
+                        _state = MonsterState.Death;
+                }
+	}
+
+        void AE_EndHit()
+        {
+                _lastAttackTime = _attackCoolTime;
+                _state = MonsterState.Idle;
+
+
+                 
+	}
+        void AE_EndDeath()
+        {
+                _animator.speed = 0.0f;
+        }
 
         void AE_OnAttack()
         {

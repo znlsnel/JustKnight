@@ -7,6 +7,8 @@ using static PlayerAnimCtrl;
 
 public class PlayerController : MonoBehaviour
 {
+	PlayerAnimCtrl _animCtrl;
+	PlayerInfoUIManager _infoUIManager;
 
 	Collider2D _sensorFrontTop;
 	Collider2D _sensorFrontBottom;
@@ -27,7 +29,6 @@ public class PlayerController : MonoBehaviour
 	public Action _onPortalEntered;
 
 	Rigidbody2D rigid;
-	PlayerAnimCtrl _animCtrl;
 
 	Vector2 _moveDir = Vector2.zero;
 
@@ -57,17 +58,23 @@ public class PlayerController : MonoBehaviour
 	private void Awake()
 	{
 		_animCtrl = GetComponent<PlayerAnimCtrl>();
+		_infoUIManager = GetComponent<PlayerInfoUIManager>();
 		rigid = GetComponent<Rigidbody2D>();
+
+
 		_sensorFrontTop = transform.Find("CollisionSensor_FrontTop").GetComponent<CircleCollider2D>();
 		_sensorFrontBottom = transform.Find("CollisionSensor_FrontBottom").GetComponent<CircleCollider2D>();
 		_sensorBackBottom = transform.Find("CollisionSensor_BackBottom").GetComponent<CircleCollider2D>();
 		_sensorGround = transform.Find("CollisionSensor_Ground").GetComponent<Collider2D>();
 		_sensorGroundFar = transform.Find("CollisionSensor_Ground2").GetComponent<Collider2D>();
 		_sensorAttack = transform.Find("CollisionSensor_Attack").GetComponent<Collider2D>();
+
+		 
 	}
 
 	void Start()
 	{
+		_infoUIManager.UpdateHpBar(3, 3);
 
 	}
 
@@ -469,7 +476,8 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 
-			hp--;
+		hp--;
+		_infoUIManager.UpdateHpBar(3, hp); 
 		Debug.Log(hp);
 		CancelAnim(); 
 		CameraManager cm = Camera.main.GetComponent<CameraManager>();

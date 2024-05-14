@@ -41,13 +41,13 @@ public class FadePanelManager : MonoBehaviour
 	{
 
 		_canvas.sortingOrder = 100;
-		_anim.Play("FadeOut");
+		_anim.Play("FadeOut"); 
 
  	}
 	void AE_EndFadeIn()
 	{
 		 
-		_anim.Play("Idle");
+		_anim.Play("Empty");  
 		_canvas.sortingOrder = -1; 
 		Debug.Log("  EnD IN FADE"); 
 	}

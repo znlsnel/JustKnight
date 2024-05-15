@@ -3,6 +3,7 @@ Shader "Unlit/ImageToDiamond"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+       _Color ("Color", Color) = (1,1,1,1)
     }
     SubShader
     {
@@ -34,6 +35,7 @@ Shader "Unlit/ImageToDiamond"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+float4 _Color; 
 
             v2f vert (appdata v)
             {
@@ -55,6 +57,8 @@ Shader "Unlit/ImageToDiamond"
                 float dist = abs(uv.x) + abs(uv.y); // Diamond shape equation
                 if (dist > 1.0)
                     clip(-1.0); // Discard pixels outside the diamond
+    
+    col *= _Color;
                 return col;
 
 }

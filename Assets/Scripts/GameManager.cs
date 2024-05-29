@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
- 
+  
 public class GameManager : Singleton<GameManager>
 {
 	// Start is called before the first frame update
 	[SerializeField] GameObject _playerPrefab;
-	[SerializeField] GameObject _fadePanelPrefab;  
+	[SerializeField] GameObject _fadePanelPrefab;
+	[SerializeField] GameObject _skillMenuManager; 
+	 
+
 	GameObject _player;
 	GameObject _fadeCanvas;
 	Camera _camera; 
@@ -20,7 +23,9 @@ public class GameManager : Singleton<GameManager>
 		_fadePanelManager = _fadeCanvas.transform.Find("Panel").GetComponent<FadePanelManager>();
 		_camera = Camera.main;
 		DontDestroyOnLoad(_fadeCanvas); 
-		DontDestroyOnLoad(_camera);   
+		DontDestroyOnLoad(_camera);
+		_skillMenuManager = Instantiate(_skillMenuManager);
+		_skillMenuManager.gameObject.SetActive(false); 
 	}
 
 	public GameObject GetPlayer()
@@ -55,7 +60,7 @@ public class GameManager : Singleton<GameManager>
 
 	// Update is called once per frame
 	void Update()
-    {
-        
-    }
+	{
+		
+	}
 }

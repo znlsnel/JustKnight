@@ -19,6 +19,7 @@ public class startMenuManager : MonoBehaviour
         
     }
 
+
        public void OnNewGameButton()
         {
                 Debug.Log("New Game");

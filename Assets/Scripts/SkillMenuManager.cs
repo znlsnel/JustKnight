@@ -72,22 +72,6 @@ public class SkillMenuManager : MonoBehaviour
         {
 		_skillPopupManager.curSkillID = id;
 		_skillPopupMenu.gameObject.SetActive(true); 
-
-	//	int MaxX = 320;
-	//	int MinX = -320;
-	//	int MaxY = 100;
-	//	int MinY = -120;
-
-	//	Vector3 mousePos = Input.mousePosition;
-	//	Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, mousePos);
-	//	Vector2 localPoint;
-	//	RectTransformUtility.ScreenPointToLocalPointInRectangle(_skillPopupMenu.GetComponent<RectTransform>(), screenPoint, Camera.main, out localPoint);
-	////	localPoint += new Vector2(30.0f, 30.0f);
-	//	localPoint += test;
-	//	localPoint.x = Mathf.Min(Mathf.Max(localPoint.x, MinX), MaxX);
-	//	localPoint.y = Mathf.Min(Mathf.Max(localPoint.y, MinY), MaxY);
-		 
-	//	_skillPopupMenu.transform.Find("Frame").localPosition = localPoint;
 	}
 
         void OnSkillButton(int skillId, bool isUpgrade)
@@ -148,6 +132,20 @@ public class SkillMenuManager : MonoBehaviour
 		}
 
 
+	}
+
+	public void ActiveMenu(bool isOpen)
+	{
+		if (isOpen)
+		{
+			gameObject.SetActive(true);
+			_skillPopupMenu.gameObject.SetActive(false); 
+		}
+		else
+		{
+			_skillPopupMenu.gameObject.SetActive(false);
+			gameObject.SetActive(false);
+		}
 	}
 
 }

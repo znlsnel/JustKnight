@@ -1,0 +1,34 @@
+{
+    "name": "Inputs",
+    "maps": [
+        {
+            "name": "UI",
+            "id": "4d6252c8-f545-4c4d-9061-4c1eac0d8b7f",
+            "actions": [
+                {
+                    "name": "Skill_Menu",
+                    "type": "Button",
+                    "id": "136d1bdd-90da-43dd-a229-97171476fef8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "399a304b-dd76-48e5-91ed-4850f067c6bf",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skill_Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FadePanelManager : MonoBehaviour
+public class FadeEffectManager : MonoBehaviour
 {
         // Start is called before the first frame update
         Animator _anim;

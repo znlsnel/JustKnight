@@ -70,7 +70,8 @@ public class SkillMenuManager : MonoBehaviour
 	public Vector2 test = new Vector2(100.0f, 100.0f); 
 	void ClickButton(int id)
         {
-		_skillPopupManager.curSkillID = id;
+		_skillPopupManager.UpdateSkillId(id);
+		//_skillPopupManager.curSkillID = id; 
 		_skillPopupMenu.gameObject.SetActive(true); 
 	}
 

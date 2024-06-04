@@ -595,6 +595,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5b4fbfb996d9234aa9687344390f948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skillDescription: {fileID: 9044585569746867107}
+  _skillName: {fileID: 6755173701028447331}
+  _skillLevel: {fileID: 0}
+  _skillCoolTime: {fileID: 0}
+  _skillValue: {fileID: 0}
   curSkillID: 0
 --- !u!1 &2991617409154908539
 GameObject:

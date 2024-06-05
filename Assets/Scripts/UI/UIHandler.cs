@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UIHandler : Singleton<UIHandler> 
 {
@@ -16,7 +17,7 @@ public class UIHandler : Singleton<UIHandler>
 	{ 
 		base.Awake(); 
 		_skillMenu = Instantiate(_skillMenu);
-		_skillMenu.gameObject.SetActive(false);
+		_skillMenu.gameObject.SetActive(false); 
 
 		_fadeEffect = Instantiate<GameObject>(_fadeEffect);
 		_fadeEffectManager = _fadeEffect.transform.Find("Panel").GetComponent<FadeEffectManager>();
@@ -26,13 +27,16 @@ public class UIHandler : Singleton<UIHandler>
 
 	void Start()
 	{
-
-
-		InputManager.instance.ReceiveAction(InputManager.instance._onSkillMenu, () => {
-			_skillMenu.GetComponent<SkillMenuManager>().ActiveMenu(_skillMenu.activeSelf != true);
-		}); 
+		InputManager.instance.ReceiveAction(InputManager.instance._onSkillMenu, () =>
+		{
+			this._skillMenu.GetComponent<SkillMenuManager>().ActiveMenu(this._skillMenu.activeSelf != true);
+		});
+		 
+	//	InputManager.instance._onSkillMenu.performed += (InputAction.CallbackContext context) =>
+	//	{
+	//		this._skillMenu.GetComponent<SkillMenuManager>().ActiveMenu(this._skillMenu.activeSelf != true);
+	//	};  
 	}
-
     // Update is called once per frame
     void Update()
     {

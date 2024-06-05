@@ -1,28 +1,60 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Json;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
+[Serializable]
+public class SkillData
+{
+	public int ID;
+	public string name;
+	public string description;
+	public int[] value;
+	public int[] coolTime;
+	public int maxLevel = 0;
+
+	public void Init()
+	{
+		int vLen = value == null ? 0 : value.Length;
+		int cLen = coolTime == null ? 0 : coolTime.Length;
+
+
+		 
+		maxLevel = math.max(vLen, cLen);
+	}
+
+}
+
+[Serializable]
+public class SkillDatas
+{
+	public SkillData[] skillDatas;
+}
+
 public class SkillMenuManager : MonoBehaviour
 {
+	[SerializeField] Text _skillPointText;
 	[SerializeField] Canvas _skillPopupMenu; 
-        [SerializeField]Button[] _skillButton = new Button[8];
-        [SerializeField] Text _skillPointText;
 
+        [SerializeField]Button[] _skillButton = new Button[8];
+	Text[] _skillLevelTexts = new Text[8];
+	int[] _skillLevels = new int[8];
+	 
 	Canvas canvas;
 	Canvas _upgradeMenu;  
 	SkillPopupManager _skillPopupManager;
-	Text[] _skillLevelTexts = new Text[8];
-        int[] _skillLevels = new int[8];
+
 	int skillPoint = 5;
-         
 
+	private SkillData[] _skillDatas;
 
-	private void Awake()
+	private void Awake() 
 	{ 
 		canvas = GetComponent<Canvas>();
                 _skillPopupMenu = Instantiate(_skillPopupMenu);
@@ -42,10 +74,22 @@ public class SkillMenuManager : MonoBehaviour
                         _skillButton[i].onClick.AddListener(() => {
 				ClickButton(k);    
                         });  
-                }  
-        }  
-         
-        public void OpenUI()
+                }
+		LoadJsonSkillData();
+
+	}
+	void LoadJsonSkillData()
+	{
+		TextAsset jsonText = Resources.Load<TextAsset>("Datas/JS_SkillData");
+
+		SkillDatas s = JsonUtility.FromJson<SkillDatas>(jsonText.text);
+		_skillDatas = s.skillDatas;
+		foreach (SkillData skillData in _skillDatas) 
+			skillData.Init(); 
+
+	}
+
+	public void OpenUI()
         {
                 gameObject.SetActive(true);
         }
@@ -71,19 +115,23 @@ public class SkillMenuManager : MonoBehaviour
 	void ClickButton(int id)
         {
 		_skillPopupManager.UpdateSkillId(id);
-		//_skillPopupManager.curSkillID = id; 
-		_skillPopupMenu.gameObject.SetActive(true); 
+		_skillPopupMenu.gameObject.SetActive(true);
+		UpdatePopupInfo(id);
+
+
 	}
 
-        void OnSkillButton(int skillId, bool isUpgrade)
+	void OnSkillButton(int skillId, bool isUpgrade)
         {
 		if (isUpgrade)
 		{
 			if (parent[skillId] != -1 && _skillLevels[parent[skillId]] == 0)
+				return; 
+
+			if (skillPoint == 0 || _skillDatas[skillId].maxLevel <= _skillLevels[skillId]) 
 				return;
 
-			if (skillPoint == 0)
-				return;
+
 
 			if (_skillLevels[skillId] == 0)
 			{
@@ -128,18 +176,36 @@ public class SkillMenuManager : MonoBehaviour
 
 				icon.GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f); 
 			}
+		}
+		 
+		UpdatePopupInfo(skillId);
 
+	}  
+	void UpdatePopupInfo(int skillId)
+	{
+		_skillPopupManager._skillDescription.text = _skillDatas[skillId].description;
+		_skillPopupManager._skillName.text = _skillDatas[skillId].name;
+		
 
+		int level = _skillLevels[skillId];
+		int value = -1;
+		int ctm = -1; 
+		if (level > 0)
+		{
+			bool hasValue = _skillDatas[skillId].value != null;
+			 value = hasValue ? _skillDatas[skillId].value[math.min(level - 1, _skillDatas[skillId].value.Length - 1)] : -1;
+			bool hasCtm = _skillDatas[skillId].coolTime != null;
+			 ctm = hasCtm ? _skillDatas[skillId].coolTime[math.min(level - 1, _skillDatas[skillId].coolTime.Length - 1)] : -1;
 		}
 
-
-	}
+		_skillPopupManager.SetSkillStateText(level, value, ctm);
+	} 
 
 	public void ActiveMenu(bool isOpen)
 	{
 		if (isOpen)
 		{
-			gameObject.SetActive(true);
+			gameObject.SetActive(true); 
 			_skillPopupMenu.gameObject.SetActive(false); 
 		}
 		else

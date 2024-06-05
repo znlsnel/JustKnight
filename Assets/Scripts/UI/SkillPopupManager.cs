@@ -6,41 +6,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
-[Serializable] public class SkillData
-{
-        public int ID;
-        public string name; 
-        public string description;
-        public int[] value;
-	public int[] coolTime;
-}
 
-[Serializable] public class SkillDatas
-{
-        public SkillData[] skillDatas;
-}
 
 
 
 public class SkillPopupManager : MonoBehaviour
 {
         // Start is called before the first frame update
-        [SerializeField] Text _skillDescription;
-        [SerializeField] Text _skillName;
-        [SerializeField] Text _skillLevel;
-        [SerializeField] Text _skillCoolTime;
-        [SerializeField] Text _skillValue;
+        [SerializeField] public Text _skillDescription;
+        [SerializeField] public Text _skillName;
+        [SerializeField] public Text _skillState;
+
 
 	Canvas _myCanvas;
 
 	public Action<int, bool> _onSkillButton; 
         public int curSkillID = 0;
-        private SkillData[] _skillDatas;
+       
 
 	private void Awake()
 	{
 		_myCanvas = transform.GetComponent<Canvas>();
-		LoadJsonSkillData();
 	}
 
 	void Start() 
@@ -48,13 +34,14 @@ public class SkillPopupManager : MonoBehaviour
 
 	}
 
-        void LoadJsonSkillData()
-        { 
-                TextAsset jsonText = Resources.Load<TextAsset>("Datas/JS_SkillData");
-
-		SkillDatas s = JsonUtility.FromJson<SkillDatas>(jsonText.text);
-                _skillDatas = s.skillDatas; 
-
+	public void SetSkillStateText(int level, int value, int coolTime)
+	{
+		_skillState.text = "";
+		_skillState.text += "Level : " + (level == 0 ? '-' : level.ToString()) + "\n";
+		if (value > 0)
+			_skillState.text += "value : " + value.ToString() + "\n";
+		if (coolTime > 0)
+			_skillState.text += "coolTime : " + coolTime.ToString();   
 	}
 
 	// Update is called once per frame
@@ -66,9 +53,6 @@ public class SkillPopupManager : MonoBehaviour
         public void UpdateSkillId(int id)
         {
                 curSkillID = id;
-
-		_skillDescription.text = _skillDatas[curSkillID].description;
-                _skillName.text = _skillDatas[curSkillID].name;  
 
         }
 

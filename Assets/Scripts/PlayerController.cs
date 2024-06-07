@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
 	private void Awake()
 	{
 		_animCtrl = GetComponent<PlayerAnimCtrl>();
-		_infoUIManager = GetComponent<PlayerInfoUIManager>();
+		_infoUIManager = GetComponent<PlayerInfoUIManager>(); 
 		rigid = GetComponent<Rigidbody2D>();
 
 
@@ -333,7 +333,8 @@ public class PlayerController : MonoBehaviour
 			if (mc != null)
 			{
 				mc.OnHit(gameObject);
-
+				if (mc.hp == 0)
+					ItemManager.instance.GetItemObj(mc.gameObject.transform.position); 
 			}
 		}
 

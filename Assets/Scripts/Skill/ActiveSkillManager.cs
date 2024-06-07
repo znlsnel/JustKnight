@@ -2,14 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSkillHandler : MonoBehaviour
-// Start is called before the first frame update
-{  
-
-    // 능력치들을 넣어주면 될것같음
-    // ex ) int 추가공격력 = 10;
-    //      ) int 
-
+public class ActiveSkillManager : MonoBehaviour
+{
+    // Start is called before the first frame update
     void Start()
     {
         

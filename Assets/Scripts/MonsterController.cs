@@ -39,7 +39,7 @@ public class MonsterController : MonoBehaviour
         float _lastMoveTime = 0.0f; 
         float _lastAttackTime = 0.0f;
 
-        int hp = 3;
+        public int hp = 3;
 
         public void InitMonster() 
         {

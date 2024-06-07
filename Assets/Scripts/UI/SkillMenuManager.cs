@@ -188,6 +188,9 @@ public class SkillMenuManager : MonoBehaviour
 		
 
 		int level = _skillLevels[skillId];
+		if (_skillDatas[skillId].maxLevel <= level)
+			level = 1000;
+
 		int value = -1;
 		int ctm = -1; 
 		if (level > 0)

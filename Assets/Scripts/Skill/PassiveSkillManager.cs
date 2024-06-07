@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSkillController : MonoBehaviour
+public class PassiveSkillManager : MonoBehaviour
 {
+        //int bnsAttack = 0;
+        //int bnsHp = 0;
+
     // Start is called before the first frame update
     void Start()
     {

@@ -21,7 +21,7 @@ public class SkillPopupManager : MonoBehaviour
 	Canvas _myCanvas;
 
 	public Action<int, bool> _onSkillButton; 
-        public int curSkillID = 0;
+        public int curSkillID = 0; 
        
 
 	private void Awake()
@@ -36,8 +36,11 @@ public class SkillPopupManager : MonoBehaviour
 
 	public void SetSkillStateText(int level, int value, int coolTime)
 	{
-		_skillState.text = "";
-		_skillState.text += "Level : " + (level == 0 ? '-' : level.ToString()) + "\n";
+		_skillState.text = ""; 
+		string levelstr = level == 1000 ? "MAX" : level.ToString(); 
+		_skillState.text += "Level : " + (level == 0 ? '-' : levelstr) + "\n"; 
+
+
 		if (value > 0)
 			_skillState.text += "value : " + value.ToString() + "\n";
 		if (coolTime > 0)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,32 +7,69 @@ public class ItemObject : MonoBehaviour
 {
         // Start is called before the first frame update
         Rigidbody2D _rigid;
-
-	private void Awake()
-	{
+        int _itemIdx = -1;
+	float spawnTIme = 0;
+	bool _isPicked = false;
+        private void Awake()
+        {
                 _rigid = gameObject.GetComponent<Rigidbody2D>();
-                  
+                
+        }
+	private void Update()
+	{
+		if (_isPicked)
+			MoveToPlayer();
 	}
-	        void Start()
-            { 
+	void MoveToPlayer()
+	{
+		Vector3 dir = (GameManager.instance.GetPlayer().transform.position + new Vector3(0.0f, 0.5f, 0.0f)) - gameObject.transform.position; 
+		if (dir.magnitude < 0.1f)
+		{
+			_isPicked = false;
+			UIHandler.instance._inventory.AddItem(_itemIdx);
+			ReleaseItem();
+
+			return;
+		}	
 		
-            }
+		_rigid.simulated = false;
+		dir = dir.normalized;
+		gameObject.transform.position += dir * Time.deltaTime * 15.0f;
+	}
 
-            // Update is called once per frame
-            void Update()
-            {
-        
-            }
+	public void SpawnItem() 
+        { 
+		_rigid.simulated = true;
+                _itemIdx = UnityEngine.Random.Range(1, 1000);
 
-        public void SpawnItem() 
-        {   
-                     
-                Vector2 force = new Vector2(Random.Range(-2.0f, 2.0f), Random.Range(1.0f, 2.0f));
-                _rigid.AddForce(force, ForceMode2D.Impulse);
-        } 
+                Vector2 force = new Vector2(UnityEngine.Random.Range(-2.0f, 2.0f), UnityEngine.Random.Range(1.0f, 2.0f));
+		_rigid.AddForce(force, ForceMode2D.Impulse);
 
-        public void ReleaseItem()
+		spawnTIme = Time.time;
+	} 
+	 
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.gameObject.GetComponent<PlayerController>() != null)
+			return;
+
+		float dist = (collision.transform.position - gameObject.transform.position).magnitude;
+		if (dist < 1.0f)
+		{
+			float delay = Math.Clamp(1.0f - (Time.time - spawnTIme), 0.0f, 1.0f);  
+			StartCoroutine(ReleaseAfterTime(delay)); 
+		}  
+	}
+
+	public void ReleaseItem()
         {
                 ItemManager.instance.ReleaseObject(gameObject); 
         }
+
+	IEnumerator ReleaseAfterTime(float delay)
+	{
+		yield return new WaitForSeconds(delay);
+		_isPicked = true;
+	}
+
 }

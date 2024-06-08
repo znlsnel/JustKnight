@@ -11,8 +11,10 @@ public class UIHandler : Singleton<UIHandler>
 	[SerializeField] GameObject _skillMenu;
 	[SerializeField] GameObject _fadeEffect;
 
-	[NonSerialized] public FadeEffectManager _fadeEffectManager;   
-	 
+	[NonSerialized] public FadeEffectManager _fadeEffectManager;
+	[NonSerialized] public InventoryManager _inventory;
+
+
 	public override void Awake()
 	{ 
 		base.Awake(); 
@@ -21,6 +23,7 @@ public class UIHandler : Singleton<UIHandler>
 
 		_fadeEffect = Instantiate<GameObject>(_fadeEffect);
 		_fadeEffectManager = _fadeEffect.transform.Find("Panel").GetComponent<FadeEffectManager>();
+		_inventory = gameObject.AddComponent<InventoryManager>(); 
 
 		DontDestroyOnLoad(_fadeEffect);  
 	}

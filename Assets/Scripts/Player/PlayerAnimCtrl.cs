@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerAnimCtrl : MonoBehaviour
 {
 	// Start is called before the first frame update
-	public enum PlayerState : int
+	public enum PlayerState : int 
 	{
 		Idle = 0, 
 		Run = 1,
@@ -59,11 +59,13 @@ public class PlayerAnimCtrl : MonoBehaviour
 		switch (state)
 		{ 
 			case PlayerState.Idle: 
+				//nextAnim = "Test_Idle"; 
 				nextAnim = "Idle"; 
 				break;
 			case PlayerState.Run:
-				nextAnim = "Run";
-				break;
+				//nextAnim = "Test_Walk";
+				nextAnim = "Run"; 
+				break; 
 			case PlayerState.Roll:
 				nextAnim = "Roll";
 				break;

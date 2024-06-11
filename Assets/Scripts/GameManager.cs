@@ -11,9 +11,8 @@ public class GameManager : Singleton<GameManager>
 	[SerializeField] GameObject _playerPrefab;
 	GameObject _player;
 
-	Camera _camera; 
+	Camera _camera;
 
-	  
 	public override void Awake() 
 	{
 	        base.Awake();
@@ -34,10 +33,11 @@ public class GameManager : Singleton<GameManager>
 	{
 		 
 		return _player;
-	}
+	} 
 	 
 	private void InitGameScene(Scene scene, LoadSceneMode mode)
 	{
+		//_onSceneLoad?.Invoke(); 
 		GameObject gen = GameObject.FindWithTag("PlayerGenPos");
 		gen.GetComponent<SpriteRenderer>().sortingOrder = -1; 
 		
@@ -49,7 +49,7 @@ public class GameManager : Singleton<GameManager>
 		_player.transform.position = gen.transform.position;
 		UIHandler.instance._fadeEffectManager.PlayFadeIn();   
 	}
-	 
+	  
 	public void LoadScene(string sceneName)
 	{
 		UIHandler.instance._fadeEffectManager.PlayFadeOut();

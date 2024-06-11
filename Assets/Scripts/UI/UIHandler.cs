@@ -10,37 +10,43 @@ public class UIHandler : Singleton<UIHandler>
 
 	[SerializeField] GameObject _skillMenu;
 	[SerializeField] GameObject _fadeEffect;
+	[SerializeField] GameObject _inventory;
 
 	[NonSerialized] public FadeEffectManager _fadeEffectManager;
-	[NonSerialized] public InventoryManager _inventory;
+	[NonSerialized] public InventoryManager _inventoryManager;
+	[NonSerialized] public SkillMenuManager _skillMenuManager;
 
 
 	public override void Awake()
 	{ 
-		base.Awake(); 
-		_skillMenu = Instantiate(_skillMenu);
-		_skillMenu.gameObject.SetActive(false); 
-
+		base.Awake();
+		_inventory = Instantiate<GameObject>(_inventory);
+		_skillMenu = Instantiate<GameObject>(_skillMenu);
 		_fadeEffect = Instantiate<GameObject>(_fadeEffect);
+
 		_fadeEffectManager = _fadeEffect.transform.Find("Panel").GetComponent<FadeEffectManager>();
-		_inventory = gameObject.AddComponent<InventoryManager>(); 
+		_inventoryManager = _inventory.GetComponent<InventoryManager>();
+		_skillMenuManager = _skillMenu.GetComponent<SkillMenuManager>();
 
-		DontDestroyOnLoad(_fadeEffect);  
+		DontDestroyOnLoad(_fadeEffect);   
+		DontDestroyOnLoad(_skillMenu);  
+		DontDestroyOnLoad(_inventory);   
 	}
-
+	 
 	void Start()
-	{
+	{ 
 		InputManager.instance.ReceiveAction(InputManager.instance._onSkillMenu, () =>
 		{
-			this._skillMenu.GetComponent<SkillMenuManager>().ActiveMenu(this._skillMenu.activeSelf != true);
-		});
-		 
-	//	InputManager.instance._onSkillMenu.performed += (InputAction.CallbackContext context) =>
-	//	{
-	//		this._skillMenu.GetComponent<SkillMenuManager>().ActiveMenu(this._skillMenu.activeSelf != true);
-	//	};  
+			this._skillMenuManager.ActiveMenu(this._skillMenu.activeSelf != true);
+		}); 
+
+		InputManager.instance.ReceiveAction(InputManager.instance._onInventory, () => 
+		{ 
+			this._inventoryManager.ActiveMenu(this._inventory.activeSelf != true);  
+		});  
 	}
-    // Update is called once per frame
+
+
     void Update()
     {
         

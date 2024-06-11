@@ -57,10 +57,14 @@ public class SkillMenuManager : MonoBehaviour
 	private void Awake() 
 	{ 
 		canvas = GetComponent<Canvas>();
+
                 _skillPopupMenu = Instantiate(_skillPopupMenu);
 		_skillPopupMenu.gameObject.SetActive(false);
+		gameObject.SetActive(false);
 		_skillPopupManager = _skillPopupMenu.GetComponent<SkillPopupManager>();
 		_skillPopupManager._onSkillButton = OnSkillButton; 
+
+		DontDestroyOnLoad(_skillPopupManager); 
 	}
 
 	// Start is called before the first frame update

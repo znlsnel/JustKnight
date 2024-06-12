@@ -37,7 +37,7 @@ public class SkillDatas
 	public SkillData[] skillDatas;
 }
 
-public class SkillMenuManager : MonoBehaviour
+public class SkillMenuManager : MonoBehaviour, IMenuUI 
 {
 	[SerializeField] Text _skillPointText;
 	[SerializeField] Canvas _skillPopupMenu; 

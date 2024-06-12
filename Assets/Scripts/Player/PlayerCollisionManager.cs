@@ -49,6 +49,9 @@ public class PlayerCollisionManager : MonoBehaviour
 
 		Func<Collider2D, bool> check = (Collider2D collider) =>
 		{
+			if (collider == null)
+				return false; 
+
 			bool returnVal = false;
 			Collider2D[] result = new Collider2D[2];
 			int count = Physics2D.OverlapCollider(collider, contactFilter, result);

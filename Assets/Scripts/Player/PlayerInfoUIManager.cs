@@ -16,8 +16,6 @@ public class PlayerInfoUIManager : MonoBehaviour
                 {
                         _hpMaterial = gm.GetComponent<Image>().material;
                 }
-                else
-                        Debug.Log("gm is null");
 
         }
 

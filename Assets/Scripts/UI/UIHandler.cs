@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public interface IMenuUI
+{
+	public void ActiveMenu(bool active);
+}
 public class UIHandler : Singleton<UIHandler> 
 {
 	// Start is called before the first frame update

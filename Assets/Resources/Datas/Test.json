@@ -1,0 +1,18 @@
+{
+    "skillDatas":
+    [
+        {
+            "ID":1,
+            "name":"TEST_1",
+            "description":"테스트입니다.",
+            "value":[],
+            "coolTime":[123,234,345,456]},
+            {
+                "ID":2,
+                "name":"TEST_2",
+                "description":"이것도 테스트입니다.",
+                "value":[12,23,34,45,56],
+                "coolTime":[]
+            }
+    ]
+}

@@ -5,7 +5,7 @@ using UnityEngine;
 public class MonsterManager : MonoBehaviour
 {
         // Start is called before the first frame update
-        [SerializeField] GameObject _skeletalPrefab;
+        [SerializeField] GameObject _skeletalPrefab; 
         List<GameObject> _skeletals = new List<GameObject>();
          
         void InitMonsterManager()

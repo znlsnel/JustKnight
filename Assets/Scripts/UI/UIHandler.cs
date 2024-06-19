@@ -15,11 +15,12 @@ public class UIHandler : Singleton<UIHandler>
 	[SerializeField] GameObject _skillMenu;
 	[SerializeField] GameObject _fadeEffect;
 	[SerializeField] GameObject _inventory;
+	[SerializeField] GameObject _dialogue;
 
 	[NonSerialized] public FadeEffectManager _fadeEffectManager;
 	[NonSerialized] public InventoryManager _inventoryManager;
 	[NonSerialized] public SkillMenuManager _skillMenuManager;
-
+	[NonSerialized] public DialogueHandler _dialogueSystem;
 
 	public override void Awake()
 	{ 
@@ -27,14 +28,18 @@ public class UIHandler : Singleton<UIHandler>
 		_inventory = Instantiate<GameObject>(_inventory);
 		_skillMenu = Instantiate<GameObject>(_skillMenu);
 		_fadeEffect = Instantiate<GameObject>(_fadeEffect);
-
+		_dialogue = Instantiate<GameObject>(_dialogue);
+		 
 		_fadeEffectManager = _fadeEffect.transform.Find("Panel").GetComponent<FadeEffectManager>();
 		_inventoryManager = _inventory.GetComponent<InventoryManager>();
 		_skillMenuManager = _skillMenu.GetComponent<SkillMenuManager>();
 
+		_dialogueSystem = _dialogue.GetComponent<DialogueHandler>();
+		 
 		DontDestroyOnLoad(_fadeEffect);   
 		DontDestroyOnLoad(_skillMenu);  
 		DontDestroyOnLoad(_inventory);   
+		DontDestroyOnLoad(_dialogue);    
 	}
 	 
 	void Start()

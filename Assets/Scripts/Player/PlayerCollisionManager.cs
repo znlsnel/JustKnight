@@ -18,11 +18,10 @@ public class PlayerCollisionManager : MonoBehaviour
 	public bool _onSensorFB = false;
 	public bool _onSensorBB = false;
 	public bool _onSensorGround = false;
-	public bool _onSensorGroundFar = false;  
+	public bool _onSensorGroundFar = false;
 
 	private void Awake()
 	{
-
 		_sensorFrontTop = transform.Find("CollisionSensor_FrontTop").GetComponent<CircleCollider2D>();
 		_sensorFrontBottom = transform.Find("CollisionSensor_FrontBottom").GetComponent<CircleCollider2D>();
 		_sensorBackBottom = transform.Find("CollisionSensor_BackBottom").GetComponent<CircleCollider2D>();
@@ -50,18 +49,19 @@ public class PlayerCollisionManager : MonoBehaviour
 		Func<Collider2D, bool> check = (Collider2D collider) =>
 		{
 			if (collider == null)
-				return false; 
+				return false;
 
 			bool returnVal = false;
 			Collider2D[] result = new Collider2D[2];
 			int count = Physics2D.OverlapCollider(collider, contactFilter, result);
+
+
 			for (int i = 0; i < count; i++)
 			{
-				returnVal = result[i].gameObject != gameObject;
-
-				if (returnVal)
-					break;
+				if (returnVal == false)
+					returnVal = result[i].gameObject != gameObject;
 			}
+
 			return returnVal;
 		};
 
@@ -71,5 +71,7 @@ public class PlayerCollisionManager : MonoBehaviour
 		_onSensorGround = check(_sensorGround);
 		_onSensorGroundFar = check(_sensorGroundFar); 
 	}
+
+
 
 }

@@ -1,0 +1,122 @@
+{
+    "quest" : "Quest_1",
+    "id" : "conversation_1",
+    "npc" : "npc_01",
+    "dialogues" : 
+    [
+        {
+            "id" : "dialogue_1",
+            "text" : 
+            [
+                "어서오게 젊은이! 당신 같이 젊은 고양이는 오랜만이구만 껄껄",
+                "그래! 이곳에는 어쩐일인가"
+            ],
+            "responses": 
+            [
+                {
+                    "id": "response_1",
+                    "text": 
+                    [
+                        "이곳에 푸른 눈의 고양이가 있다고 해서 왔습니다.",
+                        "혹시 알고 있는게 있습니까?"
+                    ],
+                    "nextDialogueId": "dialogue_2"
+                }
+
+            ]
+        },
+        {
+            "id" : "dialogue_2",
+            "text" :
+            [
+                "흠.. 푸른 눈의 고양이라.. 그러고 보니 철수 녀석이 그런 얘기를 했던 것 같은데.."
+            ],
+            "responses":
+            [
+                {
+                    "id": "response_1",
+                    "text": 
+                    [
+                        "무슨 이야기인지 들어볼 수 있겠습니까?"
+                    ],
+                    "nextDialogueId": "dialogue_3"
+                }
+            ]
+            
+        },
+
+        {
+            "id" : "dialogue_3",
+            "text" :
+            [
+                "그 전에 내 부탁 하나 들어줄 수 있겠나?",
+                "뒷 산에 가서 몬스터 10마리만 잡아주게"
+            ],
+            "responses":
+            [
+                {
+                    "id": "response_1",
+                    "text": 
+                    [
+                        "싫습니다."
+                    ],
+                    "InitDialogueId": "dialogue_5"
+                    
+                },
+
+                {
+                    "id": "response_2",
+                    "text": 
+                    [
+                        "알겠습니다."
+                    ],
+                    "nextDialogueId": "dialogue_4"
+                }
+            ]
+        },
+
+        {
+            "id" : "dialogue_4",
+            "text" :
+            [
+                "고맙네.."
+            ],
+            "responses":
+            [
+
+            ],
+            "quest" : "Quest_1"
+        },
+
+        {
+            "id" : "dialogue_5",
+            "text" :
+            [
+                "부탁을 들어주지 않을거라면 나도 할 이야기는 없네!",
+                "뒷 산에 가서 몬스터 10마리만 잡아주게"
+            ],
+            "responses":
+            [
+                {
+                    "id": "response_1",
+                    "text": 
+                    [
+                        "싫습니다."
+                    ],
+                    "InitDialogueId": "dialogue_5"
+                },
+
+                {
+                    "id": "response_2",
+                    "text": 
+                    [
+                        "알겠습니다."
+                    ],
+                    "nextDialogueId": "dialogue_4"
+                }
+            ],
+            "quest" : "Quest_1"
+        }
+
+    ]
+}

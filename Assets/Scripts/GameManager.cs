@@ -10,7 +10,6 @@ public class GameManager : Singleton<GameManager>
 	// Start is called before the first frame update
 	[SerializeField] GameObject _playerPrefab;
 	GameObject _player;
-
 	Camera _camera;
 
 	public override void Awake() 
@@ -18,11 +17,10 @@ public class GameManager : Singleton<GameManager>
 	        base.Awake();
 
 		_camera = Camera.main;
-
 		DontDestroyOnLoad(_camera); 
 	} 
 	   
-
+	 
 	void Start()   
 	{
 		

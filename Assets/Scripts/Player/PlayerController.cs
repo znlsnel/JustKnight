@@ -432,7 +432,7 @@ public class PlayerController : MonoBehaviour
 
 		hp--;
 		_infoUIManager.UpdateHpBar(3, hp); 
-		Debug.Log(hp);
+		//Debug.Log(hp);
 		CancelAnim(); 
 		CameraManager cm = Camera.main.GetComponent<CameraManager>();
 

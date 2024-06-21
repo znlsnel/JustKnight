@@ -31,13 +31,13 @@ public class NpcManager : MonoBehaviour
 
                         UIHandler.instance._dialogueSystem.OpenNPCDialogue(_npcName, 1);
 
-                        Debug.Log("NPC와의 상호작용 시작!");
+                   //     Debug.Log("NPC와의 상호작용 시작!");
                         InputManager.instance._interactionHandler.RegisterCancelAction(() => { 
                                 UIHandler.instance._dialogueSystem.CloseNPCDialogue(); 
-                                Debug.Log("취소 Action 등록 ! ");
+                           //     Debug.Log("취소 Action 등록 ! ");
 			});
 		});
-                Debug.Log("NPC 상호작용 목록에 등록");
+           //     Debug.Log("NPC 상호작용 목록에 등록");
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)
@@ -46,7 +46,7 @@ public class NpcManager : MonoBehaviour
 			return;
 
                 InputManager.instance._interactionHandler.Remove(gameObject);
-		Debug.Log("NPC 상호작용 목록에 등록 해제");
+		//Debug.Log("NPC 상호작용 목록에 등록 해제");
 
 	}
 

@@ -49,7 +49,7 @@ public class FadeEffectManager : MonoBehaviour
 		 
 		_anim.Play("Empty");  
 		_canvas.sortingOrder = -1; 
-		Debug.Log("  EnD IN FADE"); 
+		//Debug.Log("  EnD IN FADE"); 
 	}
 
 	void AE_EndFadeOut()

@@ -16,14 +16,14 @@ public class Response
 public class Dialogue
 {
 	public List<string> text;
-	public List<Response> responses;
+	public List<Response> responses; 
 	public string quest;
 }
 
 [System.Serializable]
 public class Conversation
 {
-	public string id; 
+	public string quest; 
 	public string npc;
 	public List<Dialogue> dialogues;
 }
@@ -50,7 +50,7 @@ public class DialogueHandler : MonoBehaviour
 	public void OpenNPCDialogue(string npc_id, int quest_id)
 	{
 		gameObject.SetActive(true); 
-		curDialogue = GetDialogueData(npc_id, "quest_0" + quest_id.ToString());
+		curDialogue = GetDialogueData(npc_id, "quest_" + quest_id.ToString());
 		 
 		UpdateDialouge(); 
 	}
@@ -119,7 +119,7 @@ public class DialogueHandler : MonoBehaviour
 		loaded.Add(npc_id, temp); 
 		
 		
-		string npcFilePath = Application.dataPath + "/Resources/dialogues/" + npc_id;
+		string npcFilePath = Application.dataPath + "/Resources/Datas/dialogues/" + npc_id;
 
 		string[] jsonFiles = Directory.GetFiles(npcFilePath, "*.json");
 		string[] fileNames = new string[jsonFiles.Length];
@@ -133,12 +133,12 @@ public class DialogueHandler : MonoBehaviour
 
 		foreach (string json in fileNames) 
 		{
-			string filename = json.Split('.')[0]; 
+			string filename = json.Split('.')[0];
 			string key = npc_id + filename;
 			//       npc_01 + quest_01
 
 			 
-			TextAsset jsonText = Resources.Load<TextAsset>("dialogues/" + npc_id +"/" + filename);
+			TextAsset jsonText = Resources.Load<TextAsset>("Datas/dialogues/" + npc_id +"/" + filename ); 
 			 
 			Conversation conversation = JsonUtility.FromJson<Conversation>(jsonText.text); 
 			if (conversation != null)

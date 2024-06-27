@@ -65,7 +65,7 @@ public class InventoryManager : MonoBehaviour, IMenuUI
                         {
                                 int curIdx = _slots.Count;
 				Text t = child.transform.Find("text")?.GetComponent<Text>();
-                                child.AddComponent<ButtonClickHandler>().InitButtonUpDown(
+                                child.AddComponent<ButtonClickHandler>().RegisterButtonAction(
 					() => { OnButtonUp(curIdx);}, 
 					() => { OnButtonDown(curIdx); },
 					() => { OnButtonEnter(curIdx);  },

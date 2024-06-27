@@ -1,0 +1,42 @@
+
+{
+    "quests" :
+    [
+        {
+            "id": "quest_01",
+            "title": "마을 이장 돕기",
+            "description": "뒷 산에 가서 몬스터 마리 잡기",
+            "monsterHunt" :
+            {
+                "monsterName" : "monster_01",
+                "count" : 3     
+            },
+            "reward" :
+            {
+                "gold" : 500,
+                "ItemName" : "",
+                "count" : 0
+            }
+        },
+
+        {
+            "id": "quest_02",
+            "preQuest": "quest_01",
+            "title": "마을 이장 돕기2",
+            "description": "뒷 산에 가서 몬스터 마리 잡기",
+
+            "monsterHunt" :
+            {
+                "monsterName" : "monster_01",
+                "count" : 10
+            },
+            "reward" :
+            {
+                "gold" : 500,
+                "ItemName" : "item_01",
+                "count" : 3
+                
+            }
+        }
+    ]
+}

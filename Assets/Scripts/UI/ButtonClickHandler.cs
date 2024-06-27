@@ -20,7 +20,7 @@ public class ButtonClickHandler : MonoBehaviour, IPointerDownHandler, IPointerUp
 		_button = GetComponent<Button>();
 	}
 
-	public void InitButtonUpDown(Action up, Action down, Action enter = null, Action exit = null)
+	public void RegisterButtonAction(Action up, Action down, Action enter = null, Action exit = null)
 	{
 		_onButtonDown = down;
 		_onButtonUp = up;

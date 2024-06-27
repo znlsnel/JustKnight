@@ -12,6 +12,7 @@ public class InputManager : Singleton<InputManager>
 	[NonSerialized] public InputAction _onSkillMenu;
 	[NonSerialized] public InputAction _onInventory;
 	[NonSerialized] public InputAction _onInteraction; 
+	[NonSerialized] public InputAction _onQuestMenu; 
 
 	// Start is called before the first frame update
 	public override void Awake() 
@@ -23,31 +24,22 @@ public class InputManager : Singleton<InputManager>
 		_onInventory = actionMap.FindAction("Inventory");
 		_onSkillMenu = actionMap.FindAction("Skill_Menu");
 		_onInteraction = actionMap.FindAction("Interaction");
-		_onSkillMenu.Enable();  
+		_onQuestMenu = actionMap.FindAction("Quest_Menu");   
+
+		_onSkillMenu.Enable();   
 		_onInventory.Enable();
 		_onInteraction.Enable();
+		_onQuestMenu.Enable(); 
 
 
 		_interactionHandler = gameObject.AddComponent<InteractionHandler>(); 
 	}
 	void Start() 
 	{
-		ReceiveAction(_onInteraction, () => {
-
-			if (_interactionHandler == null)
-			{
-				Debug.Log(" Exception _interactionHandler is Null"); 
-				return;
-			}
-			_interactionHandler.ExcuteInteraction(); 
-		
-		});
-		
-
-
+		BindInputAction(_onInteraction, () => {_interactionHandler.ExcuteInteraction();});
 	}
 	
-	public void ReceiveAction(InputAction input, Action action)
+	public void BindInputAction(InputAction input, Action action)
 	{
 		input.performed += (InputAction.CallbackContext context) => 
 		{ 

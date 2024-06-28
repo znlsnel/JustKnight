@@ -9,9 +9,9 @@
             "monsterHunt" :
             {
                 "monsterName" : "monster_01",
-                "count" : 3     
+                "huntCount" : 3     
             },
-            "reward" :
+            "reward" : 
             {
                 "gold" : 500,
                 "ItemName" : "",
@@ -23,13 +23,15 @@
             "id": "quest_02",
             "preQuest": "quest_01",
             "title": "마을 이장 돕기2",
-            "description": "뒷 산에 가서 몬스터 마리 잡기",
-
-            "monsterHunt" :
+            "description": "마을 이장을 도와서 두번 째 몬스터 잡기",
+    
+            "delivery" : 
             {
-                "monsterName" : "monster_01",
-                "count" : 10
+                "npcName" : "npc_01",
+                "itemName" : "item_01",
+                "itemCount" : 10
             },
+
             "reward" :
             {
                 "gold" : 500,

@@ -2,7 +2,7 @@
     {
         "id": "quest_01",
         "title": "마을 이장 돕기",
-        "description": "뒷 산에 가서 몬스터 {10}마리 잡기",
+        "description": "뒷 산에 가서 몬스터 여러마리 잡기",
         "MonsterCount": 
         {
             "monsterName" : "monster_1",
@@ -17,11 +17,11 @@
         "id": "quest_02",
         "requiredQuest" : "quest_01",
         "title": "마을 이장 돕기2",
-        "description": "뒷 산에 가서 몬스터 {itemCount}마리 잡기",
+        "description": "마을 이장 돕기 두번 째이이",
         "Delivery": 
         {
-            "npcName" : "monster_1",
-            "itemName" : "monster_1",
+            "npcName" : "npc_01",
+            "itemName" : "monster_1",  
             "itemCount" : 10 
         },
         "rewardType": "gold",
@@ -30,3 +30,4 @@
         "status" : "InProgress, Available, Completed"
     }
 ]
+ 

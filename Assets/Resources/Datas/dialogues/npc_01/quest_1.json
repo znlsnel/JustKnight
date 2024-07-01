@@ -1,5 +1,4 @@
 {
-    "quest" : "quest_1", 
     "npc" : "npc_01",
     "dialogues" : 
     [
@@ -89,7 +88,7 @@
                     "next": -5
                 }
             ],
-            "quest" : "Quest_1"
+            "quest" : 1
         },
 
         {
@@ -118,7 +117,7 @@
                     "next": 3
                 }
             ],
-            "quest" : "Quest_1"
+            "quest" : 1
         },
 
         {

@@ -13,16 +13,26 @@ public class QuestUIManager : MonoBehaviour
 
 	[SerializeField] Text _npcName;
 	[SerializeField] Text _itemName;
-	[SerializeField] Text _itemCount;
-	 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	[SerializeField] Text _itemCount; 
+
+	// Start is called before the first frame update
+	private void Awake()
+	{
+		_titleText.text = "";
+		_descriptionText.text = "";
+		//_monsterName.text = "";
+		//_huntCount.text = "";
+		//_npcName.text = ""; 
+		//_itemName.text = "";
+		//_itemCount.text = "";
+	}
+	void Start()
+	{
+		
+	}
 
     // Update is called once per frame
-    void Update()
+    void Update() 
     {
         
     } 

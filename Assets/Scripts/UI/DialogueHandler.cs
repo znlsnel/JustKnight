@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.AI;
 
 [System.Serializable]
 public class Response
@@ -17,13 +18,12 @@ public class Dialogue
 {
 	public List<string> text;
 	public List<Response> responses; 
-	public string quest;
+	public int quest;
 }
 
 [System.Serializable]
 public class Conversation
 {
-	public string quest; 
 	public string npc;
 	public List<Dialogue> dialogues;
 }
@@ -38,7 +38,7 @@ public class DialogueHandler : MonoBehaviour
 
 	[SerializeField] Image _npcImage;
 	[SerializeField] Text _npcScript;
-	[SerializeField] Text[] _respScripts;
+	[SerializeField] Text[] _respScripts; 
 
 	int script_idx = 0;
 
@@ -51,7 +51,7 @@ public class DialogueHandler : MonoBehaviour
 	{
 		gameObject.SetActive(true); 
 		curDialogue = GetDialogueData(npc_id, "quest_" + quest_id.ToString());
-		 
+		_ncpName = npc_id;  
 		UpdateDialouge(); 
 	}
 
@@ -62,7 +62,7 @@ public class DialogueHandler : MonoBehaviour
 			_npcScript.text += s + "\n";
 
 		int cnt = curDialogue.dialogues[script_idx].responses.Count;
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 3; i++) 
 		{
 			if (i < cnt)
 			{
@@ -73,11 +73,16 @@ public class DialogueHandler : MonoBehaviour
 			{
 				_respScripts[i].transform.parent.gameObject.SetActive(false);
 			}
+		} 
+
+		if (curDialogue.dialogues[script_idx].quest > 0)    
+		{
+			UIHandler.instance._questManager.AddQuest(_ncpName, curDialogue.dialogues[script_idx].quest); 
 		}
 	}
 	public void OnResponseButton(int id)
 	{ 
-		Debug.Log($"OnResponseButton : {id}");
+		//Debug.Log($"OnResponseButton : {id}");
 		int next = curDialogue.dialogues[script_idx].responses[id].next;
 		if (next < 0)
 		{ 

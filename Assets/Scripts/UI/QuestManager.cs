@@ -52,7 +52,7 @@ public class Quests
 public class QuestManager : MonoBehaviour 
 {
 	Dictionary<string , Quests> _quests = new Dictionary<string , Quests>();
-	List<Quest> _questInfoBtns =  new List<Quest>();
+	Dictionary<string, Quest> _myQuests = new Dictionary<string, Quest> ();
 	  
 	[SerializeField] GameObject _questInfoBtnPrefab;  
 	[SerializeField] GameObject _questListUI;
@@ -74,12 +74,12 @@ public class QuestManager : MonoBehaviour
     // Update is called once per frame
 	void Update()
 	{
-        
+         
 	}
 
 	public void LoadDialogueData(string npc_id)
 	{
-		Quests temp; 
+		Quests temp;  
 		if (_quests.TryGetValue(npc_id, out temp))
 			return;
 
@@ -87,36 +87,62 @@ public class QuestManager : MonoBehaviour
 		TextAsset jsonText = Resources.Load<TextAsset>(path);
 		Quests quests = JsonUtility.FromJson<Quests>(jsonText.text); 
 		if (quests != null)
-			_quests.Add(npc_id, quests);  
+			_quests.Add(npc_id, quests); 
 		
 
+	} 
+	  
+	public void AddQuest(string npc_id, int quest_id)
+	{
+		
+		string questId = "quest_0" + quest_id.ToString();
+		 
+		Debug.Log(questId);
+		Quests quests;
+		if (!_quests.TryGetValue(npc_id, out quests)) 
+			return;
+
+		Quest q;
+		if (_myQuests.TryGetValue(questId, out q))
+		{
+			Debug.Log("¿ÃπÃ ¿÷¡ˆ∑’!");
+			return;
+
+		}
+
 		foreach (Quest quest in quests.quests)
-		{ 
-			InsertQuest(quest);
-		} 
+		{
+			if (quest.id == questId) 
+			{
+				InsertQuest(quest);
+				break;
+			}
+		}
 	}
-	 
+
 	public void InsertQuest(Quest quest)
 	{
 		GameObject gm = Instantiate<GameObject>(_questInfoBtnPrefab);
 		ButtonClickHandler b = gm.AddComponent<ButtonClickHandler>();
 		
-		int idx = _questInfoBtns.Count;  
-		b.RegisterButtonAction(() => { OnButtonDown(idx); }, () => { OnButtonUp(idx); });
+		b.RegisterButtonAction(() => { OnButtonDown(quest.id); }, () => { OnButtonUp(quest.id); });
 		gm.transform.SetParent(_questListUI.transform, false);
-		gm.gameObject.GetComponentInChildren<Text>().text = quest.title; 
-		
-		_questInfoBtns.Add(quest);  
+		gm.gameObject.GetComponentInChildren<Text>().text = quest.title;
+
+		_myQuests.Add(quest.id, quest);  
 	}
 
 
-	public void OnButtonDown(int idx)
+	public void OnButtonDown(string id)
 	{
 	} 
 	 
-	public void OnButtonUp(int idx)
+	public void OnButtonUp(string id)
 	{
-		_questUIManager.UpdateQuestInfo(_questInfoBtns[idx]); 
+		Quest q;
+		_myQuests.TryGetValue(id, out q);
 		 
+		if (q != null)
+			_questUIManager.UpdateQuestInfo(q); 
 	}
 }

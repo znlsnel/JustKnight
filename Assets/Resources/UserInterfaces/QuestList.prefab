@@ -273,10 +273,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _questInfoBtnPrefab: {fileID: 1136938025393641549, guid: 0528dafc16bd3f041b4eafa80617ec9b, type: 3}
   _questListUI: {fileID: 5988602703727356208}
-  _titleText: {fileID: 4315258197549489975}
-  _descriptText: {fileID: 5784110988316033310}
-  _monsterHuntIntoUI: {fileID: 3872272436162979221}
-  _deliveryInfoUI: {fileID: 3053712936210638693}
 --- !u!114 &6793469118190684410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,7 +310,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &201911461693270942
 RectTransform:
   m_ObjectHideFlags: 0
@@ -683,7 +679,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &491432764577908852
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1420,7 +1416,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3994274268555029160
 RectTransform:
   m_ObjectHideFlags: 0

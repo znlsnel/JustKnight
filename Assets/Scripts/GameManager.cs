@@ -48,13 +48,13 @@ public class GameManager : Singleton<GameManager>
 		UIHandler.instance._fadeEffectManager.PlayFadeIn();   
 	}
 	  
-	public void LoadScene(string sceneName)
-	{
+	public void LoadScene(string sceneName) 
+	{ 
 		UIHandler.instance._fadeEffectManager.PlayFadeOut();
 		UIHandler.instance._fadeEffectManager._onFadeOutComplete = null;
 		UIHandler.instance._fadeEffectManager._onFadeOutComplete += () =>
 		{
-			UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+			UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName); 
 			UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitGameScene; 
 		}; 
 	} 

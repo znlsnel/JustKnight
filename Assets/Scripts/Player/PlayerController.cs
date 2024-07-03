@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using Unity.VisualScripting;
 using UnityEngine;
 using static PlayerAnimCtrl;
 
@@ -281,16 +282,20 @@ public class PlayerController : MonoBehaviour
 	{
 		_isAttackable = true;
 		_animCtrl.state = PlayerState.Idle;
-	}
+	} 
 
+	 
 	void AE_OnAttack()
-	{
-		Collider2D[] result = new Collider2D[100]; 
+	{   
+		Collider2D[] result = new Collider2D[100];
 		ContactFilter2D contactFilter = new ContactFilter2D();
 		Physics2D.OverlapCollider(_collMan._sensorAttack, contactFilter, result);
-
+		 
 		foreach (var c in result) 
 		{
+			if (c == null)
+				break; 
+			 
 			MonsterController mc = c.gameObject.GetComponent<MonsterController>();
 			if (mc != null)
 			{

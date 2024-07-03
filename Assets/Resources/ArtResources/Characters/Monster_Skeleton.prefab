@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 4147805909343299357}
   - component: {fileID: 4455033915772326846}
   - component: {fileID: 6746229186084961170}
-  - component: {fileID: 553824659589453695}
+  - component: {fileID: 905818480702986533}
   m_Layer: 6
   m_Name: Monster_Skeleton
   m_TagString: Untagged
@@ -249,7 +249,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.03}
   m_Size: {x: 0.39, y: 0.59}
   m_Direction: 0
---- !u!114 &553824659589453695
+--- !u!114 &905818480702986533
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -258,7 +258,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7739430645761651898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85fca6e4ac8c2d449b279b10fcbc45e1, type: 3}
+  m_Script: {fileID: 11500000, guid: 94b97004b8251634fa49ac5e62a63f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 2
+  _moveSpeed: 1
+  hp: 3

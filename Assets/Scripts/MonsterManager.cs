@@ -17,26 +17,32 @@ public class MonsterManager : MonoBehaviour
                 {
 			if (i < _skeletals.Count)
                         {
-                                _skeletals[i].SetActive(true);
-                                _skeletals[i].GetComponent<MonsterController>().InitMonster();
-                                _skeletals[i].transform.position = generator[i].transform.position;
+                                MonsterController mc = _skeletals[i].GetComponent<MonsterController>();
+                                StartCoroutine(InitMonsterRegister(mc, generator[i].transform.position, UnityEngine.Random.Range(0.1f, 2.0f)));
 			}
                         else 
                         {  
 				skeletals.Add(Instantiate(_skeletalPrefab));
-				skeletals[skeletals.Count - 1].GetComponent<MonsterController>().InitMonster();
-                                skeletals[skeletals.Count - 1].transform.position = generator[i].transform.position;
+    
+				MonsterController mc = skeletals[skeletals.Count - 1].GetComponent<MonsterController>();
+				StartCoroutine(InitMonsterRegister(mc, generator[i].transform.position, UnityEngine.Random.Range(0.1f, 2.0f)));
                         } 
                         generator[i].SetActive(false); 
-		} 
-                  
-                foreach(var i in skeletals)
-                {
+		}    
+
+                                 
+                foreach(var i in skeletals) { 
                         _skeletals.Add(i);
                 }
 
         }
-    void Start()
+	IEnumerator InitMonsterRegister(MonsterController mc, Vector3 pos, float time)
+	{
+		yield return new WaitForSeconds(time);
+                mc.InitMonster(pos);
+               
+	}
+	void Start()
     {
                 InitMonsterManager(); 
     }

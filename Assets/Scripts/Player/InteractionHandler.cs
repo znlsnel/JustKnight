@@ -53,9 +53,8 @@ public class InteractionHandler : MonoBehaviour
 
 	public void RegisterCancelAction(Action action)
 	{
-		Debug.Log("RegisterCancelAction »£√‚");
 		_onCancel = null;
-		_onCancel += action;
+		_onCancel += action; 
 	}
 
 }

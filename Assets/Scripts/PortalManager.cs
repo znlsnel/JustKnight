@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.SearchService;
 using UnityEngine;
 
+
 public class PortalManager : MonoBehaviour
 {
-        [SerializeField] string nextSceneName; 
+	[SerializeField] UnityEngine.Object _destScene;
+	
     // Start is called before the first frame update
     void Start() 
     {
@@ -18,11 +21,13 @@ public class PortalManager : MonoBehaviour
     {
         
     } 
-
+	 
 	void OnPortal()
 	{
-		Debug.Log(nextSceneName);  
-		GameManager.instance.LoadScene(nextSceneName); 
+		if (_destScene == null)
+			return;
+
+		GameManager.instance.LoadScene(_destScene.name); 
 	} 
 	
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -34,7 +39,7 @@ public class PortalManager : MonoBehaviour
 
 		}
 	}
-
+	 
 	private void OnTriggerExit2D(Collider2D collision)
 	{
 		if (collision.gameObject.tag == "Player")

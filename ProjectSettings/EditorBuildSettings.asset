@@ -15,9 +15,36 @@ EditorBuildSettings:
     path: Assets/Scenes/Tutorial.unity
     guid: b330a1ae016b0174e95aa18d04fd90f2
   - enabled: 1
-    path: Assets/Scenes/Stage_1.unity
+    path: Assets/Scenes/Chapter_1/Ch1_Town.unity
     guid: 885d6c4a32e7e2f4eafec32e3b77427e
   - enabled: 1
-    path: Assets/Scenes/Stage_2.unity
+    path: Assets/Scenes/Chapter_2/Chapter_2.unity
     guid: c04718d9b64e4154eb77295948f69f78
+  - enabled: 1
+    path: Assets/Scenes/Chapter_1/Ch1_Start.unity
+    guid: d01c0de089167c7499e0b00919efbad1
+  - enabled: 1
+    path: Assets/Scenes/Chapter_5/Chapter_5.unity
+    guid: edbc79182cfcf034dbc030ece64a0a46
+  - enabled: 1
+    path: Assets/Scenes/Chapter_4/Chapter_4.unity
+    guid: d10a9d63cae3685458d9a32c294914d5
+  - enabled: 1
+    path: Assets/Scenes/Chapter_1/Ch1_BossRoom.unity
+    guid: a3484d89ee78a254b97c8b37a930f1d3
+  - enabled: 1
+    path: Assets/Scenes/Chapter_1/Ch1_Node_1.unity
+    guid: 3f302704b5d5946498fe80c2842703c1
+  - enabled: 1
+    path: Assets/Scenes/Chapter_1/Ch1_Node_2.unity
+    guid: 3b1bff815c2c67740bae64a0207ea156
+  - enabled: 1
+    path: Assets/Scenes/Chapter_1/Ch1_Node_3.unity
+    guid: 3227238c612cef74a95d31cf0d488c5b
+  - enabled: 1
+    path: Assets/Scenes/Chapter_1/Ch1_Node_4.unity
+    guid: 4ae45f6e5d6e7fd49bb5392a51272208
+  - enabled: 1
+    path: Assets/Scenes/Chapter_3/Chapter_3.unity
+    guid: ccf21bffaca882d4b8416df43a9a51cd
   m_configObjects: {}

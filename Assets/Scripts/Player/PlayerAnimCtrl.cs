@@ -59,16 +59,16 @@ public class PlayerAnimCtrl : MonoBehaviour
 		switch (state)
 		{ 
 			case PlayerState.Idle: 
-				nextAnim = "Test_Idle"; 
-				//nextAnim = "Idle"; 
+				//nextAnim = "Test_Idle"; 
+				nextAnim = "Idle"; 
 				break;
 			case PlayerState.Run:
-				nextAnim = "Test_Run";
-				//nextAnim = "Run"; 
+				//nextAnim = "Test_Run";
+				nextAnim = "Run"; 
 				break; 
-			case PlayerState.Roll:
-			//	nextAnim = "Roll";
-				nextAnim = "Test_Roll";
+			case PlayerState.Roll: 
+				nextAnim = "Roll";
+				//nextAnim = "Test_Roll";
 				break;
 			case PlayerState.Attack:
 				{

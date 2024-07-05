@@ -8,7 +8,7 @@ using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class InputManager : Singleton<InputManager>
 {
-	public InteractionHandler _interactionHandler;
+	[NonSerialized] public InteractionHandler _interactionHandler;
 	[NonSerialized] public InputAction _onSkillMenu;
 	[NonSerialized] public InputAction _onInventory;
 	[NonSerialized] public InputAction _onInteraction; 

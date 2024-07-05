@@ -249,11 +249,9 @@ public class PlayerController : MonoBehaviour
 
 		if (_collMan._onSensorGroundFar == false)
 		{
-			//_animCtrl.state = PlayerState.Fall;
-			Debug.Log(" dddd");
 			_rigid.AddForce(new Vector2(_xMoveDir * 3.0f, -1.0f), ForceMode2D.Impulse);
 			OnFalling();
-			return;
+			return; 
 		}
 
 		if (Math.Abs(_xMoveDir) == 0)
@@ -296,11 +294,11 @@ public class PlayerController : MonoBehaviour
 			if (c == null)
 				break; 
 			 
-			MonsterController mc = c.gameObject.GetComponent<MonsterController>();
-			if (mc != null)
+			Monster mc = c.gameObject.GetComponent<Monster>();
+			if (mc != null && mc._hp > 0)
 			{
 				mc.OnHit(gameObject);
-				if (mc.hp == 0)
+				if (mc._hp == 0)
 					ItemManager.instance.GetItemObj(mc.gameObject.transform.position); 
 			}
 		}
@@ -431,7 +429,12 @@ public class PlayerController : MonoBehaviour
 			return;
 		if (_animCtrl.state == PlayerState.Block)
 		{
-			monster.GetComponent<MonsterController>()?.OnHit(gameObject);
+			Monster mst = monster.GetComponent<Monster>();
+			if (mst != null)
+			{
+				mst._onAttackBlocked = () => { mst.OnHit(gameObject); };
+				 
+			}
 			return;
 		}
 

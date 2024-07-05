@@ -15,7 +15,11 @@ public class ItemManager : Singleton<ItemManager>
 		base.Awake();
 		
                 _itemObjPool = new ObjectPool<GameObject>(
-                        createFunc: () => Instantiate(_itemObjPrefab),
+                        createFunc: () => { 
+				GameObject gm = Instantiate<GameObject>(_itemObjPrefab);
+				DontDestroyOnLoad(gm);
+				return gm; 
+			},
 			actionOnGet: obj => obj.SetActive(true),
 			actionOnRelease: obj => obj.SetActive(false),
 			actionOnDestroy: Destroy,

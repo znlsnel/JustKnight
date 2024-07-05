@@ -22,8 +22,7 @@ public class startMenuManager : MonoBehaviour
 
        public void OnNewGameButton()
         {
-                Debug.Log("New Game");
-                GameManager.instance.LoadScene("Tutorial");   
+                GameManager.instance.LoadScene("Tutorial");    
         }
 
 	public void OnContinueButton()

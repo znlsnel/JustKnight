@@ -22,7 +22,6 @@ public class UIHandler : Singleton<UIHandler>
 	[NonSerialized] public InventoryManager _inventoryManager;
 	[NonSerialized] public SkillMenuManager _skillMenuManager;
 	[NonSerialized] public DialogueHandler _dialogueSystem;
-	[NonSerialized] public QuestManager _questManager;
 
 	public override void Awake()
 	{ 
@@ -37,7 +36,6 @@ public class UIHandler : Singleton<UIHandler>
 		_inventoryManager = _inventory.GetComponent<InventoryManager>();
 		_skillMenuManager = _skillMenu.GetComponent<SkillMenuManager>();
 		_dialogueSystem = _dialogue.GetComponent<DialogueHandler>();
-		_questManager = _questMenu.GetComponent<QuestManager>();
 
 
 		DontDestroyOnLoad(_fadeEffect);   

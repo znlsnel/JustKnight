@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class GameManager : Singleton<GameManager>
 {
+
 	// Start is called before the first frame update
 //	MonsterGenerator _monsterGenerator;
 	[SerializeField] GameObject _playerPrefab;

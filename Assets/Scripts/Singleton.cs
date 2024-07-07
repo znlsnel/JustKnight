@@ -37,17 +37,17 @@ public class Singleton< T > : MonoBehaviour where T : Component
                 }
                 else
                 {
-                        Destroy(gameObject); 
+                        Destroy(gameObject);
                 }
 	}
-	void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	void Start()
+	{
+		
+	}
+
+	 void Update()
+	{
+		
+	}
 }

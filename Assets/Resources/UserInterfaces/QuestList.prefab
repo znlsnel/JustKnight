@@ -167,7 +167,6 @@ GameObject:
   - component: {fileID: 1232027520607688422}
   - component: {fileID: 7371178662829507614}
   - component: {fileID: 6084383061055068902}
-  - component: {fileID: 6542070346083313802}
   - component: {fileID: 6793469118190684410}
   m_Layer: 5
   m_Name: QuestList
@@ -236,7 +235,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.176
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -259,20 +258,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6542070346083313802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1099497523838755359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5359084fbfb85f744be3605fe9846a13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _questInfoBtnPrefab: {fileID: 1136938025393641549, guid: 0528dafc16bd3f041b4eafa80617ec9b, type: 3}
-  _questListUI: {fileID: 5988602703727356208}
 --- !u!114 &6793469118190684410
 MonoBehaviour:
   m_ObjectHideFlags: 0

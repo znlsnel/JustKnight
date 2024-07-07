@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public abstract class Monster : MonoBehaviour 
@@ -51,7 +52,8 @@ public abstract class Monster : MonoBehaviour
 	public int _hp = 3;
         public int _initHp = 3;
 	public Action _onAttackBlocked;
-	public Action _onDead;
+	[SerializeField] public UnityEvent _onDead;
+
 	public virtual void Awake()
 	{
 		_hp = _initHp; 
@@ -271,7 +273,7 @@ public abstract class Monster : MonoBehaviour
 		_animator.speed = 0.0f;
 		_onDead?.Invoke();
 
-        }
+	}
 
         void AE_OnAttack()
         {

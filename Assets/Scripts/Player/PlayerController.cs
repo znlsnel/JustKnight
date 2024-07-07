@@ -299,7 +299,10 @@ public class PlayerController : MonoBehaviour
 			{
 				mc.OnHit(gameObject);
 				if (mc._hp == 0)
-					ItemManager.instance.GetItemObj(mc.gameObject.transform.position); 
+				{
+					ItemManager.instance.GetItemObj(mc.gameObject.transform.position);
+				//	UIHandler.instance._questManager.KillMonster(mc.gameObject);  
+				}
 			}
 		}
 	}

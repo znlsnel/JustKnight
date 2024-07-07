@@ -5,11 +5,11 @@
         {
             "id": "quest_01",
             "title": "마을 이장 돕기",
-            "description": "뒷 산에 가서 몬스터 마리 잡기",
+            "description": "뒷 산에 가서 보스몬스터 잡기",
             "monsterHunt" :
             {
-                "monsterName" : "monster_01",
-                "huntCount" : 3     
+                "monsterName" : "Boss_1",
+                "huntCount" : 1     
             },
             "reward" : 
             {

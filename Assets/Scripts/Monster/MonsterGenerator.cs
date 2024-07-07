@@ -1,22 +1,40 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
+[Serializable]
+public class MonsterMapping
+{
+	public string monsterName;
+	public GameObject instance;
+}
+
 public class MonsterGenerator : Singleton<MonsterGenerator>
 {
         // Start is called before the first frame update
-        [SerializeField] GameObject _monsterInstance; 
-        List<Vector3> _spawnPoints = new List<Vector3>();
+	[SerializeField] List<MonsterMapping> _monsterMappings;
+	private Dictionary<string, GameObject> _monsterDictionary = new Dictionary<string, GameObject>();
 
+        [SerializeField] GameObject _monsterInstance;
+         
+	private List<Vector3> _spawnPoints = new List<Vector3>();
         private List<GameObject> _activeObjects = new List<GameObject>();
-        private ObjectPool<GameObject> _monsterPool;
+	private ObjectPool<GameObject> _monsterPool;
 
-        [SerializeField] int _maxMonsterSpawnCnt = 10;
+	[SerializeField] int _maxMonsterSpawnCnt = 10;
         int _spawnCnt = 0;
+
+
 
 	public override void Awake()
 	{
+                foreach (var monster in _monsterMappings)
+			_monsterDictionary.Add(monster.monsterName, monster.instance);
+
+		 
+
                 base.Awake(); 
                 _monsterPool = new ObjectPool<GameObject>(
                         createFunc: () => 
@@ -30,9 +48,9 @@ public class MonsterGenerator : Singleton<MonsterGenerator>
                         actionOnGet: (obj) => 
                         { 
                                 obj.GetComponent<Monster>().InitMonster(GetGenPos());
-                                obj.GetComponent<Monster>()._onDead = () => {
+                                obj.GetComponent<Monster>()._onDead .AddListener(() => {
                                         _monsterPool.Release(obj); 
-                                };
+                                }); 
                         },
 
                         actionOnRelease: obj => { 
@@ -64,22 +82,23 @@ public class MonsterGenerator : Singleton<MonsterGenerator>
                 _spawnCnt = 0;
 		for (int i = 0; _spawnPoints.Count > 0 & i < _maxMonsterSpawnCnt; i++)
 		{
-			StartCoroutine(InitMonsterRegister(Random.Range(0.1f, 2.0f)));
-			_spawnCnt++;
+			StartCoroutine(InitMonsterRegister(UnityEngine.Random.Range(0.1f, 2.0f)));
+                        Debug.Log("코루틴 외않돼");
+			_spawnCnt++; 
 		} 
 	}
 
         Vector3 GetGenPos()
         { 
-                int idx = Random.Range(0, _spawnPoints.Count );
+                int idx = UnityEngine.Random.Range(0, _spawnPoints.Count );
                 return _spawnPoints[idx];
         } 
 
 	IEnumerator InitMonsterRegister(float time)
 	{
 		yield return new WaitForSeconds(time);
-		if (_spawnPoints.Count > 0)
-			_monsterPool.Get();  
+	        if (_spawnPoints.Count > 0)
+			_monsterPool.Get();   
 	}
 
 	
@@ -95,12 +114,11 @@ public class MonsterGenerator : Singleton<MonsterGenerator>
     // Update is called once per frame
         void Update()
         { 
-                 
                 if (_spawnPoints.Count > 0 &&  _spawnCnt <  _maxMonsterSpawnCnt / 2)
                 {
                         for (int i = 0; i < _maxMonsterSpawnCnt  - _spawnCnt; i++)
                         {  
-				StartCoroutine(InitMonsterRegister(Random.Range(0.1f, 2.0f)));
+				StartCoroutine(InitMonsterRegister(UnityEngine.Random.Range(0.1f, 2.0f)));
 			}
                         _spawnCnt = _maxMonsterSpawnCnt;
 

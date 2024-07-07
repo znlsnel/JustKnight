@@ -77,7 +77,7 @@ public class DialogueHandler : MonoBehaviour
 
 		if (curDialogue.dialogues[script_idx].quest > 0)    
 		{
-			UIHandler.instance._questManager.AddQuest(_ncpName, curDialogue.dialogues[script_idx].quest); 
+			//UIHandler.instance._questManager.AddQuest(_ncpName, curDialogue.dialogues[script_idx].quest); 
 		}
 	}
 	public void OnResponseButton(int id)

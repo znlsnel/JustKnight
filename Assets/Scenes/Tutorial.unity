@@ -5763,7 +5763,7 @@ PrefabInstance:
     - target: {fileID: 1503686292603803056, guid: 854284676b3a30645aed79a45c22fa7a, type: 3}
       propertyPath: _destScene
       value: 
-      objectReference: {fileID: 102900000, guid: 3f302704b5d5946498fe80c2842703c1, type: 3}
+      objectReference: {fileID: 102900000, guid: a3484d89ee78a254b97c8b37a930f1d3, type: 3}
     - target: {fileID: 2940131813558543729, guid: 854284676b3a30645aed79a45c22fa7a, type: 3}
       propertyPath: m_Color.b
       value: 1

@@ -25,6 +25,7 @@ public class QuestUIManager : MonoBehaviour
 		//_npcName.text = ""; 
 		//_itemName.text = "";
 		//_itemCount.text = "";
+		gameObject.SetActive(false); 
 	}
 	void Start()
 	{
@@ -35,8 +36,8 @@ public class QuestUIManager : MonoBehaviour
     void Update() 
     {
         
-    } 
-
+    }  
+	 /*
 	public void UpdateQuestInfo(Quest quest)
 	{
 		_titleText.text = quest.title;
@@ -45,19 +46,19 @@ public class QuestUIManager : MonoBehaviour
 		_monsterName.gameObject.transform.parent.gameObject.SetActive(quest.monsterHunt.monsterName != null);
 		_npcName.gameObject.transform.parent.gameObject.SetActive(quest.delivery.itemName != null); 
 
-		if (quest.delivery != null)
+		if (quest.delivery.itemName != null)
 		{
 			_npcName.text = quest.delivery.npcName;
 			_itemName.text = quest.delivery.itemName;
 			_itemCount.text = "0 / " + quest.delivery.itemCount.ToString(); 
 		} 
 
-		else if (quest.monsterHunt != null)
+		else if (quest.monsterHunt.monsterName != null) 
 		{
 			_monsterName.text = quest.monsterHunt.monsterName;
 			_huntCount.text = quest.monsterHunt.huntCount.ToString(); 
 
 		}
 
-	}
+	}*/
 }

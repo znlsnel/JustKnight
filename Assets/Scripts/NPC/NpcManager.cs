@@ -5,14 +5,15 @@ using UnityEngine;
 
 public class NpcManager : MonoBehaviour
 {
-        Conversation _script;
        [SerializeField] string _npcName;
-
-    // Start is called before the first frame update
-        void Start()
+	[SerializeField] public List<DialogueSO> _dialogues;
+        DialogueSO _curDialogue;
+	// Start is called before the first frame update
+	void Start()
         {
-        
-        }
+                _curDialogue = _dialogues[0]; 
+
+	}
 
         // Update is called once per frame
         void Update()
@@ -29,7 +30,7 @@ public class NpcManager : MonoBehaviour
 
                 InputManager.instance._interactionHandler.AddIAction(gameObject, () => {
 
-                        UIHandler.instance._dialogueSystem.OpenNPCDialogue(_npcName, 1);
+                        UIHandler.instance._dialogueSystem.BeginDialogue(_curDialogue);
 
                    //     Debug.Log("NPC와의 상호작용 시작!");
                         InputManager.instance._interactionHandler.RegisterCancelAction(() => { 

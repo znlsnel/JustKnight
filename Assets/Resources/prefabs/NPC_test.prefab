@@ -134,3 +134,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _npcName: npc_01
+  _dialogues:
+  - {fileID: 11400000, guid: e41d1e3c641f0f042815d01dd30d9bb0, type: 2}

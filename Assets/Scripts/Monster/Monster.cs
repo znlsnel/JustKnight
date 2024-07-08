@@ -272,7 +272,7 @@ public abstract class Monster : MonoBehaviour
         {
 		_animator.speed = 0.0f;
 		_onDead?.Invoke();
-
+		
 	}
 
         void AE_OnAttack()

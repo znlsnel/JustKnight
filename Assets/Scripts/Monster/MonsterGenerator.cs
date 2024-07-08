@@ -83,8 +83,7 @@ public class MonsterGenerator : Singleton<MonsterGenerator>
 		for (int i = 0; _spawnPoints.Count > 0 & i < _maxMonsterSpawnCnt; i++)
 		{
 			StartCoroutine(InitMonsterRegister(UnityEngine.Random.Range(0.1f, 2.0f)));
-                        Debug.Log("코루틴 외않돼");
-			_spawnCnt++; 
+			_spawnCnt++;  
 		} 
 	}
 

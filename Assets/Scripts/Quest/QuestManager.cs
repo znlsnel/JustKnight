@@ -38,7 +38,7 @@ public class QuestManager : Singleton<QuestManager>
 		return null;
 	}
 
-	public void InsertQuest(string npc_id)
+	public void AddQuest(QuestSO quest)
 	{
 		//GameObject gm = Instantiate<GameObject>(_questInfoBtnPrefab);
 	//	ButtonClickHandler b = gm.AddComponent<ButtonClickHandler>();

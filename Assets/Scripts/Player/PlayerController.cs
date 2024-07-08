@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
 		_lastBlockTime += Time.deltaTime;
 
 		_xMoveDir = Input.GetAxis("Horizontal");
-
+		
 		if (_onPortalEntered != null)
 		{
 			if (Input.GetAxis("OnPortal") > 0.0f)

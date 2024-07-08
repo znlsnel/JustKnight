@@ -13,11 +13,10 @@ public class QuestReporter : MonoBehaviour
 	{ 
 		QuestSO quest = QuestManager.instance.GetQuest(category, target);
 		if (quest != null )
-		{ 
-			quest.task.curCnt += successCount;
-
-			if (quest.task.curCnt >= successCount )
-			{
+		{
+			quest.task.curCnt = quest.task.action.Run(quest.task.curCnt, successCount);
+			if (quest.task.curCnt >= quest.task.targetCnt)
+			{ 
 				quest.reward.Get();
 			}
 		}

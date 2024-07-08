@@ -189,8 +189,8 @@ MonoBehaviour:
   _attackCoolTime: 1
   _trackingDist: 5
   _hpUI: {fileID: 3785407030755466279, guid: ab4d650efb2487b42846b3e2f2602032, type: 3}
-  _hp: 10
-  _initHp: 10
+  _hp: 3
+  _initHp: 3
   _onDead:
     m_PersistentCalls:
       m_Calls:

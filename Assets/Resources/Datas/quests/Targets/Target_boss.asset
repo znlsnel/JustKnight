@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1199719cd46cc4d469cde52dd5212893, type: 3}
   m_Name: Target_boss
   m_EditorClassIdentifier: 
+  _name: Boss_01
   target: {fileID: 2245256768753076796, guid: e55a918f8ad598744b6f38ee6be2b100, type: 3}

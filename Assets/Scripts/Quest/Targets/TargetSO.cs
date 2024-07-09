@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class TargetSO : ScriptableObject
 {
-
+	public string _name;
 }

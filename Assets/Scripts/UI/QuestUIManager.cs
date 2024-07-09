@@ -5,31 +5,19 @@ using UnityEngine.UI;
 
 public class QuestUIManager : MonoBehaviour
 {
-        [SerializeField] Text _titleText;
-	[SerializeField] Text _descriptionText;
+        [SerializeField] Text _descriptionText;
 
-	[SerializeField] Text _monsterName;
-	[SerializeField] Text _huntCount;
-
-	[SerializeField] Text _npcName;
-	[SerializeField] Text _itemName;
-	[SerializeField] Text _itemCount; 
-
+	[SerializeField] GameObject _contents;
+	[SerializeField] GameObject _questPrefab; 
 	// Start is called before the first frame update
 	private void Awake()
 	{
-		_titleText.text = "";
 		_descriptionText.text = "";
-		//_monsterName.text = "";
-		//_huntCount.text = "";
-		//_npcName.text = ""; 
-		//_itemName.text = "";
-		//_itemCount.text = "";
+
 		gameObject.SetActive(false); 
 	}
 	void Start()
 	{
-		
 	}
 
     // Update is called once per frame
@@ -37,28 +25,51 @@ public class QuestUIManager : MonoBehaviour
     {
         
     }  
-	 /*
-	public void UpdateQuestInfo(Quest quest)
+
+	public void AddQuest(QuestSO quest)
 	{
-		_titleText.text = quest.title;
-		_descriptionText.text = quest.description;
+		GameObject gm = Instantiate<GameObject>(_questPrefab);
+		gm.GetComponentInChildren<Text>().text = quest.name;
+		gm.transform.SetParent(_contents.transform);
 
-		_monsterName.gameObject.transform.parent.gameObject.SetActive(quest.monsterHunt.monsterName != null);
-		_npcName.gameObject.transform.parent.gameObject.SetActive(quest.delivery.itemName != null); 
+		ButtonClickHandler b = gm.AddComponent<ButtonClickHandler>();
+		b.RegisterButtonAction(() => { OnButtonDown(quest); }, () => { OnButtonUp(quest); });
+	}
+	public void OnButtonDown(QuestSO quest)
+	{
 
-		if (quest.delivery.itemName != null)
-		{
-			_npcName.text = quest.delivery.npcName;
-			_itemName.text = quest.delivery.itemName;
-			_itemCount.text = "0 / " + quest.delivery.itemCount.ToString(); 
-		} 
+	} 
 
-		else if (quest.monsterHunt.monsterName != null) 
-		{
-			_monsterName.text = quest.monsterHunt.monsterName;
-			_huntCount.text = quest.monsterHunt.huntCount.ToString(); 
+	public void OnButtonUp(QuestSO quest)
+	{
+		UpdateQuestInfo(quest);
+	}
 
-		}
+       public void UpdateQuestInfo(QuestSO quest)
+	{
 
-	}*/
+		// 몬스터를 사냥해주세요 {이름} 0 / 25;
+		_descriptionText.text = quest.description + quest.task.target._name + quest.task.curCnt + " / " + quest.task.targetCnt;
+		/*
+	       _titleText.text = quest.title;
+	       _descriptionText.text = quest.description;
+
+	       _monsterName.gameObject.transform.parent.gameObject.SetActive(quest.monsterHunt.monsterName != null);
+	       _npcName.gameObject.transform.parent.gameObject.SetActive(quest.delivery.itemName != null); 
+
+	       if (quest.delivery.itemName != null)
+	       {
+		       _npcName.text = quest.delivery.npcName;
+		       _itemName.text = quest.delivery.itemName;
+		       _itemCount.text = "0 / " + quest.delivery.itemCount.ToString(); 
+	       } 
+
+	       else if (quest.monsterHunt.monsterName != null) 
+	       {
+		       _monsterName.text = quest.monsterHunt.monsterName;
+		       _huntCount.text = quest.monsterHunt.huntCount.ToString(); 
+
+	       }
+		*/
+	}
 }

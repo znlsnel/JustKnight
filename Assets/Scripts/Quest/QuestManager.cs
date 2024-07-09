@@ -40,26 +40,18 @@ public class QuestManager : Singleton<QuestManager>
 
 	public void AddQuest(QuestSO quest)
 	{
+		UIHandler.instance._questUIManager.AddQuest(quest);
+		_quests.Add(quest); 
 		//GameObject gm = Instantiate<GameObject>(_questInfoBtnPrefab);
-	//	ButtonClickHandler b = gm.AddComponent<ButtonClickHandler>();
-		
-	//	b.RegisterButtonAction(() => { OnButtonDown(quest.id); }, () => { OnButtonUp(quest.id); });
+		//	ButtonClickHandler b = gm.AddComponent<ButtonClickHandler>();
+
+		//	b.RegisterButtonAction(() => { OnButtonDown(quest.id); }, () => { OnButtonUp(quest.id); });
 		//gm.transform.SetParent(_questListUI.transform, false);
-	//	gm.gameObject.GetComponentInChildren<Text>().text = quest.title;
+		//	gm.gameObject.GetComponentInChildren<Text>().text = quest.title;
 
 	}
 
 
-	public void OnButtonDown(string id)
-	{
-
-	} 
-	 
-	public void OnButtonUp(string id)
-	{
-
-
-	}
 
 	public void KillMonster(GameObject monster)
 	{

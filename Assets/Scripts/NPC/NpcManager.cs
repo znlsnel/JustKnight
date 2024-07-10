@@ -6,8 +6,8 @@ using UnityEngine;
 public class NpcManager : MonoBehaviour
 {
        [SerializeField] string _npcName;
-	[SerializeField] public List<DialogueSO> _dialogues;
-        DialogueSO _curDialogue;
+	[SerializeField] public List<QuestDialogueSO> _dialogues;
+	QuestDialogueSO _curDialogue;
 	// Start is called before the first frame update
 	void Start()
         {

@@ -104,8 +104,8 @@ public class MonsterGenerator : Singleton<MonsterGenerator>
 
 	void Start()
         {
-                GameManager.instance._onSceneInit += InitMonsterManager;
-		InitMonsterManager();
+              //  GameManager.instance._onSceneInit += InitMonsterManager;
+		//InitMonsterManager();
 	} 
 
          
@@ -117,7 +117,7 @@ public class MonsterGenerator : Singleton<MonsterGenerator>
                 {
                         for (int i = 0; i < _maxMonsterSpawnCnt  - _spawnCnt; i++)
                         {  
-				StartCoroutine(InitMonsterRegister(UnityEngine.Random.Range(0.1f, 2.0f)));
+		//		StartCoroutine(InitMonsterRegister(UnityEngine.Random.Range(0.1f, 2.0f)));
 			}
                         _spawnCnt = _maxMonsterSpawnCnt;
 

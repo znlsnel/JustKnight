@@ -57,7 +57,7 @@ public abstract class Monster : MonoBehaviour
 	public virtual void Awake()
 	{
 		_hp = _initHp; 
-		if (_hpUI != null)
+		if ( _hpUI != null)
 		{
 			_hpUI = Instantiate<GameObject>(_hpUI); 
 

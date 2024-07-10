@@ -3194,74 +3194,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1656607117
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1656607120}
-  - component: {fileID: 1656607119}
-  - component: {fileID: 1656607118}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1656607118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1656607117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
---- !u!114 &1656607119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1656607117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &1656607120
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1656607117}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1772584592
 GameObject:
   m_ObjectHideFlags: 0
@@ -3479,10 +3411,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5359084fbfb85f744be3605fe9846a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _questInfoBtnPrefab: {fileID: 1136938025393641549, guid: 0528dafc16bd3f041b4eafa80617ec9b, type: 3}
-  _questListUI: {fileID: 1099497523838755359, guid: bd238b034ecc74042941d2fc58031687, type: 3}
   _quests:
   - {fileID: 11400000, guid: bd9a0487fee05594096fcd5a849524d8, type: 2}
+--- !u!114 &2009174047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009174030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &2009174048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009174030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
 --- !u!1 &2062018864
 GameObject:
   m_ObjectHideFlags: 0
@@ -3850,6 +3815,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3004416864802387988, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2009174039}
+    - targetCorrespondingSourceObject: {fileID: 3004416864802387988, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2009174048}
+    - targetCorrespondingSourceObject: {fileID: 3004416864802387988, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2009174047}
   m_SourcePrefab: {fileID: 100100000, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -3859,7 +3830,6 @@ SceneRoots:
   - {fileID: 698435621}
   - {fileID: 1772584595}
   - {fileID: 1258537988}
-  - {fileID: 1656607120}
   - {fileID: 951500024}
   - {fileID: 6211724}
   - {fileID: 1337464848}

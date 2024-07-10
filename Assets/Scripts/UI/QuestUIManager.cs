@@ -47,29 +47,9 @@ public class QuestUIManager : MonoBehaviour
 
        public void UpdateQuestInfo(QuestSO quest)
 	{
-
-		// 몬스터를 사냥해주세요 {이름} 0 / 25;
-		_descriptionText.text = quest.description + quest.task.target._name + quest.task.curCnt + " / " + quest.task.targetCnt;
-		/*
-	       _titleText.text = quest.title;
-	       _descriptionText.text = quest.description;
-
-	       _monsterName.gameObject.transform.parent.gameObject.SetActive(quest.monsterHunt.monsterName != null);
-	       _npcName.gameObject.transform.parent.gameObject.SetActive(quest.delivery.itemName != null); 
-
-	       if (quest.delivery.itemName != null)
-	       {
-		       _npcName.text = quest.delivery.npcName;
-		       _itemName.text = quest.delivery.itemName;
-		       _itemCount.text = "0 / " + quest.delivery.itemCount.ToString(); 
-	       } 
-
-	       else if (quest.monsterHunt.monsterName != null) 
-	       {
-		       _monsterName.text = quest.monsterHunt.monsterName;
-		       _huntCount.text = quest.monsterHunt.huntCount.ToString(); 
-
-	       }
-		*/
+		if (quest.task.curCnt == quest.task.targetCnt)
+			_descriptionText.text = "CLEAR !!";
+		else
+			_descriptionText.text = quest.description + quest.task.target._name +" "+ quest.task.curCnt + " / " + quest.task.targetCnt;
 	}
 }

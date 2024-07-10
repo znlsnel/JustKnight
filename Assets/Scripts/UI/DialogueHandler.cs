@@ -14,47 +14,47 @@ public class DialogueHandler : MonoBehaviour
 	[SerializeField] Image _npcImage;
 	[SerializeField] Text _npcScript;
 	[SerializeField] Text[] _respScripts;
-	 
-	DialogueSO _curDialogue;
-	int script_idx = 0;
+
+	QuestDialogueSO _curQuestDlg;
+	DialogueSO _curDlg;
+
 
 	private void Awake()  
 	{
 		gameObject.SetActive(false);
 	}
 
-	public void BeginDialogue(DialogueSO dialogue)
+	public void BeginDialogue(QuestDialogueSO dialogue)
 	{
 		gameObject.SetActive(true);
 
-		_curDialogue = dialogue;
-		script_idx = 0;
+		_curQuestDlg = dialogue;
+		_curDlg = _curQuestDlg.GetCurDialogue();
 
-		UpdateDialouge();
+		UpdateDialougeText();
 	}
 
-	private void UpdateDialouge()
+	private void UpdateDialougeText()
 	{
-		_npcScript.text = _curDialogue.npc[script_idx].text;
+		int page = _curQuestDlg.curPage;
 
-		int cnt = _curDialogue.npc[script_idx].player.Count;
+		_npcScript.text = _curDlg.npc[page].text;
+		int cnt = _curDlg.npc[page].player.Count;
+
 		for (int i = 0; i < 3; i++) 
 		{
 			if (i < cnt)
-			{
+			{ 
 				_respScripts[i].transform.parent.gameObject.SetActive(true);
-				_respScripts[i].text = _curDialogue.npc[script_idx].player[i].text; 
+				_respScripts[i].text = _curDlg.npc[page].player[i].text; 
 			}
 			else
 			{
 				_respScripts[i].transform.parent.gameObject.SetActive(false);
 			}
 		}
-		
-		if (_curDialogue.npc[script_idx].quest != null)
-		{
-			QuestManager.instance.AddQuest(_curDialogue.npc[script_idx].quest);
-		}
+
+
 	}
 
 
@@ -65,12 +65,15 @@ public class DialogueHandler : MonoBehaviour
 
 	public void OnResponseButton(int id)
 	{
-		if (_curDialogue.npc[script_idx].player[id].isEnd)
-		{
+		if (_curQuestDlg.UpdateState(id))
 			CloseNPCDialogue();
-		}
-		script_idx++;
-		UpdateDialouge();
+
+		_curQuestDlg.curPage++;  
+		 
+		if (_curDlg.npc.Count > _curQuestDlg.curPage) 
+			UpdateDialougeText();
+		else
+			CloseNPCDialogue();
 	}
 
 

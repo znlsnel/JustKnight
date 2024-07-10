@@ -9,43 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57fced589043bfd42b9ac54fa994fbf6, type: 3}
-  m_Name: episode_1
+  m_Script: {fileID: 11500000, guid: 9f8aa439f42f81c49bde2f43e2521f9f, type: 3}
+  m_Name: Episode_1
   m_EditorClassIdentifier: 
+  pendingDialogue: {fileID: 11400000, guid: e41d1e3c641f0f042815d01dd30d9bb0, type: 2}
+  rejectedDialogue: {fileID: 11400000, guid: affaa24346f8d56459dbbf0398ae4729, type: 2}
+  progressDialogue: {fileID: 11400000, guid: 6f22661710a90d749aaca3655f9d541e, type: 2}
+  awaitingDialogue: {fileID: 11400000, guid: c3f05a58f0b08f844a195b7fdf0ae161, type: 2}
+  completedDialogue: {fileID: 11400000, guid: 79bd27d7031d00642bc23c29e895aba7, type: 2}
+  quest: {fileID: 11400000, guid: bd9a0487fee05594096fcd5a849524d8, type: 2}
   npcIcon: {fileID: 0}
-  npc:
-  - text: "\uC5B4\uC11C\uC624\uAC8C \uC80A\uC740\uC774! \uB2F9\uC2E0 \uAC19\uC774
-      \uC80A\uC740 \uACE0\uC591\uC774\uB294 \uC624\uB79C\uB9CC\uC774\uAD6C\uB9CC
-      \uAEC4\uAEC4\r\n\uADF8\uB798! \uC774\uACF3\uC5D0\uB294 \uC5B4\uCA50\uC77C\uC778\uAC00"
-    player:
-    - text: "\uC774\uACF3\uC5D0 \uD478\uB978 \uB208\uC758 \uACE0\uC591\uC774\uAC00
-        \uC788\uB2E4\uACE0 \uD574\uC11C \uC654\uC2B5\uB2C8\uB2E4.\r\n\uD639\uC2DC
-        \uC54C\uACE0 \uC788\uB294\uAC8C \uC788\uC2B5\uB2C8\uAE4C?"
-      isEnd: 0
-    quest: {fileID: 0}
-  - text: "\uD760.. \uD478\uB978 \uB208\uC758 \uACE0\uC591\uC774\uB77C.. \uADF8\uB7EC\uACE0
-      \uBCF4\uB2C8 \uCCA0\uC218 \uB140\uC11D\uC774 \uADF8\uB7F0 \uC598\uAE30\uB97C
-      \uD588\uB358 \uAC83 \uAC19\uC740\uB370.."
-    player:
-    - text: "\uBB34\uC2A8 \uC774\uC57C\uAE30\uC778\uC9C0 \uB4E4\uC5B4\uBCFC \uC218
-        \uC788\uACA0\uC2B5\uB2C8\uAE4C?"
-      isEnd: 0
-    quest: {fileID: 0}
-  - text: "\uADF8 \uC804\uC5D0 \uB0B4 \uBD80\uD0C1 \uD558\uB098 \uB4E4\uC5B4\uC904
-      \uC218 \uC788\uACA0\uB098?\r"
-    player:
-    - text: "\uBB34\uC2A8 \uC774\uC57C\uAE30\uC778\uC9C0 \uB4E4\uC5B4\uBCFC \uC218
-        \uC788\uACA0\uC2B5\uB2C8\uAE4C?"
-      isEnd: 0
-    quest: {fileID: 0}
-  - text: "\uB4B7 \uC0B0\uC5D0 \uAC00\uC11C \uBAAC\uC2A4\uD130 10\uB9C8\uB9AC\uB9CC
-      \uC7A1\uC544\uC8FC\uAC8C\r"
-    player:
-    - text: "\uC54C\uACA0\uC2B5\uB2C8\uB2E4."
-      isEnd: 0
-    - text: "\uC2EB\uC2B5\uB2C8\uB2E4."
-      isEnd: 1
-    quest: {fileID: 0}
-  - text: "\uACE0\uB9D9\uB124..\r"
-    player: []
-    quest: {fileID: 11400000, guid: bd9a0487fee05594096fcd5a849524d8, type: 2}

@@ -15,10 +15,10 @@ public class QuestReporter : MonoBehaviour
 		if (quest != null )
 		{
 			quest.task.curCnt = quest.task.action.Run(quest.task.curCnt, successCount);
-			if (quest.task.curCnt >= quest.task.targetCnt)
-			{ 
-				quest.reward.Get();
-			}
+			//if (quest.task.curCnt >= quest.task.targetCnt)
+			//{ 
+			//	quest.reward.Get();
+			//}
 		}
 	}
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuestUIManager : MonoBehaviour
+public class QuestUIManager : MonoBehaviour, IMenuUI
 {
         [SerializeField] Text _descriptionText;
 
@@ -43,13 +43,29 @@ public class QuestUIManager : MonoBehaviour
 	public void OnButtonUp(QuestSO quest)
 	{
 		UpdateQuestInfo(quest);
-	}
+	} 
 
-       public void UpdateQuestInfo(QuestSO quest)
+	// if you don't send anything as a factor, this function will empty the quest text
+       public void UpdateQuestInfo(QuestSO quest = null)
 	{
+		if (quest == null)
+		{
+			_descriptionText.text = "";
+			return;
+		}
+
 		if (quest.task.curCnt == quest.task.targetCnt)
 			_descriptionText.text = "CLEAR !!";
 		else
 			_descriptionText.text = quest.description + quest.task.target._name +" "+ quest.task.curCnt + " / " + quest.task.targetCnt;
+	}
+
+	public void ActiveMenu(bool active)
+	{
+		gameObject.SetActive(active);
+		if (active)
+		{
+			UpdateQuestInfo(); 
+		}
 	}
 }

@@ -61,7 +61,7 @@ public class UIHandler : Singleton<UIHandler>
 
 		InputManager.instance.BindInputAction(InputManager.instance._onQuestMenu, () =>
 		{ 
-			this._questMenu.SetActive(!_questMenu.activeSelf);
+			this._questUIManager.ActiveMenu(!_questMenu.activeSelf); 
 		});
 
 	}

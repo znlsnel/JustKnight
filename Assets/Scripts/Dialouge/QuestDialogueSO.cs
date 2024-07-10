@@ -26,45 +26,59 @@ public class QuestDialogueSO : ScriptableObject
 	public DialogueSO progressDialogue;  // 퀘스트 진행 중 DialogueSO
 	public DialogueSO awaitingDialogue;  // 퀘스트 완료 대기 DialogueSO
 	public DialogueSO completedDialogue; // 퀘스트 완료 이후 DialogueSO
-	 
-	public EDialogueState state = EDialogueState.PENDING_ACCEPTANCE;
+
+	[NonSerialized] public EDialogueState state = EDialogueState.PENDING_ACCEPTANCE;
+	[NonSerialized] DialogueSO curDialogue;
 
 	[NonSerialized] public int curPage = 0;
-
-	public DialogueSO GetCurDialogue(bool pageInit = true)
+	 
+	public DialogueSO GetCurDialogue()
 	{
-		if (pageInit)
-			curPage = 0;
-
+		curPage = 0;
 		if (state == EDialogueState.IN_PROGRESS && quest.task.curCnt >= quest.task.targetCnt)
 			state = EDialogueState.AWAITING_COMPLETION;
 		
 		switch (state)
 		{
 			case EDialogueState.PENDING_ACCEPTANCE:
-				return pendingDialogue; // 몬스터 잡아줘
+				curDialogue = pendingDialogue; // 몬스터 잡아줘
+				break;
 
 			case EDialogueState.REJECTED:
-				return rejectedDialogue; // 거절하지 말고 잡아줘
+				curDialogue = rejectedDialogue; // 거절하지 말고 잡아줘
+				break;
 
 			case EDialogueState.IN_PROGRESS:
-				return progressDialogue; // 저 몬스터를 잡아야해!
+				curDialogue =  progressDialogue; // 저 몬스터를 잡아야해!
+				break;
 
 			case EDialogueState.AWAITING_COMPLETION:
-				return awaitingDialogue; // 고마워 보상이야!
+				curDialogue = awaitingDialogue; // 고마워 보상이야!
+				break;
 
 			case EDialogueState.COMPLETED:
-				return completedDialogue; // 저번에는 고마웠어!
+				curDialogue =  completedDialogue; // 저번에는 고마웠어!
+				break;
 
 			default:
 				return null;
 		}
-	}
+
+		return curDialogue;
+	} 
 
 	//It returns true when the dialogue is finished,
-	public bool UpdateState(int plyerIdx)
+	public bool UpdateState(int playerIdx)
 	{
-		EResponseType rspState = GetCurDialogue(false).npc[curPage].player[plyerIdx].state; 
+
+		Debug.Log($"Player Text IDX : {playerIdx}");
+		int npcSize = curDialogue.npc.Count; 
+		Debug.Log($"Page Size : {npcSize} , current Page : {curPage}");  
+
+
+		EResponseType rspState = curDialogue.npc[curPage].player[playerIdx].state; 
+		
+
 		switch (rspState)
 		{
 			case EResponseType.CONTINUE:

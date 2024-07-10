@@ -8,12 +8,18 @@ public class QuestUIManager : MonoBehaviour, IMenuUI
         [SerializeField] Text _descriptionText;
 
 	[SerializeField] GameObject _contents;
-	[SerializeField] GameObject _questPrefab; 
+	[SerializeField] GameObject _questPrefab;
+	[SerializeField] GameObject _successUI;
+
+	QuestSuccessUIManager _successUIManager;
 	// Start is called before the first frame update
 	private void Awake()
 	{
 		_descriptionText.text = "";
+		_successUI = Instantiate<GameObject>(_successUI);
+		_successUIManager = _successUI.GetComponent<QuestSuccessUIManager>();
 
+		DontDestroyOnLoad(_successUI); 
 		gameObject.SetActive(false); 
 	}
 	void Start()
@@ -56,16 +62,22 @@ public class QuestUIManager : MonoBehaviour, IMenuUI
 
 		if (quest.task.curCnt == quest.task.targetCnt)
 			_descriptionText.text = "CLEAR !!";
-		else
-			_descriptionText.text = quest.description + quest.task.target._name +" "+ quest.task.curCnt + " / " + quest.task.targetCnt;
+		else 
+			_descriptionText.text = quest.description + " [" + quest.task.target._name +"] "+ quest.task.curCnt + " / " + quest.task.targetCnt;
 	}
 
 	public void ActiveMenu(bool active)
 	{
+		UIHandler.instance.CloseAllUI(gameObject, active);
 		gameObject.SetActive(active);
 		if (active)
 		{
 			UpdateQuestInfo(); 
 		}
+	}
+
+	public void LoadSuccessUI(string rewardDescription)
+	{
+		_successUIManager.OpenSuccessUI(rewardDescription); 
 	}
 }

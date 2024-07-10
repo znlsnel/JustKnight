@@ -70,11 +70,7 @@ public class QuestDialogueSO : ScriptableObject
 	//It returns true when the dialogue is finished,
 	public bool UpdateState(int playerIdx)
 	{
-
-		Debug.Log($"Player Text IDX : {playerIdx}");
 		int npcSize = curDialogue.npc.Count; 
-		Debug.Log($"Page Size : {npcSize} , current Page : {curPage}");  
-
 
 		EResponseType rspState = curDialogue.npc[curPage].player[playerIdx].state; 
 		
@@ -88,7 +84,8 @@ public class QuestDialogueSO : ScriptableObject
 				return true; 
 
 			case EResponseType.GET_REWARD:
-				quest.reward.Get();
+				string reward = quest.reward.GetReward();
+				UIHandler.instance._questUIManager.LoadSuccessUI(reward);
 				state = EDialogueState.COMPLETED; 
 				break;
 

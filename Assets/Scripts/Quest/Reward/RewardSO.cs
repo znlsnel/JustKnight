@@ -5,5 +5,6 @@ using UnityEngine;
 
 public abstract class RewardSO : ScriptableObject
 {
-	public abstract void Get();
+	public string _description; 
+	public abstract string GetReward(); 
 }

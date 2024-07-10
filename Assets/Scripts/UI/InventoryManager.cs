@@ -92,9 +92,10 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 	public void ActiveMenu(bool isActive)
         { 
                 gameObject.SetActive(isActive); 
-        }
+		UIHandler.instance.CloseAllUI(gameObject, isActive);
+	} 
 
-       public  void AddItem(int id)
+	public  void AddItem(int id)
         {
                 if (_slotTop >= _slots.Count)
                         return;

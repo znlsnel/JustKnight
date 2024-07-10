@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
 			_lastAttackTime += Time.deltaTime;
 		_lastJumpTime += Time.deltaTime;
 		_lastRollTime += Time.deltaTime;
-		_lastBlockTime += Time.deltaTime;
+		_lastBlockTime += Time.deltaTime; 
 
 		_xMoveDir = Input.GetAxis("Horizontal");
 		
@@ -86,6 +86,9 @@ public class PlayerController : MonoBehaviour
 		}
 
 		_isAttack = Input.GetAxis("Fire1") > 0.9f && _lastAttackTime > _attackCoolTime && _isAttackable;
+		if (UIHandler.instance.isOpenAnyUI())
+			_isAttack = false; 
+
 		_isJump = Input.GetAxis("Jump") > 0.9f && _lastJumpTime > _jumpCoolTime && (_collMan._onSensorGround);
 		_isRoll = Input.GetAxis("Roll") > 0.9f && _lastRollTime > _rollCoolTime && _collMan._onSensorGround;
 		_isBlock = Input.GetAxis("Block") > 0.9f;

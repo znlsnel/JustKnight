@@ -6,9 +6,11 @@ using UnityEngine;
 
 public class TestRewardSO : RewardSO
 {
-	public string debugLog;
-	public override void Get()
+	public override string GetReward()
 	{
-		Debug.Log($"Test Reward ! : {debugLog}!");
+		int item = Random.Range(0, 999);
+		UIHandler.instance._inventoryManager.AddItem(item);
+
+		return $"æ∆¿Ã≈€ [ {item} ] »πµÊ!";
 	}
 }

@@ -7,7 +7,7 @@ using System.IO;
 using UnityEngine.AI;
 
 
-public class DialogueHandler : MonoBehaviour 
+public class DialogueHandler : MonoBehaviour , IMenuUI
 {
 	string _ncpName;
 
@@ -26,7 +26,7 @@ public class DialogueHandler : MonoBehaviour
 
 	public void BeginDialogue(QuestDialogueSO dialogue)
 	{
-		gameObject.SetActive(true);
+		ActiveMenu(true);
 
 		_curQuestDlg = dialogue;
 		_curDlg = _curQuestDlg.GetCurDialogue();
@@ -60,7 +60,7 @@ public class DialogueHandler : MonoBehaviour
 
 	public void CloseNPCDialogue()
 	{
-		gameObject.SetActive(false);
+		ActiveMenu(false); 
 	}
 
 	public void OnResponseButton(int id)
@@ -76,5 +76,9 @@ public class DialogueHandler : MonoBehaviour
 			CloseNPCDialogue();
 	}
 
-
+	public void ActiveMenu(bool active)
+	{
+		gameObject.SetActive(active);
+		UIHandler.instance.CloseAllUI(gameObject, active); 
+	}
 }

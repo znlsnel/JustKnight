@@ -210,10 +210,11 @@ public class SkillMenuManager : MonoBehaviour, IMenuUI
 
 	public void ActiveMenu(bool isOpen)
 	{
+		UIHandler.instance.CloseAllUI(gameObject, isOpen);
 		if (isOpen)
 		{
 			gameObject.SetActive(true); 
-			_skillPopupMenu.gameObject.SetActive(false); 
+			_skillPopupMenu.gameObject.SetActive(false);
 		}
 		else
 		{

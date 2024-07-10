@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public interface IMenuUI
 {
-	public void ActiveMenu(bool active);
+	public void ActiveMenu(bool active);  
 }
 public class UIHandler : Singleton<UIHandler> 
 {
@@ -24,8 +24,10 @@ public class UIHandler : Singleton<UIHandler>
 	[NonSerialized] public DialogueHandler _dialogueSystem;
 	[NonSerialized] public QuestUIManager _questUIManager;
 
+	GameObject _curOpenUI;
+
 	public override void Awake()
-	{ 
+	{
 		base.Awake();
 		_inventory = Instantiate<GameObject>(_inventory);
 		_skillMenu = Instantiate<GameObject>(_skillMenu);
@@ -56,7 +58,7 @@ public class UIHandler : Singleton<UIHandler>
 
 		InputManager.instance.BindInputAction(InputManager.instance._onInventory, () => 
 		{ 
-			this._inventoryManager.ActiveMenu(!this._inventory.activeSelf);  
+			this._inventoryManager.ActiveMenu(!this._inventory.activeSelf);
 		});
 
 		InputManager.instance.BindInputAction(InputManager.instance._onQuestMenu, () =>
@@ -66,6 +68,21 @@ public class UIHandler : Singleton<UIHandler>
 
 	}
 
+	public void CloseAllUI(GameObject nextUI, bool Active)
+	{
+		if (_curOpenUI != null)
+			_curOpenUI.SetActive(false);
+
+		if (Active)
+			_curOpenUI = nextUI;
+		else
+			_curOpenUI = null;
+	}
+
+	public bool isOpenAnyUI()
+	{
+		return _curOpenUI != null; 
+	}
 
 	void Update()
     {

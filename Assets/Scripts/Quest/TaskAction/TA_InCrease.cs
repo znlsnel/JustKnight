@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "increase", menuName = "Quest/TaskAction/increase", order = 1)]
 
-public class TaskActionSO_InCrease : TaskActionSO
+public class TA_InCrease : TaskActionSO
 {
 	public override int Run(int curCnt, int addPoint)
 	{

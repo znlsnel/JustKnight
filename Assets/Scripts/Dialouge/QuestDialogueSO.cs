@@ -31,11 +31,26 @@ public class QuestDialogueSO : ScriptableObject
 	[NonSerialized] DialogueSO curDialogue;
 
 	[NonSerialized] public int curPage = 0;
-	 
+
+	private void OnEnable()
+	{
+		 
+	}
+
 	public DialogueSO GetCurDialogue()
 	{
+		bool isClear = true;
+		foreach(QuestTaskSO task in quest.tasks)
+		{
+			if (task.curCnt < task.targetCnt)
+			{
+				isClear = false;
+				break;
+			} 
+		}
+
 		curPage = 0;
-		if (state == EDialogueState.IN_PROGRESS && quest.task.curCnt >= quest.task.targetCnt)
+		if (state == EDialogueState.IN_PROGRESS && isClear)
 			state = EDialogueState.AWAITING_COMPLETION;
 		
 		switch (state)
@@ -84,7 +99,10 @@ public class QuestDialogueSO : ScriptableObject
 				return true; 
 
 			case EResponseType.GET_REWARD:
-				string reward = quest.reward.GetReward();
+				string reward = "";
+				if (quest.reward != null)
+					reward = quest.reward.GetReward();
+
 				UIHandler.instance._questUIManager.LoadSuccessUI(reward);
 				state = EDialogueState.COMPLETED; 
 				break;

@@ -8,6 +8,9 @@ public class NpcManager : MonoBehaviour
        [SerializeField] string _npcName;
 	[SerializeField] public List<QuestDialogueSO> _dialogues;
 	QuestDialogueSO _curDialogue;
+        public bool isAutoStart = false;
+	public bool isOneTimeUse = false;
+	public int _beginCnt = 0;
 	// Start is called before the first frame update
 	void Start()
         {
@@ -25,20 +28,27 @@ public class NpcManager : MonoBehaviour
         // [ NPC 1] [ NPC 2] [ NPC 3] [ NPC 4] 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-                if (collision.gameObject.GetComponent<PlayerController>() == null)
+
+		if ((isOneTimeUse && _beginCnt > 0) || _curDialogue == null || collision.gameObject.GetComponent<PlayerController>() == null)
                         return;
 
-                InputManager.instance._interactionHandler.AddIAction(gameObject, () => {
+		_beginCnt++;
 
+		InputManager.instance._interactionHandler.AddIAction(gameObject, () => 
+		{
                         UIHandler.instance._dialogueSystem.BeginDialogue(_curDialogue);
 
-                   //     Debug.Log("NPC와의 상호작용 시작!");
                         InputManager.instance._interactionHandler.RegisterCancelAction(() => { 
                                 UIHandler.instance._dialogueSystem.CloseNPCDialogue(); 
-                           //     Debug.Log("취소 Action 등록 ! ");
+
 			});
 		});
-           //     Debug.Log("NPC 상호작용 목록에 등록");
+
+		if (isAutoStart)
+		{
+			InputManager.instance._interactionHandler.ExcuteInteraction(); 
+		}
+
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)

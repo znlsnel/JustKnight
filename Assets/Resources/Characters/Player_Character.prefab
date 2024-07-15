@@ -594,13 +594,10 @@ PrefabInstance:
       addedObject: {fileID: 6846960460459450634}
     - targetCorrespondingSourceObject: {fileID: 6323719953710832613, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6572017404797745336}
-    - targetCorrespondingSourceObject: {fileID: 6323719953710832613, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 217707138551140070}
     - targetCorrespondingSourceObject: {fileID: 6323719953710832613, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -5845907472730180856}
+      addedObject: {fileID: -3436368339180403795}
   m_SourcePrefab: {fileID: 100100000, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
 --- !u!1 &5778157463277658190 stripped
 GameObject:
@@ -625,18 +622,36 @@ MonoBehaviour:
   _blockCoolTime: 1
   _playerSpeed: 3
   _SlideDust: {fileID: 1038168246061390451, guid: 8b8c8cc6774fb074cb9139cc631b108e, type: 3}
---- !u!114 &6572017404797745336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5778157463277658190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b72a6e160803fb240b767f58f709fe35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _onMoveLeft:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3436368339180403795}
+        m_TargetAssemblyTypeName: QuestReporter, Assembly-CSharp
+        m_MethodName: Report
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onMoveRight:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3436368339180403795}
+        m_TargetAssemblyTypeName: QuestReporter, Assembly-CSharp
+        m_MethodName: Report
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!70 &217707138551140070
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -672,7 +687,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.05, y: 0.75}
   m_Size: {x: 0.65, y: 1.36}
   m_Direction: 0
---- !u!114 &-5845907472730180856
+--- !u!114 &-3436368339180403795
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -681,10 +696,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5778157463277658190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71fe979bb45cf5248a66328d63719b01, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ed8ef8022628f444bad0d266749b75e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hpMaterial: {fileID: 0}
+  reportInfos:
+  - category: {fileID: 11400000, guid: af845bfa4addaf94fb5af848843ae060, type: 2}
+    target: {fileID: 11400000, guid: fc33163e31851bb4b8a93b6a4a29833a, type: 2}
+  - category: {fileID: 11400000, guid: af845bfa4addaf94fb5af848843ae060, type: 2}
+    target: {fileID: 11400000, guid: 6636aed0a035cfa4e91254ac6d91e269, type: 2}
+  successCount: 1
 --- !u!4 &8300312879205510169 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8413529789942519730, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}

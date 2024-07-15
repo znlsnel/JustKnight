@@ -197,13 +197,13 @@ MonoBehaviour:
       - m_Target: {fileID: 6809383345153583135}
         m_TargetAssemblyTypeName: QuestReporter, Assembly-CSharp
         m_MethodName: Report
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: 0
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &6809383345153583135
@@ -218,8 +218,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed8ef8022628f444bad0d266749b75e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  category: {fileID: 11400000, guid: 52839e6589f6217438e581581769dd0e, type: 2}
-  target: {fileID: 11400000, guid: 35e1c149dfd1d1240a8cea42af0c9045, type: 2}
+  reportInfos:
+  - category: {fileID: 11400000, guid: 52839e6589f6217438e581581769dd0e, type: 2}
+    target: {fileID: 11400000, guid: 35e1c149dfd1d1240a8cea42af0c9045, type: 2}
   successCount: 1
 --- !u!1 &4573958512201458459
 GameObject:

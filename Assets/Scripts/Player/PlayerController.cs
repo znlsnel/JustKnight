@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using static PlayerAnimCtrl;
 
 public class PlayerController : MonoBehaviour
@@ -46,11 +47,14 @@ public class PlayerController : MonoBehaviour
 	private float _lastRollTime = 100.0f;
 	private float _lastBlockTime = 100.0f;
 
+	[SerializeField] public UnityEvent _onMoveLeft;
+	[SerializeField] public UnityEvent _onMoveRight;
+
 	private void Awake()
 	{
 		_rigid = GetComponent<Rigidbody2D>();
-		_animCtrl = GetComponent<PlayerAnimCtrl>();
-		_infoUIManager = GetComponent<PlayerInfoUIManager>();
+		_animCtrl = gameObject.AddComponent<PlayerAnimCtrl>(); 
+		_infoUIManager = gameObject.AddComponent<PlayerInfoUIManager>();
 
 		_collMan = gameObject.AddComponent<PlayerCollisionManager>();
 	}
@@ -100,12 +104,14 @@ public class PlayerController : MonoBehaviour
 				Vector3 temp = transform.localScale;
 				temp.x = Math.Abs(temp.x);
 				transform.localScale = temp;
+				_onMoveRight?.Invoke();
 			}
 			else if (_xMoveDir < 0)
 			{
 				Vector3 temp = transform.localScale;
 				temp.x = -Math.Abs(temp.x);
 				transform.localScale = temp;
+				_onMoveLeft?.Invoke(); 
 			}
 		}
 

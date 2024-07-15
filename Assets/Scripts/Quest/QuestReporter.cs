@@ -1,24 +1,55 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
+[Serializable]
+public class ReportInfo
+{
+	public CategorySO category;
+	public TargetSO target;
+}
 public class QuestReporter : MonoBehaviour
 {
-	[SerializeField] public CategorySO category;
-	[SerializeField] public TargetSO target;
+	[SerializeField] public List<ReportInfo> reportInfos = new List<ReportInfo>();
+	public int successCount = 0; 
 
-	public int successCount = 0;
+	public void Report(int idx) 
+	{
+		CategorySO category = reportInfos[idx].category;
+		TargetSO target = reportInfos[idx].target; 
 
-	public void Report()
-	{ 
-		QuestSO quest = QuestManager.instance.GetQuest(category, target);
-		if (quest != null )
+		List<Tuple<QuestSO,QuestTaskSO>> taskInfos = QuestManager.instance.GetQuest(category, target);
+		 
+		foreach(Tuple<QuestSO, QuestTaskSO> taskInfo in taskInfos)
 		{
-			quest.task.curCnt = quest.task.action.Run(quest.task.curCnt, successCount);
-			//if (quest.task.curCnt >= quest.task.targetCnt)
-			//{ 
-			//	quest.reward.Get();
-			//}
-		}
+			QuestSO quest = taskInfo.Item1;
+			QuestTaskSO task = taskInfo.Item2;
+
+			task.curCnt = task.action.Run(task.curCnt, successCount);
+			if (quest.isAutoComplete && task.curCnt >= task.targetCnt)
+			{
+				bool isClear = true;
+				foreach (QuestTaskSO t in quest.tasks)
+				{
+					if (t.curCnt < t.targetCnt)
+					{
+						isClear = false;
+						break;
+					}
+				}
+
+				if (isClear)
+				{
+					QuestManager.instance.RemoveQuest(quest);
+					UIHandler.instance._questUIManager.LoadSuccessUI("");
+				}
+
+
+
+			}
+		} 
+
 	}
 }

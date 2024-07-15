@@ -12,7 +12,7 @@ public class QuestSO : ScriptableObject
 	[TextArea(3, 10)]
 	public string description;
 
-	public QuestTaskSO task;
+	public List<QuestTaskSO> tasks;
 	// TASK
 	// - 카테고리
 	// - 이름, 설명
@@ -23,7 +23,9 @@ public class QuestSO : ScriptableObject
 	// REWARD
 	public RewardSO reward;
 	public bool isCancelable;
-	public bool isSavable; 
+	public bool isSavable;
+	public bool isAutoComplete;
 
-	
+
+
 }

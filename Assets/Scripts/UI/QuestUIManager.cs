@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -59,11 +60,20 @@ public class QuestUIManager : MonoBehaviour, IMenuUI
 			_descriptionText.text = "";
 			return;
 		}
+		_descriptionText.text = "";
 
-		if (quest.task.curCnt == quest.task.targetCnt)
-			_descriptionText.text = "CLEAR !!";
-		else 
-			_descriptionText.text = quest.description + " [" + quest.task.target._name +"] "+ quest.task.curCnt + " / " + quest.task.targetCnt;
+		foreach (QuestTaskSO task in quest.tasks)
+		{
+			if (task.curCnt < task.targetCnt)
+			{
+				_descriptionText.text += task.description + " [" + task.target._name + "] " + task.curCnt + " / " + task.targetCnt;
+			}
+			else
+				_descriptionText.text += task.description + " [¿Ï·á] ";
+
+			_descriptionText.text += "\n"; 
+		}
+
 	}
 
 	public void ActiveMenu(bool active)

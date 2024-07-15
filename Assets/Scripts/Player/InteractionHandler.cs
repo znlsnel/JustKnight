@@ -40,7 +40,7 @@ public class InteractionHandler : MonoBehaviour
 
 		foreach (var action in _interactions)
 		{
-			float dist = (action.Key.gameObject.transform.position - playerPos).magnitude;
+			float dist = (action.Key.transform.position - playerPos).magnitude;
 			if (curDist > dist)
 			{
 				curDist = dist;

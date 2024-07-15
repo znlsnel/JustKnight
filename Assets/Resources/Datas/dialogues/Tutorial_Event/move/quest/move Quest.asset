@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05b88bc0992cb7f48825016a50227719, type: 3}
-  m_Name: Kill_BOSS
+  m_Name: move Quest
   m_EditorClassIdentifier: 
-  codeName: KILL_BOSS
-  displayName: "\uBCF4\uC2A4 \uBAAC\uC2A4\uD130\uB97C \uC7A1\uC544\uC8FC\uC138\uC694"
-  description: "\uBCF4\uC2A4 \uBAAC\uC2A4\uD130\uB97C \uC7A1\uC544\uC8FC\uC138\uC694!"
+  codeName: MOVE_QUEST
+  displayName: move_quest
+  description: "\uC88C\uC6B0\uB85C \uC6C0\uC9C1\uC774\uB294 \uD018\uC2A4\uD2B8"
   tasks:
-  - {fileID: 11400000, guid: 0eeb111a899252247b7465efb88be986, type: 2}
-  reward: {fileID: 11400000, guid: 36496af37846ee94c8cc957705e3863f, type: 2}
+  - {fileID: 11400000, guid: 058acc991ed3070498a8a488eb9b824e, type: 2}
+  - {fileID: 11400000, guid: 7205c05a12f0142439f2574232370099, type: 2}
+  reward: {fileID: 0}
   isCancelable: 0
   isSavable: 0
+  isAutoComplete: 1

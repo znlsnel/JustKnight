@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class QuestManager : Singleton<QuestManager> 
 {
-	public List<QuestSO> _quests = new List<QuestSO>();
+	private List<QuestSO> _quests = new List<QuestSO>();
 
 	// Start is called before the first frame update
 	public override void Awake()
@@ -28,33 +28,27 @@ public class QuestManager : Singleton<QuestManager>
          
 	}
 
-	public QuestSO GetQuest(CategorySO category, TargetSO target)
+	public List<Tuple<QuestSO, QuestTaskSO>> GetQuest(CategorySO category, TargetSO target)
 	{
+		List<Tuple<QuestSO, QuestTaskSO>> ret = new List<Tuple<QuestSO, QuestTaskSO>>();
 		foreach(QuestSO s in _quests)
 		{
-			if (s.task.category == category && s.task.target == target)
-				return s;
+			foreach (QuestTaskSO task in s.tasks)
+				if (task.category == category && task.target == target) 
+					ret.Add(new Tuple<QuestSO, QuestTaskSO>(s, task)); 
 		}
-		return null;
+		return ret;
 	}
 
 	public void AddQuest(QuestSO quest)
 	{
 		UIHandler.instance._questUIManager.AddQuest(quest);
 		_quests.Add(quest); 
-		//GameObject gm = Instantiate<GameObject>(_questInfoBtnPrefab);
-		//	ButtonClickHandler b = gm.AddComponent<ButtonClickHandler>();
-
-		//	b.RegisterButtonAction(() => { OnButtonDown(quest.id); }, () => { OnButtonUp(quest.id); });
-		//gm.transform.SetParent(_questListUI.transform, false);
-		//	gm.gameObject.GetComponentInChildren<Text>().text = quest.title;
-
 	}
 
-
-
-	public void KillMonster(GameObject monster)
+	public void RemoveQuest(QuestSO quest)
 	{
-
+		_quests.Remove(quest);
 	}
+
 }

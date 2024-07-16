@@ -26,7 +26,7 @@ public class NpcManager : MonoBehaviour
 
         //     
         // [ NPC 1] [ NPC 2] [ NPC 3] [ NPC 4] 
-	private void OnTriggerEnter2D(Collider2D collision)
+	private void OnTriggerEnter2D(Collider2D collision) 
 	{
 
 		if ((isOneTimeUse && _beginCnt > 0) || _curDialogue == null || collision.gameObject.GetComponent<PlayerController>() == null)
@@ -39,8 +39,7 @@ public class NpcManager : MonoBehaviour
                         UIHandler.instance._dialogueSystem.BeginDialogue(_curDialogue);
 
                         InputManager.instance._interactionHandler.RegisterCancelAction(() => { 
-                                UIHandler.instance._dialogueSystem.CloseNPCDialogue(); 
-
+                               UIHandler.instance._dialogueSystem.ActiveMenu(false);  
 			});
 		});
 

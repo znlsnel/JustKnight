@@ -8,6 +8,7 @@ public class InteractionHandler : MonoBehaviour
 	// Start is called before the first frame update
 	 
 	Dictionary<GameObject, Action> _interactions = new Dictionary<GameObject, Action>(10);
+
 	Action _onCancel;
 	public void AddIAction(GameObject obj, Action action)
 	{
@@ -18,15 +19,23 @@ public class InteractionHandler : MonoBehaviour
 	{
 		_interactions.Remove(obj);
 	}
-	 
+
+	public void Cancel()
+	{
+		if (_onCancel != null)
+		{
+			_onCancel.Invoke();
+			_onCancel = null;
+		}
+	} 
+
 	public void ExcuteInteraction()
 	{
 		if (_onCancel != null)
 		{
-			_onCancel?.Invoke();
-			_onCancel = null;
-			return;
-		}
+			Cancel();
+			return; 
+		} 
 
 		if (_interactions.Count == 0)
 		{

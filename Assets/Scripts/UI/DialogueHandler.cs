@@ -58,27 +58,27 @@ public class DialogueHandler : MonoBehaviour , IMenuUI
 	}
 
 
-	public void CloseNPCDialogue()
-	{
-		ActiveMenu(false); 
-	}
-
 	public void OnResponseButton(int id)
 	{
 		if (_curQuestDlg.UpdateState(id))
-			CloseNPCDialogue();
+			ActiveMenu(false);
 
 		_curQuestDlg.curPage++;  
 		 
 		if (_curDlg.npc.Count > _curQuestDlg.curPage) 
 			UpdateDialougeText();
 		else
-			CloseNPCDialogue();
+			ActiveMenu(false);
 	}
 
 	public void ActiveMenu(bool active)
 	{
+		if (active == gameObject.activeSelf)
+			return;
+
 		gameObject.SetActive(active);
-		UIHandler.instance.CloseAllUI(gameObject, active); 
+		UIHandler.instance.CloseAllUI(gameObject, active);
+		if (!active)
+			InputManager.instance._interactionHandler.Cancel(); 
 	}
 }

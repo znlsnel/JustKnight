@@ -18,7 +18,6 @@ public class DialogueHandler : MonoBehaviour , IMenuUI
 	QuestDialogueSO _curQuestDlg;
 	DialogueSO _curDlg;
 
-
 	private void Awake()  
 	{
 		gameObject.SetActive(false);
@@ -27,13 +26,14 @@ public class DialogueHandler : MonoBehaviour , IMenuUI
 	public void BeginDialogue(QuestDialogueSO dialogue)
 	{
 		ActiveMenu(true);
-
+		  
+		_npcImage.sprite = Sprite.Create(dialogue.npcIcon, new Rect(0, 0, dialogue.npcIcon.width, dialogue.npcIcon.height), new Vector2(0.5f, 0.5f));
 		_curQuestDlg = dialogue;
 		_curDlg = _curQuestDlg.GetCurDialogue();
 
 		UpdateDialougeText();
 	}
-
+	 
 	private void UpdateDialougeText()
 	{
 		int page = _curQuestDlg.curPage;

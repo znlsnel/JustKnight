@@ -18,7 +18,7 @@ public enum EDialogueState
 [CreateAssetMenu(fileName = "new Episode", menuName = "Dialogue/new Episode", order = 2)]
 public class QuestDialogueSO : ScriptableObject
 {
-	public Image npcIcon;
+	public Texture2D npcIcon;
 	public QuestSO quest;
 
 	public DialogueSO pendingDialogue;   // 퀘스트 수락 전 DialogueSO
@@ -34,7 +34,7 @@ public class QuestDialogueSO : ScriptableObject
 
 	private void OnEnable()
 	{
-		 
+		
 	}
 
 	public DialogueSO GetCurDialogue()

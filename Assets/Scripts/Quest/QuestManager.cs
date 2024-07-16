@@ -38,27 +38,26 @@ public class QuestManager : Singleton<QuestManager>
     // Update is called once per frame
 	void Update()
 	{
-		
-		Debug.Log($"frame : {1.0f / Time.deltaTime}");
+
 	}
 
 	public List<Tuple<QuestSO, QuestTaskSO>> GetQuest(CategorySO category, TargetSO target)
 	{
-
 		List<Tuple<QuestSO, QuestTaskSO>> ret = new List<Tuple<QuestSO, QuestTaskSO>>();
-
-		HashSet<QuestSO> foundQuests;
+		HashSet<QuestSO> foundQuests; 
 
 		if (_quests.TryGetValue(new QuestInfo(category, target), out foundQuests))
 		{
-			foreach (QuestSO s in foundQuests)
-			{
-				foreach (QuestTaskSO task in s.tasks)
-					if (task.category == category && task.target == target)
-						ret.Add(new Tuple<QuestSO, QuestTaskSO>(s, task));
-			}
+
+			var tasks = foundQuests
+				.AsParallel()
+				.SelectMany(quest => quest.tasks
+					.Where(task => task.category == category && task.target == target)
+						.Select(task => new Tuple<QuestSO, QuestTaskSO>(quest, task)))
+				.ToList();
+			ret.AddRange(tasks);
+
 		}
-		Debug.Log($"GetQuest frame : {1.0f / Time.deltaTime}");
 		return ret;
 	}
 
@@ -75,12 +74,10 @@ public class QuestManager : Singleton<QuestManager>
 			{ 
 				myQuests = new HashSet<QuestSO>();
 				myQuests.Add(quest);
-
+				 
 				_quests.Add(new QuestInfo(task.category, task.target), myQuests); 
 			}
-		}
-		Debug.Log($"AddQuest frame : {1.0f / Time.deltaTime}");
-
+		} 
 	}
 
 	public void RemoveQuest(QuestSO quest)

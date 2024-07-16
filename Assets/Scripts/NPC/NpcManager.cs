@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NpcManager : MonoBehaviour
 {
-       [SerializeField] string _npcName;
-	[SerializeField] public List<QuestDialogueSO> _dialogues;
+	[SerializeField] public List<QuestDialogueSO> _dialogues; 
 	QuestDialogueSO _curDialogue;
         public bool isAutoStart = false;
 	public bool isOneTimeUse = false;
@@ -14,7 +14,7 @@ public class NpcManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
         {
-                _curDialogue = _dialogues[0]; 
+                _curDialogue = _dialogues[0];
 
 	}
 

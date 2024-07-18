@@ -3411,8 +3411,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5359084fbfb85f744be3605fe9846a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _quests:
-  - {fileID: 11400000, guid: bd9a0487fee05594096fcd5a849524d8, type: 2}
 --- !u!114 &2009174047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3761,6 +3759,10 @@ PrefabInstance:
       propertyPath: _questMenu
       value: 
       objectReference: {fileID: 1099497523838755359, guid: bd238b034ecc74042941d2fc58031687, type: 3}
+    - target: {fileID: 120232734221705836, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
+      propertyPath: _displayQuest
+      value: 
+      objectReference: {fileID: 8721016956293834939, guid: 96d0df0b59cf28f4fb6879e3b6253383, type: 3}
     - target: {fileID: 3004416864802387988, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
       propertyPath: m_Name
       value: GameManager

@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 8137199124965677384}
   - component: {fileID: 3392597263825874921}
   m_Layer: 5
-  m_Name: UserInfoUI
+  m_Name: UI_HpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

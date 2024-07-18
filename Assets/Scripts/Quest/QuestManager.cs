@@ -22,9 +22,9 @@ struct QuestInfo
 
 public class QuestManager : Singleton<QuestManager> 
 {
-	private Dictionary<QuestInfo, HashSet<QuestSO>> _quests = new Dictionary<QuestInfo, HashSet<QuestSO>>();
+	private Dictionary<QuestInfo, HashSet<QuestSO>> _tasks = new Dictionary<QuestInfo, HashSet<QuestSO>>();
 
-	// Start is called before the first frame update
+	// Start is called before the first frame update 
 	public override void Awake()
 	{
 		base.Awake();
@@ -46,7 +46,7 @@ public class QuestManager : Singleton<QuestManager>
 		List<Tuple<QuestSO, QuestTaskSO>> ret = new List<Tuple<QuestSO, QuestTaskSO>>();
 		HashSet<QuestSO> foundQuests; 
 
-		if (_quests.TryGetValue(new QuestInfo(category, target), out foundQuests))
+		if (_tasks.TryGetValue(new QuestInfo(category, target), out foundQuests))
 		{
 
 			var tasks = foundQuests
@@ -58,24 +58,26 @@ public class QuestManager : Singleton<QuestManager>
 			ret.AddRange(tasks);
 
 		}
-		return ret;
+		return ret; 
 	}
 
 	public void AddQuest(QuestSO quest)
 	{
 		UIHandler.instance._questUIManager.AddQuest(quest);
+		// UIHandler.instance._displayQuestManager.AddQuest(quest); 
+		 
 
 		foreach (QuestTaskSO task in quest.tasks)
 		{
 			HashSet<QuestSO> myQuests;
-			if (_quests.TryGetValue(new QuestInfo(task.category, task.target), out myQuests))
+			if (_tasks.TryGetValue(new QuestInfo(task.category, task.target), out myQuests))
 				myQuests.Add(quest);
 			else
 			{ 
 				myQuests = new HashSet<QuestSO>();
 				myQuests.Add(quest);
 				 
-				_quests.Add(new QuestInfo(task.category, task.target), myQuests); 
+				_tasks.Add(new QuestInfo(task.category, task.target), myQuests); 
 			}
 		} 
 	}
@@ -86,13 +88,13 @@ public class QuestManager : Singleton<QuestManager>
 		{
 			HashSet<QuestSO> foundQuests;
 
-			if (_quests.TryGetValue(new QuestInfo(task.category, task.target), out foundQuests))
+			if (_tasks.TryGetValue(new QuestInfo(task.category, task.target), out foundQuests))
 			{
 				if (foundQuests.Contains(quest))
 				{
 					foundQuests.Remove(quest);
 					if (foundQuests.Count == 0)
-						_quests.Remove(new QuestInfo(task.category, task.target));
+						_tasks.Remove(new QuestInfo(task.category, task.target));
 				}
 			}
 		}

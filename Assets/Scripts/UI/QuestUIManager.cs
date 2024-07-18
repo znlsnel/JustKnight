@@ -14,6 +14,8 @@ public class QuestUIManager : MonoBehaviour, IMenuUI
 
 	QuestSuccessUIManager _successUIManager;
 	// Start is called before the first frame update
+
+	Dictionary<QuestSO, QuestSlotManager> _slotManagers = new Dictionary<QuestSO, QuestSlotManager>();
 	private void Awake()
 	{
 		_descriptionText.text = "";
@@ -32,25 +34,17 @@ public class QuestUIManager : MonoBehaviour, IMenuUI
     {
         
     }  
-
+	 
 	public void AddQuest(QuestSO quest)
 	{
 		GameObject gm = Instantiate<GameObject>(_questPrefab);
-		gm.GetComponentInChildren<Text>().text = quest.name;
+		QuestSlotManager qsm = gm.GetComponent<QuestSlotManager>();
+		_slotManagers.Add(quest, qsm);
+
+		qsm.SetQuestSlot(quest);
 		gm.transform.SetParent(_contents.transform);
-
-		ButtonClickHandler b = gm.AddComponent<ButtonClickHandler>();
-		b.RegisterButtonAction(() => { OnButtonDown(quest); }, () => { OnButtonUp(quest); });
 	}
-	public void OnButtonDown(QuestSO quest)
-	{
 
-	} 
-
-	public void OnButtonUp(QuestSO quest)
-	{
-		UpdateQuestInfo(quest);
-	} 
 
 	// if you don't send anything as a factor, this function will empty the quest text
        public void UpdateQuestInfo(QuestSO quest = null)

@@ -17,38 +17,39 @@ public class UIHandler : Singleton<UIHandler>
 	[SerializeField] GameObject _inventory;
 	[SerializeField] GameObject _dialogue;
 	[SerializeField] GameObject _questMenu;
+	[SerializeField] GameObject _displayQuest;
 
 	[NonSerialized] public FadeEffectManager _fadeEffectManager;
 	[NonSerialized] public InventoryManager _inventoryManager;
 	[NonSerialized] public SkillMenuManager _skillMenuManager;
 	[NonSerialized] public DialogueHandler _dialogueSystem;
 	[NonSerialized] public QuestUIManager _questUIManager;
+	[NonSerialized] public DisplayQuestManager _displayQuestManager;
 
 	GameObject _curOpenUI;
 
 	public override void Awake()
 	{
 		base.Awake();
-		_inventory = Instantiate<GameObject>(_inventory);
-		_skillMenu = Instantiate<GameObject>(_skillMenu);
-		_fadeEffect = Instantiate<GameObject>(_fadeEffect);
-		_dialogue = Instantiate<GameObject>(_dialogue);
-		_questMenu = Instantiate<GameObject>(_questMenu);
+		InstantiateAndAssign(ref _inventory, out _inventoryManager);
+		InstantiateAndAssign(ref _skillMenu, out _skillMenuManager);
+		InstantiateAndAssign(ref _fadeEffect, out _fadeEffectManager, "Panel");
+		InstantiateAndAssign(ref _dialogue, out _dialogueSystem);
+		InstantiateAndAssign(ref _questMenu, out _questUIManager);
+		InstantiateAndAssign(ref _displayQuest, out _displayQuestManager);
 
-		_fadeEffectManager = _fadeEffect.transform.Find("Panel").GetComponent<FadeEffectManager>();
-		_inventoryManager = _inventory.GetComponent<InventoryManager>();
-		_skillMenuManager = _skillMenu.GetComponent<SkillMenuManager>();
-		_dialogueSystem = _dialogue.GetComponent<DialogueHandler>();
-		_questUIManager = _questMenu.GetComponent<QuestUIManager>(); 
-		 
-
-		DontDestroyOnLoad(_fadeEffect);   
-		DontDestroyOnLoad(_skillMenu);  
-		DontDestroyOnLoad(_inventory);   
-		DontDestroyOnLoad(_dialogue);    
-		DontDestroyOnLoad(_questMenu);      
 	}
-	 
+	private void InstantiateAndAssign<T>(ref GameObject prefab, out T manager, string childName = null) where T : Component
+	{
+		prefab = Instantiate(prefab);
+
+		manager = (childName != null) ?
+			prefab.transform.Find(childName).GetComponent<T>() 
+			: prefab.GetComponent<T>();
+
+		DontDestroyOnLoad(prefab); 
+	}
+
 	void Start()
 	{ 
 		InputManager.instance.BindInputAction(InputManager.instance._onSkillMenu, () =>

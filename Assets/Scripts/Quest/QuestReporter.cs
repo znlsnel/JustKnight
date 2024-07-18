@@ -39,17 +39,15 @@ public class QuestReporter : MonoBehaviour
 						break;
 					}
 				}
-
 				if (isClear)
 				{
 					QuestManager.instance.RemoveQuest(quest);
 					UIHandler.instance._questUIManager.LoadSuccessUI("");
 				}
-
-
-
 			}
-		} 
+		}
+		if (taskInfos.Count > 0)
+			UIHandler.instance._displayQuestManager.UpdateDisplayQuestSlot(); 
 
 	}
 }

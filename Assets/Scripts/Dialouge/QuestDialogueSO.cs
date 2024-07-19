@@ -102,7 +102,7 @@ public class QuestDialogueSO : ScriptableObject
 				string reward = "";
 				if (quest.reward != null)
 					reward = quest.reward.GetReward();
-
+				UIHandler.instance._questUIManager.MoveToCompletedQuests(quest); 
 				UIHandler.instance._questUIManager.LoadSuccessUI(reward);
 				state = EDialogueState.COMPLETED; 
 				break;

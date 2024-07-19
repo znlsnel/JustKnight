@@ -8,15 +8,19 @@ public class QuestUIManager : MonoBehaviour, IMenuUI
 {
         [SerializeField] Text _descriptionText;
 
-	[SerializeField] GameObject _contents;
+	[SerializeField] GameObject _activeQuestScrollList;
+	[SerializeField] GameObject _completedQuestScrollList;
+	[SerializeField] GameObject _activeQuestParent;
+	[SerializeField] GameObject _completedQuestParent; 
+
 	[SerializeField] GameObject _questPrefab;
 	[SerializeField] GameObject _successUI;
 
 	QuestSuccessUIManager _successUIManager;
-	// Start is called before the first frame update
 
 	Dictionary<QuestSO, QuestSlotManager> _slotManagers = new Dictionary<QuestSO, QuestSlotManager>();
-	private void Awake()
+	Dictionary<QuestSO, GameObject> _questObject = new Dictionary<QuestSO, GameObject>();
+	private void Awake() 
 	{
 		_descriptionText.text = "";
 		_successUI = Instantiate<GameObject>(_successUI);
@@ -25,24 +29,17 @@ public class QuestUIManager : MonoBehaviour, IMenuUI
 		DontDestroyOnLoad(_successUI); 
 		gameObject.SetActive(false); 
 	}
-	void Start()
-	{
-	}
 
-    // Update is called once per frame
-    void Update() 
-    {
-        
-    }  
-	 
 	public void AddQuest(QuestSO quest)
 	{
 		GameObject gm = Instantiate<GameObject>(_questPrefab);
 		QuestSlotManager qsm = gm.GetComponent<QuestSlotManager>();
+
 		_slotManagers.Add(quest, qsm);
+		_questObject.Add(quest, gm);
 
 		qsm.SetQuestSlot(quest);
-		gm.transform.SetParent(_contents.transform);
+		gm.transform.SetParent(_activeQuestParent.transform);
 	}
 
 
@@ -63,11 +60,20 @@ public class QuestUIManager : MonoBehaviour, IMenuUI
 				_descriptionText.text += task.description + " [" + task.target._name + "] " + task.curCnt + " / " + task.targetCnt;
 			}
 			else
+			{
 				_descriptionText.text += task.description + " [완료] ";
+			}
 
 			_descriptionText.text += "\n"; 
 		}
 
+	}
+
+	public void MoveToCompletedQuests(QuestSO quest)
+	{
+		GameObject gm;
+		if (_questObject.TryGetValue(quest, out gm))
+			gm.transform.SetParent(_completedQuestParent.transform);
 	}
 
 	public void ActiveMenu(bool active)
@@ -83,5 +89,19 @@ public class QuestUIManager : MonoBehaviour, IMenuUI
 	public void LoadSuccessUI(string rewardDescription)
 	{
 		_successUIManager.OpenSuccessUI(rewardDescription); 
+	}
+
+	public void OnListChangeButton(bool 진행중인퀘스트목록으로변경)
+	{
+		if (진행중인퀘스트목록으로변경)
+		{
+			_activeQuestScrollList.SetActive(true);
+			_completedQuestScrollList.SetActive(false);
+		}
+		else
+		{
+			_activeQuestScrollList.SetActive(false);
+			_completedQuestScrollList.SetActive(true);
+		}
 	}
 }

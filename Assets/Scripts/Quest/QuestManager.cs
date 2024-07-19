@@ -64,9 +64,8 @@ public class QuestManager : Singleton<QuestManager>
 	public void AddQuest(QuestSO quest)
 	{
 		UIHandler.instance._questUIManager.AddQuest(quest);
-		// UIHandler.instance._displayQuestManager.AddQuest(quest); 
-		 
-
+		UIHandler.instance._displayQuestManager.AddQuest(quest); 
+		
 		foreach (QuestTaskSO task in quest.tasks)
 		{
 			HashSet<QuestSO> myQuests;

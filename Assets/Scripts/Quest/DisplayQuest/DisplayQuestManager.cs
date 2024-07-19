@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class DisplayQuestManager : MonoBehaviour
@@ -7,7 +8,16 @@ public class DisplayQuestManager : MonoBehaviour
         public List<GameObject> _questSlots = new List<GameObject>();
         public List<QuestSO> _quests = new List<QuestSO>();
 
-        public bool AddQuest(QuestSO quest)
+        public bool IsQuestSaved(QuestSO quest)
+        {
+                foreach (QuestSO questSO in _quests)
+                        if (questSO == quest)
+                                return true;
+
+                return false;
+        }
+
+	public bool AddQuest(QuestSO quest)
         {
                 if (_quests.Count == 3)
                         return false;

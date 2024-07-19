@@ -34,6 +34,9 @@ public class NpcManager : MonoBehaviour
 
 		_beginCnt++;
 
+		if (_curDialogue.GetCurDialogue() == null)
+			return;
+
 		InputManager.instance._interactionHandler.AddIAction(gameObject, () => 
 		{
                         UIHandler.instance._dialogueSystem.BeginDialogue(_curDialogue);

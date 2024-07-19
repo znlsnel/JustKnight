@@ -10,7 +10,6 @@ public class QuestSlotManager : MonoBehaviour
 	public Button _questDisplayButton;
 
 	QuestSO _quest;
-	bool isDisplayed = false;
 
 	public void SetQuestSlot(QuestSO quest)
 	{
@@ -22,22 +21,14 @@ public class QuestSlotManager : MonoBehaviour
 
 	public void AddDisplayQuest()
 	{
-		if (isDisplayed)
-		{
-			UIHandler.instance._displayQuestManager.RemoveQuest(_quest);
-				Debug.Log("Remove ");
-				isDisplayed = false;
+		bool isDisplayed = UIHandler.instance._displayQuestManager.IsQuestSaved(_quest);
 
-			
-		}
+		if (isDisplayed)
+			UIHandler.instance._displayQuestManager.RemoveQuest(_quest);
 		else
-		{
-			if (UIHandler.instance._displayQuestManager.AddQuest(_quest))
-			{
-				isDisplayed = true;
-				Debug.Log("ADD ");
-			}
-		}
+			UIHandler.instance._displayQuestManager.AddQuest(_quest);
+
+		
 	}
 
 }

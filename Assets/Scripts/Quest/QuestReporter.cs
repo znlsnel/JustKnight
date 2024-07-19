@@ -36,18 +36,22 @@ public class QuestReporter : MonoBehaviour
 					if (t.curCnt < t.targetCnt)
 					{
 						isClear = false;
-						break;
+						break; 
 					}
 				}
 				if (isClear)
 				{
+					UIHandler.instance._questUIManager.MoveToCompletedQuests(quest);
 					QuestManager.instance.RemoveQuest(quest);
 					UIHandler.instance._questUIManager.LoadSuccessUI("");
 				}
 			}
 		}
 		if (taskInfos.Count > 0)
-			UIHandler.instance._displayQuestManager.UpdateDisplayQuestSlot(); 
+		{
+			UIHandler.instance._displayQuestManager.UpdateDisplayQuestSlot();
+			UIHandler.instance._questUIManager.UpdateQuestInfo();
+		}
 
 	}
 }

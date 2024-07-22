@@ -34,7 +34,7 @@ public class UIHandler : Singleton<UIHandler>
 		InstantiateAndAssign(ref _inventory, out _inventoryManager);
 		InstantiateAndAssign(ref _skillMenu, out _skillMenuManager);
 		InstantiateAndAssign(ref _fadeEffect, out _fadeEffectManager, "Panel");
-		InstantiateAndAssign(ref _dialogue, out _dialogueSystem);
+		InstantiateAndAssign(ref _dialogue, out _dialogueSystem); 
 		InstantiateAndAssign(ref _questMenu, out _questUIManager);
 		InstantiateAndAssign(ref _displayQuest, out _displayQuestManager);
 
@@ -47,22 +47,22 @@ public class UIHandler : Singleton<UIHandler>
 			prefab.transform.Find(childName).GetComponent<T>() 
 			: prefab.GetComponent<T>();
 
-		DontDestroyOnLoad(prefab); 
+		DontDestroyOnLoad(prefab);  
 	}
 
 	void Start()
 	{ 
-		InputManager.instance.BindInputAction(InputManager.instance._onSkillMenu, () =>
+		InputManager.instance.BindInputAction("SkillMenu", () =>
 		{
 			this._skillMenuManager.ActiveMenu(!this._skillMenu.activeSelf);
 		}); 
 
-		InputManager.instance.BindInputAction(InputManager.instance._onInventory, () => 
+		InputManager.instance.BindInputAction("Inventory", () => 
 		{ 
 			this._inventoryManager.ActiveMenu(!this._inventory.activeSelf);
 		});
 
-		InputManager.instance.BindInputAction(InputManager.instance._onQuestMenu, () =>
+		InputManager.instance.BindInputAction("QuestMenu", () =>
 		{ 
 			this._questUIManager.ActiveMenu(!_questMenu.activeSelf); 
 		});

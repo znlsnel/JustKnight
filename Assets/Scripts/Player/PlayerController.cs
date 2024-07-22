@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 	PlayerAnimCtrl _animCtrl;
 	PlayerInfoUIManager _infoUIManager;
 	PlayerCollisionManager _collMan; 
+	InputManager _inputManager;
 
 	[SerializeField] float _attackCoolTime = 0.2f;
 	[SerializeField] float _jumpCoolTime = 0.2f;
@@ -36,7 +37,7 @@ public class PlayerController : MonoBehaviour
 	bool _isAttack = false;
 	bool _isJump = false;
 	bool _isRoll = false;
-	bool _isBlock = false; 
+	bool _isShield = false; 
 
 	bool _isAttackable = true;
 
@@ -55,28 +56,45 @@ public class PlayerController : MonoBehaviour
 		_rigid = GetComponent<Rigidbody2D>();
 		_animCtrl = gameObject.AddComponent<PlayerAnimCtrl>(); 
 		_infoUIManager = gameObject.AddComponent<PlayerInfoUIManager>();
-
 		_collMan = gameObject.AddComponent<PlayerCollisionManager>();
+
+		_inputManager = InputManager.instance;
 	}
 
 	void Start()
 	{
 		_infoUIManager.UpdateHpBar(3, 3);
+		_inputManager.BindInputAction("Attack", () => InputAttack(true));
+		_inputManager.BindInputAction("Attack", () => InputAttack(false), true);
+
+		_inputManager.BindInputAction("Shield", () => { _isShield = true; });
+		_inputManager.BindInputAction("Shield", () => { _isShield = false; }, true);
+
+		_inputManager.BindInputAction("Jump", () => InputJump());
+
+		_inputManager.BindInputAction("Portal", () => InputJump());
+		_inputManager.BindInputAction("Roll", () => InputRoll());
 
 	}
 
-
-	// Update is called once per frame
-	void Update()
+	void InputAttack(bool press)
 	{
-		if (_isAttackable)
-			_lastAttackTime += Time.deltaTime;
-		_lastJumpTime += Time.deltaTime;
-		_lastRollTime += Time.deltaTime;
-		_lastBlockTime += Time.deltaTime; 
+		if (press && _lastAttackTime > _attackCoolTime && _isAttackable)
+		{
+			_isAttack = true;
+		}
+		else
+			_isAttack = false;
+	}
 
-		_xMoveDir = Input.GetAxis("Horizontal");
-		
+	void InputJump()
+	{
+		if (_lastJumpTime > _jumpCoolTime && _collMan._onSensorGround)
+			_isJump = true;
+	}
+
+	void InputPortal()
+	{
 		if (_onPortalEntered != null)
 		{
 			if (Input.GetAxis("OnPortal") > 0.0f)
@@ -88,14 +106,26 @@ public class PlayerController : MonoBehaviour
 				_onPortalEntered = null;
 			}
 		}
+	}
+	void InputRoll()
+	{
+		if (_lastRollTime > _rollCoolTime && _collMan._onSensorGround)
+			_isRoll = true;
+	}
 
-		_isAttack = Input.GetAxis("Fire1") > 0.9f && _lastAttackTime > _attackCoolTime && _isAttackable;
+	// Update is called once per frame
+	void Update()
+	{
+		if (_isAttackable)
+			_lastAttackTime += Time.deltaTime;
+		_lastJumpTime += Time.deltaTime;
+		_lastRollTime += Time.deltaTime;
+		_lastBlockTime += Time.deltaTime;
+
+		_xMoveDir = _inputManager.GetInputAction("Move").ReadValue<float>(); 
+		
 		if (UIHandler.instance.isOpenAnyUI())
 			_isAttack = false; 
-
-		_isJump = Input.GetAxis("Jump") > 0.9f && _lastJumpTime > _jumpCoolTime && (_collMan._onSensorGround);
-		_isRoll = Input.GetAxis("Roll") > 0.9f && _lastRollTime > _rollCoolTime && _collMan._onSensorGround;
-		_isBlock = Input.GetAxis("Block") > 0.9f;
 
 		if (_animCtrl.state == PlayerState.Attack == false)
 		{
@@ -181,7 +211,7 @@ public class PlayerController : MonoBehaviour
 		if (_collMan._onSensorGround)
 			_rigid.velocity = new Vector2(0.0f, 0.0f);
 
-		if (_isBlock)
+		if (_isShield)
 		{
 			_animCtrl.state = PlayerState.Block;
 			return;
@@ -225,7 +255,7 @@ public class PlayerController : MonoBehaviour
 		_lastRollTime = 0.0f;
 
 		_rigid.velocity = new Vector2(transform.localScale.x * 10.0f, 0.0f);
-
+		_isRoll = false;
 	}
 
 	void AE_EndRoll()
@@ -328,6 +358,7 @@ public class PlayerController : MonoBehaviour
 
 			_rigid.velocity += new Vector2(Math.Clamp(_moveDir.x, -1.0f, 1.0f) * _playerSpeed * 15.0f, 8.0f);
 			_lastJumpTime = 0.0f;
+			_isJump = false; 
 		}
 
 		OnFalling();
@@ -417,14 +448,14 @@ public class PlayerController : MonoBehaviour
 	 
 	void OnIdleBlock()
 	{
-		if (_isBlock == false)
+		if (_isShield == false)
 			_animCtrl.state = PlayerState.Idle;
 
 	}
 
 	void AE_EndBlock() 
 	{
-		if (_isBlock)
+		if (_isShield)
 		{
 			_animCtrl.state = PlayerState.IdleBlock;
 			return;

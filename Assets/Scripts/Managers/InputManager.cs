@@ -4,47 +4,59 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using UnityEngine.Windows;
 using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class InputManager : Singleton<InputManager>
 {
 	[NonSerialized] public InteractionHandler _interactionHandler;
-	[NonSerialized] public InputAction _onSkillMenu;
-	[NonSerialized] public InputAction _onInventory;
-	[NonSerialized] public InputAction _onInteraction; 
-	[NonSerialized] public InputAction _onQuestMenu; 
+
+	private Dictionary<string, InputAction> _inputActions = new Dictionary<string, InputAction>();
+	private InputActionMap _uiActionMap;
+	private InputActionMap _CharacterActionMap;
 
 	// Start is called before the first frame update
 	public override void Awake() 
 	{
 		base.Awake();
 
-		var inputActionAsset = Resources.Load<InputActionAsset>("Inputs/Input_UI");
-		var actionMap = inputActionAsset.FindActionMap("UI");
-		_onInventory = actionMap.FindAction("Inventory");
-		_onSkillMenu = actionMap.FindAction("Skill_Menu");
-		_onInteraction = actionMap.FindAction("Interaction");
-		_onQuestMenu = actionMap.FindAction("Quest_Menu");   
+		_interactionHandler = gameObject.AddComponent<InteractionHandler>();
 
-		_onSkillMenu.Enable();   
-		_onInventory.Enable();
-		_onInteraction.Enable();
-		_onQuestMenu.Enable(); 
+		var inputActionAsset = Resources.Load<InputActionAsset>("Inputs/InputActions");
+		_uiActionMap = inputActionAsset.FindActionMap("UI");
+		_CharacterActionMap = inputActionAsset.FindActionMap("Character");
 
-
-		_interactionHandler = gameObject.AddComponent<InteractionHandler>(); 
+		foreach (InputActionMap actionMap in inputActionAsset.actionMaps)
+		{
+			foreach (InputAction action in actionMap.actions)
+			{
+				_inputActions.Add(action.name, action);
+				action.Enable();
+			}
+		}
 	}
+
 	void Start() 
 	{
-		BindInputAction(_onInteraction, () => {_interactionHandler.ExcuteInteraction();});
+		BindInputAction("Interaction", () => {_interactionHandler.ExcuteInteraction();});
 	}
-	
-	public void BindInputAction(InputAction input, Action action)
+
+	public void BindInputAction(string inputActionName, Action act, bool bindCancel = false)
 	{
-		input.performed += (InputAction.CallbackContext context) => 
-		{ 
-			action.Invoke();  
-		}; 
+		InputAction inputAction;
+		if (_inputActions.TryGetValue(inputActionName, out inputAction))
+		{
+			 Action< InputAction.CallbackContext> action = (InputAction.CallbackContext context) => { act.Invoke(); };
+			if (!bindCancel) 
+				inputAction.performed += action; 
+			else
+				inputAction.canceled -= action; 
+		} 
+	}
+
+	public InputAction GetInputAction(string inputActionName)
+	{
+		return _inputActions[inputActionName];
 	}
 
 	// Update is called once per frame

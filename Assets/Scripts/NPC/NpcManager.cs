@@ -11,11 +11,20 @@ public class NpcManager : MonoBehaviour
         public bool isAutoStart = false;
 	public bool isOneTimeUse = false;
 	public int _beginCnt = 0;
+
+	QuestManager _questManager;
+	DialogueManager _dialogueManager;
 	// Start is called before the first frame update
 	void Start()
-        {
+        { 
                 _curDialogue = _dialogues[0];
-
+		_questManager = QuestManager.instance;
+		_dialogueManager = UIHandler.instance._dialogueSystem;
+		foreach (var d in _dialogues)
+		{
+			QuestManager.instance.AddQuest(d.quest);
+			UIHandler.instance._dialogueSystem.AddDialogue(d); 
+		}
 	}
 
         // Update is called once per frame
@@ -26,16 +35,11 @@ public class NpcManager : MonoBehaviour
 
         //     
         // [ NPC 1] [ NPC 2] [ NPC 3] [ NPC 4] 
-	private void OnTriggerEnter2D(Collider2D collision) 
+	private void OnTriggerEnter2D(Collider2D collision)  
 	{
-
-		if ((isOneTimeUse && _beginCnt > 0) || _curDialogue == null || collision.gameObject.GetComponent<PlayerController>() == null)
+		_curDialogue = _dialogueManager.UpdateQuestDialogue(_curDialogue);
+		if (_curDialogue.GetCurDialogue() == null || collision.gameObject.GetComponent<PlayerController>() == null)
                         return;
-
-		_beginCnt++;
-
-		if (_curDialogue.GetCurDialogue() == null)
-			return;
 
 		InputManager.instance._interactionHandler.AddIAction(gameObject, () => 
 		{

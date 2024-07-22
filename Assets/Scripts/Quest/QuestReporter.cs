@@ -41,9 +41,8 @@ public class QuestReporter : MonoBehaviour
 				}
 				if (isClear)
 				{
-					UIHandler.instance._questUIManager.MoveToCompletedQuests(quest);
-					QuestManager.instance.RemoveQuest(quest);
-					UIHandler.instance._questUIManager.LoadSuccessUI("");
+					QuestManager.instance.CompleteQuest(quest, "");
+					
 				}
 			}
 		}

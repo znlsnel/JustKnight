@@ -27,7 +27,7 @@ public class InteractionHandler : MonoBehaviour
 			_onCancel.Invoke();
 			_onCancel = null;
 		}
-	} 
+	}  
 
 	public void ExcuteInteraction()
 	{

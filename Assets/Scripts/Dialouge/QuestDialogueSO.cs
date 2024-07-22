@@ -48,7 +48,7 @@ public class QuestDialogueSO : ScriptableObject
 				break;
 			} 
 		}
-
+		curDialogue = null;
 		curPage = 0;
 		if (state == EDialogueState.IN_PROGRESS && isClear)
 			state = EDialogueState.AWAITING_COMPLETION;
@@ -99,17 +99,16 @@ public class QuestDialogueSO : ScriptableObject
 				return true; 
 
 			case EResponseType.GET_REWARD:
-				string reward = "";
-				if (quest.reward != null)
-					reward = quest.reward.GetReward();
-				UIHandler.instance._questUIManager.MoveToCompletedQuests(quest); 
-				UIHandler.instance._questUIManager.LoadSuccessUI(reward);
-				state = EDialogueState.COMPLETED; 
+				{
+					string reward = quest.reward != null ? quest.reward.GetReward() : "";
+					QuestManager.instance.CompleteQuest(quest, reward);
+					state = EDialogueState.COMPLETED; 
+				}
 				break;
 
 			case EResponseType.RECEIVE_QUEST:
 				state = EDialogueState.IN_PROGRESS;
-				QuestManager.instance.AddQuest(quest);
+				QuestManager.instance.RegisterQuest(quest);
 				break;
 
 			case EResponseType.REJECT:

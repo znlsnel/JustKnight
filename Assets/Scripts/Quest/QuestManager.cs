@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Json;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 struct QuestInfo
 {
@@ -23,23 +24,7 @@ struct QuestInfo
 public class QuestManager : Singleton<QuestManager> 
 {
 	private Dictionary<QuestInfo, HashSet<QuestSO>> _tasks = new Dictionary<QuestInfo, HashSet<QuestSO>>();
-
-	// Start is called before the first frame update 
-	public override void Awake()
-	{
-		base.Awake();
-	} 
-
-	void Start()
-	{  
-
-	} 
-
-    // Update is called once per frame
-	void Update()
-	{
-
-	}
+	public Dictionary<string, QuestSO> _quests = new Dictionary<string, QuestSO>(); 
 
 	public List<Tuple<QuestSO, QuestTaskSO>> GetQuest(CategorySO category, TargetSO target)
 	{
@@ -63,25 +48,33 @@ public class QuestManager : Singleton<QuestManager>
 
 	public void AddQuest(QuestSO quest)
 	{
-		UIHandler.instance._questUIManager.AddQuest(quest);
-		UIHandler.instance._displayQuestManager.AddQuest(quest); 
-		
+		if (_quests.ContainsKey(quest.codeName))
+			return;
+
+		_quests.Add(quest.codeName, quest);
 		foreach (QuestTaskSO task in quest.tasks)
 		{
 			HashSet<QuestSO> myQuests;
 			if (_tasks.TryGetValue(new QuestInfo(task.category, task.target), out myQuests))
 				myQuests.Add(quest);
 			else
-			{ 
-				myQuests = new HashSet<QuestSO>();
-				myQuests.Add(quest);
-				 
-				_tasks.Add(new QuestInfo(task.category, task.target), myQuests); 
+			{
+				myQuests = new HashSet<QuestSO> { quest };
+
+				_tasks.Add(new QuestInfo(task.category, task.target), myQuests);
 			}
-		} 
+		}
 	}
 
-	public void RemoveQuest(QuestSO quest)
+	public void RegisterQuest(QuestSO quest)
+	{
+		quest = UpdateQuestData(quest); 
+		UIHandler.instance._questUIManager.AddQuest(quest);
+		UIHandler.instance._displayQuestManager.AddQuest(quest);
+		quest.questState = EQuestState.IN_PROGRESS;
+	}
+
+	public void RemoveQuestTasks(QuestSO quest)
 	{
 		foreach (QuestTaskSO task in quest.tasks)
 		{
@@ -98,7 +91,20 @@ public class QuestManager : Singleton<QuestManager>
 			}
 		}
 		Debug.Log($"RemoveQuest frame : {1.0f / Time.deltaTime}");
-
 	}
 
+
+	public void CompleteQuest(QuestSO quest, string rewardInfo)
+	{
+		UIHandler.instance._questUIManager.LoadSuccessUI(rewardInfo);
+		UIHandler.instance._questUIManager.MoveToCompletedQuests(quest);
+
+		QuestManager.instance.RemoveQuestTasks(quest);
+		quest.questState = EQuestState.COMPLETED;
+	}
+
+	public QuestSO UpdateQuestData(QuestSO quest)
+	{
+		return _quests[quest.codeName]; 
+	}
 }

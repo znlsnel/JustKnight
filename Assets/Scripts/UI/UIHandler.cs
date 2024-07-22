@@ -22,7 +22,7 @@ public class UIHandler : Singleton<UIHandler>
 	[NonSerialized] public FadeEffectManager _fadeEffectManager;
 	[NonSerialized] public InventoryManager _inventoryManager;
 	[NonSerialized] public SkillMenuManager _skillMenuManager;
-	[NonSerialized] public DialogueHandler _dialogueSystem;
+	[NonSerialized] public DialogueManager _dialogueSystem;
 	[NonSerialized] public QuestUIManager _questUIManager;
 	[NonSerialized] public DisplayQuestManager _displayQuestManager;
 

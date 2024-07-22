@@ -6,10 +6,11 @@ using UnityEngine.UI;
 using System.IO;
 using UnityEngine.AI;
 
-
-public class DialogueHandler : MonoBehaviour , IMenuUI
+ 
+public class DialogueManager : MonoBehaviour , IMenuUI
 {
 	string _ncpName;
+	private Dictionary<string, QuestDialogueSO> _dialogues = new Dictionary<string, QuestDialogueSO>();
 
 	[SerializeField] Image _npcImage;
 	[SerializeField] Text _npcScript;
@@ -21,6 +22,19 @@ public class DialogueHandler : MonoBehaviour , IMenuUI
 	private void Awake()  
 	{
 		gameObject.SetActive(false);
+	}
+
+	public void AddDialogue(QuestDialogueSO dialogue)
+	{
+		if (_dialogues.ContainsKey(dialogue.name))
+			return;
+
+		_dialogues.Add(dialogue.name, dialogue);  
+	}
+
+	public QuestDialogueSO UpdateQuestDialogue(QuestDialogueSO dialogue)
+	{
+		return _dialogues[dialogue.name]; 
 	}
 
 	public void BeginDialogue(QuestDialogueSO dialogue)

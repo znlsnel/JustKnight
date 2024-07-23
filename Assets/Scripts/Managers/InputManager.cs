@@ -41,16 +41,18 @@ public class InputManager : Singleton<InputManager>
 		BindInputAction("Interaction", () => {_interactionHandler.ExcuteInteraction();});
 	}
 
-	public void BindInputAction(string inputActionName, Action act, bool bindCancel = false)
+	public void BindInputAction(string inputActionName, Action act, Action cancel = null)
 	{
 		InputAction inputAction;
 		if (_inputActions.TryGetValue(inputActionName, out inputAction))
 		{
 			 Action< InputAction.CallbackContext> action = (InputAction.CallbackContext context) => { act.Invoke(); };
-			if (!bindCancel) 
-				inputAction.performed += action; 
-			else
-				inputAction.canceled -= action; 
+			inputAction.performed += action; 
+			if (cancel != null)
+			{
+				Action<InputAction.CallbackContext> cc = (InputAction.CallbackContext context) => { cancel.Invoke(); };
+				inputAction.canceled += cc;
+			}
 		} 
 	}
 

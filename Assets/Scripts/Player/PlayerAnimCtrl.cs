@@ -12,22 +12,16 @@ public class PlayerAnimCtrl : MonoBehaviour
 		Idle = 0, 
 		Run = 1,
 		Roll = 2, 
-
 		Attack = 3,
-
 		IdleBlock = 4,
 		Block = 5,
-
 		Jump = 6,
 		Fall = 7,
-		 
 		WallSlider = 8,
-
 		Hurt = 9,
-
 		Death = 10,
 	}
-	 
+
 
 	[NonSerialized] public Animator anim;
 	[NonSerialized] public PlayerState state = PlayerState.Idle;
@@ -53,22 +47,19 @@ public class PlayerAnimCtrl : MonoBehaviour
 	{ 
 		// Death -> Hurt -> Attack -> Fall -> WallSlider -> Jump -> Block -> 
 		// TODO
-		
+		// if (스킬 사용 중)
 
 		string nextAnim = ""; 
 		switch (state)
 		{ 
 			case PlayerState.Idle: 
-				//nextAnim = "Test_Idle"; 
 				nextAnim = "Idle"; 
 				break;
 			case PlayerState.Run:
-				//nextAnim = "Test_Run";
 				nextAnim = "Run"; 
 				break; 
 			case PlayerState.Roll: 
 				nextAnim = "Roll";
-				//nextAnim = "Test_Roll";
 				break;
 			case PlayerState.Attack:
 				{
@@ -81,7 +72,6 @@ public class PlayerAnimCtrl : MonoBehaviour
 				break; 
 			case PlayerState.Block:
 				nextAnim = "Block";
-			//	nextAnim = "IdleBlock";
 				break;
 			case PlayerState.Fall:
 				nextAnim = "Fall";
@@ -106,7 +96,6 @@ public class PlayerAnimCtrl : MonoBehaviour
 		{
 			curAnim = nextAnim;
 			anim.Play(curAnim); 
-			//anim.speed = 2.0f;
 		}
 	}
 

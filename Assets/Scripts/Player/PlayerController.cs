@@ -14,12 +14,12 @@ public class PlayerController : MonoBehaviour
 	PlayerCollisionManager _collMan; 
 	InputManager _inputManager;
 
-	[SerializeField] float _attackCoolTime = 0.2f;
-	[SerializeField] float _jumpCoolTime = 0.2f;
-	[SerializeField] float _rollCoolTime = 1.0f;
-	[SerializeField] float _blockCoolTime = 1.0f;
+	public float _attackDelay = 0.2f;
+	public float _jumpDelay = 0.2f;
+	public float _rollDelay = 1.0f;
+	public float _shieldDelay = 1.0f; 
 
-	[SerializeField] float _playerSpeed = 5.0f;
+	[SerializeField] public float _playerSpeed = 5.0f;
 
 	[SerializeField] GameObject _SlideDust;
 
@@ -72,14 +72,14 @@ public class PlayerController : MonoBehaviour
 
 		_inputManager.BindInputAction("Jump", () => InputJump());
 
-		_inputManager.BindInputAction("Portal", () => InputJump());
+		_inputManager.BindInputAction("Portal", () => InputPortal());
 		_inputManager.BindInputAction("Roll", () => InputRoll());
 
 	}
 
 	void InputAttack(bool press)
 	{
-		if (press && _lastAttackTime > _attackCoolTime && _isAttackable)
+		if (press && _lastAttackTime > _attackDelay && _isAttackable)
 		{
 			_isAttack = true;
 		}
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
 
 	void InputJump()
 	{
-		if (_lastJumpTime > _jumpCoolTime && _collMan._onSensorGround)
+		if (_lastJumpTime > _jumpDelay && _collMan._onSensorGround)
 			_isJump = true;
 	}
 
@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
 	}
 	void InputRoll()
 	{
-		if (_lastRollTime > _rollCoolTime && _collMan._onSensorGround)
+		if (_lastRollTime > _rollDelay && _collMan._onSensorGround)
 			_isRoll = true;
 	}
 
@@ -203,8 +203,8 @@ public class PlayerController : MonoBehaviour
 	void CancelAnim()
 	{
 		_isAttackable = true;
-
 	}
+
 	void OnIdle()
 	{
 		_moveDir = Vector2.zero;
@@ -249,7 +249,7 @@ public class PlayerController : MonoBehaviour
 
 	void OnRoll()
 	{
-		if (_lastRollTime <= _rollCoolTime)
+		if (_lastRollTime <= _rollDelay)
 			return;
 
 		_lastRollTime = 0.0f;
@@ -261,8 +261,8 @@ public class PlayerController : MonoBehaviour
 	void AE_EndRoll()
 	{
 		_animCtrl.state = PlayerState.Idle;
-		if (_lastJumpTime > _jumpCoolTime)
-			_lastJumpTime = _jumpCoolTime - 0.1f;
+		if (_lastJumpTime > _jumpDelay)
+			_lastJumpTime = _jumpDelay - 0.1f;
 		//rigid.velocity = Vector
 
 	}
@@ -302,7 +302,7 @@ public class PlayerController : MonoBehaviour
 
 	void OnAttack()
 	{
-		if (_lastAttackTime < _attackCoolTime) 
+		if (_lastAttackTime < _attackDelay) 
 			return;
 
 		_lastAttackTime = 0.0f;
@@ -350,7 +350,7 @@ public class PlayerController : MonoBehaviour
 
 	void OnJump()
 	{
-		if (_lastJumpTime > _jumpCoolTime && _isJump)
+		if (_lastJumpTime > _jumpDelay && _isJump)
 		{
 			Vector3 tv = _rigid.velocity;
 			tv.y = 0.0f;
@@ -383,8 +383,8 @@ public class PlayerController : MonoBehaviour
 			if (_collMan._onSensorGround)
 			{
 				_animCtrl.state = PlayerState.Idle;
-				if (_lastJumpTime > _jumpCoolTime)
-					_lastJumpTime = _jumpCoolTime - 0.1f;
+				if (_lastJumpTime > _jumpDelay)
+					_lastJumpTime = _jumpDelay - 0.1f;
 				//Debug.Log("TO IDLE");
 			}
 		}
@@ -440,7 +440,7 @@ public class PlayerController : MonoBehaviour
 
 	void OnBlock()
 	{
-		if (_lastBlockTime <= _blockCoolTime)
+		if (_lastBlockTime <= _shieldDelay)
 			return;
 
 		_lastBlockTime = 0.0f;

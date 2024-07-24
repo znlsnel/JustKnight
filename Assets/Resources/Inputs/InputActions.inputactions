@@ -1,5 +1,5 @@
 {
-    "name": "Input_UI",
+    "name": "InputActions",
     "maps": [
         {
             "name": "UI",
@@ -230,7 +230,7 @@
                     "name": "",
                     "id": "2f0c8981-6417-473f-888c-18091d034dd5",
                     "path": "<Keyboard>/leftShift",
-                    "interactions": "MultiTap",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Roll",

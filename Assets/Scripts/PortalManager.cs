@@ -34,8 +34,8 @@ public class PortalManager : MonoBehaviour
 	{
 		if (collision.gameObject.tag == "Player")
 		{
-			collision.GetComponent<PlayerController>()._onPortalEntered = null ;
-			collision.GetComponent<PlayerController>()._onPortalEntered += OnPortal;  
+			collision.GetComponent<PlayerActionController>()._onPortalEntered = null ;
+			collision.GetComponent<PlayerActionController>()._onPortalEntered += OnPortal;   
 
 		}
 	}
@@ -44,7 +44,7 @@ public class PortalManager : MonoBehaviour
 	{
 		if (collision.gameObject.tag == "Player")
 		{
-			collision.GetComponent<PlayerController>()._onPortalEntered = null;
+			collision.GetComponent<PlayerActionController>()._onPortalEntered = null;
 		} 
 	} 
 }

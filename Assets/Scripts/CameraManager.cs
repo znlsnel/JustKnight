@@ -39,16 +39,15 @@ public class CameraManager : MonoBehaviour
 	}
 	 
 
-	public void ShakeCamera_Left()
+	public void ShakeCamera(bool left)
 	{
-		
-		_anim.Play("CameraShake_Left");
+		if (left)
+			_anim.Play("CameraShake_Left");
+		else
+			_anim.Play("CameraShake_Right");
 
-	}
-	public void ShakeCamera_Right()
-	{
-		_anim.Play("CameraShake_Right");  
-	}
+	} 
+
 
 	void AE_EndShake()
 	{

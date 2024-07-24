@@ -111,7 +111,7 @@ public abstract class Monster : MonoBehaviour
 
                                 if (!_isInPlayerAttackRange && colliders[i].gameObject == _player)
                                 {
-                                        _isInPlayerAttackRange = colliders[i].gameObject.GetComponent<PlayerAnimCtrl>()?.state != PlayerAnimCtrl.PlayerState.Death;
+                                        _isInPlayerAttackRange = colliders[i].gameObject.GetComponent<PlayerController>()?._playerState != EPlayerState.Death; 
 				} 
                                   
 			}
@@ -131,8 +131,8 @@ public abstract class Monster : MonoBehaviour
                         _isChasing = true;
 		 
                 // 거리가 10보다 커졌거나 플레이어가 죽었다면 추적 종료
-                if (DistanceToPlayer > _trackingDist * 2.0f || _player.GetComponent<PlayerAnimCtrl>()?.state == PlayerAnimCtrl.PlayerState.Death)
-                        _isChasing = false;
+                if (DistanceToPlayer > _trackingDist * 2.0f || _player.GetComponent<PlayerController>()?._playerState == EPlayerState.Death)
+                        _isChasing = false;	
 
                 // 추적중이라면 플레이어를 바라보게 설정
                 float dist = Math.Abs(MonsterToPlayer.x); 
@@ -280,7 +280,7 @@ public abstract class Monster : MonoBehaviour
                 if (_isInPlayerAttackRange == false)
                         return;
                  
-                 _player.GetComponent<PlayerController>()?.OnHit(gameObject); 
+                 _player.GetComponent<PlayerActionController>()?.OnHit(gameObject);  
 
         }
 

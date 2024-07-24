@@ -1,109 +1,142 @@
 using Cainos.PixelArtPlatformer_VillageProps;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.VisionOS;
 using UnityEngine;
+using UnityEngine.Playables;
 using static PlayerAnimCtrl;
 
 public enum EActiveState : int
 {
-	None,
+	Awaiting, 
 	Attack,
 	Jump,
 	Roll,
 	Shield,
+	Hit,
 }
+
+
 
 public class PlayerActionController : MonoBehaviour
 {
-	PlayerMovementController _MovementController;
-	PlayerController _PlayerController;
+	PlayerMovementController _movementController;
+	PlayerAnimCtrl _animCtrl;
+	PlayerController _playerController;
 	InputManager _inputManager;
 	PlayerCollisionManager _playerCollision;
 
-	EActiveState _activeState = EActiveState.None;
+	public EActiveState _activeState = EActiveState.Awaiting;
 
-	float _lastAttackTime = 100.0f;
-	float _lastJumpTime = 100.0f;
-	float _lastRollTime = 100.0f;
-	float _lastShieldTime = 100.0f;
+	[NonSerialized] public int _attackCombo = 1;
+
+	bool _isAttackable = true;
+	bool _isJumpable = true;
+	bool _isRollable = true;
+	bool _isShieldable = true; 
+
+	public Action _onPortalEntered;
 
 	private void Start()
 	{
-		_MovementController = GetComponent<PlayerMovementController>();
-		_PlayerController = GetComponent<PlayerController>();
+		_movementController = GetComponent<PlayerMovementController>();
+		_playerController = GetComponent<PlayerController>();
 		_playerCollision = GetComponent<PlayerCollisionManager>();
+		_animCtrl = GetComponent<PlayerAnimCtrl>();
 		_inputManager = InputManager.instance;
 
 		_inputManager.BindInputAction("Attack", () => InputAttack(true), () => InputAttack(false));
 		_inputManager.BindInputAction("Shield", () => InputShield(true), ()=>InputShield(false)); 
 		_inputManager.BindInputAction("Jump", InputJump);
 		_inputManager.BindInputAction("Roll", InputRoll);
-	}
-	private void Update()
-	{
-		if (_activeState != EActiveState.Attack)
-			_lastAttackTime += Time.deltaTime;
-		_lastJumpTime += Time.deltaTime; 
-		_lastRollTime += Time.deltaTime;
-		_lastShieldTime += Time.deltaTime; 
+		_inputManager.BindInputAction("Portal", InputPortal); 
 	}
 
+	private void Update()
+	{
+
+	}
+
+	bool CHECK(ref bool usable, EActiveState state)
+	{
+		EPlayerState playerState = _playerController._playerState;
+		if (usable == false || _activeState != EActiveState.Awaiting ||  
+			playerState == EPlayerState.Fall || playerState == EPlayerState.Death)
+			return false;
+
+		usable = false;
+		_activeState = state;
+
+		return true;
+	}
+	 
+	IEnumerator RegisterCooldown(float time, Action finishAction)
+	{
+		yield return new WaitForEndOfFrame();
+		float animLength = _animCtrl.GetCurAnimLength();
+		yield return new WaitForSeconds(animLength);
+		_activeState = EActiveState.Awaiting;
+		_animCtrl.PlayAnimation();
+		 
+		yield return new WaitForSeconds(time); 
+		finishAction.Invoke(); 
+	}
+
+	void InputPortal()
+	{
+		_onPortalEntered?.Invoke();
+		_onPortalEntered = null; 
+	}
 
 	void InputAttack(bool press)
 	{
-		if (CHECK(new [] { EPlayerState.Fall, EPlayerState.Death}, 
-				  new [] { EActiveState.Roll, EActiveState.Shield })) 
+		if (!press)
 			return;
 
-		if (_lastAttackTime > _PlayerController._attackDelay)
+	//	Debug.Log("Attack");
+		if (!CHECK(ref _isAttackable, EActiveState.Attack))
 			return;
-		 
-		_lastAttackTime = 0.0f;
-		_activeState = EActiveState.Attack;
+
+		_animCtrl.PlayAnimation($"Attack{_attackCombo+1}"); 
+		_attackCombo = (_attackCombo + 1) % 3;  
+		StartCoroutine(RegisterCooldown(_playerController._attackDelay, ()=> { _isAttackable = true; })); 
 	}
 
 	void InputJump()
 	{
-		_activeState = EActiveState.Jump;
+		if (!CHECK(ref _isJumpable, EActiveState.Jump))
+			return;
 
+		Rigidbody2D rb = _movementController._rigidbody;
+		float moveDir = InputManager.instance.GetInputAction("Move").ReadValue<float>();
+		rb.velocity += new Vector2(moveDir * _playerController._playerSpeed * 15.0f, 8.0f); 
+		_animCtrl.PlayAnimation("Jump");  
+		StartCoroutine(RegisterCooldown(_playerController._jumpDelay, () => { _isJumpable = true; }));
 	}
 
 	void InputRoll()
 	{
-		_activeState = EActiveState.Roll;
+		Debug.Log("ROLL");
 
+		if (!CHECK(ref _isRollable, EActiveState.Roll))
+			return;
+
+		_movementController._rigidbody.velocity = new Vector2(transform.localScale.x * 10.0f, 0.0f);
+		_animCtrl.PlayAnimation("Roll");
+		StartCoroutine(RegisterCooldown(_playerController._rollDelay, () => { _isRollable = true; }));
 	}
 
 	void InputShield(bool press)
 	{
-		_activeState = EActiveState.Shield; 
-
+		if (!CHECK(ref _isShieldable, EActiveState.Shield))
+			return; 
+		 
+		 
+		_animCtrl.PlayAnimation("Shield");
+		StartCoroutine(RegisterCooldown(_playerController._attackDelay, () => { _isAttackable = true; }));
 	}
-
-	bool CHECK(EPlayerState[] playerStates, EActiveState[] activeStates)
-	{
-		EPlayerState playerState = _MovementController._playerState;
-
-		foreach (EPlayerState state in playerStates)
-		{
-			if (playerState == state)
-				return false;
-		}
-
-		foreach (EActiveState state in activeStates)
-		{
-			if (_activeState == state)
-				return false;
-		}
-
-		return true;
-	}
-
-	void AE_EndAttack()
-	{
-		_activeState = EActiveState.None;
-	}
-
 
 	void AE_OnAttack()
 	{
@@ -125,4 +158,59 @@ public class PlayerActionController : MonoBehaviour
 				ItemManager.instance.GetItemObj(mc.gameObject.transform.position);
 		}
 	}
+	
+	void AE_EndAttack()
+	{ 
+	}
+
+	void AE_EndRoll()
+	{
+	} 
+
+	void AE_EndJump() 
+	{
+	}
+
+	void AE_EndShield()
+	{
+	}
+
+	float _lastHitTime = 0.0f;
+	public float _damageCooldown = 0.5f;
+	public void OnHit(GameObject monster)
+	{
+		if (Time.time - _lastHitTime < _damageCooldown || _activeState == EActiveState.Roll || _playerController. hp == 0)
+			return;
+		 
+		_lastHitTime = Time.time;
+		if (_activeState == EActiveState.Shield)
+		{
+			Monster mst = monster.GetComponent<Monster>();
+			if (mst != null)
+			{ 
+				mst._onAttackBlocked = () => { mst.OnHit(gameObject); };
+
+			}
+			return;
+		}
+		 
+		_playerController.hp--;
+
+		CameraManager cm = Camera.main.GetComponent<CameraManager>();
+		cm?.ShakeCamera(monster.transform.position.x < gameObject.transform.position.x);
+
+		_activeState = EActiveState.Hit;
+		_animCtrl.PlayAnimation("Hit");
+		
+	}
+
+	void AE_EndHit()
+	{
+		_animCtrl.PlayAnimation(); 
+		_activeState = EActiveState.Awaiting;
+		  
+		if (_playerController.hp == 0)
+			_playerController._playerState = EPlayerState.Death;
+	}
+
 }

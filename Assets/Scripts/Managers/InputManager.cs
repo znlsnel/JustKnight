@@ -58,7 +58,11 @@ public class InputManager : Singleton<InputManager>
 
 	public InputAction GetInputAction(string inputActionName)
 	{
-		return _inputActions[inputActionName];
+		if (_inputActions.ContainsKey(inputActionName))
+			return _inputActions[inputActionName];
+
+		Debug.Log($"Input Action을 찾지 못했습니다. [{inputActionName}]");
+		return null;
 	}
 
 	// Update is called once per frame

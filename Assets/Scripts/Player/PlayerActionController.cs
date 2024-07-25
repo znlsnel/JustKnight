@@ -73,36 +73,56 @@ public class PlayerActionController : MonoBehaviour
 	}
 	 
 	IEnumerator RegisterCooldown(float time, Action finishAction)
-	{
+	{  
 		yield return new WaitForEndOfFrame();
 		float animLength = _animCtrl.GetCurAnimLength();
+
 		yield return new WaitForSeconds(animLength);
 		_activeState = EActiveState.Awaiting;
 		_animCtrl.PlayAnimation();
-		 
+
 		yield return new WaitForSeconds(time); 
 		finishAction.Invoke(); 
 	}
-
+	  
 	void InputPortal()
 	{
 		_onPortalEntered?.Invoke();
 		_onPortalEntered = null; 
 	}
-
+	Coroutine attackCT;
 	void InputAttack(bool press)
 	{
 		if (!press)
+		{
+			if (attackCT != null)
+			{
+				StopCoroutine(attackCT);
+				attackCT = null;
+			}
 			return;
-
+		}
+		 
 	//	Debug.Log("Attack");
 		if (!CHECK(ref _isAttackable, EActiveState.Attack))
 			return;
 
-		_animCtrl.PlayAnimation($"Attack{_attackCombo+1}"); 
-		_attackCombo = (_attackCombo + 1) % 3;  
-		StartCoroutine(RegisterCooldown(_playerController._attackDelay, ()=> { _isAttackable = true; })); 
+		attackCT = StartCoroutine(OnAttack());
 	}
+
+	IEnumerator OnAttack()
+	{
+		_animCtrl.PlayAnimation($"Attack{_attackCombo + 1}");
+		_attackCombo = (_attackCombo + 1) % 3;
+
+		yield return StartCoroutine(RegisterCooldown(_playerController._attackDelay, () => { _isAttackable = true; }));
+
+		if (!InputManager.instance.GetInputAction("Attack").IsPressed()) 
+			yield break;
+
+		InputAttack(true);
+	}
+
 
 	void InputJump()
 	{
@@ -118,8 +138,6 @@ public class PlayerActionController : MonoBehaviour
 
 	void InputRoll()
 	{
-		Debug.Log("ROLL");
-
 		if (!CHECK(ref _isRollable, EActiveState.Roll))
 			return;
 
@@ -133,13 +151,14 @@ public class PlayerActionController : MonoBehaviour
 		if (!CHECK(ref _isShieldable, EActiveState.Shield))
 			return; 
 		 
-		 
+		  
 		_animCtrl.PlayAnimation("Shield");
-		StartCoroutine(RegisterCooldown(_playerController._attackDelay, () => { _isAttackable = true; }));
-	}
+		StartCoroutine(RegisterCooldown(_playerController._shieldDelay, () => { _isShieldable = true; }));
+	} 
 
 	void AE_OnAttack()
 	{
+		Debug.Log("On Attack");
 		Collider2D[] result = new Collider2D[100];
 		ContactFilter2D contactFilter = new ContactFilter2D();
 		Physics2D.OverlapCollider(_playerCollision._sensorAttack, contactFilter, result);
@@ -161,6 +180,7 @@ public class PlayerActionController : MonoBehaviour
 	
 	void AE_EndAttack()
 	{ 
+		Debug.Log("End Attack");
 	}
 
 	void AE_EndRoll()

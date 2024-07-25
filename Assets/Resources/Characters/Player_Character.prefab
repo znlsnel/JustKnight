@@ -616,12 +616,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3cec0bad318dad489f5261fc124b26b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackCoolTime: 0.1
-  _jumpCoolTime: 1
-  _rollCoolTime: 1
-  _blockCoolTime: 1
+  _attackDelay: 0
+  _jumpDelay: 0.2
+  _rollDelay: 1
+  _shieldDelay: 1
   _playerSpeed: 3
   _SlideDust: {fileID: 1038168246061390451, guid: 8b8c8cc6774fb074cb9139cc631b108e, type: 3}
+  hp: 3
+  InitHp: 3
   _onMoveLeft:
     m_PersistentCalls:
       m_Calls:

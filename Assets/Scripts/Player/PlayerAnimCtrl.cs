@@ -27,10 +27,7 @@ public class PlayerAnimCtrl : MonoBehaviour
 
 	public float GetCurAnimLength()
 	{
-		float ret = anim.GetCurrentAnimatorStateInfo(0).length;  
-
-		Debug.Log(ret); 
-		return ret;
+		return anim.GetCurrentAnimatorStateInfo(0).length;
 	}
 	public void PlayAnimation(string animName = "") 
 	{ 

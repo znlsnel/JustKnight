@@ -23,13 +23,12 @@ public class PlayerController : MonoBehaviour
 	PlayerMovementController _movementController;
 
 	public float _attackDelay = 0.0f;
-	public float _jumpDelay = 0.0f;
 	public float _rollDelay = 0.0f;
 	public float _shieldDelay = 0.0f;
 
 	[SerializeField] public float _playerSpeed = 5.0f; 
 
-	[SerializeField] GameObject _SlideDust;
+	[SerializeField] public GameObject _SlideDust;
 
 
 	public int hp = 3;
@@ -49,6 +48,10 @@ public class PlayerController : MonoBehaviour
 
 			_state = value;
 			_animController.PlayAnimation();
+
+			if (_state == EPlayerState.Fall)
+				_actionController.OnFallStart(); 
+			 
 		}
 	}
 
@@ -56,7 +59,6 @@ public class PlayerController : MonoBehaviour
 	{
 		_animController = gameObject.AddComponent<PlayerAnimCtrl>(); 
 		_infoUIManager = gameObject.AddComponent<PlayerInfoUIManager>();
-		_collMan = gameObject.AddComponent<PlayerCollisionManager>();
 		_actionController = gameObject.AddComponent<PlayerActionController>(); 
 		_movementController = gameObject.AddComponent<PlayerMovementController>();
 		_inputManager = InputManager.instance;
@@ -64,6 +66,7 @@ public class PlayerController : MonoBehaviour
 
 	void Start()
 	{
+		_collMan = gameObject.GetComponent<PlayerCollisionManager>();  
 		_infoUIManager.UpdateHpBar(3, 3);
 
 	}

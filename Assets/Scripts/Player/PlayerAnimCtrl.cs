@@ -10,8 +10,6 @@ public class PlayerAnimCtrl : MonoBehaviour
 
 	PlayerController _playerController;
 	[NonSerialized] public Animator anim;
-	private string curAnim = ""; 
-
 	void Start()
 	{
 		anim = GetComponent<Animator>();
@@ -29,6 +27,8 @@ public class PlayerAnimCtrl : MonoBehaviour
 	{
 		return anim.GetCurrentAnimatorStateInfo(0).length;
 	}
+
+	string curAnim = "";
 	public void PlayAnimation(string animName = "") 
 	{ 
 		if (animName == "")
@@ -52,7 +52,12 @@ public class PlayerAnimCtrl : MonoBehaviour
 			} 
 		}
 		 
-		anim.Play(animName);   
+		if (curAnim != animName)
+		{
+			curAnim = animName;
+			anim.Play(curAnim); 
+			Debug.Log(curAnim); 
+		}
 	}
 
 }

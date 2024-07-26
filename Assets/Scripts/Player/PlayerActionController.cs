@@ -33,10 +33,9 @@ public class PlayerActionController : MonoBehaviour
 	[NonSerialized] public int _attackCombo = 1;
 
 	bool _isAttackable = true;
-	bool _isJumpable = true;
 	bool _isRollable = true;
 	bool _isShieldable = true; 
-
+	 
 	public Action _onPortalEntered;
 
 	private void Start()
@@ -51,7 +50,7 @@ public class PlayerActionController : MonoBehaviour
 		_inputManager.BindInputAction("Shield", () => InputShield(true), ()=>InputShield(false)); 
 		_inputManager.BindInputAction("Jump", InputJump);
 		_inputManager.BindInputAction("Roll", InputRoll);
-		_inputManager.BindInputAction("Portal", InputPortal); 
+		_inputManager.BindInputAction("Up", InputPortal); 
 	}
 
 	private void Update()
@@ -90,7 +89,8 @@ public class PlayerActionController : MonoBehaviour
 		_onPortalEntered?.Invoke();
 		_onPortalEntered = null; 
 	}
-	Coroutine attackCT;
+
+	Coroutine attackCT; 
 	void InputAttack(bool press)
 	{
 		if (!press)
@@ -98,7 +98,7 @@ public class PlayerActionController : MonoBehaviour
 			if (attackCT != null)
 			{
 				StopCoroutine(attackCT);
-				attackCT = null;
+				attackCT = null; 
 			}
 			return;
 		}
@@ -114,6 +114,7 @@ public class PlayerActionController : MonoBehaviour
 	{
 		_animCtrl.PlayAnimation($"Attack{_attackCombo + 1}");
 		_attackCombo = (_attackCombo + 1) % 3;
+		_playerController._playerState = EPlayerState.Idle; 
 
 		yield return StartCoroutine(RegisterCooldown(_playerController._attackDelay, () => { _isAttackable = true; }));
 
@@ -126,24 +127,49 @@ public class PlayerActionController : MonoBehaviour
 
 	void InputJump()
 	{
-		if (!CHECK(ref _isJumpable, EActiveState.Jump))
+		bool isGround = Mathf.Abs(_movementController._rigidbody.velocity.y) <= 0.1f;
+		if (!CHECK(ref isGround, EActiveState.Jump)) 
 			return;
 
-		Rigidbody2D rb = _movementController._rigidbody;
-		float moveDir = InputManager.instance.GetInputAction("Move").ReadValue<float>();
-		rb.velocity += new Vector2(moveDir * _playerController._playerSpeed * 15.0f, 8.0f); 
-		_animCtrl.PlayAnimation("Jump");  
-		StartCoroutine(RegisterCooldown(_playerController._jumpDelay, () => { _isJumpable = true; }));
+		OnJump(); 
 	}
 
+	public void OnJump(bool isSideJump = false)
+	{
+		_playerController._playerState = EPlayerState.Idle;
+		Rigidbody2D rb = _movementController._rigidbody;
+
+		float moveDir = 0.0f; 
+		if (isSideJump)
+		{
+			moveDir = InputManager.instance.GetInputAction("Move").ReadValue<float>() * -1;
+		}
+		rb.AddForce(new Vector2(moveDir, 8.0f), ForceMode2D.Impulse);
+
+		_animCtrl.PlayAnimation("Jump");
+	}
+
+	public void OnFallStart()
+	{
+		_animCtrl.anim.speed = 1.0f;
+	}
+
+	public void OnLand()
+	{
+		if (_activeState == EActiveState.Jump)
+			_activeState = EActiveState.Awaiting; 
+	}
+		
 	void InputRoll()
 	{
 		if (!CHECK(ref _isRollable, EActiveState.Roll))
 			return;
 
-		_movementController._rigidbody.velocity = new Vector2(transform.localScale.x * 10.0f, 0.0f);
+		_playerController._playerState = EPlayerState.Idle;
+		_movementController._rigidbody.AddForce(new Vector2(gameObject.transform.localScale.x * 10.0f, 0.0f), ForceMode2D.Impulse);
+
 		_animCtrl.PlayAnimation("Roll");
-		StartCoroutine(RegisterCooldown(_playerController._rollDelay, () => { _isRollable = true; }));
+		StartCoroutine(RegisterCooldown(_playerController._rollDelay, () => { _isRollable = true; })); 
 	}
 
 	void InputShield(bool press)
@@ -158,19 +184,18 @@ public class PlayerActionController : MonoBehaviour
 
 	void AE_OnAttack()
 	{
-		Debug.Log("On Attack");
 		Collider2D[] result = new Collider2D[100];
 		ContactFilter2D contactFilter = new ContactFilter2D();
 		Physics2D.OverlapCollider(_playerCollision._sensorAttack, contactFilter, result);
 
 		foreach (var c in result)
-		{
+		{ 
 			if (c == null)
 				break;
-
+			 
 			Monster mc = c.gameObject.GetComponent<Monster>();
 			if (mc == null || mc._hp == 0)
-				return;
+				continue;
 			
 			mc.OnHit(gameObject);
 			if (mc._hp == 0) 
@@ -180,7 +205,7 @@ public class PlayerActionController : MonoBehaviour
 	
 	void AE_EndAttack()
 	{ 
-		Debug.Log("End Attack");
+
 	}
 
 	void AE_EndRoll()
@@ -189,10 +214,15 @@ public class PlayerActionController : MonoBehaviour
 
 	void AE_EndJump() 
 	{
+		_animCtrl.anim.speed = 0.0f;
 	}
 
 	void AE_EndShield()
 	{
+
+		//Vector3 temp = _movementController._rigidbody.velocity;
+		//temp.y = 0.0f; 
+		//_movementController._rigidbody.velocity = temp;
 	}
 
 	float _lastHitTime = 0.0f;

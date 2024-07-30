@@ -14,6 +14,7 @@ public class PlayerMovementController : MonoBehaviour
 	PlayerActionController _actionController;
 	PlayerCollisionManager _playerCollision;
 
+	bool _isWallClimb = false; 
 	private void Start() 
 	{
 		_playerController = GetComponent<PlayerController>();	
@@ -56,30 +57,40 @@ public class PlayerMovementController : MonoBehaviour
 	void UpdateMovement()
 	{ 
 
-		float moveDir = InputManager.instance.GetInputAction("Move").ReadValue<float>();
-
-		if (moveDir == 0.0f)
-			return;
-
 		EPlayerState pState = _playerController._playerState;
 		EActiveState acState = _actionController._activeState;
 
-		bool isWallAttached = !_playerCollision._onSensorGround && (_playerCollision._onSensorFT || _playerCollision._onSensorFB);   
-		if (!isWallAttached && pState != EPlayerState.Death && acState != EActiveState.Roll)
-		{
-			float speed = _playerController._playerSpeed;
-			if (!_playerCollision._onSensorGround && Mathf.Abs(_rigidbody.velocity.x) < 1.0f)
-				speed = 1.0f;
+		float moveDir = InputManager.instance.GetInputAction("Move").ReadValue<float>();
+		if (moveDir > 0)
+			_playerController._onMoveRight.Invoke();
+		else if (moveDir < 0)
+			_playerController._onMoveLeft.Invoke(); 
 
+		if (pState == EPlayerState.Death || moveDir == 0.0f)
+			return;
+		  
+		if (pState == EPlayerState.Move && acState != EActiveState.Roll)
+		{
+			float speed = _playerController._playerSpeed; 
 			_rigidbody.velocity = new Vector2(moveDir * speed, _rigidbody.velocity.y);
 		} 
-
+		else if (!_playerCollision._onSensorGround && acState != EActiveState.Roll)
+		{
+			if (!_isWallClimb || !_playerCollision._onSensorFT)   
+			{    
+				gameObject.transform.position += new Vector3(moveDir * Time.fixedDeltaTime, 0.0f, 0.0f);
+			}
+		}   
+		 
 		if (acState != EActiveState.Shield && pState != EPlayerState.Death)
 		{
 			int dir = moveDir > 0 ? 1 : -1;
 			Vector3 scale = gameObject.transform.localScale;
 			gameObject.transform.localScale = new Vector3(Mathf.Abs(scale.x) * dir, scale.y, scale.z);
 		}
+		
+		// 공중에 있을 때에도 약간의 이동이 되야하면서
+		// 벽타기 -> 점프에는 영향이 없어야함
 		
 	}
 	void OnIdleState()
@@ -111,10 +122,11 @@ public class PlayerMovementController : MonoBehaviour
                 if (_playerCollision._onSensorGround)
 		{
 			_playerController._playerState = EPlayerState.Idle;
-			_actionController.OnLand(); 
+			_actionController.OnLand();
+			_isWallClimb = false;
 			return;
 		}
-		
+		 
 		bool isMoving = Mathf.Abs(InputManager.instance.GetInputAction("Move").ReadValue<float>()) > 0;
 		if (_playerCollision._onSensorFT && isMoving)
 		{ 
@@ -125,18 +137,24 @@ public class PlayerMovementController : MonoBehaviour
 			if (slideDustCT == null)
 				slideDustCT = StartCoroutine(UseSlideDust());
 			_animCtrl.PlayAnimation("Wall Slide");
-
+			Vector3 v = _rigidbody.velocity;
+			v.x = 0;
+			_rigidbody.velocity = v; 
 			// 벽 점프
 			if (InputManager.instance.GetInputAction("Jump").IsPressed())
 			{
 				// 위 점프
 				if (InputManager.instance.GetInputAction("Up").IsPressed())
 				{ 
-					_actionController.OnJump(); 
+					_actionController.OnJump();
+					vel = _rigidbody.velocity;
+					_rigidbody.velocity = vel;
+					_isWallClimb = true;
 				}
 				// 옆 점프
 				else
 				{
+					_isWallClimb = false;
 					_actionController.OnJump(true);
 				}
 

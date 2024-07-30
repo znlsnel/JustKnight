@@ -134,18 +134,21 @@ public class PlayerActionController : MonoBehaviour
 		OnJump(); 
 	}
 
+	public float jumpSize = 4.0f;  
 	public void OnJump(bool isSideJump = false)
 	{
+		_activeState = EActiveState.Jump;
 		_playerController._playerState = EPlayerState.Idle;
 		Rigidbody2D rb = _movementController._rigidbody;
 
 		float moveDir = 0.0f; 
 		if (isSideJump)
 		{
-			moveDir = InputManager.instance.GetInputAction("Move").ReadValue<float>() * -1;
+			moveDir = InputManager.instance.GetInputAction("Move").ReadValue<float>() * -jumpSize;
 		}
 		rb.AddForce(new Vector2(moveDir, 8.0f), ForceMode2D.Impulse);
 
+		Debug.Log("มกวม");
 		_animCtrl.PlayAnimation("Jump");
 	}
 

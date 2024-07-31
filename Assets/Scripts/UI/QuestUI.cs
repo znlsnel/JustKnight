@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuestUIManager : MonoBehaviour, IMenuUI
+public class QuestUI : MonoBehaviour, IMenuUI
 {
         [SerializeField] Text _descriptionText;
 

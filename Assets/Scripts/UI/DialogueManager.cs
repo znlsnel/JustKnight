@@ -40,8 +40,8 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 	public void BeginDialogue(QuestDialogueSO dialogue)
 	{
 		ActiveMenu(true);
-		  
-		_npcImage.sprite = Sprite.Create(dialogue.npcIcon, new Rect(0, 0, dialogue.npcIcon.width, dialogue.npcIcon.height), new Vector2(0.5f, 0.5f));
+		  if (dialogue.npcIcon != null)
+			_npcImage.sprite = Sprite.Create(dialogue.npcIcon, new Rect(0, 0, dialogue.npcIcon.width, dialogue.npcIcon.height), new Vector2(0.5f, 0.5f));
 		_curQuestDlg = dialogue;
 		_curDlg = _curQuestDlg.GetCurDialogue();
 
@@ -89,6 +89,8 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 	{
 		if (active == gameObject.activeSelf)
 			return;
+
+		InputManager.instance.FreezeCharacter(active);
 
 		gameObject.SetActive(active);
 		UIHandler.instance.CloseAllUI(gameObject, active);

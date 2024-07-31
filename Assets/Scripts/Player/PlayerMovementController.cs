@@ -62,9 +62,9 @@ public class PlayerMovementController : MonoBehaviour
 
 		float moveDir = InputManager.instance.GetInputAction("Move").ReadValue<float>();
 		if (moveDir > 0)
-			_playerController._onMoveRight.Invoke();
+			_playerController.r_MoveRight.Invoke();
 		else if (moveDir < 0)
-			_playerController._onMoveLeft.Invoke(); 
+			_playerController.r_MoveLeft.Invoke(); 
 
 		if (pState == EPlayerState.Death || moveDir == 0.0f)
 			return;

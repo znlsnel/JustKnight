@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5729f79f84dc08549a85fd3cedda5001, type: 3}
+  m_Name: TASK_Jump
+  m_EditorClassIdentifier: 
+  category: {fileID: 11400000, guid: af845bfa4addaf94fb5af848843ae060, type: 2}
+  displayName: 
+  description: "\uC810\uD504 \uD558\uAE30"
+  action: {fileID: 11400000, guid: cc6c2c95205bce645beb130f96e09eb4, type: 2}
+  target: {fileID: 11400000, guid: d271737e4fb6dd64db5575cdc5a40f56, type: 2}
+  targetCnt: 3

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 [Serializable]
@@ -13,7 +14,16 @@ public class ReportInfo
 public class QuestReporter : MonoBehaviour
 {
 	[SerializeField] public List<ReportInfo> reportInfos = new List<ReportInfo>();
-	public int successCount = 0; 
+	public int successCount = 0;
+
+	public UnityEvent _enterCollider;
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (_enterCollider == null)
+			return;
+
+		_enterCollider.Invoke();  
+	}
 
 	public void Report(int idx) 
 	{

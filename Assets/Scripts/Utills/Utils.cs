@@ -6,31 +6,15 @@ using UnityEngine;
 
 public class Utils : Singleton<Utils>
 {
-        // Start is called before the first frame update
-
-        void Start()
-        {
-         
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-	public void SetTimer(Action act, int FPS)
+	public void SetTimer(Action act, float second)
 	{
-		StartCoroutine(ExecuteAtFPS(act, FPS));
+		StartCoroutine(Execute(act, second));
 	}
-	
-	private IEnumerator ExecuteAtFPS(Action act, int FPS)
+	 
+	private IEnumerator Execute(Action act, float second)
 	{
-		float interval = 1.0f / FPS;
-
-		while (true)
-		{
-			yield return new WaitForSeconds(interval);
-			act();
-		}
+		yield return new WaitForSeconds(second); 
+		act.Invoke(); 
 	}
-}
+} 
+ 

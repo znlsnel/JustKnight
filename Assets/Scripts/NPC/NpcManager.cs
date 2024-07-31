@@ -9,8 +9,7 @@ public class NpcManager : MonoBehaviour
 	[SerializeField] public List<QuestDialogueSO> _dialogues; 
 	QuestDialogueSO _curDialogue;
         public bool isAutoStart = false;
-	public bool isOneTimeUse = false;
-	public int _beginCnt = 0;
+	public bool isEventNpc = false;
 
 	QuestManager _questManager;
 	DialogueManager _dialogueManager;
@@ -20,11 +19,15 @@ public class NpcManager : MonoBehaviour
                 _curDialogue = _dialogues[0];
 		_questManager = QuestManager.instance;
 		_dialogueManager = UIHandler.instance._dialogueSystem;
+		
 		foreach (var d in _dialogues)
 		{
 			QuestManager.instance.AddQuest(d.quest);
 			UIHandler.instance._dialogueSystem.AddDialogue(d); 
 		}
+
+		if (isEventNpc) 
+			GetComponent<SpriteRenderer>().sortingOrder = -1; 
 	}
 
         // Update is called once per frame

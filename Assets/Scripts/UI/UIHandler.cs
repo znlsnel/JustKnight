@@ -23,8 +23,8 @@ public class UIHandler : Singleton<UIHandler>
 	[NonSerialized] public InventoryManager _inventoryManager;
 	[NonSerialized] public SkillMenuManager _skillMenuManager;
 	[NonSerialized] public DialogueManager _dialogueSystem;
-	[NonSerialized] public QuestUIManager _questUIManager;
-	[NonSerialized] public DisplayQuestManager _displayQuestManager;
+	[NonSerialized] public QuestUI _questUIManager;
+	[NonSerialized] public DisplayQuest _displayQuestManager;
 
 	GameObject _curOpenUI;
 

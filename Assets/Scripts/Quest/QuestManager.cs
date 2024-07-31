@@ -24,8 +24,16 @@ struct QuestInfo
 public class QuestManager : Singleton<QuestManager> 
 {
 	private Dictionary<QuestInfo, HashSet<QuestSO>> _tasks = new Dictionary<QuestInfo, HashSet<QuestSO>>();
-	public Dictionary<string, QuestSO> _quests = new Dictionary<string, QuestSO>(); 
+	public Dictionary<string, QuestSO> _quests = new Dictionary<string, QuestSO>();
 
+	DisplayQuest _displayQuest;
+	QuestUI _questUI;
+	 
+	private void Start()
+	{
+		_displayQuest = UIHandler.instance._displayQuestManager;
+		_questUI = UIHandler.instance._questUIManager; 
+	}
 	public List<Tuple<QuestSO, QuestTaskSO>> GetQuest(CategorySO category, TargetSO target)
 	{
 		List<Tuple<QuestSO, QuestTaskSO>> ret = new List<Tuple<QuestSO, QuestTaskSO>>();
@@ -69,8 +77,8 @@ public class QuestManager : Singleton<QuestManager>
 	public void RegisterQuest(QuestSO quest)
 	{
 		quest = UpdateQuestData(quest); 
-		UIHandler.instance._questUIManager.AddQuest(quest);
-		UIHandler.instance._displayQuestManager.AddQuest(quest);
+		_questUI.AddQuest(quest);
+		_displayQuest.AddQuest(quest);
 		quest.questState = EQuestState.IN_PROGRESS;
 	}
 
@@ -96,11 +104,12 @@ public class QuestManager : Singleton<QuestManager>
 
 	public void CompleteQuest(QuestSO quest, string rewardInfo)
 	{
-		UIHandler.instance._questUIManager.LoadSuccessUI(rewardInfo);
-		UIHandler.instance._questUIManager.MoveToCompletedQuests(quest);
-
+		_questUI.LoadSuccessUI(rewardInfo);
+		_questUI.MoveToCompletedQuests(quest);
+		Utils.instance.SetTimer(()=>_displayQuest.RemoveQuest(quest), 1.5f);
+		 
 		QuestManager.instance.RemoveQuestTasks(quest);
-		quest.questState = EQuestState.COMPLETED;
+		quest.questState = EQuestState.COMPLETED; 
 	}
 
 	public QuestSO UpdateQuestData(QuestSO quest)

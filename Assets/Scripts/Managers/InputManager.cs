@@ -13,7 +13,7 @@ public class InputManager : Singleton<InputManager>
 
 	private Dictionary<string, InputAction> _inputActions = new Dictionary<string, InputAction>();
 	private InputActionMap _uiActionMap;
-	private InputActionMap _CharacterActionMap;
+	private InputActionMap _characterActionMap;
 
 	// Start is called before the first frame update
 	public override void Awake() 
@@ -24,16 +24,25 @@ public class InputManager : Singleton<InputManager>
 
 		var inputActionAsset = Resources.Load<InputActionAsset>("Inputs/InputActions");
 		_uiActionMap = inputActionAsset.FindActionMap("UI");
-		_CharacterActionMap = inputActionAsset.FindActionMap("Character");
+		_characterActionMap = inputActionAsset.FindActionMap("Character");
 
 		foreach (InputActionMap actionMap in inputActionAsset.actionMaps)
 		{
 			foreach (InputAction action in actionMap.actions)
 			{
-				_inputActions.Add(action.name, action);
+				_inputActions.Add(action.name, action); 
 				action.Enable();
 			}
 		}
+	}
+
+	public void FreezeCharacter(bool  freeze)
+	{
+		if (freeze)
+			_characterActionMap.Disable();
+		else
+			_characterActionMap.Enable();
+
 	}
 
 	void Start() 

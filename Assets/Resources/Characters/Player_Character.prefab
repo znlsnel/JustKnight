@@ -630,7 +630,7 @@ MonoBehaviour:
   _SlideDust: {fileID: 1038168246061390451, guid: 8b8c8cc6774fb074cb9139cc631b108e, type: 3}
   hp: 3
   InitHp: 3
-  _onMoveLeft:
+  r_MoveLeft:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -3436368339180403795}
@@ -645,7 +645,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _onMoveRight:
+  r_MoveRight:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -3436368339180403795}
@@ -656,6 +656,21 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  r_Jump:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3436368339180403795}
+        m_TargetAssemblyTypeName: QuestReporter, Assembly-CSharp
+        m_MethodName: Report
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -712,6 +727,8 @@ MonoBehaviour:
     target: {fileID: 11400000, guid: fc33163e31851bb4b8a93b6a4a29833a, type: 2}
   - category: {fileID: 11400000, guid: af845bfa4addaf94fb5af848843ae060, type: 2}
     target: {fileID: 11400000, guid: 6636aed0a035cfa4e91254ac6d91e269, type: 2}
+  - category: {fileID: 11400000, guid: af845bfa4addaf94fb5af848843ae060, type: 2}
+    target: {fileID: 11400000, guid: d271737e4fb6dd64db5575cdc5a40f56, type: 2}
   successCount: 1
 --- !u!114 &8618986063133918143
 MonoBehaviour:

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class DisplayQuestManager : MonoBehaviour
+public class DisplayQuest : MonoBehaviour 
 {
         public List<GameObject> _questSlots = new List<GameObject>();
         public List<QuestSO> _quests = new List<QuestSO>();

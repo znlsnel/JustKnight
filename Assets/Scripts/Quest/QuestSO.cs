@@ -9,7 +9,7 @@ public enum EQuestState
 	AWAITING,
 	IN_PROGRESS,
 	COMPLETED
-} 
+}
 
 [CreateAssetMenu(fileName = "NewQuest", menuName = "new Quest", order = 1)]
 public class QuestSO : ScriptableObject
@@ -20,7 +20,7 @@ public class QuestSO : ScriptableObject
 	[TextArea(3, 10)]
 	public string description;
 
-	public List<QuestTaskSO> tasks; 
+	public List<QuestTaskSO> tasks;
 
 	public RewardSO reward;
 	public bool isCancelable;
@@ -28,4 +28,14 @@ public class QuestSO : ScriptableObject
 	public bool isAutoComplete;
 
 	[NonSerialized] public EQuestState questState = EQuestState.AWAITING;
+
+	public bool isClear()
+	{
+		foreach (QuestTaskSO task in tasks)
+		{
+			if (task.curCnt < task.targetCnt)
+				return false; 
+		}
+		return true;
+	}
 }

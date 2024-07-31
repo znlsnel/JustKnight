@@ -34,9 +34,10 @@ public class PlayerController : MonoBehaviour
 	public int hp = 3;
 	public int InitHp = 3;
 
-	[SerializeField] public UnityEvent _onMoveLeft;
-	[SerializeField] public UnityEvent _onMoveRight;
-
+	[SerializeField] public UnityEvent r_MoveLeft;
+	[SerializeField] public UnityEvent r_MoveRight;
+	[SerializeField] public UnityEvent r_Jump;
+	 
 	private EPlayerState _state = EPlayerState.Idle;
 	public EPlayerState _playerState
 	{

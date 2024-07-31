@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05b88bc0992cb7f48825016a50227719, type: 3}
-  m_Name: move Quest
+  m_Name: quest
   m_EditorClassIdentifier: 
-  codeName: MOVE_QUEST
-  displayName: "\uC6C0\uC9C1\uC5EC\uBCF4\uAE30"
-  description: "A \uBC84\uD2BC, D \uBC84\uD2BC\uC73C\uB85C \uC88C\uC6B0\uB85C \uC6C0\uC9C1\uC77C
+  codeName: WALL_CLIMB_EVENT
+  displayName: "\uBCBD \uC624\uB974\uAE30"
+  description: "\uC810\uD504 \uD6C4 \uBCBD\uC5D0 \uBC00\uCC29\uD558\uBA74 \uBCBD\uC5D0
+    \uBD99\uC5B4\uC788\uAC8C \uB429\uB2C8\uB2E4.\n\uC774 \uB54C \uC704 \uBC29\uD5A5\uD0A4\uB97C
+    \uB204\uB974\uACE0 \uC810\uD504\uB97C \uD558\uBA74 \uBCBD\uC744 \uC624\uB97C
     \uC218 \uC788\uC2B5\uB2C8\uB2E4."
   tasks:
-  - {fileID: 11400000, guid: 058acc991ed3070498a8a488eb9b824e, type: 2}
-  - {fileID: 11400000, guid: 7205c05a12f0142439f2574232370099, type: 2}
+  - {fileID: 11400000, guid: f7447c2b686265242b56a7b9c573a977, type: 2}
   reward: {fileID: 0}
   isCancelable: 0
   isSavable: 0

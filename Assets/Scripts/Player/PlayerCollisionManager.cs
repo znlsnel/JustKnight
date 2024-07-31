@@ -26,18 +26,22 @@ public class PlayerCollisionManager : MonoBehaviour
 		if (collider == null)
 			return false; 
 
-		bool returnVal = false;
-		Collider2D[] result = new Collider2D[2];
+		Collider2D[] result = new Collider2D[10];
 		int count = Physics2D.OverlapCollider(collider, contactFilter, result);
 
 
-		for (int i = 0; i < count; i++)
+		foreach (Collider2D r in result)
 		{
-			if (returnVal == false)
-				returnVal = result[i].gameObject != gameObject;
+			if (r == null)
+				continue;
+
+			if (r.gameObject != gameObject && r.gameObject.GetComponent<QuestBarrier>() == null)
+			{ 
+				return true;
+			} 
 		}
 
-		return returnVal;
+		return false;
 	}
 
 

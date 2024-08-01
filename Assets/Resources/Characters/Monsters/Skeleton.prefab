@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 4455033915772326846}
   - component: {fileID: 6746229186084961170}
   - component: {fileID: 905818480702986533}
+  - component: {fileID: -6580656372969123405}
   m_Layer: 6
   m_Name: Skeleton
   m_TagString: Untagged
@@ -267,3 +268,37 @@ MonoBehaviour:
   _hpUI: {fileID: 0}
   _hp: 3
   _initHp: 3
+  _onDead:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -6580656372969123405}
+        m_TargetAssemblyTypeName: QuestReporter, Assembly-CSharp
+        m_MethodName: Report
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-6580656372969123405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7739430645761651898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed8ef8022628f444bad0d266749b75e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reportInfos:
+  - category: {fileID: 11400000, guid: bd9a71b806bdf4b45ab114c16b1cedea, type: 2}
+    target: {fileID: 11400000, guid: f0ea5909621d23543ba939334152e1d2, type: 2}
+  successCount: 1
+  _enterCollider:
+    m_PersistentCalls:
+      m_Calls: []

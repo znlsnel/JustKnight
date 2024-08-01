@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57fced589043bfd42b9ac54fa994fbf6, type: 3}
+  m_Name: dialogue
+  m_EditorClassIdentifier: 
+  npc:
+  - text: "\uBCBD\uC744 \uD0C0\uACE0\uC788\uB294 \uC0C1\uD0DC\uC5D0\uC11C \uC810\uD504\uB97C
+      \uD558\uBA74 \uBC18\uB300 \uBC29\uD5A5\uC73C\uB85C \uB192\uC774 \uC810\uD504\uD558\uAC8C
+      \uB429\uB2C8\uB2E4."
+    player:
+    - text: "\uB2E4\uC74C"
+      state: 0
+  - text: "\uBCBD \uC810\uD504\uB97C \uD1B5\uD574 \uBC18\uB300\uD3B8\uC73C\uB85C
+      \uB118\uC5B4\uAC00\uBCF4\uC138\uC694"
+    player:
+    - text: "\uD655\uC778"
+      state: 4

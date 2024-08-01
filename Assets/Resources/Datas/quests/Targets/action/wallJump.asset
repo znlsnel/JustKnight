@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aae04da4646564c47a6fd71fae8212ce, type: 3}
-  m_Name: CAT_Pathfinding
+  m_Script: {fileID: 11500000, guid: 667e4d8782078aa438f573b7f653cfb3, type: 3}
+  m_Name: wallJump
   m_EditorClassIdentifier: 
-  codeName: Pathfinding
-  displayName: "\uBAA9\uC801\uC9C0\uAE4C\uC9C0 \uC774\uB3D9\uD558\uAE30"
+  _name: wallJump
+  target: wallJump

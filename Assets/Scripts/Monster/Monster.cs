@@ -53,7 +53,7 @@ public abstract class Monster : MonoBehaviour
         public int _initHp = 3;
 	public Action _onAttackBlocked;
 	[SerializeField] public UnityEvent _onDead;
-	 
+
 	public virtual void Awake()
 	{
 		_hp = _initHp; 

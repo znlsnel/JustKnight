@@ -39,7 +39,7 @@ public class NpcManager : MonoBehaviour
         //     
         // [ NPC 1] [ NPC 2] [ NPC 3] [ NPC 4] 
 	private void OnTriggerEnter2D(Collider2D collision)  
-	{
+	{ 
 		_curDialogue = _dialogueManager.UpdateQuestDialogue(_curDialogue);
 		if (_curDialogue.GetCurDialogue() == null || collision.gameObject.GetComponent<PlayerController>() == null)
                         return;

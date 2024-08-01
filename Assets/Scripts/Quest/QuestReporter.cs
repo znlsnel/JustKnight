@@ -19,11 +19,8 @@ public class QuestReporter : MonoBehaviour
 	public UnityEvent _enterCollider;
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (_enterCollider == null)
-			return;
-
-		_enterCollider.Invoke();  
-	}
+		_enterCollider?.Invoke();  
+	} 
 
 	public void Report(int idx) 
 	{
@@ -36,6 +33,9 @@ public class QuestReporter : MonoBehaviour
 		{
 			QuestSO quest = taskInfo.Item1;
 			QuestTaskSO task = taskInfo.Item2;
+
+			if (quest.questState != EQuestState.IN_PROGRESS)
+				continue;
 
 			task.curCnt = task.action.Run(task.curCnt, successCount);
 			if (quest.isAutoComplete && task.curCnt >= task.targetCnt)

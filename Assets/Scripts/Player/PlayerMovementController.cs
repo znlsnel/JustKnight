@@ -156,6 +156,7 @@ public class PlayerMovementController : MonoBehaviour
 				{
 					_isWallClimb = false;
 					_actionController.OnJump(true);
+					_playerController.r_wallJump.Invoke(); 
 				}
 
 			}

@@ -96,8 +96,8 @@ public class MonsterGenerator : Singleton<MonsterGenerator>
 	IEnumerator InitMonsterRegister(float time)
 	{
 		yield return new WaitForSeconds(time);
-	   //     if (_spawnPoints.Count > 0)
-	//		_monsterPool.Get();   
+	        if (_spawnPoints.Count > 0)
+			_monsterPool.Get();   
 	}
 
 	

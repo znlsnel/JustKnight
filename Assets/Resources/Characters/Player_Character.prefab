@@ -675,6 +675,81 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  r_wallJump:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3436368339180403795}
+        m_TargetAssemblyTypeName: QuestReporter, Assembly-CSharp
+        m_MethodName: Report
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  r_roll:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3436368339180403795}
+        m_TargetAssemblyTypeName: QuestReporter, Assembly-CSharp
+        m_MethodName: Report
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  r_attack:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3436368339180403795}
+        m_TargetAssemblyTypeName: QuestReporter, Assembly-CSharp
+        m_MethodName: Report
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  r_shield:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3436368339180403795}
+        m_TargetAssemblyTypeName: QuestReporter, Assembly-CSharp
+        m_MethodName: Report
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 6
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  r_successShield:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3436368339180403795}
+        m_TargetAssemblyTypeName: QuestReporter, Assembly-CSharp
+        m_MethodName: Report
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 7
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!70 &217707138551140070
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -729,7 +804,20 @@ MonoBehaviour:
     target: {fileID: 11400000, guid: 6636aed0a035cfa4e91254ac6d91e269, type: 2}
   - category: {fileID: 11400000, guid: af845bfa4addaf94fb5af848843ae060, type: 2}
     target: {fileID: 11400000, guid: d271737e4fb6dd64db5575cdc5a40f56, type: 2}
+  - category: {fileID: 11400000, guid: bd9a71b806bdf4b45ab114c16b1cedea, type: 2}
+    target: {fileID: 11400000, guid: 6df7e1239aff05648b456f195c56cddb, type: 2}
+  - category: {fileID: 11400000, guid: bd9a71b806bdf4b45ab114c16b1cedea, type: 2}
+    target: {fileID: 11400000, guid: 2b1ef436957f9dc47bf52e1b8d5c3e6b, type: 2}
+  - category: {fileID: 11400000, guid: bd9a71b806bdf4b45ab114c16b1cedea, type: 2}
+    target: {fileID: 11400000, guid: 4ee3d03df9326344cb696675b312c6c5, type: 2}
+  - category: {fileID: 11400000, guid: bd9a71b806bdf4b45ab114c16b1cedea, type: 2}
+    target: {fileID: 11400000, guid: 19614e0ededdad348b39cc677b8439cf, type: 2}
+  - category: {fileID: 11400000, guid: bd9a71b806bdf4b45ab114c16b1cedea, type: 2}
+    target: {fileID: 11400000, guid: f89b5d9e9b4f8ac419ab4e4cd04377c0, type: 2}
   successCount: 1
+  _enterCollider:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8618986063133918143
 MonoBehaviour:
   m_ObjectHideFlags: 0

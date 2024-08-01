@@ -39,15 +39,8 @@ public class QuestDialogueSO : ScriptableObject
 
 	public DialogueSO GetCurDialogue()
 	{
-		bool isClear = true;
-		foreach(QuestTaskSO task in quest.tasks)
-		{
-			if (task.curCnt < task.targetCnt)
-			{
-				isClear = false;
-				break;
-			} 
-		}
+		bool isClear = quest.isClear();
+
 		curDialogue = null;
 		curPage = 0;
 		if (state == EDialogueState.IN_PROGRESS && isClear)
@@ -67,7 +60,7 @@ public class QuestDialogueSO : ScriptableObject
 				curDialogue =  progressDialogue; // 저 몬스터를 잡아야해!
 				break;
 
-			case EDialogueState.AWAITING_COMPLETION:
+			case EDialogueState.AWAITING_COMPLETION: 
 				curDialogue = awaitingDialogue; // 고마워 보상이야!
 				break;
 

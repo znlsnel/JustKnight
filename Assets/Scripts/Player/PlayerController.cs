@@ -37,7 +37,12 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] public UnityEvent r_MoveLeft;
 	[SerializeField] public UnityEvent r_MoveRight;
 	[SerializeField] public UnityEvent r_Jump;
-	 
+	[SerializeField] public UnityEvent r_wallJump; 
+	[SerializeField] public UnityEvent r_roll;
+	[SerializeField] public UnityEvent r_attack;
+	[SerializeField] public UnityEvent r_shield;
+	[SerializeField] public UnityEvent r_successShield;
+
 	private EPlayerState _state = EPlayerState.Idle;
 	public EPlayerState _playerState
 	{

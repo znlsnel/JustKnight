@@ -97,8 +97,7 @@ public class QuestManager : Singleton<QuestManager>
 						_tasks.Remove(new QuestInfo(task.category, task.target));
 				}
 			}
-		}
-		Debug.Log($"RemoveQuest frame : {1.0f / Time.deltaTime}");
+		} 
 	}
 
 

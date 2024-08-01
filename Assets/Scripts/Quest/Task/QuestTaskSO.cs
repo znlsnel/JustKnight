@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu(fileName = "NewQuest", menuName = "Quest/Task", order = 1)]
+[CreateAssetMenu(fileName = "NewTask", menuName = "Quest/Task", order = 1)]
 public class QuestTaskSO : ScriptableObject
 {
 	public CategorySO category;

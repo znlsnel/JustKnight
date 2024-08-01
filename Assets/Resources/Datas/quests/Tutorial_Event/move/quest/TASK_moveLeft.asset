@@ -17,4 +17,4 @@ MonoBehaviour:
   description: "\uC67C\uCABD\uC73C\uB85C \uC6C0\uC9C1\uC774\uAE30"
   action: {fileID: 11400000, guid: 28fb629d8a30d124c8deea7af555a6ff, type: 2}
   target: {fileID: 11400000, guid: 6636aed0a035cfa4e91254ac6d91e269, type: 2}
-  targetCnt: 2
+  targetCnt: 1

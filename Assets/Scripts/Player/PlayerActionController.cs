@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.VisionOS;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Playables;
 using static PlayerAnimCtrl;
 
@@ -114,7 +115,8 @@ public class PlayerActionController : MonoBehaviour
 	{
 		_animCtrl.PlayAnimation($"Attack{_attackCombo + 1}");
 		_attackCombo = (_attackCombo + 1) % 3;
-		_playerController._playerState = EPlayerState.Idle; 
+		_playerController._playerState = EPlayerState.Idle;
+		_playerController.r_attack?.Invoke(); 
 
 		yield return StartCoroutine(RegisterCooldown(_playerController._attackDelay, () => { _isAttackable = true; }));
 
@@ -172,7 +174,8 @@ public class PlayerActionController : MonoBehaviour
 		_movementController._rigidbody.AddForce(new Vector2(gameObject.transform.localScale.x * 10.0f, 0.0f), ForceMode2D.Impulse);
 
 		_animCtrl.PlayAnimation("Roll");
-		StartCoroutine(RegisterCooldown(_playerController._rollDelay, () => { _isRollable = true; })); 
+		StartCoroutine(RegisterCooldown(_playerController._rollDelay, () => { _isRollable = true; }));
+		_playerController.r_roll.Invoke();
 	}
 
 	void InputShield(bool press)
@@ -182,6 +185,7 @@ public class PlayerActionController : MonoBehaviour
 		 
 		  
 		_animCtrl.PlayAnimation("Shield");
+		_playerController.r_shield?.Invoke(); 
 		StartCoroutine(RegisterCooldown(_playerController._shieldDelay, () => { _isShieldable = true; }));
 	} 
 
@@ -238,12 +242,12 @@ public class PlayerActionController : MonoBehaviour
 		_lastHitTime = Time.time;
 		if (_activeState == EActiveState.Shield)
 		{
-			Monster mst = monster.GetComponent<Monster>();
-			if (mst != null)
-			{ 
-				mst._onAttackBlocked = () => { mst.OnHit(gameObject); };
-
-			}
+			Monster mm= monster.GetComponent<Monster>();
+			if (mm != null)
+			{
+				mm._onAttackBlocked = () => { mm.OnHit(gameObject); };
+				_playerController.r_successShield?.Invoke(); 
+			} 
 			return;
 		}
 		 

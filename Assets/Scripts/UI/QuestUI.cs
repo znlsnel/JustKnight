@@ -18,7 +18,7 @@ public class QuestUI : MonoBehaviour, IMenuUI
 
 	QuestSuccessUIManager _successUIManager;
 
-	Dictionary<QuestSO, QuestSlotManager> _slotManagers = new Dictionary<QuestSO, QuestSlotManager>();
+	//Dictionary<QuestSO, QuestSlotManager> _slotManagers = new Dictionary<QuestSO, QuestSlotManager>();
 	Dictionary<QuestSO, GameObject> _questObject = new Dictionary<QuestSO, GameObject>();
 	private void Awake() 
 	{
@@ -35,8 +35,14 @@ public class QuestUI : MonoBehaviour, IMenuUI
 		GameObject gm = Instantiate<GameObject>(_questPrefab);
 		QuestSlotManager qsm = gm.GetComponent<QuestSlotManager>();
 
-		_slotManagers.Add(quest, qsm);
-		_questObject.Add(quest, gm);
+		//_slotManagers.Add(quest, qsm); 
+		if (_questObject.ContainsKey(quest) )
+		{
+			return; 
+		}
+		else
+			_questObject.Add(quest, gm);
+
 
 		qsm.SetQuestSlot(quest);
 		gm.transform.SetParent(_activeQuestParent.transform);

@@ -60,11 +60,13 @@ public abstract class Monster : MonoBehaviour
 	public virtual void Awake()
 	{
 		_hp = _initHp; 
-		if ( _hpUI != null)
-		{ 
-			_hpUI = Instantiate<GameObject>(_hpUI); 
+		if ( _hpUI != null ) 
+		{  
+			if (isPrefab(_hpUI))
+				_hpUI = Instantiate<GameObject>(_hpUI);  
 			_hpSlider = _hpUI.GetComponentInChildren<Slider>();
-		}
+			
+		} 
 		_animator = GetComponent<Animator>();
 		_rigid = GetComponent<Rigidbody2D>();
 
@@ -78,6 +80,11 @@ public abstract class Monster : MonoBehaviour
 		_state = MonsterState.Waiting;
 		_animator.speed = 1.0f; 
 		_hp = _initHp; 
+
+		if (_hpSlider != null )
+		{
+			_hpSlider.value = (float)_hp / _initHp; 
+		}
 	}
           
      
@@ -86,6 +93,10 @@ public abstract class Monster : MonoBehaviour
 		_player = GameManager.instance.GetPlayer();
 	}
 
+	bool isPrefab(GameObject obj)
+	{
+		return obj.scene.rootCount == 0;
+	}
         protected bool CheckSensor(Collider2D sensor, string findLayer = "")
         {
 		

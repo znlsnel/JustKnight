@@ -627,10 +627,10 @@ MonoBehaviour:
   _attackDelay: 0
   _rollDelay: 0
   _shieldDelay: 0
-  _jumpPower: 5
-  _rollPower: 5
+  _jumpPower: 7
+  _rollPower: 8
   _playerSpeed: 3
-  _InitHp: 10
+  _InitHp: 3
   r_MoveLeft:
     m_PersistentCalls:
       m_Calls:

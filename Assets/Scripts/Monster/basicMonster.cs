@@ -8,26 +8,32 @@ public class basicMonster : Monster
 	// Start is called before the first frame update
 	public override void OnAttack()
 	{
-		_lastAttackTime += Time.deltaTime;
-		if (_lastAttackTime < _attackCoolTime)
+		if (_isPlayerInAttackRange == false)
 		{
-			return; 
-		}
-
-		if (_isInPlayerAttackRange == false)
-		{
-			_state = MonsterState.Idle;
+			_state = MonsterState.Chasing;
 			return;
 		}
 
+		if (isAttack)
+			return;
+		 
+		_lastAttackTime += Time.deltaTime;
+		if (_lastAttackTime < _attackCoolTime)
+		{
+			PlayAnimation("Idle");
+			return;
+		}
+		
+		isAttack = true;
+		PlayAnimation("Attack1");
 		_lastAttackTime = 0.0f;
 
-
-		_animator.Play("Attack1");
-	}
+		StartCoroutine(RegisterCoolTime(() => { isAttack = false; })); 
+	} 
 
 	public override void OnDeath()
 	{
+		 
 	}
 
 }

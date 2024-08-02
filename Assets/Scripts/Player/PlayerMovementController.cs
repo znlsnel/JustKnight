@@ -96,15 +96,19 @@ public class PlayerMovementController : MonoBehaviour
 	void OnIdleState()
 	{
 		if (_actionController._activeState == EActiveState.Roll || _actionController._activeState == EActiveState.Attack)
-			return;  
+			return;   
 		  
                 float moveDir = InputManager.instance.GetInputAction("Move").ReadValue<float>();
                 if (Mathf.Abs(moveDir) > 0 && _actionController._activeState != EActiveState.Jump)  
 			_playerController._playerState = EPlayerState.Move;
                 
 		if (_rigidbody.velocity.y < -0.2f && !_playerCollision._onSensorGround)
-			_playerController._playerState = EPlayerState.Fall; 
-	} 
+			_playerController._playerState = EPlayerState.Fall;
+
+		 
+		Vector3 vel = _rigidbody.velocity; 
+		_rigidbody.velocity = new Vector3(vel.x - (vel.x * Time.deltaTime), vel.y, vel.z);   
+	}   
 
 	void OnMoveState()
         {

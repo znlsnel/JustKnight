@@ -5,280 +5,290 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-
-public abstract class Monster : MonoBehaviour 
+public enum MonsterState
 {
-	// Start is called before the first frame update
+	Waiting,
+	Move,
+	Chasing,
+	Attack,
+	Death,
+} 
 
-	protected Animator _animator;
+public abstract class Monster : MonoBehaviour
+{
+	// Start is called before the first frame update 
+
 	protected GameObject _player;
 	protected Rigidbody2D _rigid;
-	protected Collider2D _frontCollisionSensor;
-	
+	protected Animator _animator;
+	protected MonsterState _state = MonsterState.Waiting; 
+	protected bool _isPlayerInAttackRange { get { return CheckSensor(_attackSensor, "Player"); } }
+	protected bool _isObstacleAhead { get { return CheckSensor(_wallSensor) || !CheckSensor(_groundSensor); } }
 
-	protected enum MonsterState
-        { 
-                Idle,
+	public Collider2D _wallSensor;
+	public Collider2D _groundSensor;
+	public Collider2D _attackSensor;
 
-                Move, 
+	[Space(10)]
+	public UnityEvent _onDead;
+	public GameObject _hpUI;
 
-                Attack,
+	[Space(10)]
+	public float _moveSpeed = 1.0f;
+	public float _attackCoolTime = 1.0f;
+	public float _attackRange = 3.0f; 
+	public float _waitingTime = 1.0f;
+	public float _moveTime = 2.0f;
+	public float _playerTrackableRange = 3.0f;
 
-                Death,
+	[Space(10)]
+	public int _hp = 3;
+	public int _initHp = 3;
 
-                Hit,
-        } 
-	protected MonsterState _state = MonsterState.Idle;
-         
-        [SerializeField] protected float _moveSpeed = 1.0f;
-	[SerializeField] protected float _attackCoolTime = 1.0f;
-        [SerializeField] protected float _trackingDist = 5.0f;
-         
-	protected bool _isChasing = false;
-
-	protected bool _onFrontCollisionSensor = false;
-        protected bool _isInPlayerAttackRange = false;
-
-	protected float _trackingIdleTime = 1.0f; 
-	protected float _trackingMoveTime = 2.0f; 
-
-	protected float _lastIdleTime = 0.0f;
-	protected float _lastMoveTime = 0.0f;
+	float _lastwaitTime = 0.0f;
+	float _lastMoveTime = 0.0f;
 	protected float _lastAttackTime = 0.0f;
 
-	[SerializeField] GameObject _hpUI;
+	protected bool isHit = false;
+	protected bool isAttack = false;
+
 	Slider _hpSlider;
 
-	public int _hp = 3;
-        public int _initHp = 3;
-	public Action _onAttackBlocked;
-	[SerializeField] public UnityEvent _onDead;
+	[NonSerialized] public Action _onAttackBlocked;
+
 
 	public virtual void Awake()
 	{
 		_hp = _initHp; 
 		if ( _hpUI != null)
-		{
+		{ 
 			_hpUI = Instantiate<GameObject>(_hpUI); 
-
 			_hpSlider = _hpUI.GetComponentInChildren<Slider>();
 		}
+		_animator = GetComponent<Animator>();
+		_rigid = GetComponent<Rigidbody2D>();
+
 	}
 
 	public virtual void InitMonster(Vector3 pos)
         {
-		pos.y += transform.localScale.y / 2; 
 		gameObject.SetActive(true); 
-		_state = MonsterState.Idle;
-		gameObject.transform.position = pos;
-		
-		if(_animator != null)
-			_animator.speed = 1.0f; 
+		gameObject.transform.position = new Vector3(pos.x, pos.y + transform.localScale.y / 2, pos.z);
+		 
+		_state = MonsterState.Waiting;
+		_animator.speed = 1.0f; 
 		_hp = _initHp; 
-		//Debug.Log($"HP : {_hp} , InitHp : {_initHp}"); 
 	}
           
      
         public virtual void Start()
         { 
-                _animator = GetComponent<Animator>();
 		_player = GameManager.instance.GetPlayer();
-		_rigid = GetComponent<Rigidbody2D>();
-		_frontCollisionSensor = transform.Find("CollisionSensor_Front").GetComponent<Collider2D>(); 
 	}
 
-        const float SensorUpdateCycle = 1.0f / 30.0f;
-        float lastSensorUpdateTime = 0.0f;
-        protected void UpdateSensor()
+        protected bool CheckSensor(Collider2D sensor, string findLayer = "")
         {
-		lastSensorUpdateTime += Time.deltaTime;
-		if (lastSensorUpdateTime < SensorUpdateCycle)
-                        return; 
-                 
-                lastSensorUpdateTime = 0.0f;
-
-		_onFrontCollisionSensor = false;
-                _isInPlayerAttackRange = false;
-
-	        ContactFilter2D ft = new ContactFilter2D();
-                Collider2D[] colliders = new Collider2D[4]; 
-                 int count = Physics2D.OverlapCollider(_frontCollisionSensor, ft, colliders);
+		
+                Collider2D[] colliders = new Collider2D[10]; 
+                Physics2D.OverlapCollider(sensor, new ContactFilter2D(), colliders);
                   
-		for (int i = 0; i < count; i++) { 
-                        if (colliders[i].gameObject != gameObject)
-                        {  
-                                if (!_onFrontCollisionSensor)
-                                         _onFrontCollisionSensor = colliders[i].GetComponent<Monster>() == null;
+		foreach (Collider2D collider in colliders)  
+		{
+			if (collider == null)
+				break;
+			 
+			if (findLayer != "" && collider.gameObject.layer != LayerMask.NameToLayer(findLayer))
+				continue;
 
-                                if (!_isInPlayerAttackRange && colliders[i].gameObject == _player)
-                                {
-                                        _isInPlayerAttackRange = colliders[i].gameObject.GetComponent<PlayerController>()?._playerState != EPlayerState.Death; 
-				} 
-                                  
-			}
-                }
+                        if (collider.GetComponent<Monster>() == null)
+				return true;                                  
+                } 
+		 
+		return false;
 	}
         
          
         public virtual void Update()
-        {
-                UpdateSensor(); 
-                
-                Vector3 MonsterToPlayer = _player.transform.position - transform.position;  
-                float DistanceToPlayer = MonsterToPlayer.magnitude;
-		
-                // 거리가 5보다 작고 플레이어쪽을 바라보고 있다면 추적 시작
-                if (DistanceToPlayer < _trackingDist && MonsterToPlayer.x * transform.localScale.x > 0.0f)
-                        _isChasing = true;
-		 
-                // 거리가 10보다 커졌거나 플레이어가 죽었다면 추적 종료
-                if (DistanceToPlayer > _trackingDist * 2.0f || _player.GetComponent<PlayerController>()?._playerState == EPlayerState.Death)
-                        _isChasing = false;	
+        {                
+		UpdateState(); 
+	}  
 
-                // 추적중이라면 플레이어를 바라보게 설정
-                float dist = Math.Abs(MonsterToPlayer.x); 
-                if (_isChasing && _state == MonsterState.Move && dist > 0.1f) 
-                {
-                        Vector3 t = transform.localScale;
-                        float tx = Math.Abs(t.x);
-                        t.x = MonsterToPlayer.x > 0.0f ? tx : -tx;
-                        transform.localScale = t;   
-                        
-                }
-
-                UpdateState();
-        }  
-         
 	protected virtual void FixedUpdate()
-	{
-                bool movable = _state == MonsterState.Move && _onFrontCollisionSensor == false;
-                
-		if (movable)
-                {   
-                        Vector2 nextPos = transform.position + new Vector3(transform.localScale.x * _moveSpeed, -1.0f, 0.0f) * Time.fixedDeltaTime;
-			_rigid.MovePosition(nextPos);  
-		}
+	{ 
+		UpdateMovement();
 	}
 
-        public virtual void UpdateState()
+	void UpdateMovement()
+	{
+		bool movable = !isHit && (_state == MonsterState.Move || _state ==  MonsterState.Chasing) && _isObstacleAhead == false;
+		  
+		if (movable)
+		{
+			Vector3 vel = _rigid.velocity; 
+			_rigid.velocity = new Vector3(transform.localScale.x * _moveSpeed, vel.y, vel.x); 
+		}
+	}
+	
+	string curAnim = "";
+        public void UpdateState(string name = "") 
         {
+		if (isHit)
+			return;
+
 		switch (_state)
 		{
-			case MonsterState.Idle:
-				OnIdle();
-				_animator.Play("Idle");
+			case MonsterState.Chasing:
+				PlayAnimation("Walk");
+				OnChasing();
+				break;
+			case MonsterState.Waiting:
+				PlayAnimation("Idle"); 
+				OnWaiting();
 				break;
 			case MonsterState.Move:
+				PlayAnimation("Walk");
 				OnMove();
-				_animator.Play("Walk");
 				break;
 			case MonsterState.Attack:
 				OnAttack();
 				break;
-			case MonsterState.Hit:
-				_animator.Play("Hit"); 
-				break;
 			case MonsterState.Death:
-				_animator.Play("Death");
-				OnDeath();
+				PlayAnimation("Death");
+				OnDeath(); 
 				break;
 			default:
 				break;
 		}
-
 	}
 
-
-	public virtual void OnIdle()
-        {
-		if (_isChasing)
+	public void PlayAnimation(string nextAnim)
+	{		 
+		if (nextAnim != curAnim) 
 		{
-			bool isClosePlayer = Math.Abs(_player.transform.position.x - transform.position.x) < 0.1f;
+			curAnim = nextAnim;
+		}
+		_animator.Play(curAnim);
+	}
 
-			if (_isInPlayerAttackRange)
-				_state = MonsterState.Attack;
-
-			else if (isClosePlayer == false)
-				_state = MonsterState.Move;
-
-			return;
+	public virtual void OnChasing()
+	{
+		// 플레이어를 바라보며 달리기
+		bool isLookingAtPlayer = (_player.transform.position.x - transform.position.x) * transform.localScale.x > 0;
+		if (!isLookingAtPlayer)
+		{
+			Vector3 scale = transform.localScale;
+			scale.x *= -1;
+			transform.localScale =	scale; 
 		}
 
-		_lastIdleTime += Time.deltaTime;
-		if (_lastIdleTime < _trackingIdleTime)
+		// 장애물에 걸렸다면
+		if (_isObstacleAhead)
+		{
+			 _state = MonsterState.Waiting;
+		}
+		 
+		// 공격 범위 까지 왔다면
+		if (_isPlayerInAttackRange)
+		{
+			_state = MonsterState.Attack;
+		} 
+	} 
+
+	public virtual void OnWaiting()
+        {
+		_lastwaitTime += Time.deltaTime; 
+		if (_lastwaitTime < _waitingTime)
 			return;
+		_lastwaitTime = 0.0f;
+		 
+		bool isLookingAtPlayer = (_player.transform.position.x - transform.position.x) * transform.localScale.x > 0;
+		float distanceToPlayer = (_player.transform.position - transform.position).magnitude;
+		if (isLookingAtPlayer && distanceToPlayer < _playerTrackableRange)
+			_state = MonsterState.Chasing;
+		else
+		{
+			// 장애물에 막혀있다면 -1, 그렇지 않다면 랜덤하게 방향 설정
+			int nextDir = _isObstacleAhead ? -1 : (UnityEngine.Random.Range(0, 2) * 2 - 1);  
+			Vector3 scale = transform.localScale;
+			scale.x *= nextDir;
+			transform.localScale = scale;
 
-		_lastIdleTime = 0.0f;
-		_state = MonsterState.Move;
-
-		int nextDir = _onFrontCollisionSensor ? -1 : (UnityEngine.Random.Range(0, 2) * 2) - 1;
-
-		Vector3 ts = transform.localScale;
-		ts.x *= nextDir;
-		transform.localScale = ts;
+			_state = MonsterState.Move; 
+		}
 	}
+
+
+
 	public virtual void OnMove()
         {
-		if (_isChasing == false)
+		// 플레이어 추적 가능한 상태가 되면 추적 시작
+		bool isLookingAtPlayer = (_player.transform.position.x - transform.position.x) * transform.localScale.x > 0;
+		float distanceToPlayer = (_player.transform.position - transform.position).magnitude;
+		if (isLookingAtPlayer && distanceToPlayer < _playerTrackableRange)
 		{
-
-			_lastMoveTime += Time.deltaTime;
-			if (_lastMoveTime < _trackingMoveTime && _onFrontCollisionSensor == false)
-				return;
+			_state = MonsterState.Chasing;
 			_lastMoveTime = 0.0f;
-
-			_state = MonsterState.Idle;
 			return;
 		}
 
+		// 일정시간 동안 움직인 이후 Waiting 상태로 변환
+		_lastMoveTime += Time.deltaTime;
+		if (_lastMoveTime < _moveTime)
+			return;
+		_lastMoveTime = 0.0f; 
 
-		bool isClosePlayer = Math.Abs(_player.transform.position.x - transform.position.x) < 0.1f;
-		if (_isInPlayerAttackRange)
-		{
-			_animator.Play("Idle");
-			_state = MonsterState.Attack;
-		}
-		else if (isClosePlayer)
-		{
-			_state = MonsterState.Idle;
-		}
-
+		 
+		_state = MonsterState.Waiting;
 	}
 
 	public abstract void OnAttack();
-          
+	Coroutine endHit = null;
         public void OnHit(GameObject attacker)
         {
-                if (_hp == 0)
-                        return;
+                if (_hp > 0)
+		{
+			_hp--; 
 
-		_hp -= 1;
-		if (_hpSlider != null) 
-			_hpSlider.value = (float)_hp / _initHp;  
-		_state = MonsterState.Hit;
-                _isChasing = true;
+			if (_hpSlider != null)
+				_hpSlider.value = (float)_hp / _initHp;
+
+
+			PlayAnimation("Hit");   
+			isHit = true;
+			if (endHit != null)
+				StopCoroutine(endHit);
+			
+			endHit = StartCoroutine(RegisterCoolTime(() => 
+			{
+				isHit = false;
+				if (_hp <= 0)
+					_state = MonsterState.Death;
+			})); 
+		} 
+	} 
+
+	public IEnumerator RegisterCoolTime(Action act)
+	{
+		yield return new WaitForEndOfFrame();
+		float animLength = _animator.GetCurrentAnimatorStateInfo(0).length;
+		
+		yield return new WaitForSeconds(animLength);
+		act.Invoke();
 	} 
 
         void AE_EndHit()
         {
-                _lastAttackTime = _attackCoolTime;
-                 
-                if (_hp == 0)
-                        _state = MonsterState.Death;
-                else
-                        _state = MonsterState.Idle;
-                 
+		
 	}
         void AE_EndDeath()
         {
 		_animator.speed = 0.0f;
-		_onDead?.Invoke();
-		
+		_onDead?.Invoke(); 
 	}
 
         void AE_OnAttack()
         {
-                if (_isInPlayerAttackRange == false)
+                if (_isPlayerInAttackRange == false)
                         return;
                  
                  _player.GetComponent<PlayerActionController>()?.OnHit(gameObject);  

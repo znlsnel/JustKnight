@@ -5,31 +5,21 @@ using UnityEngine;
 
 public class BossMonster : Monster 
 {
-
-	public override void Start()
-	{
-		base.Start();
-		_trackingDist = 20;
-
-	}
 	public override void OnAttack()
 	{
 		_lastAttackTime += Time.deltaTime;
 		if (_lastAttackTime < _attackCoolTime)
 		{
 			return;
-		}
+		} 
 
-		if (_isInPlayerAttackRange == false)
+		if (_isPlayerInAttackRange == false)
 		{
-			_state = MonsterState.Idle; 
+			_state = MonsterState.Waiting; 
 			return;
 		}
 
 		_lastAttackTime = 0.0f;
-
-
-		_animator.Play("Attack");
 	}
 
 	public override void OnDeath()

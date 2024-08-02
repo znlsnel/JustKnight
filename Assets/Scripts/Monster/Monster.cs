@@ -63,10 +63,11 @@ public abstract class Monster : MonoBehaviour
 
 			_hpSlider = _hpUI.GetComponentInChildren<Slider>();
 		}
- 
 	}
+
 	public virtual void InitMonster(Vector3 pos)
         {
+		pos.y += transform.localScale.y / 2; 
 		gameObject.SetActive(true); 
 		_state = MonsterState.Idle;
 		gameObject.transform.position = pos;

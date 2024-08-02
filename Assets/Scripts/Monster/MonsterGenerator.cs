@@ -4,123 +4,98 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-[Serializable]
-public class MonsterMapping
+public class MonsterGenerator : MonoBehaviour
 {
-	public string monsterName;
-	public GameObject instance;
-}
+	public GameObject _monsterInstance;
+	public int _monsterLimit = 0; 
+        public QuestSO _endCondition;
+          
+	ObjectPool<GameObject> _monsterPool;
 
-public class MonsterGenerator : Singleton<MonsterGenerator>
-{
-        // Start is called before the first frame update
-	[SerializeField] List<MonsterMapping> _monsterMappings;
-	private Dictionary<string, GameObject> _monsterDictionary = new Dictionary<string, GameObject>();
-
-        [SerializeField] GameObject _monsterInstance;
-         
-	private List<Vector3> _spawnPoints = new List<Vector3>();
-        private List<GameObject> _activeObjects = new List<GameObject>();
-	private ObjectPool<GameObject> _monsterPool;
-
-	[SerializeField] int _maxMonsterSpawnCnt = 10;
-        int _spawnCnt = 0;
+        Vector2 _minPos, _maxPos;  
+        int _spawnedCnt = 0;
 
 
-
-	public override void Awake()
+	public void Awake()
 	{
-                foreach (var monster in _monsterMappings)
-			_monsterDictionary.Add(monster.monsterName, monster.instance);
+                gameObject.GetComponent<SpriteRenderer>().enabled = false; 
+                _minPos = transform.position - transform.localScale / 2.0f; 
+		_maxPos = transform.position + transform.localScale / 2.0f;
 
-		 
+                // Init MonsterPool
+                { 
+                        _monsterPool = new ObjectPool<GameObject>(
+                                createFunc: () =>
+                                {
+                                        GameObject gm = Instantiate<GameObject>(_monsterInstance);
+                                        return gm;
+                                },
 
-                base.Awake(); 
-                _monsterPool = new ObjectPool<GameObject>(
-                        createFunc: () => 
-                        {
-                                GameObject gm = Instantiate<GameObject>(_monsterInstance);
-                                _activeObjects.Add(gm);
-				DontDestroyOnLoad(gm);
-                                return gm; 
-                        },
+                                actionOnGet: (obj) =>
+                                {
+                                        obj.GetComponent<Monster>().InitMonster(GetGenPos());
+                                        obj.GetComponent<Monster>()._onDead.AddListener(() =>
+                                        {
+                                                _monsterPool.Release(obj);
+                                        });
+                                },
 
-                        actionOnGet: (obj) => 
-                        { 
-                                obj.GetComponent<Monster>().InitMonster(GetGenPos());
-                                obj.GetComponent<Monster>()._onDead .AddListener(() => {
-                                        _monsterPool.Release(obj); 
-                                }); 
-                        },
+                                actionOnRelease: obj =>
+                                {
+                                        obj.SetActive(false);
+                                        _spawnedCnt--;
+                                },
 
-                        actionOnRelease: obj => { 
-                                obj.SetActive(false); 
-                                _spawnCnt--; 
-                        },
-
-                        collectionCheck: false,          
-                        defaultCapacity: 20,
-                        maxSize: 40 
-                ) ;
-	} 
-
-	void InitMonsterManager()
-        {
-		foreach (GameObject obj in _activeObjects)
-                        _monsterPool.Release(obj);
-
-                _spawnPoints.Clear();
-
-
-		GameObject[] generators = GameObject.FindGameObjectsWithTag("MonsterGenerator");
-		foreach  (var generator in generators)
-                {
-			_spawnPoints.Add(generator.transform.position);
-                        generator.SetActive(false); 
-		} 
-
-                _spawnCnt = 0;
-		for (int i = 0; _spawnPoints.Count > 0 & i < _maxMonsterSpawnCnt; i++)
-		{
-			StartCoroutine(InitMonsterRegister(UnityEngine.Random.Range(0.1f, 2.0f)));
-			_spawnCnt++;  
-		} 
+                                collectionCheck: false,
+                                defaultCapacity: 20,
+                                maxSize: 40
+                        );
+                }
 	}
+         
+	void Start()
+        {
+		while (_spawnedCnt  < _monsterLimit)
+		{
+			StartCoroutine(GenMonster());
+			_spawnedCnt++;   
+		}  
+	} 
 
         Vector3 GetGenPos()
         { 
-                int idx = UnityEngine.Random.Range(0, _spawnPoints.Count );
-                return _spawnPoints[idx];
+                float genX = UnityEngine.Random.Range(_minPos.x, _maxPos.x);
+                float genY= UnityEngine.Random.Range(_minPos.y, _maxPos.y);
+
+                return new Vector3(genX, _minPos.y, 0.0f) ;  
         } 
          
-	IEnumerator InitMonsterRegister(float time)
+	IEnumerator GenMonster(float time = 0.0f)
 	{
 		yield return new WaitForSeconds(time);
-	        if (_spawnPoints.Count > 0)
-			_monsterPool.Get();   
+		_monsterPool.Get();  
 	}
 
-	
-
-	void Start()
-        { 
-                GameManager.instance._onSceneInit += InitMonsterManager;
-		InitMonsterManager();
-	} 
-
          
-
     // Update is called once per frame
         void Update()
         { 
-                if (_spawnPoints.Count > 0 &&  _spawnCnt <  _maxMonsterSpawnCnt / 2)
+                if (_spawnedCnt <  _monsterLimit / 2)
                 {
-                        for (int i = 0; i < _maxMonsterSpawnCnt  - _spawnCnt; i++)
+                        if (_endCondition != null)
+                        {
+                                _endCondition = QuestManager.instance.UpdateQuestData(_endCondition);
+                                if (_endCondition.isClear())
+                                {
+                                        gameObject.SetActive(false);
+                                        return;
+                                }
+                        }        
+                        while (_spawnedCnt < _monsterLimit)
                         {  
-				StartCoroutine(InitMonsterRegister(UnityEngine.Random.Range(0.1f, 2.0f)));
+				StartCoroutine(GenMonster(UnityEngine.Random.Range(0.1f, 2.0f)));
+                                _spawnedCnt++;
 			}
-                        _spawnCnt = _maxMonsterSpawnCnt;
-
 		}
         }
 }

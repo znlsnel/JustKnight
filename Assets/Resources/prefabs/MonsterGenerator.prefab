@@ -97,5 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21ca8cd030e603942b2f99a2d6982fad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _monsterInstance: {fileID: 7739430645761651898, guid: 4cf89e791ea10644da9c1a1166ab22ef, type: 3}
+  _monsterPrefab: {fileID: 7739430645761651898, guid: 4cf89e791ea10644da9c1a1166ab22ef, type: 3}
   _monsterLimit: 3
+  _endCondition: {fileID: 11400000, guid: c153f3224ba14254894f51510197ba6f, type: 2}

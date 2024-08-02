@@ -6,7 +6,7 @@ using UnityEngine.Pool;
 
 public class MonsterGenerator : MonoBehaviour
 {
-	public GameObject _monsterInstance;
+	public GameObject _monsterPrefab;
 	public int _monsterLimit = 0; 
         public QuestSO _endCondition;
           
@@ -27,7 +27,7 @@ public class MonsterGenerator : MonoBehaviour
                         _monsterPool = new ObjectPool<GameObject>(
                                 createFunc: () =>
                                 {
-                                        GameObject gm = Instantiate<GameObject>(_monsterInstance);
+                                        GameObject gm = Instantiate<GameObject>(_monsterPrefab);
                                         return gm;
                                 },
 

@@ -22,26 +22,31 @@ public class PlayerController : MonoBehaviour
 	PlayerActionController _actionController;
 	PlayerMovementController _movementController;
 
+	public GameObject _SlideDust;
+
+	[Space(10)]
 	public float _attackDelay = 0.0f;
 	public float _rollDelay = 0.0f;
 	public float _shieldDelay = 0.0f;
 
-	[SerializeField] public float _playerSpeed = 5.0f; 
+	[Space(10)]
+	public float _jumpPower = 5.0f;
+	public float _rollPower = 5.0f;
+	public float _playerSpeed = 5.0f; 
+	public int _InitHp = 3;
 
-	[SerializeField] public GameObject _SlideDust;
+	int _hp = 3;
+	public int hp { get { return _hp; } set { _hp = value; } }
 
 
-	public int hp = 3;
-	public int InitHp = 3;
-
-	[SerializeField] public UnityEvent r_MoveLeft;
-	[SerializeField] public UnityEvent r_MoveRight;
-	[SerializeField] public UnityEvent r_Jump;
-	[SerializeField] public UnityEvent r_wallJump; 
-	[SerializeField] public UnityEvent r_roll;
-	[SerializeField] public UnityEvent r_attack;
-	[SerializeField] public UnityEvent r_shield;
-	[SerializeField] public UnityEvent r_successShield;
+	public UnityEvent r_MoveLeft;
+	public UnityEvent r_MoveRight;
+	public UnityEvent r_Jump;
+	public UnityEvent r_wallJump; 
+	public UnityEvent r_roll;
+	public UnityEvent r_attack;
+	public UnityEvent r_shield;
+	public UnityEvent r_successShield;
 
 	private EPlayerState _state = EPlayerState.Idle;
 	public EPlayerState _playerState
@@ -68,6 +73,7 @@ public class PlayerController : MonoBehaviour
 		_actionController = gameObject.AddComponent<PlayerActionController>(); 
 		_movementController = gameObject.AddComponent<PlayerMovementController>();
 		_inputManager = InputManager.instance;
+		_hp = _InitHp; 
 	}
 
 	void Start()

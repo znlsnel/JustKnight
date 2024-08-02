@@ -14,7 +14,7 @@ public class UIHandler : Singleton<UIHandler>
 
 	[SerializeField] GameObject _skillMenu;
 	[SerializeField] GameObject _fadeEffect;
-	[SerializeField] GameObject _inventory;
+	[SerializeField] GameObject _inventory; 
 	[SerializeField] GameObject _dialogue;
 	[SerializeField] GameObject _questMenu;
 	[SerializeField] GameObject _displayQuest;
@@ -39,15 +39,15 @@ public class UIHandler : Singleton<UIHandler>
 		InstantiateAndAssign(ref _displayQuest, out _displayQuestManager);
 
 	}
-	private void InstantiateAndAssign<T>(ref GameObject prefab, out T manager, string childName = null) where T : Component
+	private void InstantiateAndAssign<T>(ref GameObject instance, out T manager, string childName = null) where T : Component
 	{
-		prefab = Instantiate(prefab);
+		instance = Instantiate(instance);
 
 		manager = (childName != null) ?
-			prefab.transform.Find(childName).GetComponent<T>() 
-			: prefab.GetComponent<T>();
+			instance.transform.Find(childName).GetComponent<T>() 
+			: instance.GetComponent<T>();
 
-		DontDestroyOnLoad(prefab);  
+		DontDestroyOnLoad(instance);  
 	}
 
 	void Start()

@@ -13,7 +13,7 @@ public class QuestUI : MonoBehaviour, IMenuUI
 	[SerializeField] GameObject _activeQuestParent;
 	[SerializeField] GameObject _completedQuestParent; 
 
-	[SerializeField] GameObject _questPrefab;
+	[SerializeField] GameObject _questObjPrefab;
 	[SerializeField] GameObject _successUI;
 
 	QuestSuccessUIManager _successUIManager;
@@ -32,7 +32,7 @@ public class QuestUI : MonoBehaviour, IMenuUI
 
 	public void AddQuest(QuestSO quest)
 	{
-		GameObject gm = Instantiate<GameObject>(_questPrefab);
+		GameObject gm = Instantiate<GameObject>(_questObjPrefab);
 		QuestSlotManager qsm = gm.GetComponent<QuestSlotManager>();
 
 		//_slotManagers.Add(quest, qsm); 

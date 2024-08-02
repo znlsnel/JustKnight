@@ -278,7 +278,7 @@ MonoBehaviour:
   _completedQuestScrollList: {fileID: 5031132573792802231}
   _activeQuestParent: {fileID: 5988602703727356208}
   _completedQuestParent: {fileID: 1904562919753945527}
-  _questPrefab: {fileID: 1136938025393641549, guid: 0528dafc16bd3f041b4eafa80617ec9b, type: 3}
+  _questObjPrefab: {fileID: 1136938025393641549, guid: 0528dafc16bd3f041b4eafa80617ec9b, type: 3}
   _successUI: {fileID: 3444435864209069865, guid: 6aabc77d57c06ba4091ab60242d39b85, type: 3}
 --- !u!1 &1129083464728721088
 GameObject:

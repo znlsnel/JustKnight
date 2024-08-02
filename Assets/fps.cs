@@ -22,7 +22,8 @@ public class fps : MonoBehaviour
                while (true)
                 {
                         yield return new WaitForSeconds(1.0f);
-			fpsText.text = (1.0f / Time.deltaTime).ToString();
+                        int curFps = (int)(1.0f / Time.deltaTime); 
+			fpsText.text = curFps.ToString(); 
 		}
 	}
 }

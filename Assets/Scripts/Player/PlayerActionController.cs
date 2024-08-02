@@ -72,7 +72,7 @@ public class PlayerActionController : MonoBehaviour
 		return true;
 	}
 	 
-	IEnumerator RegisterCooldown(float time, Action finishAction)
+	IEnumerator RegisterCooldown(float time, Action finishAction = null)
 	{  
 		yield return new WaitForEndOfFrame();
 		float animLength = _animCtrl.GetCurAnimLength();
@@ -82,7 +82,7 @@ public class PlayerActionController : MonoBehaviour
 		_animCtrl.PlayAnimation();
 
 		yield return new WaitForSeconds(time); 
-		finishAction.Invoke(); 
+		finishAction?.Invoke(); 
 	}
 	  
 	void InputPortal()
@@ -150,7 +150,7 @@ public class PlayerActionController : MonoBehaviour
 		{
 			moveDir = InputManager.instance.GetInputAction("Move").ReadValue<float>() * -jumpSize;
 		}
-		rb.AddForce(new Vector2(moveDir, 8.0f), ForceMode2D.Impulse);
+		rb.AddForce(new Vector2(moveDir, _playerController._jumpPower), ForceMode2D.Impulse);
 		_animCtrl.PlayAnimation("Jump");
 	}
 
@@ -171,7 +171,7 @@ public class PlayerActionController : MonoBehaviour
 			return;
 
 		_playerController._playerState = EPlayerState.Idle;
-		_movementController._rigidbody.AddForce(new Vector2(gameObject.transform.localScale.x * 10.0f, 0.0f), ForceMode2D.Impulse);
+		_movementController._rigidbody.AddForce(new Vector2(gameObject.transform.localScale.x * _playerController._rollPower, 0.0f), ForceMode2D.Impulse);
 
 		_animCtrl.PlayAnimation("Roll");
 		StartCoroutine(RegisterCooldown(_playerController._rollDelay, () => { _isRollable = true; }));
@@ -258,7 +258,7 @@ public class PlayerActionController : MonoBehaviour
 
 		_activeState = EActiveState.Hit;
 		_animCtrl.PlayAnimation("Hit");
-		
+		StartCoroutine(RegisterCooldown(0.0f));
 	}
 
 	void AE_EndHit()

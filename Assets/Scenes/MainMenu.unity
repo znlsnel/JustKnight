@@ -1610,7 +1610,7 @@ GameObject:
   - component: {fileID: 698435621}
   - component: {fileID: 698435620}
   - component: {fileID: 698435623}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}

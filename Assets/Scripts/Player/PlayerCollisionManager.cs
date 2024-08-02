@@ -25,17 +25,17 @@ public class PlayerCollisionManager : MonoBehaviour
 		ContactFilter2D contactFilter = new ContactFilter2D();
 		if (collider == null)
 			return false; 
-
+		 
 		Collider2D[] result = new Collider2D[10];
 		int count = Physics2D.OverlapCollider(collider, contactFilter, result);
 
 
 		foreach (Collider2D r in result)
 		{
-			if (r == null)
-				continue;
-
-			if (r.gameObject != gameObject && r.gameObject.GetComponent<QuestBarrier>() == null)
+			if (r == null || r.gameObject.layer != LayerMask.NameToLayer("Tile"))
+				continue; 
+			 
+			if (r.gameObject != gameObject)
 			{ 
 				return true;
 			} 

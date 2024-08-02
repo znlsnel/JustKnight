@@ -95,7 +95,7 @@ public class PlayerMovementController : MonoBehaviour
 	}
 	void OnIdleState()
 	{
-		if (_actionController._activeState == EActiveState.Roll)
+		if (_actionController._activeState == EActiveState.Roll || _actionController._activeState == EActiveState.Attack)
 			return;  
 		  
                 float moveDir = InputManager.instance.GetInputAction("Move").ReadValue<float>();
@@ -103,7 +103,7 @@ public class PlayerMovementController : MonoBehaviour
 			_playerController._playerState = EPlayerState.Move;
                 
 		if (_rigidbody.velocity.y < -0.2f && !_playerCollision._onSensorGround)
-			_playerController._playerState = EPlayerState.Fall;
+			_playerController._playerState = EPlayerState.Fall; 
 	} 
 
 	void OnMoveState()
@@ -127,19 +127,17 @@ public class PlayerMovementController : MonoBehaviour
 			return;
 		}
 		 
+		// 벽 타기
 		bool isMoving = Mathf.Abs(InputManager.instance.GetInputAction("Move").ReadValue<float>()) > 0;
 		if (_playerCollision._onSensorFT && isMoving)
 		{ 
-			Vector3 vel = _rigidbody.velocity;
-			vel.y = -0.2f;
-			_rigidbody.velocity = vel;
+			_rigidbody.velocity = new Vector3(0.0f, -0.2f, 0.0f);
 
 			if (slideDustCT == null)
 				slideDustCT = StartCoroutine(UseSlideDust());
+
 			_animCtrl.PlayAnimation("Wall Slide");
-			Vector3 v = _rigidbody.velocity;
-			v.x = 0;
-			_rigidbody.velocity = v; 
+
 			// 벽 점프
 			if (InputManager.instance.GetInputAction("Jump").IsPressed())
 			{
@@ -147,8 +145,6 @@ public class PlayerMovementController : MonoBehaviour
 				if (InputManager.instance.GetInputAction("Up").IsPressed())
 				{ 
 					_actionController.OnJump();
-					vel = _rigidbody.velocity;
-					_rigidbody.velocity = vel;
 					_isWallClimb = true;
 				}
 				// 옆 점프

@@ -55,6 +55,7 @@ public abstract class Monster : MonoBehaviour
 	Slider _hpSlider;
 
 	[NonSerialized] public Action _onAttackBlocked;
+	public Action _onDestroy;  
 
 
 	public virtual void Awake()
@@ -68,16 +69,16 @@ public abstract class Monster : MonoBehaviour
 			
 		} 
 		_animator = GetComponent<Animator>();
-		_rigid = GetComponent<Rigidbody2D>();
+		_rigid = GetComponent<Rigidbody2D>(); 
 
-	}
+	} 
 
 	public virtual void InitMonster(Vector3 pos)
         {
-		gameObject.SetActive(true); 
 		gameObject.transform.position = new Vector3(pos.x, pos.y + transform.localScale.y / 2, pos.z);
-		 
 		_state = MonsterState.Waiting;
+
+		 
 		_animator.speed = 1.0f; 
 		_hp = _initHp; 
 
@@ -85,10 +86,12 @@ public abstract class Monster : MonoBehaviour
 		{
 			_hpSlider.value = (float)_hp / _initHp; 
 		}
+		 
+		gameObject.SetActive(true);
 	}
-          
-     
-        public virtual void Start()
+
+
+	public virtual void Start()
         { 
 		_player = GameManager.instance.GetPlayer();
 	}
@@ -256,26 +259,30 @@ public abstract class Monster : MonoBehaviour
 	Coroutine endHit = null;
         public void OnHit(GameObject attacker)
         {
-                if (_hp > 0)
-		{
-			_hp--; 
+		if (_hp <= 0)
+			return;
 
-			if (_hpSlider != null)
-				_hpSlider.value = (float)_hp / _initHp;
+		_hp--;  
+
+		if (_hpSlider != null)
+			_hpSlider.value = (float)_hp / _initHp;
 
 
-			PlayAnimation("Hit");   
-			isHit = true;
-			if (endHit != null)
-				StopCoroutine(endHit);
+		PlayAnimation("Hit");   
+		isHit = true;
+		if (endHit != null)
+			StopCoroutine(endHit);
 			
-			endHit = StartCoroutine(RegisterCoolTime(() => 
+		endHit = StartCoroutine(RegisterCoolTime(() => 
+		{
+			isHit = false;
+			if (_hp <= 0)
 			{
-				isHit = false;
-				if (_hp <= 0)
-					_state = MonsterState.Death;
-			})); 
-		} 
+				_state = MonsterState.Death;
+			 	_onDead?.Invoke();
+			}
+		})); 
+		
 	} 
 
 	public IEnumerator RegisterCoolTime(Action act)
@@ -294,7 +301,7 @@ public abstract class Monster : MonoBehaviour
         void AE_EndDeath()
         {
 		_animator.speed = 0.0f;
-		_onDead?.Invoke(); 
+		Utils.instance.SetTimer(() => { _onDestroy?.Invoke(); }, 1.5f); 
 	}
 
         void AE_OnAttack()
@@ -320,8 +327,8 @@ public abstract class Monster : MonoBehaviour
 
 	void AE_EndAttack()
         { 
-		_lastAttackTime = 0.0f;
-		_animator.Play("Idle");
+		//_lastAttackTime = 0.0f;
+		//_animator.Play("Idle");
 	}
 
 

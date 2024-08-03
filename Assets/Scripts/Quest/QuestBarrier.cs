@@ -13,18 +13,19 @@ public class QuestBarrier : MonoBehaviour
 	{
 		_stopUI = Instantiate<GameObject>(_stopUI);
 		_stopUI.SetActive(false);
-		StartCoroutine(ClearCheck());
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
 		_stopUI?.SetActive(true); 
+		StartCoroutine(ClearCheck()); 
 	}
-
-	private void OnTriggerExit2D(Collider2D collision)
+	private void OnCollisionExit2D(Collision2D collision)
 	{
-		_stopUI?.SetActive(false); 
-	} 
+		Utils.instance.SetTimer(() => _stopUI?.SetActive(false), 0.5f);
+	}   
+
+	
 
 	IEnumerator ClearCheck()
 	{
@@ -36,8 +37,9 @@ public class QuestBarrier : MonoBehaviour
 
 			if (isClear)
 			{
-				_stopUI?.SetActive(false);
-				gameObject.SetActive(false);
+				Utils.instance.SetTimer(() => _stopUI?.SetActive(false), 0.5f);
+				Utils.instance.SetTimer(() => gameObject.SetActive(false), 1.0f);  
+				  
 				yield break;
 			} 
 		}

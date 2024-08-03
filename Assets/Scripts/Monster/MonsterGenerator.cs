@@ -15,7 +15,7 @@ public class MonsterGenerator : MonoBehaviour
         Vector2 _minPos, _maxPos;  
         int _spawnedCnt = 0;
 
-
+        static int releaseCnt = 0;
 	public void Awake()
 	{
                 gameObject.GetComponent<SpriteRenderer>().enabled = false; 
@@ -32,12 +32,13 @@ public class MonsterGenerator : MonoBehaviour
                                 },
 
                                 actionOnGet: (obj) =>
-                                {
+                                { 
                                         obj.GetComponent<Monster>().InitMonster(GetGenPos());
-                                        obj.GetComponent<Monster>()._onDead.AddListener(() =>
+                                        obj.GetComponent<Monster>()._onDestroy = () =>
                                         {
                                                 _monsterPool.Release(obj);
-                                        });
+                                                Debug.Log($"Release : {releaseCnt++}");
+                                        }; 
                                 },
 
                                 actionOnRelease: obj =>
@@ -47,9 +48,9 @@ public class MonsterGenerator : MonoBehaviour
                                 },
 
                                 collectionCheck: false,
-                                defaultCapacity: 20,
-                                maxSize: 40
-                        );
+                                defaultCapacity: _monsterLimit, 
+                                maxSize: _monsterLimit + 3
+			);
                 }
 	}
          

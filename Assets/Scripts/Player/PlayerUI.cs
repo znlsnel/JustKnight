@@ -3,25 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-
-public class PlayerInfoUIManager : MonoBehaviour
+public class PlayerUI : MonoBehaviour
 {
-        // Start is called before the first frame update 
+        // Start is called before the first frame update  
         public Material _hpMaterial;
 
 	private void Awake()  
 	{
-                //_hpMaterial = GameObject.Find("UserInfoUI").GetComponentInChildren<Material>;
-                GameObject gm = GameObject.Find("M_HpBar"); 
-                if (gm != null)
-                {
-                        _hpMaterial = gm.GetComponent<Image>().material;
-                }
-
+                gameObject.SetActive(false); 
         }
-
-	public void UpdateHpBar(int maxHp, int curHp)
+         
+	public void UpdateHpBar(int curHp, int maxHp)
         { 
                 if (_hpMaterial == null)
                 {

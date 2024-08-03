@@ -18,6 +18,7 @@ public class UIHandler : Singleton<UIHandler>
 	[SerializeField] GameObject _dialogue;
 	[SerializeField] GameObject _questMenu;
 	[SerializeField] GameObject _displayQuest;
+	[SerializeField] GameObject _playerUI;
 
 	[NonSerialized] public FadeEffectManager _fadeEffectManager;
 	[NonSerialized] public InventoryManager _inventoryManager;
@@ -25,6 +26,7 @@ public class UIHandler : Singleton<UIHandler>
 	[NonSerialized] public DialogueManager _dialogueSystem;
 	[NonSerialized] public QuestUI _questUIManager;
 	[NonSerialized] public DisplayQuest _displayQuestManager;
+	[NonSerialized] public PlayerUI _playerUIManager;
 
 	GameObject _curOpenUI;
 
@@ -37,6 +39,7 @@ public class UIHandler : Singleton<UIHandler>
 		InstantiateAndAssign(ref _dialogue, out _dialogueSystem); 
 		InstantiateAndAssign(ref _questMenu, out _questUIManager);
 		InstantiateAndAssign(ref _displayQuest, out _displayQuestManager);
+		InstantiateAndAssign(ref _playerUI, out _playerUIManager); 
 
 	}
 	private void InstantiateAndAssign<T>(ref GameObject instance, out T manager, string childName = null) where T : Component

@@ -15,8 +15,8 @@ public enum EPlayerState
 };
 public class PlayerController : MonoBehaviour
 {
+	PlayerUI _playerUI;
 	PlayerAnimCtrl _animController;
-	PlayerInfoUIManager _infoUIManager;
 	PlayerCollisionManager _collMan; 
 	InputManager _inputManager;
 	PlayerActionController _actionController;
@@ -36,7 +36,18 @@ public class PlayerController : MonoBehaviour
 	public int _InitHp = 3;
 
 	int _hp = 3;
-	public int hp { get { return _hp; } set { _hp = value; } }
+	public int hp 
+	{ 
+		get 
+		{ 
+			return _hp;
+		} 
+		set 
+		{ 
+			_hp = value;
+			_playerUI.UpdateHpBar(_hp, _InitHp); 
+		}
+	}
 
 
 	public UnityEvent r_MoveLeft;
@@ -64,23 +75,23 @@ public class PlayerController : MonoBehaviour
 				_actionController.OnFallStart(); 
 			 
 		}
-	}
+	} 
 
-	private void Awake()
+	private void Awake() 
 	{
 		_animController = gameObject.AddComponent<PlayerAnimCtrl>(); 
-		_infoUIManager = gameObject.AddComponent<PlayerInfoUIManager>();
 		_actionController = gameObject.AddComponent<PlayerActionController>(); 
 		_movementController = gameObject.AddComponent<PlayerMovementController>();
 		_inputManager = InputManager.instance;
 		_hp = _InitHp; 
 	}
-
+	 
 	void Start()
 	{
-		_collMan = gameObject.GetComponent<PlayerCollisionManager>();  
-		_infoUIManager.UpdateHpBar(3, 3);
-
+		_collMan = gameObject.GetComponent<PlayerCollisionManager>();
+		_playerUI = UIHandler.instance._playerUIManager;
+		_playerUI.gameObject.SetActive(true);
+		_playerUI.UpdateHpBar(_hp, _InitHp); 
 	}
 
 	void AE_SlideDust()

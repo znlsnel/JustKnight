@@ -5,8 +5,9 @@ using UnityEngine.Rendering;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.AI;
+using Unity.VisualScripting;
+using UnityEngine.Events;
 
- 
 public class DialogueManager : MonoBehaviour , IMenuUI
 {
 	string _ncpName;
@@ -19,11 +20,27 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 	QuestDialogueSO _curQuestDlg;
 	DialogueSO _curDlg;
 
+	Coroutine _updateScript;
+	UnityEvent _completeScript = new UnityEvent();
+	 
 	private void Awake()  
 	{
 		gameObject.SetActive(false);
 	}
 
+	private void Update()
+	{
+		if (_updateScript != null)
+		{
+			if (InputManager.instance.GetInputAction("Skip").IsPressed())
+			{
+				StopCoroutine(_updateScript);
+				_completeScript?.Invoke();
+				_completeScript?.RemoveAllListeners();
+				_updateScript = null;  
+			}
+		}
+	}
 	public void AddDialogue(QuestDialogueSO dialogue)
 	{
 		if (_dialogues.ContainsKey(dialogue.name))
@@ -48,27 +65,51 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 		UpdateDialougeText();
 	}
 	 
+
 	private void UpdateDialougeText()
 	{
 		int page = _curQuestDlg.curPage;
 
-		_npcScript.text = _curDlg.npc[page].text;
-		int cnt = _curDlg.npc[page].player.Count;
+		_npcScript.text = "";
+		_updateScript = StartCoroutine(UpdateScript(_curDlg.npc[page].text));
+		 
+		_completeScript?.RemoveAllListeners();
+		_completeScript.AddListener(() =>  
+		{
+			_npcScript.text = _curDlg.npc[page].text;
+			int cnt = _curDlg.npc[page].player.Count;
 
+			for (int i = 0; i < 3; i++)
+			{
+				if (i < cnt)
+				{
+					_respScripts[i].transform.parent.gameObject.SetActive(true);
+					_respScripts[i].text = _curDlg.npc[page].player[i].text;
+				}
+				else
+				{
+					_respScripts[i].transform.parent.gameObject.SetActive(false);
+				}
+			}
+		});
+		 
 		for (int i = 0; i < 3; i++) 
 		{
-			if (i < cnt)
-			{ 
-				_respScripts[i].transform.parent.gameObject.SetActive(true);
-				_respScripts[i].text = _curDlg.npc[page].player[i].text; 
-			}
-			else
-			{
-				_respScripts[i].transform.parent.gameObject.SetActive(false);
-			}
+			_respScripts[i].transform.parent.gameObject.SetActive(false);
 		}
+	}
 
-
+	IEnumerator UpdateScript(string text, int idx = 0)
+	{
+		while (idx < text.Length)
+		{
+			_npcScript.text += text[idx++];
+			yield return new WaitForSeconds(0.1f);
+		}
+		
+		_completeScript?.Invoke();
+		_completeScript?.RemoveAllListeners();
+		
 	}
 
 

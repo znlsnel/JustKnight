@@ -13,19 +13,36 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 	string _ncpName;
 	private Dictionary<string, QuestDialogueSO> _dialogues = new Dictionary<string, QuestDialogueSO>();
 
-	[SerializeField] Image _npcImage;
+	[SerializeField] Text _nameText;
 	[SerializeField] Text _npcScript;
 	[SerializeField] Text[] _respScripts;
+	[Space(10)]
+
+	[SerializeField] Color _pressColor;
+	[SerializeField] Color _hoverColor;
+
 
 	QuestDialogueSO _curQuestDlg;
 	DialogueSO _curDlg;
 
 	Coroutine _updateScript;
 	UnityEvent _completeScript = new UnityEvent();
-	 
-	private void Awake()  
-	{
+	
+	private void Awake()   
+	{ 
 		gameObject.SetActive(false);
+
+		foreach (Text _resp in _respScripts)
+		{
+			Color normal = _resp.color;
+			ButtonClickHandler bch = _resp.gameObject.AddComponent<ButtonClickHandler>();
+			{
+				bch._onButtonDown = () => { _resp.color = _pressColor; };
+				bch._onButtonUp = () => { _resp.color = normal; };
+				bch._onButtonEnter = () => { _resp.color = _hoverColor; };
+				bch._onButtonExit = () => { _resp.color = normal; };
+			} 
+		}
 	}
 
 	private void Update()
@@ -57,11 +74,9 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 	public void BeginDialogue(QuestDialogueSO dialogue)
 	{
 		ActiveMenu(true);
-		  if (dialogue.npcIcon != null)
-			_npcImage.sprite = Sprite.Create(dialogue.npcIcon, new Rect(0, 0, dialogue.npcIcon.width, dialogue.npcIcon.height), new Vector2(0.5f, 0.5f));
 		_curQuestDlg = dialogue;
 		_curDlg = _curQuestDlg.GetCurDialogue();
-
+		_nameText.text = dialogue.npcName;
 		UpdateDialougeText();
 	}
 	 
@@ -83,8 +98,9 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 			{
 				if (i < cnt)
 				{
-					_respScripts[i].transform.parent.gameObject.SetActive(true);
 					_respScripts[i].text = _curDlg.npc[page].player[i].text;
+					_respScripts[i].transform.parent.gameObject.SetActive(true);
+					//_respScripts[i].gameObject.GetComponent<ContentSizeFitter>()?.
 				}
 				else
 				{
@@ -136,6 +152,7 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 		gameObject.SetActive(active);
 		UIHandler.instance.CloseAllUI(gameObject, active);
 		if (!active)
-			InputManager.instance._interactionHandler.Cancel(); 
+			InputManager.instance._interactionHandler.Cancel();
+
 	}
 }

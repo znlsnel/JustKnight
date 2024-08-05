@@ -15,7 +15,7 @@ public class GameManager : Singleton<GameManager>
 	GameObject _player; 
 	Camera _camera;
 	public Action _onSceneInit;
-
+	FadeEffectManager _fadeEffect;
 	public override void Awake() 
 	{
 	        base.Awake();
@@ -30,9 +30,8 @@ public class GameManager : Singleton<GameManager>
 
 	void Start()   
 	{
-
-
-	}
+		_fadeEffect = UIHandler.instance._fadeEffect.GetComponentInChildren<FadeEffectManager>();	
+	} 
 
 	public GameObject GetPlayer()
 	{
@@ -54,17 +53,17 @@ public class GameManager : Singleton<GameManager>
 			DontDestroyOnLoad(_player); 
 		}
 		_player.transform.position = gen.transform.position;
-		UIHandler.instance._fadeEffectManager.PlayFadeIn();
+		_fadeEffect.PlayFadeIn();
 
 		_onSceneInit?.Invoke();
 	}
 	   
 	public void LoadScene(string sceneName) 
-	{ 
-		UIHandler.instance._fadeEffectManager.PlayFadeOut();
-		UIHandler.instance._fadeEffectManager._onFadeOutComplete = null;
+	{
+		_fadeEffect.PlayFadeOut();
+		_fadeEffect._onFadeOutComplete = null;
 
-		UIHandler.instance._fadeEffectManager._onFadeOutComplete += () =>
+		_fadeEffect._onFadeOutComplete += () =>
 		{
 			UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
 		}; 

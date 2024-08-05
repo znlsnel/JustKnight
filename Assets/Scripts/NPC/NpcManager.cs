@@ -18,12 +18,12 @@ public class NpcManager : MonoBehaviour
         { 
                 _curDialogue = _dialogues[0];
 		_questManager = QuestManager.instance;
-		_dialogueManager = UIHandler.instance._dialogueSystem;
+		_dialogueManager = UIHandler.instance._dialogue.GetComponent<DialogueManager>(); 
 		
 		foreach (var d in _dialogues)
 		{
 			QuestManager.instance.AddQuest(d.quest);
-			UIHandler.instance._dialogueSystem.AddDialogue(d); 
+			_dialogueManager.AddDialogue(d); 
 		}
 
 		if (isEventNpc) 
@@ -46,10 +46,10 @@ public class NpcManager : MonoBehaviour
 
 		InputManager.instance._interactionHandler.AddIAction(gameObject, () => 
 		{
-                        UIHandler.instance._dialogueSystem.BeginDialogue(_curDialogue);
+			_dialogueManager.BeginDialogue(_curDialogue);
 
-                        InputManager.instance._interactionHandler.RegisterCancelAction(() => { 
-                               UIHandler.instance._dialogueSystem.ActiveMenu(false);  
+                        InputManager.instance._interactionHandler.RegisterCancelAction(() => {
+				_dialogueManager.ActiveMenu(false);  
 			});
 		});
 

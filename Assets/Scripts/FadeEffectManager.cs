@@ -15,10 +15,10 @@ public class FadeEffectManager : MonoBehaviour
 
 	private void Awake() 
 	{
-		
+
 		_anim = GetComponent<Animator>();
-		_canvas = GetComponentInParent<Canvas>();
-		_panelImage = GetComponent<Image>();
+		_canvas = GetComponentInParent<Canvas>(); 
+		_panelImage = GetComponent<Image>(); 
 	}
 	void Start()
     {

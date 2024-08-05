@@ -7,26 +7,13 @@ using UnityEngine.UI;
 
 public class ButtonClickHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
-        Button _button;
 
-	Action _onButtonDown;
-	Action _onButtonUp; 
-	Action _onButtonEnter; 
-	Action _onButtonExit; 
+	public Action _onButtonDown;
+	public Action _onButtonUp;
+	public Action _onButtonEnter;
+	public Action _onButtonExit; 
 
 	// Start is called before the first frame update
-	private void Awake()
-	{
-		_button = GetComponent<Button>();
-	}
-
-	public void RegisterButtonAction(Action up, Action down, Action enter = null, Action exit = null)
-	{
-		_onButtonDown = down;
-		_onButtonUp = up;
-		 _onButtonEnter = enter; 
-		 _onButtonExit = exit;
-	}
 
     // Update is called once per frame
 

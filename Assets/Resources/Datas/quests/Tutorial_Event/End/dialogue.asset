@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57fced589043bfd42b9ac54fa994fbf6, type: 3}
-  m_Name: Dialogue
+  m_Name: dialogue
   m_EditorClassIdentifier: 
   npc:
-  - text: "[\uC2E4\uC804 \uC804\uD22C]"
+  - text: "[\uD29C\uD1A0\uB9AC\uC5BC \uC885\uB8CC]"
     player:
     - text: "\uB2E4\uC74C"
       state: 0
-  - text: "\uACF5\uACA9\uACFC \uB9C9\uAE30\uB97C \uBC30\uC6E0\uC73C\uB2C8 \uC774\uC81C
-      \uC2E4\uC81C \uBAAC\uC2A4\uD130\uB85C \uC5F0\uC2B5\uD574\uBCF4\uACA0\uC2B5\uB2C8\uB2E4."
+  - text: "\uACE0\uC0DD\uD558\uC168\uC2B5\uB2C8\uB2E4! \uBAA8\uB4E0 \uD29C\uD1A0\uB9AC\uC5BC\uC774
+      \uC885\uB8CC\uB418\uC5C8\uC2B5\uB2C8\uB2E4!"
     player:
     - text: "\uB2E4\uC74C"
       state: 0
-  - text: "\uBAAC\uC2A4\uD130\uB97C \uC4F0\uB7EC\uD2B8\uB9AC\uACE0, \uB9C9\uAE30\uB97C
-      \uC131\uACF5\uC2DC\uCF1C\uBCF4\uC138\uC694!"
+  - text: "\uC55E\uC5D0 \uD3EC\uD0C8\uB85C \uB4E4\uC5B4\uAC00\uC11C \uBAA8\uD5D8\uC744
+      \uC774\uC5B4\uAC00\uC8FC\uC138\uC694!"
     player:
     - text: "\uD655\uC778"
       state: 4

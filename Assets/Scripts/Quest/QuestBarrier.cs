@@ -14,34 +14,41 @@ public class QuestBarrier : MonoBehaviour
 		_stopUI = Instantiate<GameObject>(_stopUI);
 		_stopUI.SetActive(false);
 	}
+	private void Start()
+	{
 
+		_unlockQuest._onClear += ()=>ClearCheck();
+	}
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
+		if (isClear)
+			return;
+
 		_stopUI?.SetActive(true); 
-		StartCoroutine(ClearCheck()); 
 	}
 	private void OnCollisionExit2D(Collision2D collision)
 	{
-		Utils.instance.SetTimer(() => _stopUI?.SetActive(false), 0.5f);
+		if (isClear)
+		{
+			if (_stopUI?.activeSelf == true)
+				_stopUI?.SetActive(false);
+			return; 
+		}
+		 
+		Utils.instance.SetTimer(() => _stopUI?.SetActive(false), 0.5f); 
 	}   
 
-	
+	 
 
-	IEnumerator ClearCheck()
+	void ClearCheck()
 	{
-		while (true)
-		{
-			yield return new WaitForSeconds(1.0f);
-			_unlockQuest = QuestManager.instance.UpdateQuestData(_unlockQuest);
-			isClear = _unlockQuest.isClear();
+		_unlockQuest = QuestManager.instance.UpdateQuestData(_unlockQuest);
+		isClear = true;
 
-			if (isClear)
-			{
-				Utils.instance.SetTimer(() => _stopUI?.SetActive(false), 0.5f);
-				Utils.instance.SetTimer(() => gameObject.SetActive(false), 1.0f);  
-				  
-				yield break;
-			} 
-		}
+		if (_stopUI?.activeSelf == true)
+			Utils.instance.SetTimer(() => _stopUI?.SetActive(false), 0.5f); 
+		Utils.instance.SetTimer(() => gameObject.SetActive(false), 0.5f);  
+
+		
 	}
 }

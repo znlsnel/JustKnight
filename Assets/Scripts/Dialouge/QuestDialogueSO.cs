@@ -18,7 +18,7 @@ public enum EDialogueState
 [CreateAssetMenu(fileName = "new Episode", menuName = "Dialogue/new Episode", order = 2)]
 public class QuestDialogueSO : ScriptableObject
 {
-	public Texture2D npcIcon;
+	public string npcName = "";
 	public QuestSO quest;
 
 	public DialogueSO pendingDialogue;   // 퀘스트 수락 전 DialogueSO
@@ -39,8 +39,8 @@ public class QuestDialogueSO : ScriptableObject
 
 	public DialogueSO GetCurDialogue()
 	{
-		bool isClear = quest.isClear();
-
+		bool isClear = quest != null ? quest.isClear : false;
+		  
 		curDialogue = null;
 		curPage = 0;
 		if (state == EDialogueState.IN_PROGRESS && isClear)
@@ -101,8 +101,9 @@ public class QuestDialogueSO : ScriptableObject
 
 			case EResponseType.RECEIVE_QUEST:
 				state = EDialogueState.IN_PROGRESS;
-				QuestManager.instance.RegisterQuest(quest);
-				break;
+				if (quest != null)
+					QuestManager.instance.RegisterQuest(quest);
+				break; 
 
 			case EResponseType.REJECT:
 				state = EDialogueState.REJECTED;

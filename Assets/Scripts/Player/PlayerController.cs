@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
 	void Start()
 	{
 		_collMan = gameObject.GetComponent<PlayerCollisionManager>();
-		_playerUI = UIHandler.instance._playerUIManager;
+		_playerUI = UIHandler.instance._playerUI.GetComponent<PlayerUI>();
 		_playerUI.gameObject.SetActive(true);
 		_playerUI.UpdateHpBar(_hp, _InitHp); 
 	}

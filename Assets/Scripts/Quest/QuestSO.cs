@@ -27,9 +27,23 @@ public class QuestSO : ScriptableObject
 	public bool isSavable;
 	public bool isAutoComplete;
 
+	bool clear = false;
+
 	[NonSerialized] public EQuestState questState = EQuestState.AWAITING;
 
-	public bool isClear()
+	[NonSerialized] public Action _onClear;
+	public bool isClear 
+	{ 
+		get 
+		{
+			if (clear == true)
+				return true;
+			 
+			return clear = CheckClear();
+		} 
+	}
+	 
+	bool CheckClear()
 	{
 		foreach (QuestTaskSO task in tasks)
 		{

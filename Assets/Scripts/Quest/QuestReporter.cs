@@ -15,8 +15,16 @@ public class QuestReporter : MonoBehaviour
 {
 	[SerializeField] public List<ReportInfo> reportInfos = new List<ReportInfo>();
 	public int successCount = 0;
-
 	public UnityEvent _enterCollider;
+
+	DisplayQuest _displayQuest;
+	QuestUI _questUI;
+
+	private void Start()
+	{
+		_displayQuest = UIHandler.instance._displayQuest.GetComponent<DisplayQuest>();
+		_questUI =  UIHandler.instance._questUI.GetComponent<QuestUI>();
+	}
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		_enterCollider?.Invoke();  
@@ -58,8 +66,8 @@ public class QuestReporter : MonoBehaviour
 		}
 		if (taskInfos.Count > 0)
 		{
-			UIHandler.instance._displayQuestManager.UpdateDisplayQuestSlot();
-			UIHandler.instance._questUIManager.UpdateQuestInfo();
+			_displayQuest.UpdateDisplayQuestSlot();
+			_questUI.UpdateQuestInfo();
 		}
 
 	}

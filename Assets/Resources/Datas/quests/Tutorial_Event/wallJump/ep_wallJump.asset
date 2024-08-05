@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f8aa439f42f81c49bde2f43e2521f9f, type: 3}
   m_Name: ep_wallJump
   m_EditorClassIdentifier: 
-  npcIcon: {fileID: 0}
+  npcName: System
   quest: {fileID: 11400000, guid: bd8cf78aa1353b94eb40bc3a0480da0c, type: 2}
   pendingDialogue: {fileID: 11400000, guid: b47082b862d454945a168660007b271d, type: 2}
   rejectedDialogue: {fileID: 0}

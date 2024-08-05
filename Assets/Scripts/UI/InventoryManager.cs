@@ -60,18 +60,20 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		_tempSlotText = _tempSlots.transform.Find("text").GetComponent<Text>();
 		_tempSlotRectTransform = _tempSlots.GetComponent<RectTransform>();	
 		foreach (Transform child in _inventorySlots.transform)
-                { 
-                        if (child.name.Contains("ivnSlot")) 
-                        {
-                                int curIdx = _slots.Count;
-				Text t = child.transform.Find("text")?.GetComponent<Text>();
-                                child.AddComponent<ButtonClickHandler>().RegisterButtonAction(
-					() => { OnButtonUp(curIdx);}, 
-					() => { OnButtonDown(curIdx); },
-					() => { OnButtonEnter(curIdx);  },
-					() => { OnButtonExit(curIdx);  }
-					);  
+                {
+			if (child.name.Contains("ivnSlot"))
+			{
+				int curIdx = _slots.Count;
+				ButtonClickHandler bch = child.AddComponent<ButtonClickHandler>();
+				if (bch != null)
+				{
+					bch._onButtonDown = () => OnButtonDown(curIdx);
+					bch._onButtonUp = () => OnButtonUp(curIdx); 
+					bch._onButtonEnter = () => OnButtonEnter(curIdx);
+					bch._onButtonExit = () => OnButtonExit(curIdx);
+				} 
 
+				Text t = child.transform.Find("text")?.GetComponent<Text>();
                                 if (t != null) 
                                 {
 					t.text= " - "; 

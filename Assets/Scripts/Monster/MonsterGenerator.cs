@@ -15,7 +15,7 @@ public class MonsterGenerator : MonoBehaviour
         Vector2 _minPos, _maxPos;  
         int _spawnedCnt = 0;
 
-        static int releaseCnt = 0;
+
 	public void Awake()
 	{
                 gameObject.GetComponent<SpriteRenderer>().enabled = false; 
@@ -37,7 +37,6 @@ public class MonsterGenerator : MonoBehaviour
                                         obj.GetComponent<Monster>()._onDestroy = () =>
                                         {
                                                 _monsterPool.Release(obj);
-                                                Debug.Log($"Release : {releaseCnt++}");
                                         }; 
                                 },
 
@@ -86,7 +85,7 @@ public class MonsterGenerator : MonoBehaviour
                         if (_endCondition != null)
                         {
                                 _endCondition = QuestManager.instance.UpdateQuestData(_endCondition);
-                                if (_endCondition.isClear())
+                                if (_endCondition.isClear)
                                 {
                                         gameObject.SetActive(false);
                                         return;

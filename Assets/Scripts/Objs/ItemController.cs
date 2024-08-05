@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class ItemController : MonoBehaviour
 {
-        // Start is called before the first frame update
+	// Start is called before the first frame update
+	InventoryManager _inventory;
         Rigidbody2D _rigid;
         int _itemIdx = -1;
 	float spawnTime = 0;
@@ -15,6 +16,11 @@ public class ItemController : MonoBehaviour
         {
                 _rigid = gameObject.GetComponent<Rigidbody2D>();
         }
+	private void Start()
+	{
+		_inventory = UIHandler.instance._dialogue.GetComponent<InventoryManager>();
+	}
+	 
 	private void Update()
 	{
 		if (_isPicked)
@@ -28,9 +34,9 @@ public class ItemController : MonoBehaviour
 		if (dir.magnitude < 0.1f)
 		{
 			_isPicked = false;
-			UIHandler.instance._inventoryManager.AddItem(_itemIdx);
+			UIHandler.instance._inventory.GetComponent<InventoryManager>().AddItem(_itemIdx);
 			ReleaseItem();
-
+			 
 			return;
 		}	
 		

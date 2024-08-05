@@ -10,23 +10,30 @@ public class QuestSlotManager : MonoBehaviour
 	public Button _questDisplayButton;
 
 	QuestSO _quest;
+	QuestUI _questUI;
+	DisplayQuest _displayQuest;
+	private void Start()
+	{
+		_questUI = UIHandler.instance._questUI.GetComponent<QuestUI>();
+		_displayQuest = UIHandler.instance._displayQuest.GetComponent<DisplayQuest>();
+	}
 
 	public void SetQuestSlot(QuestSO quest)
 	{
 		_quest = quest;
 		_questTitle.text = quest.description;
-		_questSlotButton.onClick.AddListener( ()=>UIHandler.instance._questUIManager.UpdateQuestInfo(quest));
+		_questSlotButton.onClick.AddListener( ()=> _questUI.UpdateQuestInfo(quest));
 		_questDisplayButton.onClick.AddListener(() => AddDisplayQuest());
 	}   
 
 	public void AddDisplayQuest()
 	{
-		bool isDisplayed = UIHandler.instance._displayQuestManager.IsQuestSaved(_quest);
+		bool isDisplayed = _displayQuest.IsQuestSaved(_quest);
 
-		if (isDisplayed)
-			UIHandler.instance._displayQuestManager.RemoveQuest(_quest);
+		if (isDisplayed) 
+			_displayQuest.RemoveQuest(_quest);
 		else
-			UIHandler.instance._displayQuestManager.AddQuest(_quest);
+			_displayQuest.AddQuest(_quest);
 
 		
 	}

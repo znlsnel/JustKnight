@@ -31,8 +31,8 @@ public class QuestManager : Singleton<QuestManager>
 	 
 	private void Start()
 	{
-		_displayQuest = UIHandler.instance._displayQuestManager;
-		_questUI = UIHandler.instance._questUIManager; 
+		_displayQuest = UIHandler.instance._displayQuest.GetComponent<DisplayQuest>();
+		_questUI = UIHandler.instance._questUI.GetComponent<QuestUI>(); 
 	}
 	public List<Tuple<QuestSO, QuestTaskSO>> GetQuest(CategorySO category, TargetSO target)
 	{
@@ -56,7 +56,7 @@ public class QuestManager : Singleton<QuestManager>
 
 	public void AddQuest(QuestSO quest)
 	{
-		if (_quests.ContainsKey(quest.codeName))
+		if (quest == null || _quests.ContainsKey(quest.codeName))
 			return;
 
 		_quests.Add(quest.codeName, quest);
@@ -105,10 +105,12 @@ public class QuestManager : Singleton<QuestManager>
 	{
 		_questUI.LoadSuccessUI(rewardInfo);
 		_questUI.MoveToCompletedQuests(quest);
+	
 		Utils.instance.SetTimer(()=>_displayQuest.RemoveQuest(quest), 1.5f);
 		 
 		QuestManager.instance.RemoveQuestTasks(quest);
-		quest.questState = EQuestState.COMPLETED; 
+		quest.questState = EQuestState.COMPLETED;
+		quest._onClear?.Invoke();
 	}
 
 	public QuestSO UpdateQuestData(QuestSO quest)

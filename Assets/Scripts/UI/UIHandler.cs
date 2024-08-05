@@ -12,36 +12,37 @@ public class UIHandler : Singleton<UIHandler>
 {
 	// Start is called before the first frame update
 
-	[SerializeField] GameObject _skillMenu;
-	[SerializeField] GameObject _fadeEffect;
-	[SerializeField] GameObject _inventory; 
-	[SerializeField] GameObject _dialogue;
-	[SerializeField] GameObject _questMenu;
-	[SerializeField] GameObject _displayQuest;
-	[SerializeField] GameObject _playerUI;
-
-	[NonSerialized] public FadeEffectManager _fadeEffectManager;
-	[NonSerialized] public InventoryManager _inventoryManager;
-	[NonSerialized] public SkillMenuManager _skillMenuManager;
-	[NonSerialized] public DialogueManager _dialogueSystem;
-	[NonSerialized] public QuestUI _questUIManager;
-	[NonSerialized] public DisplayQuest _displayQuestManager;
-	[NonSerialized] public PlayerUI _playerUIManager;
+	public GameObject _skillMenu;
+	public GameObject _fadeEffect;
+	public GameObject _inventory; 
+	public GameObject _dialogue;
+	public GameObject _questUI;
+	public GameObject _displayQuest;
+	public GameObject _playerUI;
+	public GameObject _fpsUI;
 
 	GameObject _curOpenUI;
 
 	public override void Awake()
 	{
 		base.Awake();
-		InstantiateAndAssign(ref _inventory, out _inventoryManager);
-		InstantiateAndAssign(ref _skillMenu, out _skillMenuManager);
-		InstantiateAndAssign(ref _fadeEffect, out _fadeEffectManager, "Panel");
-		InstantiateAndAssign(ref _dialogue, out _dialogueSystem); 
-		InstantiateAndAssign(ref _questMenu, out _questUIManager);
-		InstantiateAndAssign(ref _displayQuest, out _displayQuestManager);
-		InstantiateAndAssign(ref _playerUI, out _playerUIManager); 
 
+		InstantiateAndAssign(ref _inventory);
+		InstantiateAndAssign(ref _fadeEffect);
+		InstantiateAndAssign(ref _inventory);
+		InstantiateAndAssign(ref _dialogue);
+		InstantiateAndAssign(ref _questUI);
+		InstantiateAndAssign(ref _displayQuest);
+		InstantiateAndAssign(ref _playerUI);
+		InstantiateAndAssign(ref _fpsUI);
 	}
+
+	private void InstantiateAndAssign(ref GameObject instance)
+	{
+		instance = Instantiate(instance);
+		DontDestroyOnLoad(instance);
+	} 
+
 	private void InstantiateAndAssign<T>(ref GameObject instance, out T manager, string childName = null) where T : Component
 	{
 		instance = Instantiate(instance);
@@ -57,17 +58,20 @@ public class UIHandler : Singleton<UIHandler>
 	{ 
 		InputManager.instance.BindInputAction("SkillMenu", () =>
 		{
-			this._skillMenuManager.ActiveMenu(!this._skillMenu.activeSelf);
+			SkillMenuManager skillMenuManager = _skillMenu.GetComponent<SkillMenuManager>();
+			skillMenuManager?.ActiveMenu(!this._skillMenu.activeSelf); 
 		}); 
 
 		InputManager.instance.BindInputAction("Inventory", () => 
 		{ 
-			this._inventoryManager.ActiveMenu(!this._inventory.activeSelf);
+			InventoryManager inventoryManager = _inventory.GetComponent<InventoryManager>();
+			inventoryManager?.ActiveMenu(!this._inventory.activeSelf); 
 		});
 
 		InputManager.instance.BindInputAction("QuestMenu", () =>
 		{ 
-			this._questUIManager.ActiveMenu(!_questMenu.activeSelf); 
+			QuestUI questUI = _questUI.GetComponent<QuestUI>();
+			questUI?.ActiveMenu(!_questUI.activeSelf); 
 		});
 
 	}

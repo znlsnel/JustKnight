@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 7657816096572166638}
   - component: {fileID: 8994359762084695819}
   - component: {fileID: 870631690122267248}
-  - component: {fileID: 3714210082168184141}
+  - component: {fileID: 8679864015448132114}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -200,7 +200,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3714210082168184141
+--- !u!114 &8679864015448132114
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

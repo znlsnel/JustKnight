@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 	InputManager _inputManager;
 	PlayerActionController _actionController;
 	PlayerMovementController _movementController;
+	PlayerEffectManager _effectManager;
 
 	public GameObject _SlideDust;
 
@@ -80,8 +81,9 @@ public class PlayerController : MonoBehaviour
 	private void Awake() 
 	{
 		_animController = gameObject.AddComponent<PlayerAnimCtrl>(); 
-		_actionController = gameObject.AddComponent<PlayerActionController>(); 
+		_actionController = gameObject.AddComponent<PlayerActionController>();
 		_movementController = gameObject.AddComponent<PlayerMovementController>();
+		_effectManager  = gameObject.AddComponent<PlayerEffectManager>();
 		_inputManager = InputManager.instance;
 		_hp = _InitHp; 
 	}

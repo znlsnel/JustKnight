@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class Item : MonoBehaviour
 {
+	public Text _name;
 	public int _itemIdx;
-	public Text _name;  
 	[NonSerialized] public RectTransform _rectTransform;
 
 	private void Awake()

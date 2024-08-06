@@ -9,32 +9,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Experimental.Playables;
 using UnityEngine.UI;
 
-public enum ItemType : int
-{
-	Headband = 0,
-	Belt = 1,
-	Gloves = 2,
-	Shoes = 3,
-	// -------------
-         
-	Amulet = 4,
-}
- 
 
-public class Item
-{
-        public Item() { }
-	public Item(int type, Text t)
-	{
-		_itemType = type;
-		_name = t;
-	}
-
-	public int _itemType; 
-        public Text _name;  
-
-
-} 
 
 public class InventoryManager : MonoBehaviour, IMenuUI
 { 
@@ -43,7 +18,6 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 	[SerializeField] GameObject _tempSlots;
 
 	Text _tempSlotText;
-	RectTransform _tempSlotRectTransform;
 
 	List<Item>  _slots = new List<Item>();
         int _slotTop = 0;
@@ -55,31 +29,30 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 	private Coroutine startCoroutine;
 
 	private void Awake() 
-	{
-		_tempSlots.GetComponent<GraphicRaycaster>().enabled = false;	 
+	{ 
+		//_tempSlots.GetComponent<GraphicRaycaster>().enabled = false;	 
 		_tempSlotText = _tempSlots.transform.Find("text").GetComponent<Text>();
-		_tempSlotRectTransform = _tempSlots.GetComponent<RectTransform>();	
+		_tempSlots.SetActive(false);
 		foreach (Transform child in _inventorySlots.transform)
                 {
-			if (child.name.Contains("ivnSlot"))
+			int curIdx = _slots.Count;
+			ButtonClickHandler bch = child.AddComponent<ButtonClickHandler>();
+			if (bch != null)
 			{
-				int curIdx = _slots.Count;
-				ButtonClickHandler bch = child.AddComponent<ButtonClickHandler>();
-				if (bch != null)
-				{
-					bch._onButtonDown = () => OnButtonDown(curIdx);
-					bch._onButtonUp = () => OnButtonUp(curIdx); 
-					bch._onButtonEnter = () => OnButtonEnter(curIdx);
-					bch._onButtonExit = () => OnButtonExit(curIdx);
-				} 
+				bch._onButtonDown = () => OnButtonDown(curIdx);
+				bch._onButtonUp = () => OnButtonUp(curIdx); 
+				bch._onButtonEnter = () => OnButtonEnter(curIdx);
+				bch._onButtonExit = () => OnButtonExit(curIdx);
+			} 
 
-				Text t = child.transform.Find("text")?.GetComponent<Text>();
-                                if (t != null) 
-                                {
-					t.text= " - "; 
-					_slots.Add(new Item(0, t)); 
-				}
+			Text t = child.transform.Find("text")?.GetComponent<Text>();
+                        if (t != null) 
+                        {
+				t.text= " - ";
+				Item item = child.GetComponent<Item>();
+				_slots.Add(item);  
 			}
+			
                 }
 		gameObject.SetActive(false);
 	}
@@ -102,7 +75,7 @@ public class InventoryManager : MonoBehaviour, IMenuUI
                 if (_slotTop >= _slots.Count)
                         return;
 
-                _slots[_slotTop]._itemType = id;
+                _slots[_slotTop]._itemIdx = id;
                 _slots[_slotTop++]._name.text =  id.ToString();
         }
 
@@ -111,11 +84,13 @@ public class InventoryManager : MonoBehaviour, IMenuUI
         {
 		_lastButtonDownTime = Time.time;
 
-		startCoroutine = StartCoroutine(StartRelocateItem(idx)); 
+		startCoroutine = StartCoroutine(StartRelocateItem(idx));
+		
         }
 
         void OnButtonUp(int idx) 
         { 
+
                 float delay = Time.time - _lastButtonDownTime;
 		if (delay < 0.2)
                 {
@@ -137,17 +112,21 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 
 	void OnButtonEnter(int idx)
 	{
-		_hoverSlotIdx = idx; 
+
+		_hoverSlotIdx = idx;
 	}
 
 	void OnButtonExit(int idx) 
 	{
-		_hoverSlotIdx = -1; 
+		_hoverSlotIdx = -1;
 	}
 
 	IEnumerator StartRelocateItem(int idx)
 	{
 		yield return new WaitForSeconds(0.2f);
+		if (idx != _hoverSlotIdx)
+			yield break;
+
 		InitTempSlot(idx);
 		isRelocateItem = true;
 		startCoroutine = null;
@@ -155,8 +134,19 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 
 	void InitTempSlot(int idx)
 	{ 
-		MoveTempSlot(); 
+		MoveTempSlot();
 		_tempSlotText.text = _slots[idx]._name.text;
+
+		// Source RectTransform의 월드 좌표를 얻음
+		Vector3 worldPosition = _slots[idx]._rectTransform.position;
+
+		// 월드 좌표를 Target RectTransform의 로컬 좌표로 변환
+		RectTransform targetRectTransform = _tempSlots.GetComponent<RectTransform>();
+		Vector3 localPosition = targetRectTransform.parent.InverseTransformPoint(worldPosition);
+
+		//Target RectTransform의 위치를 로컬 좌표로 설정
+		targetRectTransform.localPosition = localPosition;
+		prevPos = new Vector2(0, 0);
 		_tempSlots.SetActive(true);
 	}
 
@@ -170,12 +160,21 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		_slots[_hoverSlotIdx]._name.text = tmp; 
 	}
 
+	Vector2 prevPos;
 	void MoveTempSlot() 
 	{
-		Vector2 mousePos;
-		RectTransformUtility.ScreenPointToLocalPointInRectangle(_tempSlotRectTransform.parent as RectTransform, Input.mousePosition, null, out mousePos);
+		RectTransform targetRectTransform = _tempSlots.GetComponent<RectTransform>();
+		Vector3 localPosition = targetRectTransform.parent.InverseTransformPoint(Input.mousePosition);
+		Vector2 mousePos = localPosition;
+		if (prevPos.magnitude == 0)
+		{
+			prevPos = mousePos;
+			return;
+		}
+		 
+		targetRectTransform.anchoredPosition += mousePos - prevPos ;
+		prevPos = mousePos;
 
-		_tempSlotRectTransform.anchoredPosition = mousePos; 
-	
+
 	}
 }

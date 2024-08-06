@@ -147,8 +147,8 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 		if (active == gameObject.activeSelf)
 			return;
 
-		InputManager.instance.FreezeCharacter(active);
-
+		InputManager.instance.Freezz(active);
+		 
 		gameObject.SetActive(active);
 		UIHandler.instance.CloseAllUI(gameObject, active);
 		if (!active)

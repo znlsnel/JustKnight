@@ -35,6 +35,20 @@ public class InputManager : Singleton<InputManager>
 			}
 		}
 	}
+	public void Freezz(bool freeze)
+	{
+		//FreezeUI(freeze);
+		FreezeCharacter(freeze);
+	}
+	public void FreezeUI(bool freeze)
+	{
+		if (freeze)
+		{
+			_uiActionMap.Disable();
+		}
+		else
+			_uiActionMap.Enable();
+	}
 
 	public void FreezeCharacter(bool  freeze)
 	{

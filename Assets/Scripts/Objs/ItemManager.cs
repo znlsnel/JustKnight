@@ -32,7 +32,7 @@ public class ItemManager : Singleton<ItemManager>
 	public GameObject GetItemObj(Vector3 genPos)
 	{
 		GameObject result = _itemObjPool.Get();
-		ItemController io = result.GetComponent<ItemController>();
+		ItemObject io = result.GetComponent<ItemObject>();
 		result.transform.position = genPos;
 		io.SpawnItem();
 		return result; 

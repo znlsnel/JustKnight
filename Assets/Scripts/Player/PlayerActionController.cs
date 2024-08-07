@@ -205,8 +205,6 @@ public class PlayerActionController : MonoBehaviour
 				continue;
 			
 			mc.OnHit(gameObject);
-			if (mc._hp == 0) 
-				ItemManager.instance.GetItemObj(mc.gameObject.transform.position);
 		}
 	}
 	

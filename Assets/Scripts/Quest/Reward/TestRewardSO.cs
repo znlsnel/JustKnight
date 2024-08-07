@@ -9,9 +9,9 @@ public class TestRewardSO : RewardSO
 {
 	public override string GetReward()
 	{
-		int item = Random.Range(0, 999);
-		UIHandler.instance._inventory.GetComponent<InventoryManager>().AddItem(item);
+		//int item = Random.Range(0, 999);
+	//	UIHandler.instance._inventory.GetComponent<InventoryManager>().AddItem(item);
 		 
-		return $"æ∆¿Ã≈€ [ {item} ] »πµÊ!";
+		return $"æ∆¿Ã≈€ [ ] »πµÊ!";
 	}
 }

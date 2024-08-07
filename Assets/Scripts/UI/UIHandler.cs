@@ -27,7 +27,7 @@ public class UIHandler : Singleton<UIHandler>
 	{
 		base.Awake();
 
-		InstantiateAndAssign(ref _inventory);
+		InstantiateAndAssign(ref _skillMenu);
 		InstantiateAndAssign(ref _fadeEffect);
 		InstantiateAndAssign(ref _inventory);
 		InstantiateAndAssign(ref _dialogue);
@@ -58,22 +58,22 @@ public class UIHandler : Singleton<UIHandler>
 	{ 
 		InputManager.instance.BindInputAction("SkillMenu", () =>
 		{
-			SkillMenuManager skillMenuManager = _skillMenu.GetComponent<SkillMenuManager>();
+			SkillMenuManager skillMenuManager = this._skillMenu.GetComponent<SkillMenuManager>();
 			skillMenuManager?.ActiveMenu(!this._skillMenu.activeSelf); 
 		}); 
 
 		InputManager.instance.BindInputAction("Inventory", () => 
 		{ 
-			InventoryManager inventoryManager = _inventory.GetComponent<InventoryManager>();
+			InventoryManager inventoryManager = this._inventory.GetComponent<InventoryManager>();
 			inventoryManager?.ActiveMenu(!this._inventory.activeSelf); 
 		});
 
 		InputManager.instance.BindInputAction("QuestMenu", () =>
 		{ 
-			QuestUI questUI = _questUI.GetComponent<QuestUI>();
-			questUI?.ActiveMenu(!_questUI.activeSelf); 
+			QuestUI questUI = this._questUI.GetComponent<QuestUI>();
+			questUI?.ActiveMenu(!this._questUI.activeSelf); 
 		});
-
+		 
 	}
 
 	public void CloseAllUI(GameObject nextUI, bool Active)

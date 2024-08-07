@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: {fileID: 2823326081377000863}
-  _itemIdx: 0
+  _itemIcon: {fileID: 6400713366175181457}
 --- !u!1 &2706904561942157576
 GameObject:
   m_ObjectHideFlags: 0

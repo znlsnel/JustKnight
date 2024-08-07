@@ -22,8 +22,14 @@ public enum EPlayerEffects : int
 
 
 	Count,
-} 
+}
 
+[Serializable]
+public struct  Range
+{
+	public int _min;
+	public int _max;
+}
 public class PlayerEffectManager : Singleton<PlayerEffectManager>
 {
 	[NonSerialized] public int _addHp;
@@ -39,21 +45,21 @@ public class PlayerEffectManager : Singleton<PlayerEffectManager>
 	[NonSerialized] public int _teleportAddDistance;
 	[NonSerialized] public int _revivalCnt;
 
-	public Tuple<int, int> _rangeAddHp;
-	public Tuple<int, int> _rangeAddDamage; 
-	public Tuple<int, int> _rangeDubbleAttackRate;
-	public Tuple<int, int> _rangeArmor;
-	public Tuple<int, int> _rangeReflectDamage;
-	public Tuple<int, int> _rangeAvoidanceRate;
-	public Tuple<int, int> _rangeJumpPower;
-	public Tuple<int, int> _rangeMoveSpeed; 
-	public Tuple<int, int> _rangeAttackSpeed;
-	public Tuple<int, int> _rangeTeleportSkillLevelUp;
-	public Tuple<int, int> _rangeTeleportAddDistance;
-	public Tuple<int, int> _rangeRevivalCnt;
+	public Range _rangeAddHp;
+	public Range _rangeAddDamage; 
+	public Range _rangeDubbleAttackRate;
+	public Range _rangeArmor;
+	public Range _rangeReflectDamage;
+	public Range _rangeAvoidanceRate;
+	public Range _rangeJumpPower;
+	public Range _rangeMoveSpeed; 
+	public Range _rangeAttackSpeed;
+	public Range _rangeTeleportSkillLevelUp;
+	public Range _rangeTeleportAddDistance; 
+	public Range _rangeRevivalCnt;
 
 
-	public Tuple<int, int> ApplyAbility(EPlayerEffects type, int value)
+	public Range ApplyAbility(EPlayerEffects type, int value)
 	{
 		switch (type)
 		{
@@ -108,7 +114,7 @@ public class PlayerEffectManager : Singleton<PlayerEffectManager>
 				return _rangeRevivalCnt; 
 		}
 
-		return null;
+		return new Range();
 	}
 
 }

@@ -83,7 +83,6 @@ public class PlayerController : MonoBehaviour
 		_animController = gameObject.AddComponent<PlayerAnimCtrl>(); 
 		_actionController = gameObject.AddComponent<PlayerActionController>();
 		_movementController = gameObject.AddComponent<PlayerMovementController>();
-		_effectManager  = gameObject.AddComponent<PlayerEffectManager>();
 		_inputManager = InputManager.instance;
 		_hp = _InitHp; 
 	}
@@ -91,6 +90,7 @@ public class PlayerController : MonoBehaviour
 	void Start()
 	{
 		_collMan = gameObject.GetComponent<PlayerCollisionManager>();
+		_effectManager = PlayerEffectManager.instance;
 		_playerUI = UIHandler.instance._playerUI.GetComponent<PlayerUI>();
 		_playerUI.gameObject.SetActive(true);
 		_playerUI.UpdateHpBar(_hp, _InitHp); 

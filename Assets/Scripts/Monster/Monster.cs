@@ -12,8 +12,14 @@ public enum MonsterState
 	Chasing,
 	Attack,
 	Death,
-} 
+}
 
+[Serializable]
+public struct DropItem
+{
+	public ItemSO item;
+	public int dropRate; 
+}
 public abstract class Monster : MonoBehaviour
 {
 	// Start is called before the first frame update 
@@ -44,6 +50,7 @@ public abstract class Monster : MonoBehaviour
 	[Space(10)]
 	public int _hp = 3;
 	public int _initHp = 3;
+	public List<DropItem> _dropItems;
 
 	float _lastwaitTime = 0.0f;
 	float _lastMoveTime = 0.0f;
@@ -55,8 +62,7 @@ public abstract class Monster : MonoBehaviour
 	Slider _hpSlider;
 
 	[NonSerialized] public Action _onAttackBlocked;
-	public Action _onDestroy;  
-
+	public Action _onDestroy;
 
 	public virtual void Awake()
 	{
@@ -278,12 +284,26 @@ public abstract class Monster : MonoBehaviour
 			isHit = false;
 			if (_hp <= 0)
 			{
+				DropItem();
 				_state = MonsterState.Death;
-			 	_onDead?.Invoke();
+				_onDead?.Invoke();
 			}
-		})); 
-		
-	} 
+		})); 	
+	}
+
+	void DropItem()
+	{
+		foreach (DropItem item in _dropItems)
+		{
+			int rand = UnityEngine.Random.Range(0, 100);
+			Debug.Log($" 아이템 랜덤 수치 : {rand} , 목표 수치 : {item.dropRate}");
+			if (rand >= item.dropRate)
+				continue;
+
+			ItemManager.instance.GetItemObj(item.item, gameObject.transform.position);
+		}
+
+	}
 
 	public IEnumerator RegisterCoolTime(Action act)
 	{

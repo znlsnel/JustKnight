@@ -2,23 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
-public class ItemObject : MonoBehaviour
+public class ItemController : MonoBehaviour
 {
 	// Start is called before the first frame update
 	InventoryManager _inventory;
         Rigidbody2D _rigid;
-        int _itemIdx = -1;
+	ItemSO _item;
+
 	float spawnTime = 0;
 	bool _isPicked = false;
 
-        private void Awake()
-        {
-                _rigid = gameObject.GetComponent<Rigidbody2D>();
-        }
-	private void Start()
+	private void Start() 
 	{
-		_inventory = UIHandler.instance._dialogue.GetComponent<InventoryManager>();
+                _rigid = gameObject.GetComponent<Rigidbody2D>();
+		_inventory = UIHandler.instance._inventory.GetComponent<InventoryManager>();
 	}
 	 
 	private void Update()
@@ -34,7 +33,7 @@ public class ItemObject : MonoBehaviour
 		if (dir.magnitude < 0.1f)
 		{
 			_isPicked = false;
-			UIHandler.instance._inventory.GetComponent<InventoryManager>().AddItem(_itemIdx);
+			_inventory.AddItem(_item);
 			ReleaseItem();
 			 
 			return;
@@ -45,26 +44,29 @@ public class ItemObject : MonoBehaviour
 		gameObject.transform.position += dir * Time.deltaTime * 10.0f; 
 	}
 
-	public void SpawnItem() 
-        { 
+	public void SpawnItem(ItemSO item) 
+        {
+		if (item == null)
+		{
+			Debug.Log("Çæ·©¹æ±¸");
+		}
+		_item = item;
 		_rigid.simulated = true;
-                _itemIdx = UnityEngine.Random.Range(1, 1000);
 
                 Vector2 force = new Vector2(UnityEngine.Random.Range(-2.0f, 2.0f), UnityEngine.Random.Range(1.0f, 2.0f));
 		_rigid.AddForce(force, ForceMode2D.Impulse);
 
 		spawnTime = Time.time;
-		StartCoroutine(ReleaseAfterTime(1.0f));
 	}  
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (true || collision.gameObject.GetComponent<PlayerController>() != null)
+		if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
 			return; 
 
 		float dist = (collision.transform.position - gameObject.transform.position).magnitude;
-		if (false && dist < 1.0f)
-		{
+		if (!_inventory.isEmpty() && dist < 1.0f) 
+		{  
 			float delay = Math.Clamp(1.0f - (Time.time - spawnTime), 0.0f, 1.0f);  
 			StartCoroutine(ReleaseAfterTime(delay)); 
 		}  

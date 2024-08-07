@@ -9,33 +9,36 @@ public class ItemManager : Singleton<ItemManager>
         [SerializeField] GameObject _itemObjPrefab;
         private ObjectPool<GameObject> _itemObjPool;
 	
-
 	public override void Awake()
 	{
 		base.Awake();
 		
                 _itemObjPool = new ObjectPool<GameObject>(
-                        createFunc: () => { 
+                        createFunc: () => 
+			{ 
 				GameObject gm = Instantiate<GameObject>(_itemObjPrefab);
 				DontDestroyOnLoad(gm);
-				return gm; 
+				return gm;
 			},
+
 			actionOnGet: obj => obj.SetActive(true),
 			actionOnRelease: obj => obj.SetActive(false),
 			actionOnDestroy: Destroy,
 			collectionCheck: false,
 			defaultCapacity: 10, 
 			maxSize: 20
-		) ;
+		);
 	}
 
-	public GameObject GetItemObj(Vector3 genPos)
+	public GameObject GetItemObj(ItemSO item, Vector3 genPos)
 	{
 		GameObject result = _itemObjPool.Get();
-		ItemObject io = result.GetComponent<ItemObject>();
 		result.transform.position = genPos;
-		io.SpawnItem();
-		return result; 
+
+		ItemController io = result.AddComponent<ItemController>();
+		io.SpawnItem(item);
+
+		return result;  
 	}
 
 	public void ReleaseObject(GameObject obj)

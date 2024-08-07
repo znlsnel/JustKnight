@@ -10,6 +10,8 @@ public class ItemSO : ScriptableObject
 	[NonSerialized] public RectTransform _rectTransform;
 	public Texture2D _itemIcon;
 	public string _name;
+	[TextArea(3, 10)]
+	public string _description;
 	[NonSerialized] public int level;
 
 	public List<SkillAttribute> _effects; 
@@ -61,9 +63,9 @@ public class SkillAttribute
 	{
 		if (_minValue + _maxValue == 0)
 		{
-			Tuple<int, int> range = PlayerEffectManager.instance.ApplyAbility(effectType, 0);
-			_minValue = range.Item1;
-			_maxValue = range.Item2;
+			Range range = PlayerEffectManager.instance.ApplyAbility(effectType, 0);
+			_minValue = range._min;
+			_maxValue = range._max;
 		}
 		 
 		if (value == 0)

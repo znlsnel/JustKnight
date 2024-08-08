@@ -35,7 +35,8 @@ public class ItemManager : Singleton<ItemManager>
 		GameObject result = _itemObjPool.Get();
 		result.transform.position = genPos;
 
-		ItemController io = result.AddComponent<ItemController>();
+		ItemController io = result.GetComponent<ItemController>();
+		
 		io.SpawnItem(item);
 
 		return result;  

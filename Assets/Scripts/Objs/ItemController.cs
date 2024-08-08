@@ -14,12 +14,13 @@ public class ItemController : MonoBehaviour
 	float spawnTime = 0;
 	bool _isPicked = false;
 
-	private void Start() 
+	private void Awake()
 	{
-                _rigid = gameObject.GetComponent<Rigidbody2D>();
+
+		_rigid = gameObject.GetComponent<Rigidbody2D>();
 		_inventory = UIHandler.instance._inventory.GetComponent<InventoryManager>();
 	}
-	 
+
 	private void Update()
 	{
 		if (_isPicked)
@@ -46,10 +47,6 @@ public class ItemController : MonoBehaviour
 
 	public void SpawnItem(ItemSO item) 
         {
-		if (item == null)
-		{
-			Debug.Log("Çæ·©¹æ±¸");
-		}
 		_item = item;
 		_rigid.simulated = true;
 
@@ -68,13 +65,14 @@ public class ItemController : MonoBehaviour
 		if (!_inventory.isEmpty() && dist < 1.0f) 
 		{  
 			float delay = Math.Clamp(1.0f - (Time.time - spawnTime), 0.0f, 1.0f);  
-			StartCoroutine(ReleaseAfterTime(delay)); 
+
+			Utils.instance.SetTimer(() => { _isPicked = true; }, delay);
 		}  
 	} 
 
 	void CheckPlayerColliding()
 	{
-		if (true || Time.time - spawnTime < 1.0f)
+		if (Time.time - spawnTime < 1.0f)
 			return;
 
 		float dist = (GameManager.instance.GetPlayer().transform.position - gameObject.transform.position).magnitude;
@@ -88,11 +86,5 @@ public class ItemController : MonoBehaviour
         {
                 ItemManager.instance.ReleaseObject(gameObject); 
         }
-
-	IEnumerator ReleaseAfterTime(float delay)
-	{
-		yield return new WaitForSeconds(delay);
-		_isPicked = true;
-	}
 
 }

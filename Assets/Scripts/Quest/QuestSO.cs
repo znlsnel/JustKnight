@@ -27,7 +27,7 @@ public class QuestSO : ScriptableObject
 	public bool isSavable;
 	public bool isAutoComplete;
 
-	bool clear = false;
+	[NonSerialized] private bool clear = false;
 
 	[NonSerialized] public EQuestState questState = EQuestState.AWAITING;
 

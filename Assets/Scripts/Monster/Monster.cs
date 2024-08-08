@@ -295,13 +295,12 @@ public abstract class Monster : MonoBehaviour
 	{
 		foreach (DropItem item in _dropItems)
 		{
-			int rand = UnityEngine.Random.Range(0, 100);
-			Debug.Log($" 아이템 랜덤 수치 : {rand} , 목표 수치 : {item.dropRate}");
-			if (rand >= item.dropRate)
+			if (UnityEngine.Random.Range(0, 100) >= item.dropRate)
 				continue;
-
-			ItemManager.instance.GetItemObj(item.item, gameObject.transform.position);
-		}
+			
+			ItemSO itemSO = Instantiate<ItemSO>(item.item);
+			ItemManager.instance.GetItemObj(itemSO, gameObject.transform.position);
+		} 
 
 	}
 

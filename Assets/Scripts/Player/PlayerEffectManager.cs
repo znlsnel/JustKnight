@@ -7,6 +7,7 @@ using UnityEngine;
 public enum EPlayerEffects : int
 {
 	None = -1,
+
 	AddHp,
 	AddDamage,
 	DubbleAttackRate,
@@ -16,8 +17,6 @@ public enum EPlayerEffects : int
 	jumpPower,
 	MoveSpeed,
 	AttackSpeed,
-	TeleportSkillLevelUp,
-	TeleportAddDistance,
 	RevivalCnt,
 
 
@@ -32,18 +31,9 @@ public struct  Range
 }
 public class PlayerEffectManager : Singleton<PlayerEffectManager>
 {
-	[NonSerialized] public int _addHp;
-	[NonSerialized]  public int _addDamage;
-	[NonSerialized] public int _dubbleAttackRate;
-	[NonSerialized] public int _armor;
-	[NonSerialized] public int _reflectDamage; 
-	[NonSerialized] public int _avoidanceRate;
-	[NonSerialized] public int _jumpPower;
-	[NonSerialized] public int _moveSpeed;
-	[NonSerialized] public int _attackSpeed;
-	[NonSerialized] public int _teleportSkillLevelUp;
-	[NonSerialized] public int _teleportAddDistance;
-	[NonSerialized] public int _revivalCnt;
+	[NonSerialized] public List<Range> _ranges = new List<Range>();
+	[NonSerialized] public List<int> _effects = new List<int>((int)EPlayerEffects.Count);
+	[NonSerialized] public List<string> _descript = new List<string>((int)EPlayerEffects.Count);
 
 	public Range _rangeAddHp;
 	public Range _rangeAddDamage; 
@@ -54,67 +44,77 @@ public class PlayerEffectManager : Singleton<PlayerEffectManager>
 	public Range _rangeJumpPower;
 	public Range _rangeMoveSpeed; 
 	public Range _rangeAttackSpeed;
-	public Range _rangeTeleportSkillLevelUp;
-	public Range _rangeTeleportAddDistance; 
 	public Range _rangeRevivalCnt;
 
-
-	public Range ApplyAbility(EPlayerEffects type, int value)
+	public override  void Awake()
 	{
-		switch (type)
+		base.Awake();
+
+		for (int i =0; i < (int)EPlayerEffects.Count; i++)
 		{
-			case EPlayerEffects.None:
-				break;
-			case EPlayerEffects.AddHp:
-				_addHp += value;
-				return _rangeAddHp;
-
-			case EPlayerEffects.AddDamage:
-				_addDamage += value;
-				return _rangeAddDamage;
-
-			case EPlayerEffects.DubbleAttackRate:
-				_dubbleAttackRate += value;
-				return _rangeDubbleAttackRate;
-
-			case EPlayerEffects.Armor:
-				_armor += value;
-				return _rangeArmor;
-
-			case EPlayerEffects.ReflectDamage:
-				_reflectDamage += value;
-				return _rangeReflectDamage;
-
-			case EPlayerEffects.AvoidanceRate:
-				_avoidanceRate += value;
-				return _rangeAvoidanceRate;
-
-			case EPlayerEffects.jumpPower:
-				_jumpPower += value;
-				return _rangeJumpPower;
-
-			case EPlayerEffects.MoveSpeed:
-				_moveSpeed += value;
-				return _rangeMoveSpeed;
-
-			case EPlayerEffects.AttackSpeed:
-				_attackSpeed += value;
-				return _rangeAttackSpeed;
-
-			case EPlayerEffects.TeleportSkillLevelUp:
-				_teleportSkillLevelUp += value;
-				return _rangeTeleportSkillLevelUp;
-
-			case EPlayerEffects.TeleportAddDistance:
-				_teleportAddDistance += value;
-				return _rangeTeleportAddDistance;
-
-			case EPlayerEffects.RevivalCnt:
-				_revivalCnt += value;
-				return _rangeRevivalCnt; 
+			_effects.Add(0); 
 		}
 
-		return new Range();
+		_ranges.AddRange(new Range[] 
+		{
+			_rangeAddHp, 
+			_rangeAddDamage, 
+			_rangeDubbleAttackRate, 
+										
+			_rangeArmor, 
+			_rangeReflectDamage,
+			_rangeAvoidanceRate, 
+										
+			_rangeJumpPower, 
+			_rangeMoveSpeed,  
+			_rangeAttackSpeed,
+										
+			_rangeRevivalCnt   
+		});
+
+		_descript.AddRange(new string[]
+		{
+			"체력",
+			"추가 데미지", 
+			"추가 공격 확률",
+			"방어력",
+			"반사 데미지",
+			"회피 확률",
+			"점프력",
+			"이동 속도",
+			"공격 속도",
+			"부활 횟수",
+		}) ;
 	}
 
+	public string GetDescription(EPlayerEffects type)
+	{
+		if (type == EPlayerEffects.None || type == EPlayerEffects.Count)
+			return "";
+
+		return _descript[(int)type]; 
+	}
+	public Range GetRange(EPlayerEffects type)
+	{
+		if (type == EPlayerEffects.None || type == EPlayerEffects.Count)
+			return new Range();
+
+		return _ranges[(int)type];
+	}
+
+	public void ApplyEffect(EPlayerEffects type, int value)
+	{
+		if (type == EPlayerEffects.None || type == EPlayerEffects.Count)
+			return;
+
+		_effects[(int)type] += value;  
+	}
+
+	public void CancelEffect(EPlayerEffects type, int value)
+	{
+		if (type == EPlayerEffects.None || type == EPlayerEffects.Count)
+			return;
+
+		_effects[(int)type] -= value; 
+	}
 }

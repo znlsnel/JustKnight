@@ -15,8 +15,9 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 { 
         [SerializeField] GameObject _equipSlots; 
         [SerializeField] GameObject _inventorySlots; 
-	[SerializeField] Image _selectItemIcon;  
-	[SerializeField] Text _selectItemDiscript;
+	[SerializeField] Image _selectItemIcon;
+	[SerializeField] Text _selectItemTitle;
+	[SerializeField] Text _selectItemDescript;
 	[SerializeField] GameObject _moveSlot;
 
 	List<ItemSO> _items;
@@ -106,11 +107,12 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 				_usedSlotCnt++;
 				_items[i] = item;
 
+				item.InitItem();
 				Sprite newSprite = Sprite.Create(item._itemIcon,
 					 new Rect(0, 0, item._itemIcon.width, item._itemIcon.height),
 					 new Vector2(0.5f, 0.5f));
 
-				_slots[i].GetComponent<ItemSlot>().SetImage(newSprite);
+				_slots[i].GetComponent<ItemSlot>().SetImage(newSprite, item);
 
 				return;
 			}
@@ -134,21 +136,23 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 
 		float delay = Time.time - _lastButtonDownTime;
 		if (delay < 0.2)
-                {
+                { 
 			Sprite nextSprite = null;
-			String nextText = "";
+			_selectItemDescript.text = "";
+			_selectItemTitle.text = "";
 			if (_items[idx] != null)
 			{
 				nextSprite = Sprite.Create(_items[idx]._itemIcon,
 				 new Rect(0, 0, _items[idx]._itemIcon.width, _items[idx]._itemIcon.height),
 				 new Vector2(0.5f, 0.5f));
-
-				nextText = _items[idx]._description;
+				_selectItemTitle.text = _items[idx]._name;
+				_selectItemDescript.text = _items[idx]._description;
 			}
 			_selectItemIcon.gameObject.SetActive(nextSprite != null);
-			_selectItemDiscript.gameObject.SetActive(nextSprite != null); 
+			_selectItemDescript.gameObject.SetActive(nextSprite != null);
+			_selectItemTitle.gameObject.SetActive(nextSprite != null);
 			_selectItemIcon.sprite = nextSprite;
-			_selectItemDiscript.text = nextText;
+
 
 		}
 
@@ -218,15 +222,26 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		if (_horverSlotIdx < 0)
 			return;
 
+		if (idx >= _equipSlotCount && _horverSlotIdx < _equipSlotCount)
+		{
+			_usedSlotCnt--;
+			_items[idx]?.EquipItem();
+			_items[_horverSlotIdx]?.UnequipItem(); 
+		}
+		else if (idx < _equipSlotCount && _horverSlotIdx >= _equipSlotCount)
+		{
+			_items[idx]?.UnequipItem();
+			_items[_horverSlotIdx]?.EquipItem();
+		}
 
 
 		ItemSO temp = _items[_horverSlotIdx];
 		_items[_horverSlotIdx] = _items[idx];
 		_items[idx] = temp;
-
+		
 		Sprite tempS = _slots[idx].GetComponent<ItemSlot>()._itemIcon.sprite;
-		_slots[idx].GetComponent<ItemSlot>().SetImage(_slots[_horverSlotIdx].GetComponent<ItemSlot>()._itemIcon.sprite);
-		_slots[_horverSlotIdx].GetComponent<ItemSlot>().SetImage( tempS); 
+		_slots[idx].GetComponent<ItemSlot>().SetImage(_slots[_horverSlotIdx].GetComponent<ItemSlot>()._itemIcon.sprite, _items[idx]);
+		_slots[_horverSlotIdx].GetComponent<ItemSlot>().SetImage( tempS, _items[_horverSlotIdx]); 
 
 	}  
 

@@ -105,25 +105,26 @@ public class PlayerActionController : MonoBehaviour
 		}
 		 
 	//	Debug.Log("Attack");
-		if (!CHECK(ref _isAttackable, EActiveState.Attack))
-			return;
+		
 
 		attackCT = StartCoroutine(OnAttack());
 	}
 
 	IEnumerator OnAttack()
 	{
-		_animCtrl.PlayAnimation($"Attack{_attackCombo + 1}");
-		_attackCombo = (_attackCombo + 1) % 3;
-		_playerController._playerState = EPlayerState.Idle;
-		_playerController.r_attack?.Invoke(); 
+		if (CHECK(ref _isAttackable, EActiveState.Attack))
+		{
+			_attackCombo = (_attackCombo + 1) % 3;
+			_playerController._playerState = EPlayerState.Idle;
+			_animCtrl.PlayAnimation($"Attack{_attackCombo + 1}");
+			_playerController.r_attack?.Invoke();
 
+			
+		}
 		yield return StartCoroutine(RegisterCooldown(_playerController._attackDelay, () => { _isAttackable = true; }));
 
-		if (!InputManager.instance.GetInputAction("Attack").IsPressed()) 
-			yield break;
-
-		InputAttack(true);
+		if (InputManager.instance.GetInputAction("Attack").IsPressed())
+			InputAttack(true);
 	}
 
 

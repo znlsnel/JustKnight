@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Cainos.LucidEditor
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method, AllowMultiple = true)]
-    public class GUIColorAttribute : Attribute
+    public class GUIColorAttribute : System.Attribute
     {
         public readonly InspectorColor color = InspectorColor.EditorText;
         public readonly bool useCustomColor;

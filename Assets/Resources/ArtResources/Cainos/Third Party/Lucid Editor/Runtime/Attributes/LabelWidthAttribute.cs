@@ -3,7 +3,7 @@ using System;
 namespace Cainos.LucidEditor
 {
     [AttributeUsage(AttributeTargets.Field)]
-    public class LabelWidthAttribute : Attribute
+    public class LabelWidthAttribute : System.Attribute
     {
         public readonly float width;
 

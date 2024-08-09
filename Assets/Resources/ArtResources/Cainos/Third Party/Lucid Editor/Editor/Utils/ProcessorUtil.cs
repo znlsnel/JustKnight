@@ -11,7 +11,7 @@ namespace Cainos.LucidEditor
         private static Type[] cacheAttributeProcessorTypes;
         private static Type[] cacheGroupProcessorTypes;
 
-        public static PropertyProcessor CreateAttributeProcessor(InspectorProperty property, Attribute attribute)
+        public static PropertyProcessor CreateAttributeProcessor(InspectorProperty property, System.Attribute attribute)
         {
             if (cacheAttributeProcessorTypes == null)
             {

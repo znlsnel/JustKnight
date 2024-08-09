@@ -32,7 +32,7 @@ namespace Cainos.LucidEditor
     }
 
     [AttributeUsage(AttributeTargets.Class)]
-    public sealed class CustomGroupProcessorAttribute : Attribute
+    public sealed class CustomGroupProcessorAttribute : System.Attribute
     {
         public readonly Type type;
         public CustomGroupProcessorAttribute(Type type)

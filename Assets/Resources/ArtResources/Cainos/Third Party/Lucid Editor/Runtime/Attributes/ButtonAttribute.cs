@@ -3,7 +3,7 @@ using System;
 namespace Cainos.LucidEditor
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class ButtonAttribute : Attribute
+    public class ButtonAttribute : System.Attribute
     {
         public readonly string label = null;
         public readonly InspectorButtonSize size = InspectorButtonSize.Small;

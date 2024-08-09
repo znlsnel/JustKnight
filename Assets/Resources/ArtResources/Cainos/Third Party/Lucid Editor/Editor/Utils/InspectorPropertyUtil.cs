@@ -18,7 +18,7 @@ namespace Cainos.LucidEditor
             iterator.NextVisible(true);
             while (iterator.NextVisible(false))
             {
-                InspectorField ip = new InspectorField(iterator.Copy(), iterator.GetAttributes<Attribute>(true));
+				InspectorField ip = new InspectorField(iterator.Copy(), iterator.GetAttributes<System.Attribute>(true));
                 list.Add(ip);
             }
 
@@ -41,12 +41,12 @@ namespace Cainos.LucidEditor
 
                 iterator.NextVisible(true);
                 int depth = iterator.depth;
-                list.Add(new InspectorField(iterator.Copy(), iterator.GetAttributes<Attribute>(true)));
+                list.Add(new InspectorField(iterator.Copy(), iterator.GetAttributes<System.Attribute>(true)));
 
                 while (iterator.NextVisible(false))
                 {
                     if (iterator.depth != depth) break;
-                    list.Add(new InspectorField(iterator.Copy(), iterator.GetAttributes<Attribute>(true)));
+                    list.Add(new InspectorField(iterator.Copy(), iterator.GetAttributes<System.Attribute>(true)));
                 }
 
                 object obj = property.serializedProperty.GetValue<object>();

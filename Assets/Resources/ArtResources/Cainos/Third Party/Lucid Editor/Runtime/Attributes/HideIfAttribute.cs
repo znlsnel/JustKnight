@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Cainos.LucidEditor
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method)]
-    public class HideIfAttribute : Attribute
+    public class HideIfAttribute : System.Attribute
     {
         public readonly string condition;
 

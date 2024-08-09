@@ -41,7 +41,7 @@ namespace Cainos.LucidEditor
 
         }
 
-        internal InspectorField(SerializedProperty property, Attribute[] attributes) : base(property.serializedObject, property, property.GetParentObject(), property.name, attributes)
+        internal InspectorField(SerializedProperty property, System.Attribute[] attributes) : base(property.serializedObject, property, property.GetParentObject(), property.name, attributes)
         {
             this.displayName = property.displayName;
             InitializeChildProperties();
@@ -55,14 +55,14 @@ namespace Cainos.LucidEditor
         internal override void Initialize()
         {
             processors.Clear();
-            foreach (Attribute attribute in attributes)
+            foreach (System.Attribute attribute in attributes)
             {
-                PropertyProcessor processor = ProcessorUtil.CreateAttributeProcessor(this, attribute);
+				PropertyProcessor processor = ProcessorUtil.CreateAttributeProcessor(this, attribute);
 
                 if (processor != null)
                 {
                     processor.Initialize();
-                    processors.Add(processor);
+					processors.Add(processor);
                 }
             }
 
@@ -203,13 +203,13 @@ namespace Cainos.LucidEditor
             if (GUI.Button(position, buttonLabel, EditorStyles.objectField))
             {
                 Type baseType = GetManagedReferenceFieldType(property.serializedProperty);
-                SerializeReferenceDropdown dropdown = new SerializeReferenceDropdown(
-                    TypeCache.GetTypesDerivedFrom(baseType).Append(baseType).Where(p =>
+				SerializeReferenceDropdown dropdown = new SerializeReferenceDropdown(
+		    TypeCache.GetTypesDerivedFrom(baseType).Append(baseType).Where(p =>
                             (p.IsPublic || p.IsNestedPublic) &&
                             !p.IsAbstract &&
                             !p.IsGenericType &&
                             !typeof(UnityEngine.Object).IsAssignableFrom(p) &&
-                            Attribute.IsDefined(p, typeof(SerializableAttribute))
+			    System.Attribute.IsDefined(p, typeof(SerializableAttribute))
                         ),
                         maxTypePopupLineCount,
                         new AdvancedDropdownState()

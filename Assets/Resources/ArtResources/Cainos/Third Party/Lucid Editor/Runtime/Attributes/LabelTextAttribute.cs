@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Cainos.LucidEditor
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method)]
-    public class LabelTextAttribute : Attribute
+    public class LabelTextAttribute : System.Attribute
     {
         public readonly string label;
 

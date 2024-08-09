@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Cainos.LucidEditor
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method)]
-    public class PropertyOrderAttribute : Attribute
+    public class PropertyOrderAttribute : System.Attribute
     {
         public readonly int propertyOrder;
 

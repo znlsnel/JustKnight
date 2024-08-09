@@ -10,19 +10,19 @@ namespace Cainos.LucidEditor
 {
     public static class SerializedPropertyExtensions
     {
-        public static bool TryGetAttribute<TAttribute>(this SerializedProperty property, out TAttribute result) where TAttribute : Attribute
+        public static bool TryGetAttribute<TAttribute>(this SerializedProperty property, out TAttribute result) where TAttribute : System.Attribute
         {
             return TryGetAttribute<TAttribute>(property, false, out result);
         }
 
-        public static bool TryGetAttribute<TAttribute>(this SerializedProperty property, bool inherit, out TAttribute result) where TAttribute : Attribute
+        public static bool TryGetAttribute<TAttribute>(this SerializedProperty property, bool inherit, out TAttribute result) where TAttribute : System.Attribute
         {
             TAttribute att = GetAttribute<TAttribute>(property, inherit);
             result = att;
             return att != null;
         }
 
-        public static TAttribute GetAttribute<TAttribute>(this SerializedProperty property, bool inherit = false) where TAttribute : Attribute
+        public static TAttribute GetAttribute<TAttribute>(this SerializedProperty property, bool inherit = false) where TAttribute : System.Attribute
         {
             if (property == null)
             {
@@ -54,7 +54,7 @@ namespace Cainos.LucidEditor
             throw new ArgumentException($"Could not find the field or property of {nameof(property)}");
         }
 
-        public static TAttribute[] GetAttributes<TAttribute>(this SerializedProperty property, bool inherit) where TAttribute : Attribute
+        public static TAttribute[] GetAttributes<TAttribute>(this SerializedProperty property, bool inherit) where TAttribute : System.Attribute
         {
             if (property == null)
             {

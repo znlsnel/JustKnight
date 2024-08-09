@@ -3,7 +3,7 @@ using System;
 namespace Cainos.LucidEditor
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method)]
-    public class OnValueChangedAttribute : Attribute
+    public class OnValueChangedAttribute : System.Attribute
     {
         public readonly string methodName;
 

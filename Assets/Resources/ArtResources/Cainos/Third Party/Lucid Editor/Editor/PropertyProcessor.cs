@@ -5,8 +5,8 @@ namespace Cainos.LucidEditor
 {
     public abstract class PropertyProcessor
     {
-        public Attribute attribute => _attribute;
-        internal Attribute _attribute;
+        public System.Attribute attribute => _attribute;
+        internal System.Attribute _attribute;
 
         public InspectorProperty property => _inspectorProperty;
         internal InspectorProperty _inspectorProperty;
@@ -30,7 +30,7 @@ namespace Cainos.LucidEditor
     }
 
     [AttributeUsage(AttributeTargets.Class)]
-    public sealed class CustomAttributeProcessorAttribute : Attribute
+    public sealed class CustomAttributeProcessorAttribute : System.Attribute
     {
         public readonly Type type;
         public CustomAttributeProcessorAttribute(Type type)

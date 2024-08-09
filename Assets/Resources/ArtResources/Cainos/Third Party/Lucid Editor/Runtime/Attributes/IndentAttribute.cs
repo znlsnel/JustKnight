@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Cainos.LucidEditor
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method)]
-    public class IndentAttribute : Attribute
+    public class IndentAttribute : System.Attribute
     {
         public readonly int indent;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Cainos.LucidEditor
 {
     [AttributeUsage(AttributeTargets.Field)]
-    public class RequiredAttribute : Attribute
+    public class RequiredAttribute : System.Attribute
     {
         public readonly string message = null;
         public RequiredAttribute() { }

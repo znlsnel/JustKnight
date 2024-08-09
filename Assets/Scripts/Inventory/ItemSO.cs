@@ -89,9 +89,9 @@ public class SkillAttribute
 	{
 		if (_minValue + _maxValue == 0)
 		{
-			Range range = PlayerEffectManager.instance.GetRange(effectType);
-			_minValue = range._min;
-			_maxValue = range._max;
+			Attribute range = PlayerEffectManager.instance.GetRange(effectType);
+			_minValue = range.min;
+			_maxValue = range.max;
 		}  
 		 
 		// 최고 옵션 = red
@@ -108,7 +108,7 @@ public class SkillAttribute
 		{
 			descript = "<color=red>" + descript + "</color>";
 		}
-		else if (value > (_minValue + _maxValue) / 2)
+		else if (value >= (_minValue + _maxValue) / 2)
 		{
 			descript = "<color=yellow>" + descript + "</color>";
 		}

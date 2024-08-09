@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Cainos.LucidEditor
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method, AllowMultiple = true)]
-    public class SectionHeaderAttribute : Attribute
+    public class SectionHeaderAttribute : System.Attribute
     {
         public readonly string title;
 

@@ -44,14 +44,14 @@ namespace Cainos.LucidEditor
         internal override void Initialize()
         {
             processors.Clear();
-            foreach (Attribute attribute in attributes)
+            foreach (System.Attribute attribute in attributes)
             {
-                PropertyProcessor processor = ProcessorUtil.CreateAttributeProcessor(this, attribute);
+				PropertyProcessor processor = ProcessorUtil.CreateAttributeProcessor(this, attribute);
 
                 if (processor != null)
                 {
                     processor.Initialize();
-                    processors.Add(processor);
+					processors.Add(processor);
                 }
             }
         }

@@ -8,19 +8,19 @@ namespace Cainos.LucidEditor
     public sealed class NonSerializedInspectorProperty : InspectorProperty
     {
         private List<PropertyProcessor> processors = new List<PropertyProcessor>();
-        internal NonSerializedInspectorProperty(SerializedObject serializedObject, object parentObject, string name, Attribute[] attributes) : base(serializedObject, null, parentObject, name, attributes) { }
+        internal NonSerializedInspectorProperty(SerializedObject serializedObject, object parentObject, string name, System.Attribute[] attributes) : base(serializedObject, null, parentObject, name, attributes) { }
 
         internal override void Initialize()
         {
             processors.Clear();
-            foreach (Attribute attribute in attributes)
+            foreach (System.Attribute attribute in attributes)
             {
-                PropertyProcessor processor = ProcessorUtil.CreateAttributeProcessor(this, attribute);
+				PropertyProcessor processor = ProcessorUtil.CreateAttributeProcessor(this, attribute);
 
                 if (processor != null)
                 {
                     processor.Initialize();
-                    processors.Add(processor);
+					processors.Add(processor);
                 }
             }
         }

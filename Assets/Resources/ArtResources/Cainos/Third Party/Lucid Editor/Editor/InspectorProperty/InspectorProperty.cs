@@ -11,11 +11,11 @@ namespace Cainos.LucidEditor
         public readonly string name;
         public readonly Type type;
 
-        public readonly Attribute[] attributes;
+        public readonly System.Attribute[] attributes;
 
-        public TAttribute GetAttribute<TAttribute>() where TAttribute : Attribute
+        public TAttribute GetAttribute<TAttribute>() where TAttribute : System.Attribute
         {
-            foreach (Attribute att in attributes)
+            foreach (System.Attribute att in attributes)
             {
                 if (att is TAttribute)
                 {
@@ -25,9 +25,9 @@ namespace Cainos.LucidEditor
             return null;
         }
 
-        public bool TryGetAttribute<TAttribute>(out TAttribute result) where TAttribute : Attribute
+        public bool TryGetAttribute<TAttribute>(out TAttribute result) where TAttribute : System.Attribute
         {
-            foreach (Attribute att in attributes)
+            foreach (System.Attribute att in attributes)
             {
                 if (att is TAttribute)
                 {
@@ -39,7 +39,7 @@ namespace Cainos.LucidEditor
             return false;
         }
 
-        internal InspectorProperty(SerializedObject serializedObject, SerializedProperty serializedProperty, object parentObject, string name, Attribute[] attributes)
+        internal InspectorProperty(SerializedObject serializedObject, SerializedProperty serializedProperty, object parentObject, string name, System.Attribute[] attributes)
         {
             this.serializedObject = serializedObject;
             if (serializedProperty != null)

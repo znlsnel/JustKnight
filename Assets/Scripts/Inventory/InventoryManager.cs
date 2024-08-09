@@ -15,14 +15,19 @@ using UnityEngine.UI;
 public class InventoryManager : MonoBehaviour, IMenuUI
 { 
         [SerializeField] GameObject _equipSlots; 
-        [SerializeField] GameObject _inventorySlots; 
+        [SerializeField] GameObject _inventorySlots;
+	[Space(10)]
+
 	[SerializeField] Image _selectItemIcon;
 	[SerializeField] Text _selectItemTitle;
 	[SerializeField] Text _selectItemDescript;
-	[SerializeField] GameObject _moveSlot; 
+	[SerializeField] Text _statusText;
 
+	[Space(10)]
+	[SerializeField] GameObject _moveSlot;
 	[SerializeField] GameObject _deletePopup;
-	[SerializeField] GameObject _wastebasket; 
+	[SerializeField] GameObject _wastebasket;
+	[SerializeField] GameObject _status;
 
 
 	List<ItemSO> _items;
@@ -52,7 +57,7 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		_items = new List<ItemSO>(_slots.Count);
 		for (int i = 0; i < _slots.Count; i++)
 			_items.Add(null);
-		
+
 		gameObject.SetActive(false); 
 	}
 
@@ -62,7 +67,7 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		foreach (Transform child in slot.transform)
 		{
 			int curIdx = _slots.Count;
-			ButtonClickHandler bch = child.AddComponent<ButtonClickHandler>();
+			ButtonHandler bch = child.AddComponent<ButtonHandler>();
 			if (bch != null)
 			{
 				bch._onButtonDown = () => OnButtonDown(curIdx);
@@ -92,6 +97,10 @@ public class InventoryManager : MonoBehaviour, IMenuUI
         { 
                 gameObject.SetActive(isActive); 
 		UIHandler.instance.CloseAllUI(gameObject, isActive);
+
+		_status.SetActive(false);
+		_deletePopup.SetActive(false);	 
+		
 	} 
 
 	public bool isEmpty()
@@ -238,13 +247,13 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		if (idx >= _equipSlotCount && _horverSlotIdx < _equipSlotCount)
 		{
 			_usedSlotCnt--;
-			_items[idx]?.EquipItem();
-			_items[_horverSlotIdx]?.UnequipItem(); 
+			EquipItem(idx);
+			EquipItem(_horverSlotIdx, true);
 		}
 		else if (idx < _equipSlotCount && _horverSlotIdx >= _equipSlotCount)
 		{
-			_items[idx]?.UnequipItem();
-			_items[_horverSlotIdx]?.EquipItem();
+			EquipItem(idx, true);
+			EquipItem(_horverSlotIdx);  
 		}
 
 
@@ -257,6 +266,16 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		_slots[_horverSlotIdx].GetComponent<ItemSlot>().SetImage( tempS, _items[_horverSlotIdx]); 
 
 	}  
+	void EquipItem(int idx, bool unequip = false)
+	{
+		if (unequip)
+			_items[idx]?.UnequipItem();
+		else
+			_items[idx]?.EquipItem();
+
+		_statusText.text = PlayerEffectManager.instance.GetStatus();
+
+	}
 
 	Vector2 prevPos;
 	void MoveTempSlot() 
@@ -282,7 +301,7 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		_onRemoveItem = () =>
 		{
 			if (idx < _equipSlotCount)
-				_items[idx].UnequipItem(); 
+				EquipItem(idx, true);
 			else
 				_usedSlotCnt--;
 
@@ -303,6 +322,18 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 
 	}
 
+	public void OnStatus()
+	{
+		_statusText.text = PlayerEffectManager.instance.GetStatus();
+
+		_status.SetActive(true);
+	}
+
+	public void CloseStatus()
+	{
+		_status.SetActive(false);
+
+	}
 
 
 }

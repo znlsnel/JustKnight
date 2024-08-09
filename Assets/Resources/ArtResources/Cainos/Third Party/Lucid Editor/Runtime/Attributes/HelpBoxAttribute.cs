@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Cainos.LucidEditor
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method, AllowMultiple = true)]
-    public class HelpBoxAttribute : Attribute
+    public class HelpBoxAttribute : System.Attribute
     {
         public readonly string message;
         public readonly HelpBoxMessageType type;

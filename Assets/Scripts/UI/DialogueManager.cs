@@ -35,7 +35,7 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 		foreach (Text _resp in _respScripts)
 		{
 			Color normal = _resp.color;
-			ButtonClickHandler bch = _resp.gameObject.AddComponent<ButtonClickHandler>();
+			ButtonHandler bch = _resp.gameObject.AddComponent<ButtonHandler>();
 			{
 				bch._onButtonDown = () => { _resp.color = _pressColor; };
 				bch._onButtonUp = () => { _resp.color = normal; };

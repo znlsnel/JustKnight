@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Cainos.LucidEditor
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method, AllowMultiple = true)]
-    public class HorizontalLineAttribute : Attribute
+    public class HorizontalLineAttribute : System.Attribute
     {
         public readonly InspectorColor color = InspectorColor.EditorLine;
         public readonly bool useCustomColor;

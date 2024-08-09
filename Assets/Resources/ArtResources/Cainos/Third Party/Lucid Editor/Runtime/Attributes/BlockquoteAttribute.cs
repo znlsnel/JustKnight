@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Cainos.LucidEditor
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Method, AllowMultiple = true)]
-    public class BlockquoteAttribute : Attribute
+    public class BlockquoteAttribute : System.Attribute
     {
         public readonly string text;
 

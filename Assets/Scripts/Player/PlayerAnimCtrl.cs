@@ -56,7 +56,7 @@ public class PlayerAnimCtrl : MonoBehaviour
 		{
 			curAnim = animName;
 			anim.Play(curAnim); 
-			Debug.Log(curAnim); 
+			//Debug.Log(curAnim); 
 		}
 	}
 

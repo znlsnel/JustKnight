@@ -50,7 +50,7 @@ public class ItemSO : ScriptableObject
 
 	public void EquipItem()
 	{
-		PlayerEffectManager pe = PlayerEffectManager.instance;
+		PlayerStatus pe = PlayerStatus.instance;
 		foreach (SkillAttribute sa in _effects)
 		{
 			pe.ApplyEffect(sa.effectType, sa.value);
@@ -61,7 +61,7 @@ public class ItemSO : ScriptableObject
 
 	public void UnequipItem()
 	{
-		PlayerEffectManager pe = PlayerEffectManager.instance;
+		PlayerStatus pe = PlayerStatus.instance;
 		foreach (SkillAttribute sa in _effects)
 		{ 
 			pe.CancelEffect(sa.effectType, sa.value);
@@ -89,7 +89,7 @@ public class SkillAttribute
 	{
 		if (_minValue + _maxValue == 0)
 		{
-			Attribute range = PlayerEffectManager.instance.GetRange(effectType);
+			Attribute range = PlayerStatus.instance.GetRange(effectType);
 			_minValue = range.min;
 			_maxValue = range.max;
 		}  
@@ -102,7 +102,7 @@ public class SkillAttribute
 		if (value == 0)
 			value = UnityEngine.Random.Range(_minValue, _maxValue+1);
 
-		descript =  PlayerEffectManager.instance.GetDescription(effectType) + " + " + value.ToString();
+		descript =  PlayerStatus.instance.GetDescription(effectType) + " + " + value.ToString();
 
 		if (value == _maxValue)
 		{

@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 	InputManager _inputManager;
 	PlayerActionController _actionController;
 	PlayerMovementController _movementController;
-	PlayerEffectManager _effectManager;
+	PlayerStatus _effectManager;
 
 	public GameObject _SlideDust;
 
@@ -33,8 +33,8 @@ public class PlayerController : MonoBehaviour
 	[Space(10)]
 	public float _jumpPower = 5.0f;
 	public float _rollPower = 5.0f;
-	public float _playerSpeed = 5.0f; 
-	public int _InitHp = 3;
+	public float _playerSpeed = 5.0f;
+
 
 	int _hp = 3;
 	public int hp 
@@ -44,9 +44,9 @@ public class PlayerController : MonoBehaviour
 			return _hp;
 		} 
 		set 
-		{ 
+		{  
 			_hp = value;
-			_playerUI.UpdateHpBar(_hp, _InitHp); 
+			_playerUI.UpdateHpBar(_hp, _effectManager._hp.value + _effectManager._effects[(int)EPlayerEffects.AddHp]); 
 		}
 	}
 
@@ -84,16 +84,17 @@ public class PlayerController : MonoBehaviour
 		_actionController = gameObject.AddComponent<PlayerActionController>();
 		_movementController = gameObject.AddComponent<PlayerMovementController>();
 		_inputManager = InputManager.instance;
-		_hp = _InitHp; 
 	}
 	 
 	void Start()
 	{
 		_collMan = gameObject.GetComponent<PlayerCollisionManager>();
-		_effectManager = PlayerEffectManager.instance;
+		_effectManager = PlayerStatus.instance;
 		_playerUI = UIHandler.instance._playerUI.GetComponent<PlayerUI>();
 		_playerUI.gameObject.SetActive(true);
-		_playerUI.UpdateHpBar(_hp, _InitHp); 
+		
+		_hp = _effectManager._hp.value + _effectManager._effects[(int)EPlayerEffects.AddHp];   
+		_playerUI.UpdateHpBar(_hp, _hp);
 	}
 
 	void AE_SlideDust()

@@ -263,12 +263,12 @@ public abstract class Monster : MonoBehaviour
 
 	public abstract void OnAttack();
 	Coroutine endHit = null;
-        public void OnHit(GameObject attacker)
+        public void OnHit(GameObject attacker, int damage)
         {
 		if (_hp <= 0)
 			return;
 
-		_hp--;  
+		_hp -= damage;  
 
 		if (_hpSlider != null)
 			_hpSlider.value = (float)_hp / _initHp;

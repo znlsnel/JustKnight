@@ -28,6 +28,7 @@ public class PlayerActionController : MonoBehaviour
 	PlayerController _playerController;
 	InputManager _inputManager;
 	PlayerCollisionManager _playerCollision;
+	PlayerStatus _status;
 
 	public EActiveState _activeState = EActiveState.Awaiting;
 
@@ -46,6 +47,7 @@ public class PlayerActionController : MonoBehaviour
 		_playerCollision = GetComponent<PlayerCollisionManager>();
 		_animCtrl = GetComponent<PlayerAnimCtrl>();
 		_inputManager = InputManager.instance;
+		_status = PlayerStatus.instance;
 
 		_inputManager.BindInputAction("Attack", () => InputAttack(true), () => InputAttack(false));
 		_inputManager.BindInputAction("Shield", () => InputShield(true), ()=>InputShield(false)); 
@@ -205,7 +207,7 @@ public class PlayerActionController : MonoBehaviour
 			if (mc == null || mc._hp == 0)
 				continue;
 			
-			mc.OnHit(gameObject);
+			mc.OnHit(gameObject, _status.GetValue(EPlayerEffects.AddDamage)); 
 		}
 	}
 	
@@ -233,7 +235,8 @@ public class PlayerActionController : MonoBehaviour
 
 	float _lastHitTime = 0.0f;
 	public float _damageCooldown = 0.5f;
-	public void OnHit(GameObject monster)
+
+	public void OnHit(GameObject monster, int damage = 1)
 	{
 		if (Time.time - _lastHitTime < _damageCooldown || _activeState == EActiveState.Roll || _playerController. hp == 0)
 			return;
@@ -244,13 +247,12 @@ public class PlayerActionController : MonoBehaviour
 			Monster mm= monster.GetComponent<Monster>();
 			if (mm != null)
 			{
-				mm._onAttackBlocked = () => { mm.OnHit(gameObject); };
+				mm._onAttackBlocked = () => { mm.OnHit(gameObject, _status.GetValue(EPlayerEffects.ShieldDamage)); };
 				_playerController.r_successShield?.Invoke(); 
 			} 
-			return;
+			return; 
 		}
-		 
-		_playerController.hp--;
+		_playerController.hp -= Mathf.Max(0, damage - _status.GetValue(EPlayerEffects.Armor)); 
 
 		CameraManager cm = Camera.main.GetComponent<CameraManager>();
 		cm?.ShakeCamera(monster.transform.position.x < gameObject.transform.position.x);

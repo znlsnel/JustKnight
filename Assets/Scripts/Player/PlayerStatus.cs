@@ -12,7 +12,7 @@ public enum EPlayerEffects : int
 	AddDamage,
 	DubbleAttackRate,
 	Armor,
-	ReflectDamage,
+	ShieldDamage,
 	AvoidanceRate,
 	jumpPower,
 	MoveSpeed,
@@ -25,33 +25,39 @@ public enum EPlayerEffects : int
 
 public struct  Attribute
 {
-	public int init;
+	public int value;
 	public int min;
 	public int max;
 
-	public Attribute(int init, int min, int max)
+	public Attribute(int value, int min, int max)
 	{
-		this.init = init;
+		this.value = value;
 		this.min = min;
 		this.max = max;
 	}
 }
-public class PlayerEffectManager : Singleton<PlayerEffectManager>
+public class PlayerStatus : Singleton<PlayerStatus>
 {
 	[NonSerialized] public List<Attribute> _ranges = new List<Attribute>();
 	[NonSerialized] public List<int> _effects = new List<int>((int)EPlayerEffects.Count);
 	[NonSerialized] public List<string> _descript = new List<string>((int)EPlayerEffects.Count);
 
-	public Attribute _hp					= new Attribute(3, 1, 3);
+	public Attribute _hp 					= new Attribute(3, 1, 3);
 	public Attribute _power				= new Attribute(1, 1, 3);
 	public Attribute _dubbleAttackRate		= new Attribute(0, 2, 6);
 	public Attribute _armor				= new Attribute(0, 1, 3);
-	public Attribute _reflectDamage		= new Attribute(0, 1, 3);
+	public Attribute _ShieldDamage		= new Attribute(0, 1, 3);
 	public Attribute _avoidanceRate		= new Attribute(0, 1, 5);
-	public Attribute _jumpPower			= new Attribute(100, 1, 3);
+	public Attribute _jumpPower			= new Attribute(0, 1, 3);
 	public Attribute _moveSpeed			= new Attribute(100, 1, 3);
 	public Attribute _attackSpeed			= new Attribute(100, 1, 3);
 	public Attribute _revivalRate			= new Attribute(0, 1, 3); 
+
+	 
+	public int GetValue(EPlayerEffects type)
+	{
+		return _ranges[(int)type].value + _effects[(int)type]; 
+	}
 
 	public override  void Awake()
 	{
@@ -69,7 +75,7 @@ public class PlayerEffectManager : Singleton<PlayerEffectManager>
 			_dubbleAttackRate, 
 										
 			_armor, 
-			_reflectDamage,
+			_ShieldDamage,
 			_avoidanceRate, 
 										
 			_jumpPower, 
@@ -85,7 +91,7 @@ public class PlayerEffectManager : Singleton<PlayerEffectManager>
 			"공격력", 
 			"추가 공격 확률",
 			"방어력",
-			"반사 데미지",
+			"막기 데미지",
 			"회피 확률",
 			"점프력",
 			"이동 속도",
@@ -130,7 +136,7 @@ public class PlayerEffectManager : Singleton<PlayerEffectManager>
 		string ret = "";
 		for (int i = 0; i <(int)EPlayerEffects.Count; i++)
 		{
-			ret += _descript[i] + " - " + (_ranges[i].init + _effects[i]).ToString();
+			ret += _descript[i] + " - " + (_ranges[i].value + _effects[i]).ToString();
 			if (_effects[i] > 0)
 			{
 				ret += $"<color=yellow>(+{_effects[i]})</color>";

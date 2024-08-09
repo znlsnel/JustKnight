@@ -13,6 +13,7 @@ public class PlayerMovementController : MonoBehaviour
 	PlayerAnimCtrl _animCtrl;
 	PlayerActionController _actionController;
 	PlayerCollisionManager _playerCollision;
+	PlayerStatus _status;
 
 	bool _isWallClimb = false; 
 	private void Start() 
@@ -71,7 +72,7 @@ public class PlayerMovementController : MonoBehaviour
 		  
 		if (pState == EPlayerState.Move && acState != EActiveState.Roll)
 		{
-			float speed = _playerController._playerSpeed; 
+			float speed = _playerController._playerSpeed;
 			_rigidbody.velocity = new Vector2(moveDir * speed, _rigidbody.velocity.y);
 		} 
 		else if (!_playerCollision._onSensorGround && acState != EActiveState.Roll)

@@ -44,6 +44,13 @@ public class NpcManager : MonoBehaviour
 		if (_curDialogue.GetCurDialogue() == null || collision.gameObject.GetComponent<PlayerController>() == null)
                         return;
 
+		if (isAutoStart)
+		{
+			_dialogueManager.BeginDialogue(_curDialogue);
+			//InputManager.instance._interactionHandler.ExcuteInteraction();
+			return;
+		}
+
 		InputManager.instance._interactionHandler.AddIAction(gameObject, () => 
 		{
 			_dialogueManager.BeginDialogue(_curDialogue);
@@ -53,10 +60,6 @@ public class NpcManager : MonoBehaviour
 			});
 		});
 
-		if (isAutoStart)
-		{
-			InputManager.instance._interactionHandler.ExcuteInteraction(); 
-		}
 
 	}
 

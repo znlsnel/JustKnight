@@ -94,7 +94,8 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 
 
 	public void ActiveMenu(bool isActive)
-        { 
+        {
+		InputManager.instance.FreezeCharacter(isActive); 
                 gameObject.SetActive(isActive); 
 		UIHandler.instance.CloseAllUI(gameObject, isActive);
 
@@ -213,11 +214,14 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 	{ 
 		MoveTempSlot();
 
+
 		Sprite newSprite = Sprite.Create(_items[idx]._itemIcon,
 			 new Rect(0, 0, _items[idx]._itemIcon.width, _items[idx]._itemIcon.height),
 			 new Vector2(0.5f, 0.5f));
 
 		_moveSlot.GetComponentInChildren<ItemSlot>().SetImage( newSprite);
+		_slots[idx].GetComponent<ItemSlot>().SetImage(null);
+
 		//_moveSlot.GetComponentInChildren<Text>().text = _slots[idx]._name.text;
 
 		// Source RectTransform의 월드 좌표를 얻음
@@ -232,9 +236,11 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		prevPos = new Vector2(0, 0);
 		_moveSlot.SetActive(true);
 	}
-
+	
 	void RelocateItemSlot(int idx)
 	{
+		_slots[idx].GetComponent<ItemSlot>().SetImage(_moveSlot.GetComponentInChildren<ItemSlot>()._itemIcon.sprite);
+
 		if (_horverSlotIdx < 0)
 			return;
 		
@@ -273,7 +279,7 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		else
 			_items[idx]?.EquipItem();
 
-		_statusText.text = PlayerEffectManager.instance.GetStatus();
+		_statusText.text = PlayerStatus.instance.GetStatus();
 
 	}
 
@@ -324,7 +330,7 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 
 	public void OnStatus()
 	{
-		_statusText.text = PlayerEffectManager.instance.GetStatus();
+		_statusText.text = PlayerStatus.instance.GetStatus();
 
 		_status.SetActive(true);
 	}

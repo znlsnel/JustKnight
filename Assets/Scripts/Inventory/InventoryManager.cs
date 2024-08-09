@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro.EditorUtilities;
 using Unity.VisualScripting;
+using UnityEditor.VisionOS;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -18,7 +19,11 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 	[SerializeField] Image _selectItemIcon;
 	[SerializeField] Text _selectItemTitle;
 	[SerializeField] Text _selectItemDescript;
-	[SerializeField] GameObject _moveSlot;
+	[SerializeField] GameObject _moveSlot; 
+
+	[SerializeField] GameObject _deletePopup;
+	[SerializeField] GameObject _wastebasket; 
+
 
 	List<ItemSO> _items;
 	List<GameObject> _slots = new List<GameObject> ();
@@ -42,7 +47,7 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		InitSlot(_equipSlots); 
 		_equipSlotCount = _slots.Count;
 		InitSlot(_inventorySlots); 
-		_itemSlotCnt = _slots.Count - _equipSlotCount;
+		_itemSlotCnt = (_slots.Count - _equipSlotCount) - 1;
 
 		_items = new List<ItemSO>(_slots.Count);
 		for (int i = 0; i < _slots.Count; i++)
@@ -102,9 +107,9 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		for (int i = _equipSlotCount; i <  _slots.Count; i++)
 		{
 
-			if (_items[i] == null)
+			if (_items[i] == null && _slots[i] != _wastebasket)
 			{
-				_usedSlotCnt++;
+				_usedSlotCnt++; 
 				_items[i] = item;
 
 				item.InitItem();
@@ -122,6 +127,8 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 
         void OnButtonDown(int idx)
         {
+		if (_items[idx] == _wastebasket)
+			return;
 
 		_lastButtonDownTime = Time.time;
 
@@ -221,6 +228,12 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 	{
 		if (_horverSlotIdx < 0)
 			return;
+		
+		if (_slots[_horverSlotIdx] == _wastebasket)
+		{
+			RemoveItem(idx);
+			return;
+		}
 
 		if (idx >= _equipSlotCount && _horverSlotIdx < _equipSlotCount)
 		{
@@ -259,7 +272,37 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		 
 		targetRectTransform.anchoredPosition += mousePos - prevPos ;
 		prevPos = mousePos;
+	}
 
+	Action _onRemoveItem;
+
+	void RemoveItem(int idx)
+	{
+		_deletePopup.SetActive(true);
+		_onRemoveItem = () =>
+		{
+			if (idx < _equipSlotCount)
+				_items[idx].UnequipItem(); 
+			else
+				_usedSlotCnt--;
+
+			_items[idx] = null;
+			_slots[idx].GetComponent<ItemSlot>().SetImage(null);
+		};
+	}
+
+	public void OnRemoveItemButton()
+	{
+		_onRemoveItem.Invoke(); 
+		_deletePopup.SetActive(false);
+	}
+
+	public void OnRemoveCancelButton()
+	{
+		_deletePopup.SetActive(false);
 
 	}
+
+
+
 }

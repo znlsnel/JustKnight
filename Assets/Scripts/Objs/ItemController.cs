@@ -12,7 +12,7 @@ public class ItemController : MonoBehaviour
 	ItemSO _item;
 
 	float spawnTime = 0;
-	bool _isPicked = false;
+	bool isMovingToPlayer = false;
 
 	private void Awake()
 	{
@@ -23,27 +23,10 @@ public class ItemController : MonoBehaviour
 
 	private void Update()
 	{
-		if (_isPicked)
+		if (isMovingToPlayer)
 			MoveToPlayer();
-		else
-			CheckPlayerColliding(); 
 	}
-	void MoveToPlayer()
-	{
-		Vector3 dir = (GameManager.instance.GetPlayer().transform.position + new Vector3(0.0f, 0.5f, 0.0f)) - gameObject.transform.position; 
-		if (dir.magnitude < 0.1f)
-		{
-			_isPicked = false;
-			_inventory.AddItem(_item);
-			ReleaseItem();
-			 
-			return;
-		}	
-		
-		_rigid.simulated = false;
-		dir = dir.normalized;
-		gameObject.transform.position += dir * Time.deltaTime * 10.0f; 
-	}
+
 
 	public void SpawnItem(ItemSO item) 
         {
@@ -54,32 +37,46 @@ public class ItemController : MonoBehaviour
 		_rigid.AddForce(force, ForceMode2D.Impulse);
 
 		spawnTime = Time.time;
+		if (!_inventory.isEmpty())
+			Utils.instance.SetTimer(() => { isMovingToPlayer = true; }, 1.0f);
 	}  
-
+	 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.gameObject.layer != LayerMask.NameToLayer("Player"))
+		if (isMovingToPlayer || collision.gameObject.layer != LayerMask.NameToLayer("Player"))
 			return; 
 
-		float dist = (collision.transform.position - gameObject.transform.position).magnitude;
-		if (!_inventory.isEmpty() && dist < 1.0f) 
+		if (!_inventory.isEmpty()) 
 		{  
 			float delay = Math.Clamp(1.0f - (Time.time - spawnTime), 0.0f, 1.0f);  
-
-			Utils.instance.SetTimer(() => { _isPicked = true; }, delay);
+			Utils.instance.SetTimer(() => { isMovingToPlayer = true; }, delay); 
 		}  
-	} 
+	}
 
-	void CheckPlayerColliding()
+	void MoveToPlayer()
 	{
-		if (Time.time - spawnTime < 1.0f)
-			return;
-
-		float dist = (GameManager.instance.GetPlayer().transform.position - gameObject.transform.position).magnitude;
-		if (dist < 1.5f)
+		Vector3 dir = (GameManager.instance.GetPlayer().transform.position + new Vector3(0.0f, 0.5f, 0.0f)) - gameObject.transform.position;
+		if (dir.magnitude < 0.1f)
 		{
-			_isPicked = true; 
+			isMovingToPlayer = false;
+
+			if (_inventory.isEmpty())
+			{
+				_rigid.simulated = true;
+				_rigid.velocity = new Vector2(0.1f, _rigid.velocity.y / 2);
+				return;
+			}
+
+			_rigid.simulated = false;
+			_inventory.AddItem(_item);
+			ReleaseItem();
+
+			return;
 		}
+
+		dir = dir.normalized;
+		//gameObject.transform.position += dir * Time.deltaTime * 10.0f;
+		_rigid.velocity = dir * 10.0f;
 	}
 
 	public void ReleaseItem()

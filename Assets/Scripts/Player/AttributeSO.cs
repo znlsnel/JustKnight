@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum EPlayerEffects : int
+public enum EPlayerStatus : int
 {
 	None = -1,
 
@@ -24,7 +24,7 @@ public enum EPlayerEffects : int
 
 public class AttributeSO : ScriptableObject
 {
-	public EPlayerEffects type;
+	public EPlayerStatus type;
 	public int value;
 	public string title;
 	[TextArea(3, 10)]

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Move Speed
   m_EditorClassIdentifier: 
   type: 7
-  value: 8
+  value: 100
   title: "\uC774\uB3D9 \uC18D\uB3C4"
   descript: 
-  minItemStatValue: 1
-  maxItemStatValue: 1
+  minItemStatValue: 2
+  maxItemStatValue: 5

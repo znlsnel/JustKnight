@@ -145,6 +145,7 @@ public abstract class Monster : MonoBehaviour
 		if (movable)
 		{
 			Vector3 vel = _rigid.velocity; 
+
 			_rigid.velocity = new Vector3(transform.localScale.x * _moveSpeed, vel.y, vel.x); 
 		}
 	}

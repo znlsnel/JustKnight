@@ -31,7 +31,7 @@ public class ItemSO : ScriptableObject
 		 
 		while (cnt-- > 0)
 		{
-			EPlayerEffects type = (EPlayerEffects)UnityEngine.Random.Range(0, (int)EPlayerEffects.Count);
+			EPlayerStatus type = (EPlayerStatus)UnityEngine.Random.Range(0, (int)EPlayerStatus.Count);
 			SkillAttribute sa = new SkillAttribute(type);
 			_effects.Add(sa);
 		}
@@ -73,10 +73,10 @@ public class ItemSO : ScriptableObject
 public class SkillAttribute
 {
 	public SkillAttribute() { }
-	public SkillAttribute(EPlayerEffects type) {
+	public SkillAttribute(EPlayerStatus type) {
 		effectType = type;
 	}
-	[SerializeField] public EPlayerEffects effectType = EPlayerEffects.Damage;
+	[SerializeField] public EPlayerStatus effectType = EPlayerStatus.Damage;
 	[Space(10)]
 
 	[SerializeField] int _minValue;

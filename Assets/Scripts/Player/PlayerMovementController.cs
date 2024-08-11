@@ -72,8 +72,8 @@ public class PlayerMovementController : MonoBehaviour
 		  
 		if (pState == EPlayerState.Move && acState != EActiveState.Roll)
 		{
-			float speed = _playerController._playerSpeed;
-			_rigidbody.velocity = new Vector2(moveDir * speed, _rigidbody.velocity.y);
+			float moveSize = _playerController._playerSpeed * (float)PlayerStatus.instance.GetValue(EPlayerStatus.MoveSpeed) * 0.01f;
+			_rigidbody.velocity = new Vector2(moveDir * moveSize, _rigidbody.velocity.y);
 		} 
 		else if (!_playerCollision._onSensorGround && acState != EActiveState.Roll)
 		{

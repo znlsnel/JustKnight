@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
 		set 
 		{  
 			_hp = value;
-			_playerUI.UpdateHpBar(_hp, _effectManager._hp.value + _effectManager._effects[(int)EPlayerEffects.AddHp]); 
+			_playerUI.UpdateHpBar(_hp, _effectManager.GetValue(EPlayerEffects.HP)); 
 		}
 	}
 
@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
 		_playerUI = UIHandler.instance._playerUI.GetComponent<PlayerUI>();
 		_playerUI.gameObject.SetActive(true);
 		
-		_hp = _effectManager._hp.value + _effectManager._effects[(int)EPlayerEffects.AddHp];   
+		_hp = _effectManager.GetValue(EPlayerEffects.HP);    
 		_playerUI.UpdateHpBar(_hp, _hp);
 	}
 

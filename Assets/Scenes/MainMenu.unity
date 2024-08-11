@@ -3431,54 +3431,6 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!114 &2009174056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2009174030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6728d6bbea7970f45869bbf382530086, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rangeAddHp:
-    _min: 1
-    _max: 3
-  _rangeAddDamage:
-    _min: 1
-    _max: 3
-  _rangeDubbleAttackRate:
-    _min: 2
-    _max: 5
-  _rangeArmor:
-    _min: 1
-    _max: 2
-  _rangeReflectDamage:
-    _min: 1
-    _max: 3
-  _rangeAvoidanceRate:
-    _min: 2
-    _max: 5
-  _rangeJumpPower:
-    _min: 1
-    _max: 2
-  _rangeMoveSpeed:
-    _min: 1
-    _max: 2
-  _rangeAttackSpeed:
-    _min: 2
-    _max: 5
-  _rangeTeleportSkillLevelUp:
-    _min: 1
-    _max: 3
-  _rangeTeleportAddDistance:
-    _min: 1
-    _max: 3
-  _rangeRevivalCnt:
-    _min: 1
-    _max: 1
 --- !u!1 &2062018864
 GameObject:
   m_ObjectHideFlags: 0
@@ -3865,9 +3817,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3004416864802387988, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2009174047}
-    - targetCorrespondingSourceObject: {fileID: 3004416864802387988, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2009174056}
   m_SourcePrefab: {fileID: 100100000, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

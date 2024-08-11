@@ -76,7 +76,7 @@ public class SkillAttribute
 	public SkillAttribute(EPlayerEffects type) {
 		effectType = type;
 	}
-	[SerializeField] public EPlayerEffects effectType = EPlayerEffects.None;
+	[SerializeField] public EPlayerEffects effectType = EPlayerEffects.Damage;
 	[Space(10)]
 
 	[SerializeField] int _minValue;
@@ -89,9 +89,9 @@ public class SkillAttribute
 	{
 		if (_minValue + _maxValue == 0)
 		{
-			Attribute range = PlayerStatus.instance.GetRange(effectType);
-			_minValue = range.min;
-			_maxValue = range.max;
+			AttributeSO attribute = PlayerStatus.instance.GetAttribute(effectType);
+			_minValue = attribute.minItemStatValue;
+			_maxValue = attribute.maxItemStatValue;
 		}  
 		 
 		// 최고 옵션 = red

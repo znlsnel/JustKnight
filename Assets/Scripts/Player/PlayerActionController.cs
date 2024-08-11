@@ -207,7 +207,7 @@ public class PlayerActionController : MonoBehaviour
 			if (mc == null || mc._hp == 0)
 				continue;
 			
-			mc.OnHit(gameObject, _status.GetValue(EPlayerEffects.AddDamage)); 
+			mc.OnHit(gameObject, _status.GetValue(EPlayerEffects.Damage)); 
 		}
 	}
 	

@@ -217,7 +217,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8068015101430386222
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2279,15 +2279,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB3D9\uB124 \uACE0\uC591\uC774\uAC00 \uC120\uBB3C\uD55C \uBD80\uC801\uC785\uB2C8\uB2E4.\n\uC774
-    \uBD80\uC801\uC744 \uC18C\uC9C0\uD558\uBA74 \uB2A5\uB825\uCE58\uAC00 \uC18C\uD3ED
-    \uC0C1\uC2B9\uD569\uB2C8\uB2E4.\n\n- \uCCB4\uB825 + 4\n- \uCCB4\uB825 + 4\n-
-    \uCCB4\uB825 + 4\n- \uCCB4\uB825 + 4\n- \uCCB4\uB825 + 4- \uCCB4\uB825 + 4- \uCCB4\uB825
-    + 4\n- \uCCB4\uB825 + 4\n- \uCCB4\uB825 + 4\n- \uCCB4\uB825 + 4- \uCCB4\uB825
-    + 4- \uCCB4\uB825 + 4\n- \uCCB4\uB825 + 4- \uCCB4\uB825 + 4- \uCCB4\uB825 + 4\n-
-    \uCCB4\uB825 + 4- \uCCB4\uB825 + 4- \uCCB4\uB825 + 4- \uCCB4\uB825 + 4- \uCCB4\uB825
-    + 4- \uCCB4\uB825 + 4\n- \uCCB4\uB825 + 4- \uCCB4\uB825 + 4- \uCCB4\uB825 + 4\n-
-    \uCCB4\uB825 + 4- \uCCB4\uB825 + 4- \uCCB4\uB825 + 4"
+  m_Text: 
 --- !u!1 &3503915589247825108
 GameObject:
   m_ObjectHideFlags: 0
@@ -3055,7 +3047,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7525665548700941061
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3926,8 +3918,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7124434016429131477}
   m_HandleRect: {fileID: 3112224233583447239}
   m_Direction: 2
-  m_Value: 1.0000049
-  m_Size: 0.3521008
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 1
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4431,7 +4423,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 5.22, y: -0.000015258789}
-  m_SizeDelta: {x: 4.98, y: 121.03321}
+  m_SizeDelta: {x: 4.98, y: 111.25}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &7092786179990316313
 CanvasRenderer:

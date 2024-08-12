@@ -57,8 +57,6 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		_items = new List<ItemSO>(_slots.Count);
 		for (int i = 0; i < _slots.Count; i++)
 			_items.Add(null);
-
-		gameObject.SetActive(false); 
 	}
 
 	

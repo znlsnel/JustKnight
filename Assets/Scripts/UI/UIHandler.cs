@@ -62,15 +62,13 @@ public class UIHandler : Singleton<UIHandler>
 
 		InputManager.instance.BindInputAction("Inventory", () => 
 		{
-			MainMenu mainMenu = this._mainMenu.GetComponent<MainMenu>();
-			mainMenu.OnMenu(EMenuType.INVENTORY); 
+			this._mainMenu.GetComponent<MainMenu>().OnMenu(EMenuType.INVENTORY); 
 		});
 
 		InputManager.instance.BindInputAction("QuestMenu", () =>
 		{
-			MainMenu mainMenu = this._mainMenu.GetComponent<MainMenu>();
-			mainMenu.OnMenu(EMenuType.QUEST);  
-		});
+			this._mainMenu.GetComponent<MainMenu>().OnMenu(EMenuType.QUEST); 
+		}); 
 		 
 	}
 

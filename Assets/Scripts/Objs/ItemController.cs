@@ -14,11 +14,11 @@ public class ItemController : MonoBehaviour
 	float spawnTime = 0;
 	bool isMovingToPlayer = false;
 
-	private void Awake()
+	private void Awake() 
 	{
 
 		_rigid = gameObject.GetComponent<Rigidbody2D>();
-		_inventory = UIHandler.instance._mainMenu.GetComponent<InventoryManager>();
+		_inventory = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._inventoryManager;
 	}
 
 	private void Update()

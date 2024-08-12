@@ -8,8 +8,6 @@ public enum EMenuType : int
 {
 	INVENTORY = 0,
 	QUEST,
-
-	COUNT,
 }
 
 public class MainMenu : MonoBehaviour
@@ -23,21 +21,26 @@ public class MainMenu : MonoBehaviour
 
 	[NonSerialized] public InventoryManager _inventoryManager;
 	[NonSerialized] public QuestUI _questUI;
-	 
+
+	Color _buttonColor;
 
 	private void Awake()
 	{
 		_inventoryManager = _inventory.GetComponent<InventoryManager>(); 
-		_questUI = _quest.GetComponent<QuestUI>(); 
-
-		_menuButtons.Add(EMenuType.INVENTORY, new Tuple<GameObject, Button>(_inventory, bt_onInventory));
-		_menuButtons.Add(EMenuType.QUEST, new Tuple<GameObject, Button>(_quest, bt_onQuest));
+		_questUI = _quest.GetComponent<QuestUI>();
 
 		bt_onInventory.onClick.AddListener(() => OnMenu(EMenuType.INVENTORY));
 		bt_onQuest.onClick.AddListener(() => OnMenu(EMenuType.QUEST));
 
+		_buttonColor = bt_onInventory.image.color;
+
+		_menuButtons.Add(EMenuType.INVENTORY, new Tuple<GameObject, Button>(_inventory, bt_onInventory));
+		_menuButtons.Add(EMenuType.QUEST, new Tuple<GameObject, Button>(_quest, bt_onQuest));
+
+		_inventory.SetActive(true);
+		
 		gameObject.SetActive(false);
-	} 
+	}
 
 	public void OnMenu(EMenuType type)
 	{
@@ -47,20 +50,20 @@ public class MainMenu : MonoBehaviour
 			InputManager.instance.FreezeCharacter(true);
 		}
 
-		for (EMenuType t = EMenuType.INVENTORY; t < EMenuType.COUNT; t++)
+		foreach (EMenuType t in Enum.GetValues(typeof(EMenuType)))
 		{
 			Tuple<GameObject, Button> tp = _menuButtons[t];
-			Color color = new Color(0.9f, 0.9f, 0.9f, 1.0f);
+			Color color = _buttonColor;
 			bool isActive = false;
 
 			if (t == type)
 			{
-				color = Color.white;
+				color *= 1.1f;
 				isActive = true;
 			}
 
-			tp.Item1.SetActive(isActive); 
-			tp.Item2.image.color = color; 
+			tp.Item1.gameObject.SetActive(isActive);
+			tp.Item2.image.color = color;
 		}
 	}
 

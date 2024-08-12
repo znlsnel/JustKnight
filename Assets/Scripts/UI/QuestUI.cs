@@ -37,7 +37,7 @@ public class QuestUI : MonoBehaviour, IMenuUI
 		_successUIManager = _successUI.GetComponent<QuestSuccessUIManager>();
 		
 		DontDestroyOnLoad(_successUI); 
-		gameObject.SetActive(false); 
+
 	}
 
 	public void AddQuest(QuestSO quest)

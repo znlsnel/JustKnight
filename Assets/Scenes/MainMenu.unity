@@ -3749,6 +3749,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1099497523838755359, guid: bd238b034ecc74042941d2fc58031687, type: 3}
     - target: {fileID: 120232734221705836, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
+      propertyPath: _mainMenu
+      value: 
+      objectReference: {fileID: 8128465400994920941, guid: c0680f1db8d6e7b4dad97d780d91d201, type: 3}
+    - target: {fileID: 120232734221705836, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
       propertyPath: _playerUI
       value: 
       objectReference: {fileID: 6858208880696852724, guid: fa8fdb4905f3362498db76cddc4b18a0, type: 3}

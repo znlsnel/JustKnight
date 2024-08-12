@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b88bc0992cb7f48825016a50227719, type: 3}
   m_Name: quest
   m_EditorClassIdentifier: 
-  codeName: EVENT_ROLL
-  displayName: "\uAD6C\uB974\uAE30 \uD574\uBCF4\uAE30"
-  description: "\uAD6C\uB974\uAE30 \uD574\uBCF4\uAE30"
+  npcName: System
+  questName: "\uAD6C\uB974\uAE30 \uB3D9\uC791 \uD574\uBCF4\uAE30"
+  description: "\uC67C\uCABD \uC26C\uD504\uD2B8\uD0A4\uB97C \uC774\uC6A9\uD558\uC5EC
+    \uAD6C\uB974\uAE30 \uB3D9\uC791\uC744 \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.
+    \uD574\uB2F9 \uB3D9\uC791\uC744 \uC0AC\uC6A9\uD558\uBA74 \uBAAC\uC2A4\uD130\uC758
+    \uACF5\uACA9\uC744 \uD68C\uD53C\uD560 \uC218 \uC788\uACE0 \uBE60\uB974\uAC8C
+    \uC774\uB3D9\uD560 \uC218\uB3C4 \uC788\uC2B5\uB2C8\uB2E4!"
   tasks:
   - {fileID: 11400000, guid: bcadf4b226213a84985f0963d9fc5cde, type: 2}
   reward: {fileID: 0}

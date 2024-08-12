@@ -23,7 +23,7 @@ public class QuestReporter : MonoBehaviour
 	private void Start()
 	{
 		_displayQuest = UIHandler.instance._displayQuest.GetComponent<DisplayQuest>();
-		_questUI =  UIHandler.instance._questUI.GetComponent<QuestUI>();
+		_questUI =  UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI;
 	}
 	private void OnTriggerEnter2D(Collider2D collision)
 	{

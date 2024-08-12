@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b88bc0992cb7f48825016a50227719, type: 3}
   m_Name: quest
   m_EditorClassIdentifier: 
-  codeName: WALL_CLIMB_EVENT
-  displayName: "\uBCBD \uC624\uB974\uAE30"
+  npcName: System
+  questName: "\uBCBD \uC624\uB974\uAE30"
   description: "\uC810\uD504 \uD6C4 \uBCBD\uC5D0 \uBC00\uCC29\uD558\uBA74 \uBCBD\uC5D0
-    \uBD99\uC5B4\uC788\uAC8C \uB429\uB2C8\uB2E4.\n\uC774 \uB54C \uC704 \uBC29\uD5A5\uD0A4\uB97C
+    \uBD99\uC5B4\uC788\uAC8C \uB429\uB2C8\uB2E4. \uC774 \uB54C \uC704 \uBC29\uD5A5\uD0A4\uB97C
     \uB204\uB974\uACE0 \uC810\uD504\uB97C \uD558\uBA74 \uBCBD\uC744 \uC624\uB97C
-    \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uBCBD \uC624\uB974\uAE30 \uAE30\uB2A5\uC744
+    \uC774\uC6A9\uD558\uC5EC \uC55E\uC5D0 \uC788\uB294 \uBCBD\uC744 \uC62C\uB77C\uBCF4\uC138\uC694!"
   tasks:
   - {fileID: 11400000, guid: f7447c2b686265242b56a7b9c573a977, type: 2}
   reward: {fileID: 0}

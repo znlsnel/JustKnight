@@ -11,7 +11,7 @@ public class DisplayQuestSlotManager : MonoBehaviour
 	 
 	public void SetQuestSlot(QuestSO quest)
 	{
-		_questTitle.text = quest.displayName;
+		_questTitle.text = quest.questName;
 
 		for (int i = 0; i < 3; i++)
 		{

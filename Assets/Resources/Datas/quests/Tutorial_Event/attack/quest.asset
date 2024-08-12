@@ -12,9 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b88bc0992cb7f48825016a50227719, type: 3}
   m_Name: quest
   m_EditorClassIdentifier: 
-  codeName: EVENT_ATTACK
-  displayName: "\uACF5\uACA9 \uD574\uBCF4\uAE30"
-  description: "\uACF5\uACA9 \uD574\uBCF4\uAE30"
+  npcName: System
+  questName: "\uACF5\uACA9, \uB9C9\uAE30 \uD574\uBCF4\uAE30"
+  description: "\uBAAC\uC2A4\uD130\uC640 \uC2F8\uC6B0\uAE30 \uC704\uD574\uC11C\uB294
+    \uACF5\uACA9\uC744 \uD560 \uC218 \uC788\uC5B4\uC57C\uD558\uBA70 \uC790\uAE30
+    \uC790\uC2E0\uC744 \uC9C0\uD0A4\uAE30 \uC704\uD574 \uACF5\uACA9\uC744 \uB9C9\uB294
+    \uBC95\uB3C4 \uC54C\uC544\uC57C\uD569\uB2C8\uB2E4. \uC67C\uCABD \uB9C8\uC6B0\uC2A4\uB85C
+    \uACF5\uACA9, \uC624\uB978\uCABD \uB9C8\uC6B0\uC2A4\uB85C \uB9C9\uAE30 \uB3D9\uC791\uC744
+    \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4 \uC9C1\uC811 \uCE90\uB9AD\uD130\uB97C
+    \uC870\uC791\uD558\uC5EC \uACF5\uACA9, \uB9C9\uAE30\uB97C \uD574\uBCF4\uC138\uC694!"
   tasks:
   - {fileID: 11400000, guid: abee2d72000f61e4da114a9dc8154acd, type: 2}
   - {fileID: 11400000, guid: 7f2161fe98f09334ca1e303639aefb42, type: 2}

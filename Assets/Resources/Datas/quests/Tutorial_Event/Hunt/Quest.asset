@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b88bc0992cb7f48825016a50227719, type: 3}
   m_Name: Quest
   m_EditorClassIdentifier: 
-  codeName: EVENT_HUNT_SKELETON
-  displayName: "\uBAAC\uC2A4\uD130 \uC0AC\uB0E5\uD558\uAE30"
-  description: "\uBAAC\uC2A4\uD130\uB97C \uC0AC\uB0E5\uD558\uACE0 \uB9C9\uAE30\uB97C
-    \uC131\uACF5\uC2DC\uCF1C\uBCF4\uC138\uC694"
+  npcName: System
+  questName: "\uC2E4\uC804 \uC804\uD22C"
+  description: "\uC9C0\uAE08\uAE4C\uC9C0 \uBC30\uC6B4 \uAE30\uB2A5\uB4E4\uC744 \uC774\uC6A9\uD574\uC11C
+    \uBAAC\uC2A4\uD130\uC758 \uACF5\uACA9\uC744 \uB9C9\uACE0, \uC9C1\uC811 \uACF5\uACA9\uD558\uC5EC
+    \uC81C\uC555\uD574\uBCF4\uC138\uC694!"
   tasks:
   - {fileID: 11400000, guid: a4aacfae01022ec4384c91cb1a69f9a7, type: 2}
   - {fileID: 11400000, guid: 720ef2ad77913094ba8bc09ff1b16c88, type: 2}

@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class QuestSlotManager : MonoBehaviour
 {
-	public Text _questTitle;
+	public TextMeshProUGUI _questTitle;
 	public Button _questSlotButton;
 	public Button _questDisplayButton;
 
@@ -14,8 +15,8 @@ public class QuestSlotManager : MonoBehaviour
 	DisplayQuest _displayQuest;
 	private void Start()
 	{
-		_questUI = UIHandler.instance._questUI.GetComponent<QuestUI>();
-		_displayQuest = UIHandler.instance._displayQuest.GetComponent<DisplayQuest>();
+		_questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI;
+		_displayQuest = UIHandler.instance._displayQuest.GetComponent<DisplayQuest>(); 
 	}
 
 	public void SetQuestSlot(QuestSO quest)

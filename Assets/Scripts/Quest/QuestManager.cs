@@ -31,8 +31,8 @@ public class QuestManager : Singleton<QuestManager>
 	 
 	private void Start()
 	{
-		_displayQuest = UIHandler.instance._displayQuest.GetComponent<DisplayQuest>();
-		_questUI = UIHandler.instance._questUI.GetComponent<QuestUI>(); 
+		_displayQuest = UIHandler.instance._displayQuest.GetComponent<DisplayQuest>(); 
+		_questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI; 
 	}
 	public List<Tuple<QuestSO, QuestTaskSO>> GetQuest(CategorySO category, TargetSO target)
 	{
@@ -56,10 +56,10 @@ public class QuestManager : Singleton<QuestManager>
 
 	public void AddQuest(QuestSO quest)
 	{
-		if (quest == null || _quests.ContainsKey(quest.codeName))
+		if (quest == null || _quests.ContainsKey(quest.questName))
 			return;
 
-		_quests.Add(quest.codeName, quest);
+		_quests.Add(quest.questName, quest);
 		foreach (QuestTaskSO task in quest.tasks)
 		{
 			HashSet<QuestSO> myQuests;
@@ -115,6 +115,6 @@ public class QuestManager : Singleton<QuestManager>
 
 	public QuestSO UpdateQuestData(QuestSO quest)
 	{
-		return _quests[quest.codeName]; 
+		return _quests[quest.questName]; 
 	}
 }

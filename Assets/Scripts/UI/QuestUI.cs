@@ -1,19 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class QuestUI : MonoBehaviour, IMenuUI
 {
-        [SerializeField] Text _descriptionText;
+        [SerializeField] TextMeshProUGUI _questTitleText;
+        [SerializeField] TextMeshProUGUI _descriptionText;
 
-	[SerializeField] GameObject _activeQuestScrollList;
-	[SerializeField] GameObject _completedQuestScrollList;
-	[SerializeField] GameObject _activeQuestParent;
-	[SerializeField] GameObject _completedQuestParent; 
+	[Space(10)]
+	[SerializeField] GameObject _questView_Pending;
+	[SerializeField] GameObject _questView_InProgress;
+	[SerializeField] GameObject _questView_completed;
+	[SerializeField] GameObject _questView_displaying;
 
-	[SerializeField] GameObject _questObjPrefab;
+	[Space(10)]
+	[SerializeField] GameObject _questParent_Pending;
+	[SerializeField] GameObject _questParent_InProgress;
+	[SerializeField] GameObject _questParent_completed;
+	[SerializeField] GameObject _questParent_displaying;
+
+	[Space(10)]
+	[SerializeField] GameObject _questSlotPrefab;
 	[SerializeField] GameObject _successUI;
 
 	QuestSuccessUIManager _successUIManager;
@@ -25,14 +35,14 @@ public class QuestUI : MonoBehaviour, IMenuUI
 		_descriptionText.text = "";
 		_successUI = Instantiate<GameObject>(_successUI);
 		_successUIManager = _successUI.GetComponent<QuestSuccessUIManager>();
-
+		
 		DontDestroyOnLoad(_successUI); 
 		gameObject.SetActive(false); 
 	}
 
 	public void AddQuest(QuestSO quest)
 	{
-		GameObject gm = Instantiate<GameObject>(_questObjPrefab);
+		GameObject gm = Instantiate<GameObject>(_questSlotPrefab);
 		QuestSlotManager qsm = gm.GetComponent<QuestSlotManager>();
 
 		//_slotManagers.Add(quest, qsm); 
@@ -45,7 +55,7 @@ public class QuestUI : MonoBehaviour, IMenuUI
 
 
 		qsm.SetQuestSlot(quest);
-		gm.transform.SetParent(_activeQuestParent.transform);
+		gm.transform.SetParent(_questParent_Pending .transform);
 	}
 
 
@@ -58,6 +68,7 @@ public class QuestUI : MonoBehaviour, IMenuUI
 			return;
 		}
 		_descriptionText.text = "";
+
 
 		foreach (QuestTaskSO task in quest.tasks)
 		{
@@ -79,7 +90,7 @@ public class QuestUI : MonoBehaviour, IMenuUI
 	{
 		GameObject gm;
 		if (_questObject.TryGetValue(quest, out gm))
-			gm.transform.SetParent(_completedQuestParent.transform);
+			gm.transform.SetParent(_questParent_completed.transform);
 	}
 
 	public void ActiveMenu(bool active)
@@ -101,13 +112,13 @@ public class QuestUI : MonoBehaviour, IMenuUI
 	{
 		if (진행중인퀘스트목록으로변경)
 		{
-			_activeQuestScrollList.SetActive(true);
-			_completedQuestScrollList.SetActive(false);
+			_questView_InProgress.SetActive(true);
+			_questView_completed.SetActive(false);
 		}
 		else
 		{
-			_activeQuestScrollList.SetActive(false);
-			_completedQuestScrollList.SetActive(true);
+			_questView_InProgress.SetActive(false);
+			_questView_completed.SetActive(true);
 		}
 	}
 }

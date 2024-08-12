@@ -18,7 +18,7 @@ public class ItemController : MonoBehaviour
 	{
 
 		_rigid = gameObject.GetComponent<Rigidbody2D>();
-		_inventory = UIHandler.instance._inventory.GetComponent<InventoryManager>();
+		_inventory = UIHandler.instance._mainMenu.GetComponent<InventoryManager>();
 	}
 
 	private void Update()

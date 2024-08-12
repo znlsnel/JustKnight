@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b88bc0992cb7f48825016a50227719, type: 3}
   m_Name: move Quest
   m_EditorClassIdentifier: 
-  codeName: MOVE_QUEST
-  displayName: "\uC6C0\uC9C1\uC5EC\uBCF4\uAE30"
-  description: "A \uBC84\uD2BC, D \uBC84\uD2BC\uC73C\uB85C \uC88C\uC6B0\uB85C \uC6C0\uC9C1\uC77C
-    \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+  npcName: System
+  questName: "\uCE90\uB9AD\uD130 \uC6C0\uC9C1\uC774\uAE30"
+  description: "\uCE90\uB9AD\uD130\uB97C \uC9C1\uC811 \uC870\uC791\uD574\uBCF4\uC138\uC694!
+    A, D\uD0A4\uB97C \uC0AC\uC6A9\uD574\uC11C \uC88C\uC6B0\uB85C \uC6C0\uC9C1\uC77C
+    \uC218 \uC788\uC73C\uBA70\n\uC2A4\uD398\uC774\uC2A4\uBC14\uB85C \uC810\uD504\uD560
+    \uC218 \uC788\uC2B5\uB2C8\uB2E4!"
   tasks:
   - {fileID: 11400000, guid: 058acc991ed3070498a8a488eb9b824e, type: 2}
   - {fileID: 11400000, guid: 7205c05a12f0142439f2574232370099, type: 2}

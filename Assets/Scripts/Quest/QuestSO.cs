@@ -14,8 +14,8 @@ public enum EQuestState
 [CreateAssetMenu(fileName = "NewQuest", menuName = "new Quest", order = 1)]
 public class QuestSO : ScriptableObject
 {
-	public string codeName;
-	public string displayName;
+	public string npcName;
+	public string questName;
 
 	[TextArea(3, 10)]
 	public string description;

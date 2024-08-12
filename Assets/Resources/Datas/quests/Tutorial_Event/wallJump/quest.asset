@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b88bc0992cb7f48825016a50227719, type: 3}
   m_Name: quest
   m_EditorClassIdentifier: 
-  codeName: EVENT_WALL_JUMP
-  displayName: "\uBCBD \uC810\uD504\uB85C \uC774\uB3D9\uD558\uAE30"
-  description: "\uBCBD \uC810\uD504 \uAE30\uB2A5\uC744 \uC774\uC6A9\uD574\uC11C \uAC74\uB108\uD3B8\uC73C\uB85C
-    \uC774\uB3D9\uD574\uC8FC\uC138\uC694\n\uBCBD \uC810\uD504\uB294 \uBCBD\uC744
-    \uD0C4 \uC0C1\uD0DC\uC5D0\uC11C \uC810\uD504\uD0A4\uB97C \uB204\uB974\uBA74 \uBC1C\uB3D9\uD569\uB2C8\uB2E4."
+  npcName: System
+  questName: "\uBCBD \uC810\uD504 \uD574\uBCF4\uAE30"
+  description: "\uBCBD\uC744 \uD0C4 \uC0C1\uD0DC\uC5D0\uC11C \uC810\uD504\uD0A4\uB97C
+    \uB204\uB974\uBA74 \uBCBD \uC810\uD504 \uB3D9\uC791\uC744 \uC2E4\uD589\uD569\uB2C8\uB2E4.
+    \uBCBD \uC810\uD504 \uAE30\uB2A5\uC744 \uC9C1\uC811 \uC0AC\uC6A9\uD574\uBCF4\uC138\uC694!"
   tasks:
   - {fileID: 11400000, guid: 0f7a6919fdefd504e8c6bf9c3e643575, type: 2}
   reward: {fileID: 0}

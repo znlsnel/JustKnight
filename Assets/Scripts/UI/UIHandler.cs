@@ -14,9 +14,8 @@ public class UIHandler : Singleton<UIHandler>
 
 	public GameObject _skillMenu;
 	public GameObject _fadeEffect;
-	public GameObject _inventory; 
+	public GameObject _mainMenu; 
 	public GameObject _dialogue;
-	public GameObject _questUI;
 	public GameObject _displayQuest;
 	public GameObject _playerUI;
 	public GameObject _fpsUI;
@@ -29,9 +28,8 @@ public class UIHandler : Singleton<UIHandler>
 
 		InstantiateAndAssign(ref _skillMenu);
 		InstantiateAndAssign(ref _fadeEffect);
-		InstantiateAndAssign(ref _inventory);
+		InstantiateAndAssign(ref _mainMenu);
 		InstantiateAndAssign(ref _dialogue);
-		InstantiateAndAssign(ref _questUI);
 		InstantiateAndAssign(ref _displayQuest);
 		InstantiateAndAssign(ref _playerUI);
 		InstantiateAndAssign(ref _fpsUI);
@@ -63,15 +61,15 @@ public class UIHandler : Singleton<UIHandler>
 		}); 
 
 		InputManager.instance.BindInputAction("Inventory", () => 
-		{ 
-			InventoryManager inventoryManager = this._inventory.GetComponent<InventoryManager>();
-			inventoryManager?.ActiveMenu(!this._inventory.activeSelf); 
+		{
+			MainMenu mainMenu = this._mainMenu.GetComponent<MainMenu>();
+			mainMenu.OnMenu(EMenuType.INVENTORY); 
 		});
 
 		InputManager.instance.BindInputAction("QuestMenu", () =>
-		{ 
-			QuestUI questUI = this._questUI.GetComponent<QuestUI>();
-			questUI?.ActiveMenu(!this._questUI.activeSelf); 
+		{
+			MainMenu mainMenu = this._mainMenu.GetComponent<MainMenu>();
+			mainMenu.OnMenu(EMenuType.QUEST);  
 		});
 		 
 	}

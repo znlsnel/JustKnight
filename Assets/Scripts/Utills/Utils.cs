@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class Utils : Singleton<Utils>
 {
-	public void SetTimer(Action act, float second)
+	public Coroutine SetTimer(Action act, float second)
 	{
-		StartCoroutine(Execute(act, second));
+		return StartCoroutine(Execute(act, second));
 	}
 	 
 	private IEnumerator Execute(Action act, float second)

@@ -38,6 +38,9 @@ public abstract class Monster : MonoBehaviour
 	[Space(10)]
 	public UnityEvent _onDead;
 	public GameObject _hpUI;
+	public Transform _hpPos;
+	public GameObject _damageUIPrefab; 
+	DamageUI _damageUI;
 
 	[Space(10)]
 	public float _moveSpeed = 1.0f;
@@ -75,8 +78,10 @@ public abstract class Monster : MonoBehaviour
 			
 		} 
 		_animator = GetComponent<Animator>();
-		_rigid = GetComponent<Rigidbody2D>(); 
-
+		_rigid = GetComponent<Rigidbody2D>();
+		_damageUIPrefab = Instantiate<GameObject>(_damageUIPrefab);
+		_damageUI = _damageUIPrefab.GetComponent<DamageUI>();
+		_damageUI._parent = _hpSlider.gameObject;
 	} 
 
 	public virtual void InitMonster(Vector3 pos)
@@ -94,6 +99,7 @@ public abstract class Monster : MonoBehaviour
 		}
 		 
 		gameObject.SetActive(true);
+		_hpUI.SetActive(true);
 	}
 
 
@@ -130,7 +136,8 @@ public abstract class Monster : MonoBehaviour
          
         public virtual void Update()
         {                
-		UpdateState(); 
+		UpdateState();
+		_hpSlider.gameObject.transform.position = _hpPos.position; 
 	}  
 
 	protected virtual void FixedUpdate()
@@ -269,8 +276,8 @@ public abstract class Monster : MonoBehaviour
 		if (_hp <= 0)
 			return;
 
-		_hp -= damage;  
-
+		_hp -= damage;
+		_damageUI.SetDamage(damage); 
 		if (_hpSlider != null)
 			_hpSlider.value = (float)_hp / _initHp;
 
@@ -320,6 +327,7 @@ public abstract class Monster : MonoBehaviour
 	}
         void AE_EndDeath()
         {
+		_hpUI.SetActive(false);
 		_animator.speed = 0.0f;
 		Utils.instance.SetTimer(() => { _onDestroy?.Invoke(); }, 1.5f); 
 	}

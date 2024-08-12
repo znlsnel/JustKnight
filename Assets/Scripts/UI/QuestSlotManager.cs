@@ -22,7 +22,7 @@ public class QuestSlotManager : MonoBehaviour
 	public void SetQuestSlot(QuestSO quest)
 	{
 		_quest = quest;
-		_questTitle.text = quest.description;
+		_questTitle.text = quest.questName;
 		_questSlotButton.onClick.AddListener( ()=> _questUI.UpdateQuestInfo(quest));
 		_questDisplayButton.onClick.AddListener(() => AddDisplayQuest());
 	}   

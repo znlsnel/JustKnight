@@ -44,7 +44,7 @@ public class QuestUI : MonoBehaviour, IMenuUI
 	{
 		GameObject gm = Instantiate<GameObject>(_questSlotPrefab);
 		QuestSlotManager qsm = gm.GetComponent<QuestSlotManager>();
-
+		gm.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 		//_slotManagers.Add(quest, qsm); 
 		if (_questObject.ContainsKey(quest) )
 		{
@@ -62,23 +62,27 @@ public class QuestUI : MonoBehaviour, IMenuUI
 	// if you don't send anything as a factor, this function will empty the quest text
        public void UpdateQuestInfo(QuestSO quest = null)
 	{
-		if (quest == null)
-		{
-			_descriptionText.text = "";
-			return;
-		}
+		
+		_questTitleText.text = "";
 		_descriptionText.text = "";
 
+		if (quest == null)
+			return;
+
+		_questTitleText.text = quest.questName;
+		_descriptionText.text += "<b>NPC : " + quest.npcName + "</b>\n\n";
+		_descriptionText.text += quest.description + "\n\n";
+		_descriptionText.text +="<color=white><b>";
 
 		foreach (QuestTaskSO task in quest.tasks)
 		{
 			if (task.curCnt < task.targetCnt)
 			{
-				_descriptionText.text += task.description + " [" + task.target._name + "] " + task.curCnt + " / " + task.targetCnt;
+				_descriptionText.text += "-" + task.description + "<color=yellow>( " + task.curCnt + " / " + task.targetCnt + " )</color>";
 			}
 			else
 			{
-				_descriptionText.text += task.description + " [완료] ";
+				_descriptionText.text += task.description + "<color=yellow> [완료] </color>";
 			}
 
 			_descriptionText.text += "\n"; 

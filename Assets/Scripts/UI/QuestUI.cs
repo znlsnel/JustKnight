@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,9 +6,18 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum EQuestMenuType : int
+{
+	PENDING,
+	INPROGRESS,
+	COMPLETED,
+	DISPLAYING,
+}
 public class QuestUI : MonoBehaviour, IMenuUI
 {
-        [SerializeField] TextMeshProUGUI _questTitleText;
+	#region Serialize Fields
+
+	[SerializeField] TextMeshProUGUI _questTitleText;
         [SerializeField] TextMeshProUGUI _descriptionText;
 
 	[Space(10)]
@@ -23,19 +33,39 @@ public class QuestUI : MonoBehaviour, IMenuUI
 	[SerializeField] GameObject _questParent_displaying;
 
 	[Space(10)]
+	[SerializeField] Button bt_questPending;
+	[SerializeField] Button bt_questInProgress;
+	[SerializeField] Button bt_questCompleted;
+	[SerializeField] Button bt_questDisplaying;  
+
+	[Space(10)]
 	[SerializeField] GameObject _questSlotPrefab;
 	[SerializeField] GameObject _successUI;
 
-	QuestSuccessUIManager _successUIManager;
+	#endregion
 
-	//Dictionary<QuestSO, QuestSlotManager> _slotManagers = new Dictionary<QuestSO, QuestSlotManager>();
+	QuestSuccessUIManager _successUIManager;
 	Dictionary<QuestSO, GameObject> _questObject = new Dictionary<QuestSO, GameObject>();
-	private void Awake() 
+	Dictionary<EQuestMenuType, Tuple<GameObject, Button>> _questMenus = new Dictionary<EQuestMenuType, Tuple<GameObject, Button>>();
+
+	Color _questMenuColor;
+	private void Awake()  
 	{
-		_descriptionText.text = "";
+		_descriptionText.text = ""; 
 		_successUI = Instantiate<GameObject>(_successUI);
 		_successUIManager = _successUI.GetComponent<QuestSuccessUIManager>();
-		
+
+		_questMenus.Add(EQuestMenuType.PENDING, new Tuple<GameObject, Button>(_questView_Pending, bt_questPending));
+		_questMenus.Add(EQuestMenuType.INPROGRESS, new Tuple<GameObject, Button>(_questView_InProgress, bt_questInProgress)); 
+		_questMenus.Add(EQuestMenuType.COMPLETED, new Tuple<GameObject, Button>(_questView_completed, bt_questCompleted));
+		_questMenus.Add(EQuestMenuType.DISPLAYING, new Tuple<GameObject, Button>(_questView_displaying, bt_questDisplaying));
+
+		bt_questPending.onClick.AddListener(() => { OnQuestList(EQuestMenuType.PENDING); });
+		bt_questInProgress.onClick.AddListener(() => { OnQuestList(EQuestMenuType.INPROGRESS); });
+		bt_questCompleted.onClick.AddListener(() => { OnQuestList(EQuestMenuType.COMPLETED); }); 
+		bt_questDisplaying.onClick.AddListener(() => { OnQuestList(EQuestMenuType.DISPLAYING); });
+		_questMenuColor = bt_questCompleted.image.color;
+
 		DontDestroyOnLoad(_successUI); 
 
 	}
@@ -44,23 +74,23 @@ public class QuestUI : MonoBehaviour, IMenuUI
 	{
 		GameObject gm = Instantiate<GameObject>(_questSlotPrefab);
 		QuestSlotManager qsm = gm.GetComponent<QuestSlotManager>();
-		gm.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-		//_slotManagers.Add(quest, qsm); 
+
 		if (_questObject.ContainsKey(quest) )
-		{
 			return; 
-		}
-		else
-			_questObject.Add(quest, gm);
+		
+		_questObject.Add(quest, gm);
 
 
 		qsm.SetQuestSlot(quest);
-		gm.transform.SetParent(_questParent_Pending .transform);
+
+		gm.transform.SetParent(_questParent_Pending.gameObject.transform);
+		gm.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f); 
+
 	}
 
 
 	// if you don't send anything as a factor, this function will empty the quest text
-       public void UpdateQuestInfo(QuestSO quest = null)
+	public void UpdateQuestInfo(QuestSO quest = null)
 	{
 		
 		_questTitleText.text = "";
@@ -112,17 +142,23 @@ public class QuestUI : MonoBehaviour, IMenuUI
 		_successUIManager.OpenSuccessUI(rewardDescription); 
 	}
 
-	public void OnListChangeButton(bool 진행중인퀘스트목록으로변경)
+
+	void OnQuestList(EQuestMenuType type)
 	{
-		if (진행중인퀘스트목록으로변경)
+		foreach (EQuestMenuType t in Enum.GetValues(typeof(EQuestMenuType)))
 		{
-			_questView_InProgress.SetActive(true);
-			_questView_completed.SetActive(false);
-		}
-		else
-		{
-			_questView_InProgress.SetActive(false);
-			_questView_completed.SetActive(true);
+			Tuple<GameObject, Button> tp = _questMenus[t];
+			Color color = _questMenuColor;
+			bool isActive = false;
+
+			if (t == type)
+			{
+				color *= 1.1f;
+				isActive = true;
+			}
+			tp.Item1.SetActive(isActive);
+			tp.Item2.image.color = color;
+
 		}
 	}
 }

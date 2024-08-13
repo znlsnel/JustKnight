@@ -37,7 +37,6 @@ public class MainMenu : MonoBehaviour
 		_menuButtons.Add(EMenuType.INVENTORY, new Tuple<GameObject, Button>(_inventory, bt_onInventory));
 		_menuButtons.Add(EMenuType.QUEST, new Tuple<GameObject, Button>(_quest, bt_onQuest));
 
-		_inventory.SetActive(true);
 		
 		gameObject.SetActive(false);
 	}

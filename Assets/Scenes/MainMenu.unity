@@ -3764,6 +3764,10 @@ PrefabInstance:
       propertyPath: _displayQuest
       value: 
       objectReference: {fileID: 8721016956293834939, guid: 96d0df0b59cf28f4fb6879e3b6253383, type: 3}
+    - target: {fileID: 1481640057383993897, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
+      propertyPath: _interactionUIPrefab
+      value: 
+      objectReference: {fileID: 439444161918286182, guid: 767aaa16f551d0f4ebd6466b84e44a5c, type: 3}
     - target: {fileID: 3004416864802387988, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
       propertyPath: m_Name
       value: GameManager

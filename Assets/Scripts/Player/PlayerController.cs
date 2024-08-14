@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
 	public float _jumpPower = 5.0f;
 	public float _rollPower = 5.0f;
 	public float _playerSpeed = 5.0f;
-
+	public Transform _uiPos;
 
 	int _hp = 3;
 	public int hp 

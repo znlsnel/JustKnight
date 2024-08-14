@@ -12754,6 +12754,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d3d359b792fd25e40b2077df1580ee0f, type: 2}
   isAutoStart: 1
   isEventNpc: 1
+  _onDialogue:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &169549926
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12985,6 +12988,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d950e55673ec62c4ca3f270e4256881a, type: 2}
   isAutoStart: 1
   isEventNpc: 1
+  _onDialogue:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &357036723
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13317,6 +13323,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 418eaca9cc9b2e34ea794e768c0491da, type: 2}
   isAutoStart: 1
   isEventNpc: 1
+  _onDialogue:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &658324369
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14339,6 +14348,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5eda91ac3b920e9438b1721cef4e09ea, type: 2}
   isAutoStart: 1
   isEventNpc: 1
+  _onDialogue:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &1685599330
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14691,6 +14703,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 86354e2b91c62464fa761e927b355442, type: 2}
   isAutoStart: 1
   isEventNpc: 1
+  _onDialogue:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &1791251562
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14823,6 +14838,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e3d6db673d8abd1408d73ea53fd04851, type: 2}
   isAutoStart: 1
   isEventNpc: 1
+  _onDialogue:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &1928809545
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15710,7 +15728,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8875407409645299773, guid: dc594eb07fb86414ba6db5fc9e4f1e31, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 60.6
+      value: 55.19
       objectReference: {fileID: 0}
     - target: {fileID: 8875407409645299773, guid: dc594eb07fb86414ba6db5fc9e4f1e31, type: 3}
       propertyPath: m_LocalPosition.y

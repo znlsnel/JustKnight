@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2447656538877890325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2121523583750910032}
+  m_Layer: 3
+  m_Name: UIPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2121523583750910032
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2447656538877890325}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8300312879205510169}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4103853403767395847
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,6 +623,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8413529789942519730, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4114621420771651226}
+    - targetCorrespondingSourceObject: {fileID: 8413529789942519730, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2121523583750910032}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6323719953710832613, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       insertIndex: -1
@@ -633,6 +667,7 @@ MonoBehaviour:
   _jumpPower: 7
   _rollPower: 8
   _playerSpeed: 3
+  _uiPos: {fileID: 2121523583750910032}
   r_MoveLeft:
     m_PersistentCalls:
       m_Calls:
@@ -851,61 +886,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6728d6bbea7970f45869bbf382530086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _datas:
-  - key: 0
-    value:
-      value: 3
-      descript: "\uCCB4\uB825"
-      minItemStatValue: 1
-      maxItemStatValue: 5
-  - key: 1
-    value:
-      value: 1
-      descript: "\uB370\uBBF8\uC9C0"
-      minItemStatValue: 1
-      maxItemStatValue: 3
-  - key: 2
-    value:
-      value: 0
-      descript: "\uCD94\uAC00 \uACF5\uACA9 \uD655\uB960"
-      minItemStatValue: 2
-      maxItemStatValue: 5
-  - key: 3
-    value:
-      value: 0
-      descript: "\uBC29\uC5B4\uB825"
-      minItemStatValue: 1
-      maxItemStatValue: 3
-  - key: 4
-    value:
-      value: 0
-      descript: "\uB9C9\uAE30 \uB370\uBBF8\uC9C0"
-      minItemStatValue: 1
-      maxItemStatValue: 3
-  - key: 5
-    value:
-      value: 0
-      descript: "\uD68C\uD53C \uD655\uB960"
-      minItemStatValue: 1
-      maxItemStatValue: 3
-  - key: 6
-    value:
-      value: 8
-      descript: "\uC810\uD504\uB825"
-      minItemStatValue: 1
-      maxItemStatValue: 1
-  - key: 7
-    value:
-      value: 5
-      descript: "\uC774\uB3D9\uC18D\uB3C4"
-      minItemStatValue: 1
-      maxItemStatValue: 1
-  - key: 8
-    value:
-      value: 5
-      descript: "\uC774\uB3D9\uC18D\uB3C4"
-      minItemStatValue: 1
-      maxItemStatValue: 1
 --- !u!4 &8300312879205510169 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8413529789942519730, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}

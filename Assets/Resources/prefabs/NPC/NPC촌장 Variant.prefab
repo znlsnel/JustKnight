@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1791447420929923435, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.99
+      objectReference: {fileID: 0}
     - target: {fileID: 3068755330031266945, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       propertyPath: m_Name
       value: "NPC\uCD0C\uC7A5 Variant"

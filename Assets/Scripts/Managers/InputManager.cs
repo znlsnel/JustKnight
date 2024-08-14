@@ -9,19 +9,21 @@ using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class InputManager : Singleton<InputManager>
 {
-	[NonSerialized] public InteractionHandler _interactionHandler;
-
+	[SerializeField] GameObject _interactionUIPrefab;
+	public InteractionHandler _interactionHandler{get { return _interactionUIPrefab.GetComponent<InteractionHandler>(); }}
+	 
 	private Dictionary<string, InputAction> _inputActions = new Dictionary<string, InputAction>();
 	private InputActionMap _uiActionMap;
 	private InputActionMap _characterActionMap;
 
-	// Start is called before the first frame update
+	// Start is called before the first frame update 
 	public override void Awake() 
 	{
-		base.Awake();
+		base.Awake(); 
+		_interactionUIPrefab = Instantiate<GameObject>(_interactionUIPrefab);
 
-		_interactionHandler = gameObject.AddComponent<InteractionHandler>();
-
+		DontDestroyOnLoad(_interactionUIPrefab);
+		 
 		var inputActionAsset = Resources.Load<InputActionAsset>("Inputs/InputActions");
 		_uiActionMap = inputActionAsset.FindActionMap("UI");
 		_characterActionMap = inputActionAsset.FindActionMap("Character");

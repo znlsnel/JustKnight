@@ -7,8 +7,15 @@ public class DisplayQuest : MonoBehaviour
 {
         public List<GameObject> _questSlots = new List<GameObject>();
         public List<QuestSO> _quests = new List<QuestSO>();
+	Dictionary<QuestSO, GameObject> _questObject = new Dictionary<QuestSO, GameObject>();
 
-        public bool IsQuestSaved(QuestSO quest)
+	QuestUI _questUI;
+
+	private void Awake()
+	{
+		_questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI; 
+	}
+	public bool IsQuestStored(QuestSO quest)
         {
                 foreach (QuestSO questSO in _quests)
                         if (questSO == quest)
@@ -24,7 +31,17 @@ public class DisplayQuest : MonoBehaviour
 
                 _quests.Add(quest);
                 UpdateDisplayQuestSlot();
-                return true;
+
+		GameObject gm = Instantiate<GameObject>(_questUI._questSlotPrefab);
+		gm.GetComponent<QuestSlotManager>().SetQuestSlot(quest, true);
+
+		_questObject.Add(quest, gm);
+
+		gm.transform.SetParent(_questUI._questParent_displaying.transform);
+		gm.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+
+
+		return true;
 	}
 
         public void RemoveQuest(QuestSO quest)
@@ -37,12 +54,18 @@ public class DisplayQuest : MonoBehaviour
                         if (_quests[i] != quest)
                         {
                                 next.Add(_quests[i]);
-
-
 			}
                 }
                 _quests = next;
                 UpdateDisplayQuestSlot();
+
+
+                GameObject gm;
+		if (_questObject.TryGetValue(quest, out gm))
+                {
+			_questObject.Remove(quest);
+			Destroy(gm); 
+                }
 	}
 
         public  void UpdateDisplayQuestSlot()

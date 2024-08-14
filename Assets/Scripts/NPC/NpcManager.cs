@@ -13,10 +13,13 @@ public class NpcManager : MonoBehaviour
 
 	QuestManager _questManager;
 	DialogueManager _dialogueManager;
+	QuestUI _questUI;
 	// Start is called before the first frame update
 	void Start()
-        { 
-                _curDialogue = _dialogues[0];
+        {
+		_questUI = _questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI;
+
+		_curDialogue = _dialogues[0];
 		_questManager = QuestManager.instance;
 		_dialogueManager = UIHandler.instance._dialogue.GetComponent<DialogueManager>(); 
 		
@@ -24,6 +27,7 @@ public class NpcManager : MonoBehaviour
 		{
 			QuestManager.instance.AddQuest(d.quest);
 			_dialogueManager.AddDialogue(d); 
+			_questUI.AddQuest(EQuestMenuType.PENDING, d.quest); 
 		}
 
 		if (isEventNpc) 

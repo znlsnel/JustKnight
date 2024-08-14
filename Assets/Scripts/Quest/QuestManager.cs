@@ -77,8 +77,7 @@ public class QuestManager : Singleton<QuestManager>
 	public void RegisterQuest(QuestSO quest)
 	{
 		quest = UpdateQuestData(quest); 
-		_questUI.AddQuest(quest);
-		_displayQuest.AddQuest(quest);
+		_questUI.MoveToQuestList(EQuestMenuType.INPROGRESS, quest, true);
 		quest.questState = EQuestState.IN_PROGRESS;
 	}
 
@@ -104,7 +103,7 @@ public class QuestManager : Singleton<QuestManager>
 	public void CompleteQuest(QuestSO quest, string rewardInfo)
 	{
 		_questUI.LoadSuccessUI(rewardInfo);
-		_questUI.MoveToCompletedQuests(quest);
+		_questUI.MoveToQuestList(EQuestMenuType.COMPLETED ,quest);
 	
 		Utils.instance.SetTimer(()=>_displayQuest.RemoveQuest(quest), 1.5f);
 		 

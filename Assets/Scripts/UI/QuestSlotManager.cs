@@ -7,36 +7,49 @@ using UnityEngine.UI;
 public class QuestSlotManager : MonoBehaviour
 {
 	public TextMeshProUGUI _questTitle;
+	public TextMeshProUGUI _checkBoxText; 
 	public Button _questSlotButton;
 	public Button _questDisplayButton;
 
 	QuestSO _quest;
 	QuestUI _questUI;
 	DisplayQuest _displayQuest;
-	private void Start()
+	private void Awake()
 	{
 		_questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI;
 		_displayQuest = UIHandler.instance._displayQuest.GetComponent<DisplayQuest>(); 
 	}
 
-	public void SetQuestSlot(QuestSO quest)
+	public void SetQuestSlot(QuestSO quest, bool displaying = false)
 	{
 		_quest = quest;
 		_questTitle.text = quest.questName;
 		_questSlotButton.onClick.AddListener( ()=> _questUI.UpdateQuestInfo(quest));
 		_questDisplayButton.onClick.AddListener(() => AddDisplayQuest());
+		_checkBoxText.gameObject.SetActive(displaying);
+
+
 	}   
 
 	public void AddDisplayQuest()
 	{
-		bool isDisplayed = _displayQuest.IsQuestSaved(_quest);
+		bool isDisplayed = _displayQuest.IsQuestStored(_quest);
 
-		if (isDisplayed) 
+		if (isDisplayed)
+		{
 			_displayQuest.RemoveQuest(_quest);
+			_checkBoxText.gameObject.SetActive(false);
+			_questUI.DisplayingQuestCheck(_quest, false);
+		}
 		else
+		{
 			_displayQuest.AddQuest(_quest);
+			_checkBoxText.gameObject.SetActive(true);
 
-		
+
+		}
+
+
 	}
 
 }

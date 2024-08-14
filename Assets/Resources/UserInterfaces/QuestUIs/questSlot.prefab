@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5158585398801530890}
   - component: {fileID: 1588434276967804318}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -252,6 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _questTitle: {fileID: 1588434276967804318}
+  _checkBoxText: {fileID: 2672772868626706318}
   _questSlotButton: {fileID: 1705039892684048173}
   _questDisplayButton: {fileID: 4821079818238229080}
 --- !u!1 &6293952243551587053
@@ -508,12 +509,12 @@ GameObject:
   - component: {fileID: 8088625210028526857}
   - component: {fileID: 2672772868626706318}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: checkBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3517050419388046754
 RectTransform:
   m_ObjectHideFlags: 0

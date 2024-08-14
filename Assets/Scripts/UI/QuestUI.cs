@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
 
 public enum EQuestMenuType : int
@@ -30,7 +31,7 @@ public class QuestUI : MonoBehaviour, IMenuUI
 	[SerializeField] GameObject _questParent_Pending;
 	[SerializeField] GameObject _questParent_InProgress;
 	[SerializeField] GameObject _questParent_completed;
-	[SerializeField] GameObject _questParent_displaying;
+	[SerializeField] public GameObject _questParent_displaying;
 
 	[Space(10)]
 	[SerializeField] Button bt_questPending;
@@ -39,7 +40,7 @@ public class QuestUI : MonoBehaviour, IMenuUI
 	[SerializeField] Button bt_questDisplaying;  
 
 	[Space(10)]
-	[SerializeField] GameObject _questSlotPrefab;
+	[SerializeField] public GameObject _questSlotPrefab;
 	[SerializeField] GameObject _successUI;
 
 	#endregion
@@ -70,23 +71,28 @@ public class QuestUI : MonoBehaviour, IMenuUI
 
 	}
 
-	public void AddQuest(QuestSO quest)
+	GameObject GetQuestParent(EQuestMenuType type)
 	{
-		GameObject gm = Instantiate<GameObject>(_questSlotPrefab);
-		QuestSlotManager qsm = gm.GetComponent<QuestSlotManager>();
+		switch (type)
+		{
+			case EQuestMenuType.PENDING:
+				return _questParent_Pending;
 
-		if (_questObject.ContainsKey(quest) )
-			return; 
-		
-		_questObject.Add(quest, gm);
+			case EQuestMenuType.COMPLETED:
+				return _questParent_completed;
 
+			case EQuestMenuType.DISPLAYING:
+				return _questParent_displaying;
 
-		qsm.SetQuestSlot(quest);
+			case EQuestMenuType.INPROGRESS:
+				return _questParent_InProgress;
 
-		gm.transform.SetParent(_questParent_Pending.gameObject.transform);
-		gm.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f); 
-
+			default: 
+				return null;	
+		}
 	}
+
+
 
 
 	// if you don't send anything as a factor, this function will empty the quest text
@@ -107,25 +113,55 @@ public class QuestUI : MonoBehaviour, IMenuUI
 		foreach (QuestTaskSO task in quest.tasks)
 		{
 			if (task.curCnt < task.targetCnt)
-			{
-				_descriptionText.text += "-" + task.description + "<color=yellow>( " + task.curCnt + " / " + task.targetCnt + " )</color>";
-			}
-			else
-			{
-				_descriptionText.text += task.description + "<color=yellow> [완료] </color>";
-			}
+				_descriptionText.text += "-" + task.description + "( " + task.curCnt + " / " + task.targetCnt + " )";
+			else 
+				_descriptionText.text += task.description + "<color=yellow> [완료] </color>";  
 
-			_descriptionText.text += "\n"; 
-		}
+			_descriptionText.text += "\n";  
+		} 
+	}
+	
 
+	public void AddQuest(EQuestMenuType type, QuestSO quest)
+	{
+		if (quest == null || _questObject.ContainsKey(quest))
+			return;
+
+		GameObject gm = Instantiate<GameObject>(_questSlotPrefab);
+		gm.GetComponent<QuestSlotManager>().SetQuestSlot(quest);
+
+		_questObject.Add(quest, gm);
+
+		gm.transform.SetParent(GetQuestParent(type).transform);
+		gm.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+		
 	}
 
-	public void MoveToCompletedQuests(QuestSO quest)
+	public void MoveToQuestList(EQuestMenuType type, QuestSO quest, bool display = false) 
+	{
+		
+		GameObject gm;
+		if (_questObject.TryGetValue(quest, out gm)) 
+		{
+			gm.transform.SetParent(GetQuestParent(type).transform); 
+			gm.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);	
+
+			if (display)
+			{
+				gm.GetComponent<QuestSlotManager>().AddDisplayQuest();
+			}
+		}  
+	}
+
+	public void DisplayingQuestCheck(QuestSO quest, bool check)
 	{
 		GameObject gm;
 		if (_questObject.TryGetValue(quest, out gm))
-			gm.transform.SetParent(_questParent_completed.transform);
+		{
+			gm.GetComponent<QuestSlotManager>()._checkBoxText.gameObject.SetActive(check);
+		}
 	}
+
 
 	public void ActiveMenu(bool active)
 	{
@@ -152,8 +188,8 @@ public class QuestUI : MonoBehaviour, IMenuUI
 			bool isActive = false;
 
 			if (t == type)
-			{
-				color *= 1.1f;
+			{ 
+				color *= 1.2f;
 				isActive = true;
 			}
 			tp.Item1.SetActive(isActive);

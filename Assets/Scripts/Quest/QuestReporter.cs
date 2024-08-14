@@ -14,7 +14,7 @@ public class ReportInfo
 public class QuestReporter : MonoBehaviour
 {
 	[SerializeField] public List<ReportInfo> reportInfos = new List<ReportInfo>();
-	public int successCount = 0;
+	public int successCount = 1;
 	public UnityEvent _enterCollider;
 
 	DisplayQuest _displayQuest;

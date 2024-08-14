@@ -18,7 +18,7 @@ public class DisplayQuestSlotManager : MonoBehaviour
 			if (quest.tasks.Count > i)
 			{
 				_questTasks[i].SetActive(true);
-				_questTasks[i].GetComponent<DisplayQuestTaskManager>().SetQuestInfo(quest.tasks[i].description, quest.tasks[i].curCnt, quest.tasks[i].targetCnt);
+				_questTasks[i].GetComponent<DisplayQuestTaskManager>().SetQuestInfo(quest.tasks[i].taskTitle, quest.tasks[i].curCnt, quest.tasks[i].targetCnt);
 			} 
 			else 
 			{

@@ -86,7 +86,8 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 		int page = _curQuestDlg.curPage;
 
 		_npcScript.text = "";
-		_updateScript = StartCoroutine(UpdateScript(_curDlg.npc[page].text));
+		if (_curDlg.npc[page] != null ) 
+			_updateScript = StartCoroutine(UpdateScript(_curDlg.npc[page].text));
 		 
 		_completeScript?.RemoveAllListeners();
 		_completeScript.AddListener(() =>  
@@ -132,7 +133,10 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 	public void OnResponseButton(int id)
 	{
 		if (_curQuestDlg.UpdateState(id))
+		{
 			ActiveMenu(false);
+			return;
+		}
 
 		_curQuestDlg.curPage++;  
 		 

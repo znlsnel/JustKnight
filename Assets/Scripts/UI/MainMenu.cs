@@ -25,7 +25,13 @@ public class MainMenu : MonoBehaviour
 	Color _buttonColor;
 
 	private void Awake()
-	{
+	{ 
+		_inventory.SetActive(true);
+		_quest.SetActive(true);
+
+		_inventory.SetActive(false);
+		_quest.SetActive(false);
+
 		_inventoryManager = _inventory.GetComponent<InventoryManager>(); 
 		_questUI = _quest.GetComponent<QuestUI>();
 

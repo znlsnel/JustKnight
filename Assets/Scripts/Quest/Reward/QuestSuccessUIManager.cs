@@ -10,15 +10,17 @@ public class QuestSuccessUIManager : MonoBehaviour
 	private void Awake()
 	{
 		gameObject.SetActive(false);
+
 	}
 	public void OpenSuccessUI(string rewardDecription)
-        { 
-                gameObject.SetActive(true);
-                _description.text = "퀘스트 성공!";
-                if (rewardDecription != "")
-			_description.text += "\n" + $"보상 :  {rewardDecription} "; 
+        {
+		_description.text = "퀘스트 성공!";
+		if (rewardDecription != "")
+			_description.text += "\n" + $"보상 :  {rewardDecription} ";
+
+		gameObject.SetActive(true);
                 StartCoroutine(CloseUI()); 
-        }
+	}
          
 	IEnumerator CloseUI()
         {

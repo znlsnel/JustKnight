@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class NpcManager : MonoBehaviour
@@ -15,6 +16,9 @@ public class NpcManager : MonoBehaviour
 	DialogueManager _dialogueManager;
 	QuestUI _questUI;
 	// Start is called before the first frame update
+
+	public UnityEvent _onDialogue;
+
 	void Start()
         {
 		_questUI = _questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI;
@@ -51,6 +55,7 @@ public class NpcManager : MonoBehaviour
 		if (isAutoStart)
 		{
 			_dialogueManager.BeginDialogue(_curDialogue);
+			_onDialogue?.Invoke();
 			//InputManager.instance._interactionHandler.ExcuteInteraction();
 			return;
 		}
@@ -58,8 +63,9 @@ public class NpcManager : MonoBehaviour
 		InputManager.instance._interactionHandler.AddIAction(gameObject, () => 
 		{
 			_dialogueManager.BeginDialogue(_curDialogue);
+			_onDialogue?.Invoke(); 
 
-                        InputManager.instance._interactionHandler.RegisterCancelAction(() => {
+			InputManager.instance._interactionHandler.RegisterCancelAction(() => {
 				_dialogueManager.ActiveMenu(false);  
 			});
 		});

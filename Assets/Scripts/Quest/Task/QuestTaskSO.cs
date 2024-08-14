@@ -8,11 +8,10 @@ using UnityEngine.Events;
 public class QuestTaskSO : ScriptableObject
 {
 	public CategorySO category;
-	public string displayName;
 
-	[TextArea(3, 10)]
-	public string description;
+	public string taskTitle;
 
+	[Space(10)]
 	public TaskActionSO action;
 	public TargetSO target;
 	 

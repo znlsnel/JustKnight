@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: task
   m_EditorClassIdentifier: 
   category: {fileID: 11400000, guid: ed17eee6497195748a30a8c7097c5f2b, type: 2}
-  displayName: "\uBCBD \uC704\uAE4C\uC9C0 \uC624\uB974\uAE30"
-  description: "\uBCBD \uC810\uD504\uB97C \uC774\uC6A9\uD574\uC11C \uBCBD \uC704\uC5D0
-    \uC62C\uB77C\uBCF4\uC138\uC694"
+  taskTitle: "\uBCBD \uC624\uB974\uAE30"
   action: {fileID: 11400000, guid: cc6c2c95205bce645beb130f96e09eb4, type: 2}
   target: {fileID: 11400000, guid: 1110b87ca09f6c24aa45fbd5c581d367, type: 2}
   targetCnt: 1

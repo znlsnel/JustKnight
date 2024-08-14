@@ -17,7 +17,7 @@ public enum EQuestMenuType : int
 public class QuestUI : MonoBehaviour, IMenuUI
 {
 	#region Serialize Fields
-
+	 
 	[SerializeField] TextMeshProUGUI _questTitleText;
         [SerializeField] TextMeshProUGUI _descriptionText;
 
@@ -45,16 +45,17 @@ public class QuestUI : MonoBehaviour, IMenuUI
 
 	#endregion
 
-	QuestSuccessUIManager _successUIManager;
+
 	Dictionary<QuestSO, GameObject> _questObject = new Dictionary<QuestSO, GameObject>();
 	Dictionary<EQuestMenuType, Tuple<GameObject, Button>> _questMenus = new Dictionary<EQuestMenuType, Tuple<GameObject, Button>>();
 
 	Color _questMenuColor;
 	private void Awake()  
 	{
-		_descriptionText.text = ""; 
+		_descriptionText.text = "";
+
 		_successUI = Instantiate<GameObject>(_successUI);
-		_successUIManager = _successUI.GetComponent<QuestSuccessUIManager>();
+		DontDestroyOnLoad(_successUI);
 
 		_questMenus.Add(EQuestMenuType.PENDING, new Tuple<GameObject, Button>(_questView_Pending, bt_questPending));
 		_questMenus.Add(EQuestMenuType.INPROGRESS, new Tuple<GameObject, Button>(_questView_InProgress, bt_questInProgress)); 
@@ -67,8 +68,12 @@ public class QuestUI : MonoBehaviour, IMenuUI
 		bt_questDisplaying.onClick.AddListener(() => { OnQuestList(EQuestMenuType.DISPLAYING); });
 		_questMenuColor = bt_questCompleted.image.color;
 
-		DontDestroyOnLoad(_successUI); 
 
+		 
+	}
+	private void Start()
+	{
+		
 	}
 
 	GameObject GetQuestParent(EQuestMenuType type)
@@ -113,9 +118,9 @@ public class QuestUI : MonoBehaviour, IMenuUI
 		foreach (QuestTaskSO task in quest.tasks)
 		{
 			if (task.curCnt < task.targetCnt)
-				_descriptionText.text += "-" + task.description + "( " + task.curCnt + " / " + task.targetCnt + " )";
+				_descriptionText.text += "-" + task.taskTitle + "( " + task.curCnt + " / " + task.targetCnt + " )";
 			else 
-				_descriptionText.text += task.description + "<color=yellow> [완료] </color>";  
+				_descriptionText.text += task.taskTitle + "<color=yellow> [완료] </color>";  
 
 			_descriptionText.text += "\n";  
 		} 
@@ -175,7 +180,7 @@ public class QuestUI : MonoBehaviour, IMenuUI
 
 	public void LoadSuccessUI(string rewardDescription)
 	{
-		_successUIManager.OpenSuccessUI(rewardDescription); 
+ 		_successUI.GetComponent<QuestSuccessUIManager>()?.OpenSuccessUI(rewardDescription); 
 	}
 
 

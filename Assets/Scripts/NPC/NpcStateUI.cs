@@ -19,10 +19,11 @@ public class NpcStateUI : MonoBehaviour
 
         public void SetNpcStateUI(QuestDialogueSO dl)
         {
-		EDialogueState state = dl._state;
+		
 	       ENpcStateType type= ENpcStateType.NONE; 
 		if (dl.GetCurDialogue(false) != null)
 		{
+			EDialogueState state = dl._state;
 			switch (state)
 			{
 				case EDialogueState.PENDING_ACCEPTANCE:
@@ -58,7 +59,7 @@ public class NpcStateUI : MonoBehaviour
 				break;
 
                         case ENpcStateType .COMPLETE:
-				_exclamationMark.gameObject.SetActive(false);
+				_exclamationMark.gameObject.SetActive(false); 
 				_questionMark.gameObject.SetActive(true); 
 				_talking.gameObject.SetActive(false);
 				break;

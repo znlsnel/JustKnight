@@ -25,9 +25,14 @@ public class NpcManager : MonoBehaviour
 		_questUI = _questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI;
 
 		_curDialogue = _dialogues[0];
+
 		_questManager = QuestManager.instance;
-		_dialogueManager = UIHandler.instance._dialogue.GetComponent<DialogueManager>(); 
-		
+		_dialogueManager = UIHandler.instance._dialogue.GetComponent<DialogueManager>();
+
+		QuestDialogueSO t = _dialogueManager.UpdateQuestDialogue(_curDialogue);
+		if (t != null)
+			_curDialogue = t;
+
 		foreach (var d in _dialogues)
 		{
 			QuestManager.instance.AddQuest(d.quest);
@@ -41,8 +46,16 @@ public class NpcManager : MonoBehaviour
 		if (_npcStateUI != null)
 		{
 			_npcStateUI.SetNpcStateUI(_curDialogue);
-			_curDialogue._onChangeState += () => { _npcStateUI.SetNpcStateUI(_curDialogue); };
-		} 
+			_curDialogue._onChangeState = () =>
+			{
+				if (_npcStateUI != null)
+					_npcStateUI.SetNpcStateUI(_curDialogue);
+				else
+					Debug.Log("_npcStateUI ¾ø¾û.."); 
+
+			};
+		}
+
 
 	}
 

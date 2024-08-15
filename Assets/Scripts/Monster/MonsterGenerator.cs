@@ -42,6 +42,9 @@ public class MonsterGenerator : MonoBehaviour
 
                                 actionOnRelease: obj =>
                                 {
+                                        if (obj == null)
+                                                return;
+
                                         obj.SetActive(false);
                                         _spawnedCnt--;
                                 },

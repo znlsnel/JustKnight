@@ -7,6 +7,7 @@ using System.IO;
 using UnityEngine.AI;
 using Unity.VisualScripting;
 using UnityEngine.Events;
+using System.Security.Cryptography;
 
 public class DialogueManager : MonoBehaviour , IMenuUI
 {
@@ -68,6 +69,9 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 
 	public QuestDialogueSO UpdateQuestDialogue(QuestDialogueSO dialogue)
 	{
+		if (!_dialogues.ContainsKey(dialogue.name))
+			return null;
+
 		return _dialogues[dialogue.name]; 
 	}
 

@@ -29,9 +29,6 @@ public class MainMenu : MonoBehaviour
 		_inventory.SetActive(true);
 		_quest.SetActive(true);
 
-		_inventory.SetActive(false);
-		_quest.SetActive(false);
-
 		_inventoryManager = _inventory.GetComponent<InventoryManager>(); 
 		_questUI = _quest.GetComponent<QuestUI>();
 
@@ -44,7 +41,6 @@ public class MainMenu : MonoBehaviour
 		_menuButtons.Add(EMenuType.QUEST, new Tuple<GameObject, Button>(_quest, bt_onQuest));
 
 		
-		gameObject.SetActive(false);
 	}
 
 	public void OnMenu(EMenuType type)
@@ -76,5 +72,11 @@ public class MainMenu : MonoBehaviour
 	{
 		gameObject.SetActive(false);  
 		InputManager.instance.FreezeCharacter(false);
+	}
+
+	private void Start()
+	{
+		gameObject.SetActive(false);
+
 	}
 }

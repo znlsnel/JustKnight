@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 1.02
       objectReference: {fileID: 0}
+    - target: {fileID: 3997044059354726977, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5091171931418441748, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       propertyPath: m_Sprite
       value: 

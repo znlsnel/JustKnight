@@ -138,6 +138,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4394e9afcf5ec2b419dbec3f64539ca5, type: 2}
   isAutoStart: 0
   isEventNpc: 0
+  _npcStateUI: {fileID: 8741120605885149612}
   _onDialogue:
     m_PersistentCalls:
       m_Calls: []
@@ -243,3 +244,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8768084343268157299, guid: 267c9d85e207dcc4f8d9d6c723142d38, type: 3}
   m_PrefabInstance: {fileID: 7021676630212410904}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8741120605885149612 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1746467919138213812, guid: 267c9d85e207dcc4f8d9d6c723142d38, type: 3}
+  m_PrefabInstance: {fileID: 7021676630212410904}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7693b5056a17d9418b3ceceef250956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

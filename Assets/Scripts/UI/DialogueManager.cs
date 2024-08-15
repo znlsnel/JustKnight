@@ -132,18 +132,15 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 
 	public void OnResponseButton(int id)
 	{
-		if (_curQuestDlg.UpdateState(id))
+		
+		if (_curQuestDlg.UpdateState(id) ||_curQuestDlg.isEndPage(_curDlg))
 		{
 			ActiveMenu(false);
-			return;
+			return; 
 		}
+		_curQuestDlg.curPage++;
 
-		_curQuestDlg.curPage++;  
-		 
-		if (_curDlg.npc.Count > _curQuestDlg.curPage) 
-			UpdateDialougeText();
-		else
-			ActiveMenu(false);
+		UpdateDialougeText();
 	}
 
 	public void ActiveMenu(bool active)

@@ -12,6 +12,7 @@ public class NpcManager : MonoBehaviour
         public bool isAutoStart = false;
 	public bool isEventNpc = false;
 
+	[SerializeField] NpcStateUI _npcStateUI;
 	QuestManager _questManager;
 	DialogueManager _dialogueManager;
 	QuestUI _questUI;
@@ -20,7 +21,7 @@ public class NpcManager : MonoBehaviour
 	public UnityEvent _onDialogue;
 
 	void Start()
-        {
+        { 
 		_questUI = _questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI;
 
 		_curDialogue = _dialogues[0];
@@ -31,11 +32,18 @@ public class NpcManager : MonoBehaviour
 		{
 			QuestManager.instance.AddQuest(d.quest);
 			_dialogueManager.AddDialogue(d); 
-			_questUI.AddQuest(EQuestMenuType.PENDING, d.quest); 
+			_questUI.AddQuest(EQuestMenuType.PENDING, d.quest);  
 		}
 
 		if (isEventNpc) 
-			GetComponent<SpriteRenderer>().sortingOrder = -1; 
+			GetComponent<SpriteRenderer>().sortingOrder = -1;
+
+		if (_npcStateUI != null)
+		{
+			_npcStateUI.SetNpcStateUI(_curDialogue);
+			_curDialogue._onChangeState += () => { _npcStateUI.SetNpcStateUI(_curDialogue); };
+		} 
+
 	}
 
         // Update is called once per frame

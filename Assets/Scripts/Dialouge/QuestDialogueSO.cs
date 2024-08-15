@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,8 +27,25 @@ public class QuestDialogueSO : ScriptableObject
 	public DialogueSO progressDialogue;  // 퀘스트 진행 중 DialogueSO
 	public DialogueSO awaitingDialogue;  // 퀘스트 완료 대기 DialogueSO
 	public DialogueSO completedDialogue; // 퀘스트 완료 이후 DialogueSO
+	public Action _onChangeState;
 
-	[NonSerialized] public EDialogueState state = EDialogueState.PENDING_ACCEPTANCE;
+	[NonSerialized] EDialogueState state = EDialogueState.PENDING_ACCEPTANCE;
+	public EDialogueState _state
+	{ 
+		get {return state; } 
+		set 
+		{ 
+			if (state != value) 
+				state = value;
+			_onChangeState?.Invoke();
+		}
+	}
+
+	public bool isEndPage(DialogueSO dialogue)
+	{
+		return dialogue.npc.Count - 1 <= curPage; 
+	}
+
 	[NonSerialized] DialogueSO curDialogue;
 
 	[NonSerialized] public int curPage = 0;
@@ -37,16 +55,17 @@ public class QuestDialogueSO : ScriptableObject
 		
 	}
 
-	public DialogueSO GetCurDialogue()
+	public DialogueSO GetCurDialogue(bool init = true)
 	{
 		bool isClear = quest != null ? quest.isClear : false;
 		  
 		curDialogue = null;
-		curPage = 0;
-		if (state == EDialogueState.IN_PROGRESS && isClear)
-			state = EDialogueState.AWAITING_COMPLETION;
+		if (init)
+			curPage = 0; 
+		if (_state == EDialogueState.IN_PROGRESS && isClear)
+			_state = EDialogueState.AWAITING_COMPLETION;
 		
-		switch (state)
+		switch (_state)
 		{
 			case EDialogueState.PENDING_ACCEPTANCE:
 				curDialogue = pendingDialogue; // 몬스터 잡아줘
@@ -95,18 +114,18 @@ public class QuestDialogueSO : ScriptableObject
 				{
 					string reward = quest.reward != null ? quest.reward.GetReward() : "";
 					QuestManager.instance.CompleteQuest(quest, reward);
-					state = EDialogueState.COMPLETED; 
+					_state = EDialogueState.COMPLETED; 
 				}
 				break;
 
 			case EResponseType.RECEIVE_QUEST:
-				state = EDialogueState.IN_PROGRESS;
+				_state = EDialogueState.IN_PROGRESS;
 				if (quest != null)
 					QuestManager.instance.RegisterQuest(quest);
 				break; 
 
 			case EResponseType.REJECT:
-				state = EDialogueState.REJECTED;
+				_state = EDialogueState.REJECTED;
 				return true;
 
 		};

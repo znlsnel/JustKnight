@@ -106,7 +106,7 @@ public class QuestManager : Singleton<QuestManager>
 		_questUI.MoveToQuestList(EQuestMenuType.COMPLETED ,quest);
 	
 		Utils.instance.SetTimer(()=>_displayQuest.RemoveQuest(quest), 1.5f);
-		 
+
 		QuestManager.instance.RemoveQuestTasks(quest);
 		quest.questState = EQuestState.COMPLETED;
 		quest._onClear?.Invoke();

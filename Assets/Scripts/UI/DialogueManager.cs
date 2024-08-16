@@ -68,32 +68,37 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 		dialogue = _dialogues[dialogue.name]; 
 	}
 
-	public void RegisteEpisodes(List<EpisodeSO> episodes)
+	public bool RegisteEpisodes(List<EpisodeSO> episodes)
 	{
 		ActiveMenu(true);
 
 		_npcScript.text = "";
-		int cnt = episodes.Count;
-		if (cnt == 1)
-		{
-			BeginEpisode(episodes[0]);
-			return;
-		}
 
-		for (int i = 0; i < cnt; i++)
+		bool flag = false; 
+
+		for (int i = 0; i < episodes.Count; i++)
 		{ 
-			int idx = i;
+			int idx = i; 
 
 			EpisodeSO ep = episodes[idx]; 
 			UpdateQuestDialogue(ref ep); 
 
 			if (ep.GetCurDialogue(false) == null || (ep.preQuest != null && !ep.preQuest.isClear)) 
 				continue;
+			 
+			flag = true;
 
-			GameObject _responseSlot = Instantiate<GameObject>(_responseSlotPrefab); 
-			_responseSlot.GetComponent<DialogueResponseSlot>().InitResponseText(_responseParent, ep.episodeName, () => BeginEpisode(ep));
-			_onResponButton += () => { Destroy(_responseSlot); };
-		}
+			if (episodes.Count == 1)
+				BeginEpisode(episodes[0]);
+			else
+			{
+				GameObject _responseSlot = Instantiate<GameObject>(_responseSlotPrefab);
+				_responseSlot.GetComponent<DialogueResponseSlot>().InitResponseText(_responseParent, ep.episodeName, () => BeginEpisode(ep));
+				_onResponButton += () => { Destroy(_responseSlot); };
+			}
+		} 
+
+		return flag;
 	}
 
 	void BeginEpisode(EpisodeSO dialogue)

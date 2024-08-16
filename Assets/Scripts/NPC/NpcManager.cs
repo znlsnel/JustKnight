@@ -40,10 +40,6 @@ public class NpcManager : MonoBehaviour
 			else
 				episode.preQuest._onClear.Add(()=>InitDialogue(episode));
 		}
-		// 저장된 퀘스트 불러오기 
-
-
-		
 
 
 		// EVENT라면 안보이게
@@ -91,33 +87,40 @@ public class NpcManager : MonoBehaviour
 			{
 				InputManager.instance._interactionHandler.Remove(gameObject);
 				canStartQuest = false;
+				yield break;
 			}
 			else
 				yield return new WaitForSeconds(0.5f);
 		}
 	}
 
+
+	//Collision을 체크하는 방식으로 변경 (현재는 오류가 있음 )
 	IEnumerator StartConversation(GameObject target)
 	{
+		StartCoroutine(CheckQuestAvailability());
 		while (canStartQuest == false || target.GetComponent<PlayerController>() == null)
 			yield return new WaitForSeconds(0.5f);
 		
 		if (isAutoStart)
 		{
-			_dialogueManager.RegisteEpisodes(_dialogues);
-			_onDialogue?.Invoke();
+			if (_dialogueManager.RegisteEpisodes(_dialogues))
+				_onDialogue?.Invoke(); 
 			yield break ;
 		}
 
-		StartCoroutine(CheckQuestAvailability());
 		InputManager.instance._interactionHandler.AddIAction(gameObject, () =>
 		{
-			_dialogueManager.RegisteEpisodes(_dialogues);
-			_onDialogue?.Invoke();
+			if (_dialogueManager.RegisteEpisodes(_dialogues))
+			{
+				_onDialogue?.Invoke();
 
-			InputManager.instance._interactionHandler.RegisterCancelAction(() => {
-				_dialogueManager.ActiveMenu(false);
-			});
+				InputManager.instance._interactionHandler.RegisterCancelAction(() => {
+					_dialogueManager.ActiveMenu(false);
+				});
+			}  
+			else
+				InputManager.instance._interactionHandler.Remove(gameObject);
 		});
 	}
 

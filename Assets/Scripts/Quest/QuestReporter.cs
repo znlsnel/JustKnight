@@ -28,9 +28,9 @@ public class QuestReporter : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		_enterCollider?.Invoke();  
-	} 
+	}  
 
-	public void Report(int idx) 
+	public void Report(int idx)  
 	{
 		CategorySO category = reportInfos[idx].category;
 		TargetSO target = reportInfos[idx].target; 

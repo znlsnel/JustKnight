@@ -78,16 +78,12 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 3a324d4a1aa4f0445a629f948ecdb71f, type: 2}
     - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       propertyPath: _onDialogue.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       propertyPath: _onDialogue.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
-      propertyPath: _onDialogue.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 766539518754221669}
     - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       propertyPath: _onDialogue.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -111,9 +107,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3068755330031266945, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1160848390232673157}
-    - targetCorrespondingSourceObject: {fileID: 3068755330031266945, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 766539518754221669}
   m_SourcePrefab: {fileID: 100100000, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
 --- !u!1 &5950452557866930818 stripped
 GameObject:
@@ -141,22 +134,3 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &766539518754221669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5950452557866930818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed8ef8022628f444bad0d266749b75e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reportInfos:
-  - category: {fileID: 11400000, guid: 1519d2090b95c2740b411fd4c1d858c0, type: 2}
-    target: {fileID: 11400000, guid: 9372b6f6e24ddb54c823ffec540f522d, type: 2}
-  successCount: 0
-  _enterCollider:
-    m_PersistentCalls:
-      m_Calls: []

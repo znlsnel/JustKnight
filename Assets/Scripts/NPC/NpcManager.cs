@@ -62,9 +62,23 @@ public class NpcManager : MonoBehaviour
         // Update is called once per frame
         void Update()
         {
-        
+		
         }
 
+	IEnumerator CheckQuestAvailability()
+	{
+		while (true)
+		{
+			_curDialogue = _dialogueManager.UpdateQuestDialogue(_curDialogue);
+			if (_curDialogue.GetCurDialogue(false) == null)
+			{
+				InputManager.instance._interactionHandler.Remove(gameObject);
+				yield break;
+			}
+			yield return new WaitForSeconds(0.5f);
+
+		}
+	}
         //     
         // [ NPC 1] [ NPC 2] [ NPC 3] [ NPC 4] 
 	private void OnTriggerEnter2D(Collider2D collision)  
@@ -77,12 +91,16 @@ public class NpcManager : MonoBehaviour
 		{
 			_dialogueManager.BeginDialogue(_curDialogue);
 			_onDialogue?.Invoke();
-			//InputManager.instance._interactionHandler.ExcuteInteraction();
 			return;
 		}
 
-		InputManager.instance._interactionHandler.AddIAction(gameObject, () => 
+		StartCoroutine(CheckQuestAvailability());
+		InputManager.instance._interactionHandler.AddIAction(gameObject, () =>
 		{
+			_curDialogue = _dialogueManager.UpdateQuestDialogue(_curDialogue);
+			if (_curDialogue.GetCurDialogue(false) == null) 
+				return;
+
 			_dialogueManager.BeginDialogue(_curDialogue);
 			_onDialogue?.Invoke(); 
 

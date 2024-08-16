@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f8aa439f42f81c49bde2f43e2521f9f, type: 3}
+  m_Script: {fileID: 11500000, guid: ab0f38a0c871e5d4ca33a79c7c903ba1, type: 3}
   m_Name: "ep_\uAE40\uB355\uBC30\uCCAB\uB9CC\uB0A8"
   m_EditorClassIdentifier: 
   npcName: "\uAE40\uB355\uBC30"
   quest: {fileID: 11400000, guid: 87724b97dccc11c40aafeaac4999b608, type: 2}
+  preQuest: {fileID: 0}
   pendingDialogue: {fileID: 11400000, guid: 48ff385cca865b443bba5dc4861249cc, type: 2}
   rejectedDialogue: {fileID: 11400000, guid: a46116e25da82f748b9544d97ab8908c, type: 2}
   progressDialogue: {fileID: 11400000, guid: 102a7b7b46ebfed4cb1be2e98e39efbc, type: 2}

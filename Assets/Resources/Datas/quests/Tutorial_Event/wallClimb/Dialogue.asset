@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dialogue
   m_EditorClassIdentifier: 
   npc:
-  - text: "[\uBCBD \uC624\uB974\uAE30]"
+  - text: "\uBCBD \uC624\uB974\uAE30"
     player:
     - text: "\uB2E4\uC74C"
       state: 0

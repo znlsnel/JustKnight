@@ -13,10 +13,6 @@ MonoBehaviour:
   m_Name: dialogue
   m_EditorClassIdentifier: 
   npc:
-  - text: "[\uBCBD \uC810\uD504]"
-    player:
-    - text: "\uB2E4\uC74C"
-      state: 0
   - text: "\uBCBD\uC744 \uD0C0\uB294 \uC0C1\uD0DC\uC5D0\uC11C \uC810\uD504\uB97C
       \uD558\uBA74 \uBCBD\uC758 \uBC18\uB300 \uBC29\uD5A5\uC73C\uB85C \uAC15\uD558\uAC8C
       \uC810\uD504\uD569\uB2C8\uB2E4."
@@ -33,3 +29,7 @@ MonoBehaviour:
     player:
     - text: "\uD655\uC778"
       state: 4
+  - text: "\uBCBD \uC810\uD504"
+    player:
+    - text: "\uB2E4\uC74C"
+      state: 0

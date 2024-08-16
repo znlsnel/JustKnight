@@ -11,20 +11,23 @@ public class ButtonHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 	public Action _onButtonDown;
 	public Action _onButtonUp;
 	public Action _onButtonEnter;
-	public Action _onButtonExit; 
+	public Action _onButtonExit;
 
 	// Start is called before the first frame update
 
-    // Update is called once per frame
+	// Update is called once per frame
 
+	float lastButtonDown = 0.0f;
 	public void OnPointerDown(PointerEventData eventData)
 	{
 		_onButtonDown?.Invoke();
+		lastButtonDown = Time.time; 
 	}
 	 
 	public void OnPointerUp(PointerEventData eventData)
 	{
-		_onButtonUp?.Invoke();
+//		if (Time.time  - lastButtonDown < 0.1)
+			_onButtonUp?.Invoke(); 
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)

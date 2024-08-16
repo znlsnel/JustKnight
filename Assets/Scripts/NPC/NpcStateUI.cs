@@ -17,7 +17,7 @@ public class NpcStateUI : MonoBehaviour
         [SerializeField] TextMeshProUGUI _questionMark;
         [SerializeField] TextMeshProUGUI _talking;  
 
-        public void SetNpcStateUI(QuestDialogueSO dl)
+        public void SetNpcStateUI(EpisodeSO dl)
         {
 		
 	       ENpcStateType type= ENpcStateType.NONE; 

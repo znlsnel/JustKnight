@@ -8,24 +8,21 @@ using UnityEngine.UI;
 
 public class NpcManager : MonoBehaviour
 {
-	[SerializeField] public List<QuestDialogueSO> _dialogues;
+	[SerializeField] public List<EpisodeSO> _dialogues;
 	[SerializeField] NpcStateUI _npcStateUI;
-	[Space(10)]
+	[Space(10)]  public UnityEvent _onDialogue;
+	[Space(10)]  public bool isAutoStart = false;
+	[SerializeField] bool isEventNpc = false;
 
 	QuestManager _questManager;
 	DialogueManager _dialogueManager;
-	QuestDialogueSO _curDialogue;
 	QuestUI _questUI;
 
-	public UnityEvent _onDialogue;
-
-	[Space(10)]
-        public bool isAutoStart = false;
-	public bool isEventNpc = false;
-
-	bool hasCompletedPreQuest = false;
-
 	Coroutine startConversation;
+
+	bool canStartQuest = false;
+
+
 
 	void Start()
         { 
@@ -33,76 +30,81 @@ public class NpcManager : MonoBehaviour
 		_dialogueManager = UIHandler.instance._dialogue.GetComponent<DialogueManager>();
 		_questManager = QuestManager.instance;
 
-		_curDialogue = _dialogues[0];
+		for (int i = 0; i < _dialogues.Count; i++)
+		{
+			EpisodeSO episode = _dialogues[i];
+			_dialogueManager.UpdateQuestDialogue(ref episode);
 
-		// 저장된 퀘스트 불러오기
-		QuestDialogueSO t = _dialogueManager.UpdateQuestDialogue(_curDialogue);
-		if (t != null)
-			_curDialogue = t;
+			if (episode.preQuest == null || episode.preQuest.isClear)
+				InitDialogue(episode);
+			else
+				episode.preQuest._onClear.Add(()=>InitDialogue(episode));
+		}
+		// 저장된 퀘스트 불러오기 
 
-		if (_curDialogue.preQuest == null || _curDialogue.preQuest.isClear)
-			InitDialogue();
-		else
-			_curDialogue.preQuest._onClear.Add(InitDialogue);
+
+		
 
 
 		// EVENT라면 안보이게
 		if (isEventNpc) GetComponent<SpriteRenderer>().sortingOrder = -1;
 	}
 
-	void InitDialogue()
+	void InitDialogue(EpisodeSO episode)
 	{
-		Debug.Log("ADDQUESTINFO");
-		QuestManager.instance.AddQuest(_curDialogue.quest);
-		_dialogueManager.AddDialogue(_curDialogue);
-		_questUI.AddQuest(EQuestMenuType.PENDING, _curDialogue.quest);
+		QuestManager.instance.AddQuest(episode.quest);
+		_dialogueManager.AddDialogue(episode);
+		_questUI.AddQuest(EQuestMenuType.PENDING, episode.quest);
 
-		// State UI 표시
+		// TODO State UI 표시
 		if (_npcStateUI != null)
 		{
-			_npcStateUI.SetNpcStateUI(_curDialogue);
-			_curDialogue._onChangeState = () =>
+			_npcStateUI.SetNpcStateUI(episode);
+			episode._onChangeState = () =>
 			{
 				if (_npcStateUI != null)
-					_npcStateUI.SetNpcStateUI(_curDialogue);
+					_npcStateUI.SetNpcStateUI(episode);
 			};
 		}
 
-
-		hasCompletedPreQuest = true;
-	}
-
-        // Update is called once per frame
-        void Update()
-        {
+		canStartQuest = true;
 		
-        }
+	}
 
 	IEnumerator CheckQuestAvailability()
 	{
 		while (true)
 		{
-			_curDialogue = _dialogueManager.UpdateQuestDialogue(_curDialogue);
-			if (_curDialogue.GetCurDialogue(false) == null)
+			bool flag = false;
+			for(int i = 0; i < _dialogues.Count; i++ )
+			{
+				EpisodeSO episode = _dialogues[i];
+				_dialogueManager.UpdateQuestDialogue(ref episode);
+				if (episode.GetCurDialogue(false) != null)
+				{
+					flag = true;
+					break;
+				}
+			} 
+
+			if (!flag)
 			{
 				InputManager.instance._interactionHandler.Remove(gameObject);
-				yield break;
+				canStartQuest = false;
 			}
-			yield return new WaitForSeconds(0.5f); 
-
+			else
+				yield return new WaitForSeconds(0.5f);
 		}
 	}
-        //     
-        // [ NPC 1] [ NPC 2] [ NPC 3] [ NPC 4] 
 
 	IEnumerator StartConversation(GameObject target)
 	{
-		while (hasCompletedPreQuest == false || _curDialogue.GetCurDialogue() == null || target.GetComponent<PlayerController>() == null)
+		while (canStartQuest == false || target.GetComponent<PlayerController>() == null)
 			yield return new WaitForSeconds(0.5f);
 		
 		if (isAutoStart)
 		{
-			_dialogueManager.BeginDialogue(_curDialogue);
+			_dialogueManager.RegisteEpisodes(_dialogues);
 			_onDialogue?.Invoke();
 			yield break ;
 		}
@@ -110,11 +112,7 @@ public class NpcManager : MonoBehaviour
 		StartCoroutine(CheckQuestAvailability());
 		InputManager.instance._interactionHandler.AddIAction(gameObject, () =>
 		{
-			_curDialogue = _dialogueManager.UpdateQuestDialogue(_curDialogue);
-			if (_curDialogue.GetCurDialogue(false) == null)
-				return;
-
-			_dialogueManager.BeginDialogue(_curDialogue);
+			_dialogueManager.RegisteEpisodes(_dialogues);
 			_onDialogue?.Invoke();
 
 			InputManager.instance._interactionHandler.RegisterCancelAction(() => {
@@ -137,8 +135,6 @@ public class NpcManager : MonoBehaviour
 			StopCoroutine(startConversation);
 
 		InputManager.instance._interactionHandler.Remove(gameObject);
-		//Debug.Log("NPC 상호작용 목록에 등록 해제");
-
 	}
-
 }
+ 

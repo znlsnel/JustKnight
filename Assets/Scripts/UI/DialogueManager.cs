@@ -8,42 +8,35 @@ using UnityEngine.AI;
 using Unity.VisualScripting;
 using UnityEngine.Events;
 using System.Security.Cryptography;
+using UnityEngine.Pool;
+using System;
+using UnityEngine.UIElements;
+using TMPro;
+using System.Text.RegularExpressions;
 
 public class DialogueManager : MonoBehaviour , IMenuUI
 {
 	string _ncpName;
-	private Dictionary<string, QuestDialogueSO> _dialogues = new Dictionary<string, QuestDialogueSO>();
+	private Dictionary<string, EpisodeSO> _dialogues = new Dictionary<string, EpisodeSO>();
 
-	[SerializeField] Text _nameText;
-	[SerializeField] Text _npcScript;
-	[SerializeField] Text[] _respScripts;
+	[SerializeField] TextMeshProUGUI _nameText;
+	[SerializeField] TextMeshProUGUI _npcScript;
 	[Space(10)]
 
-	[SerializeField] Color _pressColor;
-	[SerializeField] Color _hoverColor;
+	[SerializeField] GameObject _responseSlotPrefab;
+	[SerializeField] GameObject _responseParent;
 
-
-	QuestDialogueSO _curQuestDlg;
+	EpisodeSO _curQuestDlg;
 	DialogueSO _curDlg;
 
 	Coroutine _updateScript;
 	UnityEvent _completeScript = new UnityEvent();
-	
+
+	Action _onResponButton;
+
 	private void Awake()   
 	{ 
 		gameObject.SetActive(false);
-
-		foreach (Text _resp in _respScripts)
-		{
-			Color normal = _resp.color;
-			ButtonHandler bch = _resp.gameObject.AddComponent<ButtonHandler>();
-			{
-				bch._onButtonDown = () => { _resp.color = _pressColor; };
-				bch._onButtonUp = () => { _resp.color = normal; };
-				bch._onButtonEnter = () => { _resp.color = _hoverColor; };
-				bch._onButtonExit = () => { _resp.color = normal; };
-			} 
-		}
 	}
 
 	private void Update()
@@ -59,7 +52,7 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 			}
 		}
 	}
-	public void AddDialogue(QuestDialogueSO dialogue)
+	public void AddDialogue(EpisodeSO dialogue)
 	{
 		if (_dialogues.ContainsKey(dialogue.name))
 			return;
@@ -67,19 +60,49 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 		_dialogues.Add(dialogue.name, dialogue);  
 	}
 
-	public QuestDialogueSO UpdateQuestDialogue(QuestDialogueSO dialogue)
+	public void UpdateQuestDialogue(ref EpisodeSO dialogue)
 	{
 		if (!_dialogues.ContainsKey(dialogue.name))
-			return null;
-
-		return _dialogues[dialogue.name]; 
+			return;
+		 
+		dialogue = _dialogues[dialogue.name]; 
 	}
 
-	public void BeginDialogue(QuestDialogueSO dialogue)
+	public void RegisteEpisodes(List<EpisodeSO> episodes)
 	{
 		ActiveMenu(true);
+
+		_npcScript.text = "";
+		int cnt = episodes.Count;
+		if (cnt == 1)
+		{
+			BeginEpisode(episodes[0]);
+			return;
+		}
+
+		for (int i = 0; i < cnt; i++)
+		{ 
+			int idx = i;
+
+			EpisodeSO ep = episodes[idx]; 
+			UpdateQuestDialogue(ref ep); 
+
+			if (ep.GetCurDialogue(false) == null || (ep.preQuest != null && !ep.preQuest.isClear)) 
+				continue;
+
+			GameObject _responseSlot = Instantiate<GameObject>(_responseSlotPrefab); 
+			_responseSlot.GetComponent<DialogueResponseSlot>().InitResponseText(_responseParent, ep.episodeName, () => BeginEpisode(ep));
+			_onResponButton += () => { Destroy(_responseSlot); };
+		}
+	}
+
+	void BeginEpisode(EpisodeSO dialogue)
+	{
+		_onResponButton?.Invoke();
+		_onResponButton = null;
+
 		_curQuestDlg = dialogue;
-		_curDlg = _curQuestDlg.GetCurDialogue();
+		_curDlg = dialogue.GetCurDialogue(); 
 		_nameText.text = dialogue.npcName;
 		UpdateDialougeText();
 	}
@@ -99,25 +122,14 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 			_npcScript.text = _curDlg.npc[page].text;
 			int cnt = _curDlg.npc[page].player.Count;
 
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < cnt; i++)
 			{
-				if (i < cnt)
-				{
-					_respScripts[i].text = _curDlg.npc[page].player[i].text;
-					_respScripts[i].transform.parent.gameObject.SetActive(true);
-					//_respScripts[i].gameObject.GetComponent<ContentSizeFitter>()?.
-				}
-				else
-				{
-					_respScripts[i].transform.parent.gameObject.SetActive(false);
-				}
+				int idx = i;
+				GameObject _responseSlot = Instantiate<GameObject>(_responseSlotPrefab);
+				_responseSlot.GetComponent<DialogueResponseSlot>().InitResponseText(_responseParent, _curDlg.npc[page].player[i].text, ()=>OnResponseButton(idx));
+				_onResponButton += () => { Destroy(_responseSlot); };
 			}
 		});
-		 
-		for (int i = 0; i < 3; i++) 
-		{
-			_respScripts[i].transform.parent.gameObject.SetActive(false);
-		}
 	}
 
 	IEnumerator UpdateScript(string text, int idx = 0)
@@ -134,9 +146,11 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 	}
 
 
-	public void OnResponseButton(int id)
+	void OnResponseButton(int id)
 	{
-		
+		_onResponButton.Invoke();
+		_onResponButton = null;
+
 		if (_curQuestDlg.UpdateState(id) ||_curQuestDlg.isEndPage(_curDlg))
 		{
 			ActiveMenu(false);

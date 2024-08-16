@@ -109,7 +109,9 @@ public class QuestManager : Singleton<QuestManager>
 
 		QuestManager.instance.RemoveQuestTasks(quest);
 		quest.questState = EQuestState.COMPLETED;
-		quest._onClear?.Invoke();
+
+		foreach (Action action in quest._onClear)
+			action?.Invoke();
 	}
 
 	public QuestSO UpdateQuestData(QuestSO quest)

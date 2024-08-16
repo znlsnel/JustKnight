@@ -21,6 +21,7 @@ public class QuestDialogueSO : ScriptableObject
 {
 	public string npcName = "";
 	public QuestSO quest;
+	public QuestSO preQuest;
 
 	public DialogueSO pendingDialogue;   // 퀘스트 수락 전 DialogueSO
 	public DialogueSO rejectedDialogue;  // 퀘스트 거절 DialogueSO
@@ -28,6 +29,8 @@ public class QuestDialogueSO : ScriptableObject
 	public DialogueSO awaitingDialogue;  // 퀘스트 완료 대기 DialogueSO
 	public DialogueSO completedDialogue; // 퀘스트 완료 이후 DialogueSO
 	public Action _onChangeState;
+
+	public QuestDialogueSO nextEpisode;
 
 	[NonSerialized] EDialogueState state = EDialogueState.PENDING_ACCEPTANCE;
 	public EDialogueState _state

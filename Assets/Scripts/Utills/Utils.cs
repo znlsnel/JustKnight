@@ -16,5 +16,6 @@ public class Utils : Singleton<Utils>
 		yield return new WaitForSeconds(second); 
 		act.Invoke(); 
 	}
+
 } 
  

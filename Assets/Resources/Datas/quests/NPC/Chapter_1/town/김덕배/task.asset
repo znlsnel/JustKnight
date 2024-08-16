@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5729f79f84dc08549a85fd3cedda5001, type: 3}
   m_Name: task
   m_EditorClassIdentifier: 
-  category: {fileID: 11400000, guid: 1519d2090b95c2740b411fd4c1d858c0, type: 2}
+  category: {fileID: 11400000, guid: ed17eee6497195748a30a8c7097c5f2b, type: 2}
   taskTitle: "\uAE40\uCD0C\uC7A5 \uCC3E\uAE30"
   action: {fileID: 11400000, guid: cc6c2c95205bce645beb130f96e09eb4, type: 2}
   target: {fileID: 11400000, guid: 9372b6f6e24ddb54c823ffec540f522d, type: 2}

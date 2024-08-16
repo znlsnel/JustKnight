@@ -28,10 +28,11 @@ public class QuestSO : ScriptableObject
 	public bool isAutoComplete;
 
 	[NonSerialized] private bool clear = false;
-
+	 
 	[NonSerialized] public EQuestState questState = EQuestState.AWAITING;
 
-	[NonSerialized] public Action _onClear;
+	[NonSerialized] public HashSet<Action> _onClear = new HashSet<Action>();
+
 	public bool isClear 
 	{ 
 		get 
@@ -50,6 +51,8 @@ public class QuestSO : ScriptableObject
 			if (task.curCnt < task.targetCnt)
 				return false; 
 		}
+
+		
 		return true;
 	}
 }

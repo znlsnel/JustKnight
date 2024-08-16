@@ -16,8 +16,7 @@ public class QuestBarrier : MonoBehaviour
 	}
 	private void Start()
 	{
-
-		_unlockQuest._onClear += ()=>ClearCheck();
+		_unlockQuest._onClear.Add(ClearCheck); 
 	}
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
@@ -47,8 +46,9 @@ public class QuestBarrier : MonoBehaviour
 
 		if (_stopUI?.activeSelf == true)
 			Utils.instance.SetTimer(() => _stopUI?.SetActive(false), 0.5f); 
-		Utils.instance.SetTimer(() => gameObject.SetActive(false), 0.5f);  
+		Utils.instance.SetTimer(() => gameObject.SetActive(false), 0.5f);
 
-		
+
+
 	}
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,42 +8,56 @@ using UnityEngine.UI;
 
 public class NpcManager : MonoBehaviour
 {
-	[SerializeField] public List<QuestDialogueSO> _dialogues; 
+	[SerializeField] public List<QuestDialogueSO> _dialogues;
+	[SerializeField] NpcStateUI _npcStateUI;
+	[Space(10)]
+
+	QuestManager _questManager;
+	DialogueManager _dialogueManager;
 	QuestDialogueSO _curDialogue;
+	QuestUI _questUI;
+
+	public UnityEvent _onDialogue;
+
+	[Space(10)]
         public bool isAutoStart = false;
 	public bool isEventNpc = false;
 
-	[SerializeField] NpcStateUI _npcStateUI;
-	QuestManager _questManager;
-	DialogueManager _dialogueManager;
-	QuestUI _questUI;
-	// Start is called before the first frame update
+	bool hasCompletedPreQuest = false;
 
-	public UnityEvent _onDialogue;
+	Coroutine startConversation;
 
 	void Start()
         { 
 		_questUI = _questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI;
+		_dialogueManager = UIHandler.instance._dialogue.GetComponent<DialogueManager>();
+		_questManager = QuestManager.instance;
 
 		_curDialogue = _dialogues[0];
 
-		_questManager = QuestManager.instance;
-		_dialogueManager = UIHandler.instance._dialogue.GetComponent<DialogueManager>();
-
+		// 저장된 퀘스트 불러오기
 		QuestDialogueSO t = _dialogueManager.UpdateQuestDialogue(_curDialogue);
 		if (t != null)
 			_curDialogue = t;
 
-		foreach (var d in _dialogues)
-		{
-			QuestManager.instance.AddQuest(d.quest);
-			_dialogueManager.AddDialogue(d); 
-			_questUI.AddQuest(EQuestMenuType.PENDING, d.quest);  
-		}
+		if (_curDialogue.preQuest == null || _curDialogue.preQuest.isClear)
+			InitDialogue();
+		else
+			_curDialogue.preQuest._onClear.Add(InitDialogue);
 
-		if (isEventNpc) 
-			GetComponent<SpriteRenderer>().sortingOrder = -1;
 
+		// EVENT라면 안보이게
+		if (isEventNpc) GetComponent<SpriteRenderer>().sortingOrder = -1;
+	}
+
+	void InitDialogue()
+	{
+		Debug.Log("ADDQUESTINFO");
+		QuestManager.instance.AddQuest(_curDialogue.quest);
+		_dialogueManager.AddDialogue(_curDialogue);
+		_questUI.AddQuest(EQuestMenuType.PENDING, _curDialogue.quest);
+
+		// State UI 표시
 		if (_npcStateUI != null)
 		{
 			_npcStateUI.SetNpcStateUI(_curDialogue);
@@ -50,13 +65,11 @@ public class NpcManager : MonoBehaviour
 			{
 				if (_npcStateUI != null)
 					_npcStateUI.SetNpcStateUI(_curDialogue);
-				else
-					Debug.Log("_npcStateUI 없엉.."); 
-
 			};
 		}
 
 
+		hasCompletedPreQuest = true;
 	}
 
         // Update is called once per frame
@@ -75,41 +88,44 @@ public class NpcManager : MonoBehaviour
 				InputManager.instance._interactionHandler.Remove(gameObject);
 				yield break;
 			}
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(0.5f); 
 
 		}
 	}
         //     
         // [ NPC 1] [ NPC 2] [ NPC 3] [ NPC 4] 
-	private void OnTriggerEnter2D(Collider2D collision)  
-	{ 
-		_curDialogue = _dialogueManager.UpdateQuestDialogue(_curDialogue);
-		if (_curDialogue.GetCurDialogue() == null || collision.gameObject.GetComponent<PlayerController>() == null)
-                        return;
 
+	IEnumerator StartConversation(GameObject target)
+	{
+		while (hasCompletedPreQuest == false || _curDialogue.GetCurDialogue() == null || target.GetComponent<PlayerController>() == null)
+			yield return new WaitForSeconds(0.5f);
+		
 		if (isAutoStart)
 		{
 			_dialogueManager.BeginDialogue(_curDialogue);
 			_onDialogue?.Invoke();
-			return;
+			yield break ;
 		}
 
 		StartCoroutine(CheckQuestAvailability());
 		InputManager.instance._interactionHandler.AddIAction(gameObject, () =>
 		{
 			_curDialogue = _dialogueManager.UpdateQuestDialogue(_curDialogue);
-			if (_curDialogue.GetCurDialogue(false) == null) 
+			if (_curDialogue.GetCurDialogue(false) == null)
 				return;
 
 			_dialogueManager.BeginDialogue(_curDialogue);
-			_onDialogue?.Invoke(); 
+			_onDialogue?.Invoke();
 
 			InputManager.instance._interactionHandler.RegisterCancelAction(() => {
-				_dialogueManager.ActiveMenu(false);  
+				_dialogueManager.ActiveMenu(false);
 			});
 		});
+	}
 
-
+	private void OnTriggerEnter2D(Collider2D collision)  
+	{
+		startConversation = StartCoroutine(StartConversation(collision.gameObject));
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)
@@ -117,7 +133,10 @@ public class NpcManager : MonoBehaviour
 		if (collision.gameObject.GetComponent<PlayerController>() == null)
 			return;
 
-                InputManager.instance._interactionHandler.Remove(gameObject);
+		if (startConversation != null)
+			StopCoroutine(startConversation);
+
+		InputManager.instance._interactionHandler.Remove(gameObject);
 		//Debug.Log("NPC 상호작용 목록에 등록 해제");
 
 	}

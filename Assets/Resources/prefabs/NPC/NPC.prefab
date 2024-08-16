@@ -136,12 +136,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dialogues:
   - {fileID: 11400000, guid: 4394e9afcf5ec2b419dbec3f64539ca5, type: 2}
-  isAutoStart: 0
-  isEventNpc: 0
   _npcStateUI: {fileID: 8741120605885149612}
   _onDialogue:
     m_PersistentCalls:
       m_Calls: []
+  isAutoStart: 0
+  isEventNpc: 0
 --- !u!1001 &7021676630212410904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -150,9 +150,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 200919956834838886}
     m_Modifications:
+    - target: {fileID: 3644751484164239442, guid: 267c9d85e207dcc4f8d9d6c723142d38, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4807450789835173250, guid: 267c9d85e207dcc4f8d9d6c723142d38, type: 3}
       propertyPath: m_Name
       value: npcInteractionUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199868804631395417, guid: 267c9d85e207dcc4f8d9d6c723142d38, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8768084343268157299, guid: 267c9d85e207dcc4f8d9d6c723142d38, type: 3}
       propertyPath: m_Pivot.x

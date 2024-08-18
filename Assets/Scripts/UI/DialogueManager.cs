@@ -145,13 +145,12 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 	{
 		while (idx < text.Length)
 		{
-			if (text[idx] == '<')
-			{
-				while (text[idx] != '>')
-					idx++;
-				idx++;
-			}
+			if (text[idx] == ' ')
+				_npcScript.text += text[idx++];
 
+			if (text[idx] == '<')
+				while (text[idx++] != '>');
+			
 			_npcScript.text += text[idx++];
 			yield return new WaitForSeconds(0.1f);
 		}

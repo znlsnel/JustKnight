@@ -35,7 +35,7 @@ public class NpcManager : MonoBehaviour
 			EpisodeSO episode = _dialogues[i];
 			_dialogueManager.UpdateQuestDialogue(ref episode);
 
-			if (episode.preQuest == null || episode.preQuest.isClear)
+			if (episode.preQuest == null || episode.preQuest.questState == EQuestState.COMPLETED)
 				InitDialogue(episode);
 			else
 				episode.preQuest._onClear.Add(()=>InitDialogue(episode));
@@ -51,20 +51,18 @@ public class NpcManager : MonoBehaviour
 		QuestManager.instance.AddQuest(episode.quest);
 		_dialogueManager.AddDialogue(episode);
 		_questUI.AddQuest(EQuestMenuType.PENDING, episode.quest);
+		canStartQuest = true;
 
 		// TODO State UI Ç¥½Ã
-		if (_npcStateUI != null)
-		{
-			_npcStateUI.SetNpcStateUI(episode);
-			episode._onChangeState = () =>
-			{
-				if (_npcStateUI != null)
-					_npcStateUI.SetNpcStateUI(episode);
-			};
-		}
+		if (_npcStateUI == null)
+			return;
 
-		canStartQuest = true;
-		
+		_npcStateUI.SetNpcStateUI(episode);
+		episode._onChangeState = () =>
+		{ 
+			if (_npcStateUI != null)
+				_npcStateUI.SetNpcStateUI(episode);
+		};
 	}
 
 	IEnumerator CheckQuestAvailability()

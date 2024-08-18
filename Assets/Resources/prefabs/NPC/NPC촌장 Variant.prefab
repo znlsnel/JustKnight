@@ -73,9 +73,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
+      propertyPath: _dialogues.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       propertyPath: _dialogues.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 3a324d4a1aa4f0445a629f948ecdb71f, type: 2}
+    - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
+      propertyPath: _dialogues.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4526fdc66a8d7614696463505174f91d, type: 2}
     - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       propertyPath: _onDialogue.m_PersistentCalls.m_Calls.Array.size
       value: 0

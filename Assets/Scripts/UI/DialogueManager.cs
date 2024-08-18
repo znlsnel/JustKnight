@@ -74,8 +74,7 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 
 		_npcScript.text = "";
 
-		bool flag = false; 
-
+		List<int> startableIdxs = new List<int>();
 		for (int i = 0; i < episodes.Count; i++)
 		{ 
 			int idx = i; 
@@ -83,22 +82,27 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 			EpisodeSO ep = episodes[idx]; 
 			UpdateQuestDialogue(ref ep); 
 
-			if (ep.GetDialogue(false) == null || (ep.preQuest != null && !ep.preQuest.isClear)) 
+			if (ep.GetDialogue(false) == null || (ep.preQuest != null &&  ep.preQuest.questState != EQuestState.COMPLETED) )
 				continue;
-			 
-			flag = true;
-
-			if (episodes.Count == 1)
-				BeginEpisode(episodes[0]);
-			else
-			{
+			  
+			startableIdxs.Add(idx);			
+		} 
+		
+		if (startableIdxs.Count == 1)
+			BeginEpisode(episodes[startableIdxs[0]]);
+		else 
+		{
+			foreach (int i in startableIdxs) 
+			{  
+				int idx = i; 
+				EpisodeSO ep = episodes[idx];
 				GameObject _responseSlot = Instantiate<GameObject>(_responseSlotPrefab);
 				_responseSlot.GetComponent<DialogueResponseSlot>().InitResponseText(_responseParent, ep.episodeName, () => BeginEpisode(ep));
 				_onResponButton += () => { Destroy(_responseSlot); };
 			}
-		} 
-
-		return flag;
+		}
+			
+		return startableIdxs.Count > 0;
 	}
 
 	void BeginEpisode(EpisodeSO dialogue)

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab0f38a0c871e5d4ca33a79c7c903ba1, type: 3}
+  m_Name: ep_FindGrambart
+  m_EditorClassIdentifier: 
+  npcName: "\uBE4C\uACE4\uD2B8"
+  episodeName: "\uADF8\uB78C\uBC14\uD2B8 \uCC3E\uAE30"
+  quest: {fileID: 11400000, guid: 621e6c89c4e515245a22ed7c22b07193, type: 2}
+  preQuest: {fileID: 11400000, guid: 779067e940b49014fb8cdd822b865c05, type: 2}
+  pendingDialogue: {fileID: 11400000, guid: 8caae0f482f3a4e43a10a15347309277, type: 2}
+  rejectedDialogue: {fileID: 11400000, guid: ec6bb585842a4874a930bee99194c208, type: 2}
+  progressDialogue: {fileID: 11400000, guid: 5f786c25d853bd4409fd8ffeb633e479, type: 2}
+  awaitingDialogue: {fileID: 0}
+  completedDialogue: {fileID: 0}

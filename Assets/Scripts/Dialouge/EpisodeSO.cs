@@ -37,9 +37,11 @@ public class EpisodeSO : ScriptableObject
 		get {return state; } 
 		set 
 		{ 
-			if (state != value) 
-				state = value;
-			_onChangeState?.Invoke();
+			if (state != value)
+			{
+				state = value; 
+				_onChangeState?.Invoke();
+			}
 		}
 	}
 

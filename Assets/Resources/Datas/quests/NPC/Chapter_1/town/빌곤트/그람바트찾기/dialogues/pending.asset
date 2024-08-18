@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57fced589043bfd42b9ac54fa994fbf6, type: 3}
+  m_Name: pending
+  m_EditorClassIdentifier: 
+  npc:
+  - text: "\uC5B4\uB514\uAC14\uC9C0.."
+    player:
+    - text: "\uC65C\uADF8\uB7EC\uC2DC\uC8E0?"
+      state: 0
+  - text: "\uC774\uC81C \uB9C8\uC744\uB85C \uCD9C\uBC1C\uD558\uB824\uB294\uB370 <color=yellow>\uADF8\uB7FC\uBC14\uD06C</color>\uAC00
+      \uC548\uBCF4\uC785\uB2C8\uB2E4"
+    player:
+    - text: "\uB2E4\uC74C"
+      state: 0
+  - text: "\uBCFC\uC77C\uBCF4\uACE0 \uC628\uB2E4\uBA74\uC11C \uC624\uB978\uCABD\uC73C\uB85C
+      \uAC14\uC5C8\uB294\uB370.."
+    player:
+    - text: "\uC81C\uAC00 \uCC3E\uC544\uBCF4\uACA0\uC2B5\uB2C8\uB2E4"
+      state: 4
+    - text: "\uC54C\uC544\uC11C \uC624\uACA0\uC8E0"
+      state: 2
+  - text: "\uADF8\uB798\uC8FC\uC2E0\uB2E4\uBA74 \uAC10\uC0AC\uD558\uC8E0!\n\uADF8\uB7FC
+      \uBD80\uD0C1 \uB4DC\uB9AC\uACA0\uC2B5\uB2C8\uB2E4!"
+    player:
+    - text: "\uB124"
+      state: 0

@@ -56,20 +56,18 @@ public class EpisodeSO : ScriptableObject
 	{
 		
 	}
-
-	public DialogueSO GetCurDialogue(bool init = true)
+	public DialogueSO GetDialogue(bool init = true)
 	{
 		bool isClear = quest != null ? quest.isClear : false;
 		  
-		curDialogue = null;
-		if (init)
-			curPage = 0; 
-		if (_state == EDialogueState.IN_PROGRESS && isClear)
+		curPage = init ? 0 : curPage; 
+
+		if (_state == EDialogueState.IN_PROGRESS && (quest == null || quest.isClear))
 			_state = EDialogueState.AWAITING_COMPLETION;
 		
 		switch (_state)
 		{
-			case EDialogueState.PENDING_ACCEPTANCE:
+			case EDialogueState.PENDING_ACCEPTANCE: 
 				curDialogue = pendingDialogue; // 몬스터 잡아줘
 				break;
 
@@ -97,13 +95,11 @@ public class EpisodeSO : ScriptableObject
 	} 
 
 	//It returns true when the dialogue is finished,
-	public bool UpdateState(int playerIdx)
+	public bool UpdateState(DialogueSO dialogue, int playerIdx)
 	{
-		int npcSize = curDialogue.npc.Count; 
-
-		EResponseType rspState = curDialogue.npc[curPage].player[playerIdx].state; 
+		EResponseType rspState = dialogue.npc[curPage].player[playerIdx].state; 
 		
-
+		 
 		switch (rspState)
 		{
 			case EResponseType.CONTINUE:

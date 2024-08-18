@@ -26,8 +26,8 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 	[SerializeField] GameObject _responseSlotPrefab;
 	[SerializeField] GameObject _responseParent;
 
-	EpisodeSO _curQuestDlg;
-	DialogueSO _curDlg;
+	EpisodeSO _episode;
+	DialogueSO _dialogue;
 
 	Coroutine _updateScript;
 	UnityEvent _completeScript = new UnityEvent();
@@ -83,7 +83,7 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 			EpisodeSO ep = episodes[idx]; 
 			UpdateQuestDialogue(ref ep); 
 
-			if (ep.GetCurDialogue(false) == null || (ep.preQuest != null && !ep.preQuest.isClear)) 
+			if (ep.GetDialogue(false) == null || (ep.preQuest != null && !ep.preQuest.isClear)) 
 				continue;
 			 
 			flag = true;
@@ -106,8 +106,8 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 		_onResponButton?.Invoke();
 		_onResponButton = null;
 
-		_curQuestDlg = dialogue;
-		_curDlg = dialogue.GetCurDialogue(); 
+		_episode = dialogue;
+		_dialogue = dialogue.GetDialogue(); 
 		_nameText.text = dialogue.npcName;
 		UpdateDialougeText();
 	}
@@ -115,23 +115,23 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 
 	private void UpdateDialougeText()
 	{
-		int page = _curQuestDlg.curPage;
+		int page = _episode.curPage;
 
 		_npcScript.text = "";
-		if (_curDlg.npc[page] != null ) 
-			_updateScript = StartCoroutine(UpdateScript(_curDlg.npc[page].text));
+		if (_dialogue.npc[page] != null ) 
+			_updateScript = StartCoroutine(UpdateScript(_dialogue.npc[page].text));
 		 
 		_completeScript?.RemoveAllListeners();
 		_completeScript.AddListener(() =>  
 		{
-			_npcScript.text = _curDlg.npc[page].text;
-			int cnt = _curDlg.npc[page].player.Count;
+			_npcScript.text = _dialogue.npc[page].text;
+			int cnt = _dialogue.npc[page].player.Count;
 
 			for (int i = 0; i < cnt; i++)
 			{
 				int idx = i;
 				GameObject _responseSlot = Instantiate<GameObject>(_responseSlotPrefab);
-				_responseSlot.GetComponent<DialogueResponseSlot>().InitResponseText(_responseParent, _curDlg.npc[page].player[i].text, ()=>OnResponseButton(idx));
+				_responseSlot.GetComponent<DialogueResponseSlot>().InitResponseText(_responseParent, _dialogue.npc[page].player[i].text, ()=>OnResponseButton(idx));
 				_onResponButton += () => { Destroy(_responseSlot); };
 			}
 		});
@@ -141,6 +141,13 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 	{
 		while (idx < text.Length)
 		{
+			if (text[idx] == '<')
+			{
+				while (text[idx] != '>')
+					idx++;
+				idx++;
+			}
+
 			_npcScript.text += text[idx++];
 			yield return new WaitForSeconds(0.1f);
 		}
@@ -156,12 +163,12 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 		_onResponButton.Invoke();
 		_onResponButton = null;
 
-		if (_curQuestDlg.UpdateState(id) ||_curQuestDlg.isEndPage(_curDlg))
+		if (_episode.UpdateState(_dialogue, id) ||_episode.isEndPage(_dialogue))
 		{
-			ActiveMenu(false);
+			ActiveMenu(false); 
 			return; 
 		}
-		_curQuestDlg.curPage++;
+		_episode.curPage++;
 
 		UpdateDialougeText();
 	}

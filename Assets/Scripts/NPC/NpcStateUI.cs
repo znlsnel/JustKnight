@@ -21,7 +21,7 @@ public class NpcStateUI : MonoBehaviour
         {
 		
 	       ENpcStateType type= ENpcStateType.NONE; 
-		if (dl.GetCurDialogue(false) != null)
+		if (dl.GetDialogue(false) != null)
 		{
 			EDialogueState state = dl._state;
 			switch (state)

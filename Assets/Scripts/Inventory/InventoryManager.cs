@@ -30,7 +30,7 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 	[SerializeField] GameObject _status;
 
 
-	List<ItemSO> _items;
+	public List<ItemSO> _items { get; private set; }
 	List<GameObject> _slots = new List<GameObject> ();
 
 	int _equipSlotCount = 0;

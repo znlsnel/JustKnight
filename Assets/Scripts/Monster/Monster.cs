@@ -61,11 +61,20 @@ public abstract class Monster : MonoBehaviour
 
 	protected bool isHit = false;
 	protected bool isAttack = false;
+	protected bool isPlayerDead
+	{
+		get
+		{
+			return _player.GetComponent<PlayerController>()._playerState == EPlayerState.Death;
+		}
+	}
 
 	Slider _hpSlider;
 
 	[NonSerialized] public Action _onAttackBlocked;
 	public Action _onDestroy;
+
+	
 
 	public virtual void Awake()
 	{
@@ -210,13 +219,13 @@ public abstract class Monster : MonoBehaviour
 		}
 
 		// 장애물에 걸렸다면
-		if (_isObstacleAhead)
+		if (_isObstacleAhead || isPlayerDead)
 		{
 			 _state = MonsterState.Waiting;
 		}
 		 
 		// 공격 범위 까지 왔다면
-		if (_isPlayerInAttackRange)
+		if (!isPlayerDead && _isPlayerInAttackRange)
 		{
 			_state = MonsterState.Attack;
 		} 
@@ -231,7 +240,7 @@ public abstract class Monster : MonoBehaviour
 		 
 		bool isLookingAtPlayer = (_player.transform.position.x - transform.position.x) * transform.localScale.x > 0;
 		float distanceToPlayer = (_player.transform.position - transform.position).magnitude;
-		if (isLookingAtPlayer && distanceToPlayer < _playerTrackableRange)
+		if (!isPlayerDead && isLookingAtPlayer && distanceToPlayer < _playerTrackableRange)
 			_state = MonsterState.Chasing;
 		else
 		{
@@ -252,7 +261,7 @@ public abstract class Monster : MonoBehaviour
 		// 플레이어 추적 가능한 상태가 되면 추적 시작
 		bool isLookingAtPlayer = (_player.transform.position.x - transform.position.x) * transform.localScale.x > 0;
 		float distanceToPlayer = (_player.transform.position - transform.position).magnitude;
-		if (isLookingAtPlayer && distanceToPlayer < _playerTrackableRange)
+		if (!isPlayerDead && isLookingAtPlayer && distanceToPlayer < _playerTrackableRange)
 		{
 			_state = MonsterState.Chasing;
 			_lastMoveTime = 0.0f;

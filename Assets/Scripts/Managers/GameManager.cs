@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using Unity.VisualScripting;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -16,6 +16,9 @@ public class GameManager : Singleton<GameManager>
 	Camera _camera;
 	public Action _onSceneInit;
 	FadeEffectManager _fadeEffect;
+
+	double _playTime; 
+
 	public override void Awake() 
 	{
 	        base.Awake();
@@ -26,6 +29,8 @@ public class GameManager : Singleton<GameManager>
 		UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitGameScene;
 
 	}
+
+	
 
 
 	void Start()   

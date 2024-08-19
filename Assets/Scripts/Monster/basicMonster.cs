@@ -8,7 +8,7 @@ public class basicMonster : Monster
 	// Start is called before the first frame update
 	public override void OnAttack()
 	{
-		if (_isPlayerInAttackRange == false)
+		if (isPlayerDead || _isPlayerInAttackRange == false)
 		{
 			_state = MonsterState.Chasing;
 			return;

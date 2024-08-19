@@ -65,7 +65,6 @@ public class PlayerStatus : Singleton<PlayerStatus>
 				ret += $"<color=yellow>(+{_attributes[type].addValue})</color>";
 			}
 			ret += "\n";
-			
 		}
 		return ret;
 	}

@@ -58,24 +58,23 @@ public class PlayerMovementController : MonoBehaviour
 	void UpdateMovement()
 	{ 
 
-		EPlayerState pState = _playerController._playerState;
-		EActiveState acState = _actionController._activeState;
-
 		float moveDir = InputManager.instance.GetInputAction("Move").ReadValue<float>();
-		if (moveDir > 0)
-			_playerController.r_MoveRight.Invoke();
-		else if (moveDir < 0)
-			_playerController.r_MoveLeft.Invoke(); 
-
-		if (pState == EPlayerState.Death || moveDir == 0.0f)
+		
+		if (_playerController._playerState == EPlayerState.Death || _actionController._activeState == EActiveState.Hit || moveDir == 0.0f)
 			return;
 		  
-		if (pState == EPlayerState.Move && acState != EActiveState.Roll)
+		if (_playerController._playerState == EPlayerState.Move && _actionController._activeState != EActiveState.Roll)
 		{
 			float moveSize = _playerController._playerSpeed * (float)PlayerStatus.instance.GetValue(EPlayerStatus.MoveSpeed) * 0.01f;
 			_rigidbody.velocity = new Vector2(moveDir * moveSize, _rigidbody.velocity.y);
+
+			if (moveDir > 0)
+				_playerController.qr_MoveRight.Invoke();
+			else if (moveDir < 0)
+				_playerController.qr_MoveLeft.Invoke();
 		} 
-		else if (!_playerCollision._onSensorGround && acState != EActiveState.Roll)
+
+		else if (!_playerCollision._onSensorGround && _actionController._activeState != EActiveState.Roll)
 		{
 			if (!_isWallClimb || !_playerCollision._onSensorFT)   
 			{    
@@ -83,7 +82,7 @@ public class PlayerMovementController : MonoBehaviour
 			}
 		}   
 		 
-		if (acState != EActiveState.Shield && pState != EPlayerState.Death)
+		if (_actionController._activeState != EActiveState.Shield && _playerController._playerState != EPlayerState.Death)
 		{
 			int dir = moveDir > 0 ? 1 : -1;
 			Vector3 scale = gameObject.transform.localScale;
@@ -96,10 +95,12 @@ public class PlayerMovementController : MonoBehaviour
 	}
 	void OnIdleState()
 	{
-		if (_actionController._activeState == EActiveState.Roll || _actionController._activeState == EActiveState.Attack)
+		if (_actionController._activeState == EActiveState.Roll ||
+			_actionController._activeState == EActiveState.Attack ||  
+			_actionController._activeState == EActiveState.Hit)
 			return;   
 		  
-                float moveDir = InputManager.instance.GetInputAction("Move").ReadValue<float>();
+                float moveDir = InputManager.instance.GetInputAction("Move").ReadValue<float>(); 
                 if (Mathf.Abs(moveDir) > 0 && _actionController._activeState != EActiveState.Jump)  
 			_playerController._playerState = EPlayerState.Move;
                 
@@ -157,7 +158,7 @@ public class PlayerMovementController : MonoBehaviour
 				{
 					_isWallClimb = false;
 					_actionController.OnJump(true);
-					_playerController.r_wallJump.Invoke(); 
+					_playerController.qr_wallJump.Invoke(); 
 				}
 
 			}

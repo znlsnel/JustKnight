@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
 	public float _jumpPower = 5.0f;
 	public float _rollPower = 5.0f;
 	public float _playerSpeed = 5.0f;
+
+	[Space(10)]
 	public Transform _uiPos;
 
 	int _hp = 3;
@@ -51,14 +53,14 @@ public class PlayerController : MonoBehaviour
 	}
 
 
-	public UnityEvent r_MoveLeft;
-	public UnityEvent r_MoveRight;
-	public UnityEvent r_Jump;
-	public UnityEvent r_wallJump; 
-	public UnityEvent r_roll;
-	public UnityEvent r_attack;
-	public UnityEvent r_shield;
-	public UnityEvent r_successShield;
+	public UnityEvent qr_MoveLeft;
+	public UnityEvent qr_MoveRight;
+	public UnityEvent qr_Jump;
+	public UnityEvent qr_wallJump; 
+	public UnityEvent qr_roll;
+	public UnityEvent qr_attack;
+	public UnityEvent qr_shield;
+	public UnityEvent qr_successShield;
 
 	private EPlayerState _state = EPlayerState.Idle;
 	public EPlayerState _playerState
@@ -74,12 +76,12 @@ public class PlayerController : MonoBehaviour
 
 			if (_state == EPlayerState.Fall)
 				_actionController.OnFallStart(); 
-			 
 		}
 	} 
 
 	private void Awake() 
 	{
+		
 		_animController = gameObject.AddComponent<PlayerAnimCtrl>(); 
 		_actionController = gameObject.AddComponent<PlayerActionController>();
 		_movementController = gameObject.AddComponent<PlayerMovementController>();

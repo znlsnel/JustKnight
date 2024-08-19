@@ -19,8 +19,9 @@ public class UIHandler : Singleton<UIHandler>
 	public GameObject _displayQuest;
 	public GameObject _playerUI;
 	public GameObject _fpsUI;
+	public GameObject _dieUI;
 
-	GameObject _curOpenUI;
+	GameObject _curOpenUI; 
 
 	public override void Awake()
 	{
@@ -33,6 +34,7 @@ public class UIHandler : Singleton<UIHandler>
 		InstantiateAndAssign(ref _displayQuest);
 		InstantiateAndAssign(ref _playerUI);
 		InstantiateAndAssign(ref _fpsUI);
+		InstantiateAndAssign(ref _dieUI);
 	}
 
 	private void InstantiateAndAssign(ref GameObject instance)

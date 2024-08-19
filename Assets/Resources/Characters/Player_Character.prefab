@@ -668,22 +668,7 @@ MonoBehaviour:
   _rollPower: 8
   _playerSpeed: 3
   _uiPos: {fileID: 2121523583750910032}
-  r_MoveLeft:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -3436368339180403795}
-        m_TargetAssemblyTypeName: QuestReporter, Assembly-CSharp
-        m_MethodName: Report
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  r_MoveRight:
+  qr_MoveLeft:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -3436368339180403795}
@@ -698,7 +683,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  r_Jump:
+  qr_MoveRight:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -3436368339180403795}
+        m_TargetAssemblyTypeName: QuestReporter, Assembly-CSharp
+        m_MethodName: Report
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  qr_Jump:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -3436368339180403795}
@@ -713,7 +713,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  r_wallJump:
+  qr_wallJump:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -3436368339180403795}
@@ -728,7 +728,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  r_roll:
+  qr_roll:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -3436368339180403795}
@@ -743,7 +743,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  r_attack:
+  qr_attack:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -3436368339180403795}
@@ -758,7 +758,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  r_shield:
+  qr_shield:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -3436368339180403795}
@@ -773,7 +773,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  r_successShield:
+  qr_successShield:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -3436368339180403795}
@@ -837,9 +837,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reportInfos:
   - category: {fileID: 11400000, guid: af845bfa4addaf94fb5af848843ae060, type: 2}
-    target: {fileID: 11400000, guid: fc33163e31851bb4b8a93b6a4a29833a, type: 2}
-  - category: {fileID: 11400000, guid: af845bfa4addaf94fb5af848843ae060, type: 2}
     target: {fileID: 11400000, guid: 6636aed0a035cfa4e91254ac6d91e269, type: 2}
+  - category: {fileID: 11400000, guid: af845bfa4addaf94fb5af848843ae060, type: 2}
+    target: {fileID: 11400000, guid: fc33163e31851bb4b8a93b6a4a29833a, type: 2}
   - category: {fileID: 11400000, guid: af845bfa4addaf94fb5af848843ae060, type: 2}
     target: {fileID: 11400000, guid: d271737e4fb6dd64db5575cdc5a40f56, type: 2}
   - category: {fileID: 11400000, guid: bd9a71b806bdf4b45ab114c16b1cedea, type: 2}

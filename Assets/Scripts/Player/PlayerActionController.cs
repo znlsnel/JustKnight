@@ -75,15 +75,17 @@ public class PlayerActionController : MonoBehaviour
 	}
 	 
 	IEnumerator RegisterCooldown(float time, Action finishAction = null)
-	{  
-		yield return new WaitForEndOfFrame();
-		float animLength = _animCtrl.GetCurAnimLength();
+	{ 
+		while (_animCtrl.GetCurAnimLength() == 1.0f) // 1.0f는 잘못된 길이의 기본값이라고 가정
+			yield return null; // 다음 프레임까지 대기
 
+		float animLength = _animCtrl.GetCurAnimLength();
+		 
 		yield return new WaitForSeconds(animLength);
 		_activeState = EActiveState.Awaiting;
 		_animCtrl.PlayAnimation();
 
-		yield return new WaitForSeconds(time); 
+		yield return new WaitForSeconds(time);  
 		finishAction?.Invoke(); 
 	}
 	  
@@ -120,7 +122,7 @@ public class PlayerActionController : MonoBehaviour
 			_playerController._playerState = EPlayerState.Idle;
 			_animCtrl.PlayAnimation($"Attack{_attackCombo + 1}");
 			_animCtrl.anim.speed = (float)PlayerStatus.instance.GetValue(EPlayerStatus.AttackSpeed) * 0.01f;
-			_playerController.r_attack?.Invoke();
+			_playerController.qr_attack?.Invoke();
 
 
 		}
@@ -154,7 +156,7 @@ public class PlayerActionController : MonoBehaviour
 		_playerController._playerState = EPlayerState.Idle;
 		Rigidbody2D rb = _movementController._rigidbody;
 		 
-		_playerController.r_Jump.Invoke();
+		_playerController.qr_Jump.Invoke();
 
 		float moveDir = isSideJump ? InputManager.instance.GetInputAction("Move").ReadValue<float>() * - 4.0f : 0.0f;
 
@@ -184,7 +186,7 @@ public class PlayerActionController : MonoBehaviour
 
 		_animCtrl.PlayAnimation("Roll");
 		StartCoroutine(RegisterCooldown(_playerController._rollDelay, () => { _isRollable = true; }));
-		_playerController.r_roll.Invoke();
+		_playerController.qr_roll.Invoke();
 	}
 
 	void InputShield(bool press)
@@ -194,7 +196,7 @@ public class PlayerActionController : MonoBehaviour
 		 
 		  
 		_animCtrl.PlayAnimation("Shield");
-		_playerController.r_shield?.Invoke(); 
+		_playerController.qr_shield?.Invoke(); 
 		StartCoroutine(RegisterCooldown(_playerController._shieldDelay, () => { _isShieldable = true; }));
 	} 
 
@@ -247,7 +249,9 @@ public class PlayerActionController : MonoBehaviour
 
 	public void OnHit(GameObject monster, int damage = 1)
 	{
-		if (Time.time - _lastHitTime < _damageCooldown || _activeState == EActiveState.Roll || _playerController. hp == 0)
+		if (Time.time - _lastHitTime < _damageCooldown || 
+			_activeState == EActiveState.Roll || 
+			_playerController._playerState == EPlayerState.Death)
 			return;
 		 
 		_lastHitTime = Time.time;
@@ -257,7 +261,7 @@ public class PlayerActionController : MonoBehaviour
 			if (mm != null)
 			{
 				mm._onAttackBlocked = () => { mm.OnHit(gameObject, _status.GetValue(EPlayerStatus.ShieldDamage)); };
-				_playerController.r_successShield?.Invoke(); 
+				_playerController.qr_successShield?.Invoke(); 
 			} 
 			return; 
 		}
@@ -272,18 +276,26 @@ public class PlayerActionController : MonoBehaviour
 			cm?.ShakeCamera(monster.transform.position.x < gameObject.transform.position.x);
 
 			_activeState = EActiveState.Hit;
-			_animCtrl.PlayAnimation("Hit"); 
+			_playerController._playerState = EPlayerState.Idle;
+			_animCtrl.PlayAnimation("Hit");
+;
+			StartCoroutine(RegisterCooldown(0.0f, () => { 
+				if (_playerController.hp == 0)
+				{
+					_playerController._playerState = EPlayerState.Death;
+					UIHandler.instance._dieUI.GetComponent<DieUI>().Open();
+				}
+
+				_animCtrl.PlayAnimation();
+				_activeState = EActiveState.Awaiting;
+			}));
 		}
-		StartCoroutine(RegisterCooldown(0.0f));
 	}
 
 	void AE_EndHit()
 	{
-		_animCtrl.PlayAnimation(); 
-		_activeState = EActiveState.Awaiting;
-		  
-		if (_playerController.hp == 0)
-			_playerController._playerState = EPlayerState.Death;
+
+		
 	}
 
 }

@@ -43,6 +43,11 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 	bool isRelocateItem = false;
 
 	private Coroutine startCoroutine;
+	
+	public void TEST()
+	{
+		SaveManager.instance.Save();
+	}
 
 	private  void Awake() 
 	{

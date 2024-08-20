@@ -17,7 +17,7 @@ using System.Text.RegularExpressions;
 public class DialogueManager : MonoBehaviour , IMenuUI
 {
 	string _ncpName;
-	private Dictionary<string, EpisodeSO> _dialogues = new Dictionary<string, EpisodeSO>();
+	public Dictionary<string, EpisodeSO> _episodes = new Dictionary<string, EpisodeSO>();
 
 	[SerializeField] TextMeshProUGUI _nameText;
 	[SerializeField] TextMeshProUGUI _npcScript;
@@ -54,18 +54,18 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 	}
 	public void AddDialogue(EpisodeSO dialogue)
 	{
-		if (_dialogues.ContainsKey(dialogue.name))
+		if (_episodes.ContainsKey(dialogue.episodeCode))
 			return;
 
-		_dialogues.Add(dialogue.name, dialogue);  
+		_episodes.Add(dialogue.episodeCode, dialogue);  
 	}
 
 	public void UpdateQuestDialogue(ref EpisodeSO dialogue)
 	{
-		if (!_dialogues.ContainsKey(dialogue.name))
+		if (!_episodes.ContainsKey(dialogue.episodeCode))
 			return;
 		 
-		dialogue = _dialogues[dialogue.name]; 
+		dialogue = _episodes[dialogue.episodeCode]; 
 	}
 
 	public bool RegisteEpisodes(List<EpisodeSO> episodes)

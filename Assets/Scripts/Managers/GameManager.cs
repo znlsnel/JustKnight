@@ -17,7 +17,7 @@ public class GameManager : Singleton<GameManager>
 	public Action _onSceneInit;
 	FadeEffectManager _fadeEffect;
 
-	double _playTime; 
+	public int _playTime; 
 
 	public override void Awake() 
 	{
@@ -30,12 +30,20 @@ public class GameManager : Singleton<GameManager>
 
 	}
 
-	
+	IEnumerator UpdateTime()
+	{
+		while (true)
+		{
+			yield return new WaitForSeconds(60);
+			++_playTime;
+		}
+	}
 
 
 	void Start()   
 	{
-		_fadeEffect = UIHandler.instance._fadeEffect.GetComponentInChildren<FadeEffectManager>();	
+		_fadeEffect = UIHandler.instance._fadeEffect.GetComponentInChildren<FadeEffectManager>();
+		StartCoroutine(UpdateTime()); 
 	} 
 
 	public GameObject GetPlayer()

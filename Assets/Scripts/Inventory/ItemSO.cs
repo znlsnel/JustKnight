@@ -10,6 +10,8 @@ public class ItemSO : ScriptableObject
 	[NonSerialized] public RectTransform _rectTransform;
 	public Texture2D _itemIcon;
 	public string _name;
+	public string _itemCode;
+
 	[TextArea(3, 10)]
 	public string _description;
 	[NonSerialized] public int level;

@@ -25,6 +25,7 @@ public class QuestManager : Singleton<QuestManager>
 {
 	private Dictionary<QuestInfo, HashSet<QuestSO>> _tasks = new Dictionary<QuestInfo, HashSet<QuestSO>>();
 	public Dictionary<string, QuestSO> _quests = new Dictionary<string, QuestSO>();
+	
 
 	DisplayQuest _displayQuest;
 	QuestUI _questUI;
@@ -56,10 +57,10 @@ public class QuestManager : Singleton<QuestManager>
 
 	public void AddQuest(QuestSO quest)
 	{
-		if (quest == null || _quests.ContainsKey(quest.questName))
+		if (quest == null || _quests.ContainsKey(quest.questCode))
 			return;
 
-		_quests.Add(quest.questName, quest);
+		_quests.Add(quest.questCode, quest); 
 		foreach (QuestTaskSO task in quest.tasks)
 		{
 			HashSet<QuestSO> myQuests;
@@ -117,6 +118,6 @@ public class QuestManager : Singleton<QuestManager>
 
 	public QuestSO UpdateQuestData(QuestSO quest)
 	{
-		return _quests[quest.questName]; 
+		return _quests[quest.questCode]; 
 	}
 }

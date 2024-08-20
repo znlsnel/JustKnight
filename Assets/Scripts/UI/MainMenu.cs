@@ -14,6 +14,8 @@ public class MainMenu : MonoBehaviour
 {
         public GameObject _inventory;
         public GameObject _quest;
+        public GameObject _save;
+	
 
 	Dictionary<EMenuType, Tuple<GameObject, Button>> _menuButtons = new Dictionary<EMenuType, Tuple<GameObject, Button>>();
         public Button bt_onInventory;
@@ -21,6 +23,7 @@ public class MainMenu : MonoBehaviour
 
 	[NonSerialized] public InventoryManager _inventoryManager;
 	[NonSerialized] public QuestUI _questUI;
+	[NonSerialized] public SaveUI _saveUI;
 
 	Color _buttonColor;
 
@@ -31,6 +34,7 @@ public class MainMenu : MonoBehaviour
 
 		_inventoryManager = _inventory.GetComponent<InventoryManager>(); 
 		_questUI = _quest.GetComponent<QuestUI>();
+		_saveUI = _save.GetComponent<SaveUI>();
 
 		bt_onInventory.onClick.AddListener(() => OnMenu(EMenuType.INVENTORY));
 		bt_onQuest.onClick.AddListener(() => OnMenu(EMenuType.QUEST));

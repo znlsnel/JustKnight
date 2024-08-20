@@ -21,7 +21,6 @@ public class EpisodeSO : ScriptableObject
 {
 	public string npcName = "";
 	public string episodeName = "";
-	public string episodeCode;
 
 	public QuestSO quest;
 	public QuestSO preQuest;

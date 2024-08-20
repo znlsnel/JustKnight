@@ -57,10 +57,10 @@ public class QuestManager : Singleton<QuestManager>
 
 	public void AddQuest(QuestSO quest)
 	{
-		if (quest == null || _quests.ContainsKey(quest.questCode))
+		if (quest == null || _quests.ContainsKey(quest.npcName + quest.questName))
 			return;
 
-		_quests.Add(quest.questCode, quest); 
+		_quests.Add(quest.npcName + quest.questName, quest); 
 		foreach (QuestTaskSO task in quest.tasks)
 		{
 			HashSet<QuestSO> myQuests;
@@ -118,6 +118,6 @@ public class QuestManager : Singleton<QuestManager>
 
 	public QuestSO UpdateQuestData(QuestSO quest)
 	{
-		return _quests[quest.questCode]; 
+		return _quests[quest.npcName + quest.questName]; 
 	}
 }

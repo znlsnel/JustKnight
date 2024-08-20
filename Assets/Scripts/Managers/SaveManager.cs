@@ -39,6 +39,11 @@ public class SaveManager : Singleton<SaveManager>
 		
 	}
 
+        public void DeleteSaveFile(string fileName)
+        {
+                File.Delete(Application.dataPath + "/SaveDatas/" + fileName + ".json"); 
+        }
+
         public void LoadAllSaveData()
         {
 		string folderPath = Application.dataPath + "/SaveDatas";
@@ -56,12 +61,14 @@ public class SaveManager : Singleton<SaveManager>
 		}
         }
         
-        public void Save()
+        public SaveData Save()
         {
 		SaveData saveData = new SaveData();
-                saveData.PlayerInfo.scene = SceneManager.GetActiveScene().name;
-		saveData.PlayerInfo.hp = GameManager.instance.GetPlayer().GetComponent<PlayerController>().hp;  
-
+                saveData.PlayInfo.scene = SceneManager.GetActiveScene().name;
+		saveData.PlayInfo.hp = GameManager.instance.GetPlayer().GetComponent<PlayerController>().hp;
+		saveData.PlayInfo._saveDate = DateTime.Now.ToString("yy.MM.dd (HH:mm)");
+                saveData.PlayInfo._playTime = GameManager.instance._playTime;
+                 
 		for (int i = 0; i < _inventory._items.Count; i++)
                 {
                         ItemSO item = _inventory._items[i];
@@ -108,15 +115,19 @@ public class SaveManager : Singleton<SaveManager>
 		string jsonString = JsonUtility.ToJson(saveData, true);
 
                 string fileName = GenerateStringID();
-
-		string path = Application.dataPath + "/SaveDatas/" + fileName +".json"; 
+		saveData.fileName = fileName; 
+		string path = Application.dataPath + "/SaveDatas/" + fileName +".json";  
 		File.WriteAllText(path, jsonString);
                 _savedFiles.Add(fileName, saveData);
+
+                return saveData;
 	}
 
         string GenerateStringID()
-        {
-                const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890~!@#$%^&*()-=_+,.";
+	{
+
+   //       \, /, :, *, ?, ", <, >, |
+		const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
                 int len = chars.Length;
 
                 string ret = "";
@@ -142,16 +153,20 @@ public class SaveData
         public List<EpisodeData> episodes = new List<EpisodeData>();
         public List<QuestData> quests = new List<QuestData>();
 
-        public PlayerInfo PlayerInfo = new PlayerInfo();
+        public PlayInfo PlayInfo = new PlayInfo();
+
+        public string fileName;
 
 }
 
 
 [Serializable]
-public class PlayerInfo
+public class PlayInfo
 {
         public string scene;
-        public int hp;
+	public string _saveDate;
+	public int _playTime;
+	public int hp;
 }
 
 [Serializable]

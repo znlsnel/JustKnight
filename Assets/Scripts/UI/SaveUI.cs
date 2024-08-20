@@ -16,31 +16,32 @@ public class SaveUI : MonoBehaviour
 	[SerializeField] Button _saveButton;
 	[SerializeField] Button _loadButton;
 	[SerializeField] Button _overwriteButton;
+	[SerializeField] Button _deleteButton;
 
 	SaveData _selected = null;
+	GameObject _selectedObject;
 
+	private void Start()
+	{
+		SelectSaveData(null);
+	}
 
 	public void OnSave(bool auto)
 	{
 
 		GameObject slot = Instantiate<GameObject>(_saveSlotPrefab);
 		slot.transform.SetParent(_slotParent.transform);
+		slot.transform.localScale = Vector3.one;
 
-		SaveDataSlot saveSlot = slot.GetComponent<SaveDataSlot>();
-		saveSlot._date.text = DateTime.Now.ToString("yy.MM.dd (HH:mm)");
-		if (auto)
-			saveSlot._date.text = "<b>[auto]</b> " + saveSlot._date.text;
+		slot.GetComponent<SaveDataSlot>().InitSaveSlot(auto);
 
-		int playTime = GameManager.instance._playTime;
-		saveSlot._playTime.text = $"플레이타임 - {playTime / 60}h";
+		
 
-		if (playTime / 60 < 100)
-			saveSlot._playTime.text += (playTime % 60).ToString();
 	}
 
 	public void OnLoad()
 	{
-
+		 
 	}
 
 	public void OnOverWrite()
@@ -48,23 +49,47 @@ public class SaveUI : MonoBehaviour
 
 	}
 
-	public void SelectSaveData(SaveData data)
+	public void OnDelete()
+	{
+		Debug.Log("DEDE");
+		SaveManager.instance.DeleteSaveFile(_selected.fileName);
+		_selected = null;
+		SelectSaveData(null);
+		_selectedObject.transform.localScale = Vector3.one;
+		Destroy(_selectedObject);
+	}
+
+	public void SelectSaveData(SaveData data, GameObject obj = null)
 	{
 		Color color = Color.white;
+		Vector3 size = Vector3.one;
+
+		if (_selectedObject != null)
+			_selectedObject.transform.localScale = size;
+
 		if (data == _selected)
 		{
 			_selected = null;
 			color.a = 0.5f;
-		}  
+		}
 		else
 		{
 			_selected = data;
+			size *= 0.9f;
+			_selectedObject = obj;
 		}
+
 		 
+		if (obj != null)
+			obj.transform.localScale = size;
+
+		
 		_loadButton.image.color = color;
 		_overwriteButton.image.color = color;
+		_deleteButton.image.color = color;
 
-		_loadButton.enabled = data != _selected;
-		_overwriteButton.enabled = data != _selected;
+		_loadButton.enabled = _selected != null;
+		_overwriteButton.enabled = _selected != null;
+		_deleteButton.enabled = _selected != null; 
 	}
 }

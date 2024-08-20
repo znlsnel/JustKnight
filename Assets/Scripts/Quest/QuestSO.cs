@@ -16,7 +16,6 @@ public class QuestSO : ScriptableObject
 {
 	public string npcName;
 	public string questName;
-	public string questCode;
 	[TextArea(3, 10)]
 	public string description;
 

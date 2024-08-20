@@ -44,10 +44,7 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 
 	private Coroutine startCoroutine;
 	
-	public void TEST()
-	{
-		SaveManager.instance.Save();
-	}
+
 
 	private  void Awake() 
 	{

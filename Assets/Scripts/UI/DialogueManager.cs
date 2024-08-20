@@ -54,18 +54,18 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 	}
 	public void AddDialogue(EpisodeSO dialogue)
 	{
-		if (_episodes.ContainsKey(dialogue.episodeCode))
+		if (_episodes.ContainsKey(dialogue.npcName + dialogue.episodeName))
 			return;
 
-		_episodes.Add(dialogue.episodeCode, dialogue);  
+		_episodes.Add(dialogue.npcName + dialogue.episodeName, dialogue);  
 	}
 
 	public void UpdateQuestDialogue(ref EpisodeSO dialogue)
 	{
-		if (!_episodes.ContainsKey(dialogue.episodeCode))
+		if (!_episodes.ContainsKey(dialogue.npcName + dialogue.episodeName))
 			return;
 		 
-		dialogue = _episodes[dialogue.episodeCode]; 
+		dialogue = _episodes[dialogue.npcName + dialogue.episodeName]; 
 	}
 
 	public bool RegisteEpisodes(List<EpisodeSO> episodes)

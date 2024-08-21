@@ -21,6 +21,7 @@ public class SaveUI : MonoBehaviour
 	SaveData _selected = null;
 	GameObject _selectedObject;
 
+	float lastSaveTime = 0.0f;
 	private void Start()
 	{
 		SelectSaveData(null);
@@ -28,16 +29,24 @@ public class SaveUI : MonoBehaviour
 
 	public void OnSave(bool auto)
 	{
+		if (Time.time - lastSaveTime < 1.01)
+			return;
+		lastSaveTime = Time.time;	 
+
+		OnSave(auto, null );  
+	}
+	public void OnSave(bool auto, SaveData saveData)
+	{
+		lastSaveTime = Time.time;
 
 		GameObject slot = Instantiate<GameObject>(_saveSlotPrefab);
 		slot.transform.SetParent(_slotParent.transform);
 		slot.transform.localScale = Vector3.one;
+		slot.transform.SetSiblingIndex(0); 
 
-		slot.GetComponent<SaveDataSlot>().InitSaveSlot(auto);
-
-		
-
+		slot.GetComponent<SaveDataSlot>().InitSaveSlot(auto, saveData);
 	}
+
 
 	public void OnLoad()
 	{

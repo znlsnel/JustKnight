@@ -23,16 +23,15 @@ public class SaveDataSlot : MonoBehaviour
 		_saveUI.SelectSaveData(_data, gameObject);
 	}
 
-	public void InitSaveSlot(bool auto)
+	public void InitSaveSlot(bool auto, SaveData saveData = null)
 	{
-		SaveData saveData =  SaveManager.instance.Save();
-		_data = saveData; 
+		if (saveData == null)
+			saveData =  SaveManager.instance.Save(auto);  
+		_data = saveData;
 
-		_date.text = DateTime.Now.ToString("yy.MM.dd (HH:mm)");
-		if (auto)
-			_date.text = "<b>[auto]</b> " + _date.text;
+		_date.text = saveData.PlayInfo._saveDate;
 
-		int playTime = GameManager.instance._playTime;
+		int playTime = saveData.PlayInfo._playTime;
 		_playTime.text = $"플레이타임 - ";
 
 		if (playTime > 60)

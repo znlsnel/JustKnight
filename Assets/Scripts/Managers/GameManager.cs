@@ -17,7 +17,7 @@ public class GameManager : Singleton<GameManager>
 	public Action _onSceneInit;
 	FadeEffectManager _fadeEffect;
 
-	public int _playTime; 
+	[NonSerialized] public int _playTime; 
 
 	public override void Awake() 
 	{

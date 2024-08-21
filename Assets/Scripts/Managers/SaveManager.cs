@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Unity.IO.LowLevel.Unsafe;
 using Unity.Mathematics;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -26,12 +28,17 @@ public class SaveManager : Singleton<SaveManager>
         InventoryManager _inventory;
         DialogueManager _dialogue;
         QuestManager _quest;
+        SaveUI _saveUI;
 
 	void Start()
         {
 		_inventory = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._inventoryManager;
                 _dialogue = UIHandler.instance._dialogue.GetComponent<DialogueManager>();
                 _quest = QuestManager.instance;
+                _saveUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._saveUI;
+		
+
+		LoadAllSaveData();
 	}
 
 	public void Load()
@@ -49,26 +56,75 @@ public class SaveManager : Singleton<SaveManager>
 		string folderPath = Application.dataPath + "/SaveDatas";
                 string[] files = Directory.GetFiles(folderPath);
 
+                Dictionary<long, SaveData> date = new Dictionary<long, SaveData>();
+
             // 파일 이름들을 출력 (확장자 포함)
                 foreach (string file in files)
                 {
-                        if (!file.Contains(".json"))
+                        if (file.Substring(file.Length - 5, 5) != ".json")
                                 continue;
 
-                        string jsonString = File.ReadAllText(folderPath + "/" + file);
+                    //   Debug.Log(file); 
+                        string jsonString = File.ReadAllText(file);
+                        Debug.Log(file.Substring(file.Length - 10, 5)); 
 			SaveData saveData = JsonUtility.FromJson<SaveData>(jsonString);
-                        _savedFiles.Add(file.Substring(0, 5), saveData); 
+                        _savedFiles.Add(file.Substring(file.Length - 10, 5), saveData);
+
+                        long idx = saveData.PlayInfo._date + saveData.PlayInfo._playTime * 60;
+     
+			date.Add(idx, saveData);
 		}
-        }
+
+		foreach (var item in date.OrderBy(x => x.Key))
+		{
+			_saveUI.OnSave(false, item.Value); 
+		}
+	}
         
-        public SaveData Save()
+        long GetDate(string date)
+        {
+
+		long ret = 0;
+                int idx = date.Length - 1;
+
+                // yy MM DD hh mm ss
+                List<int> arr = new List<int>(); 
+                for (int i = idx; i >= 0; i--)
+                        if (date[i] >= '0' && date[i] <= '9')
+				arr.Add((int)(date[i] - '0'));
+
+                ret += arr[0];
+                ret += arr[1] * 10;
+
+		ret += arr[2] * 60;
+                ret += arr[3] * 600;
+
+                ret += arr[4] * 3600;
+                ret += arr[5] * 36000;
+
+                ret += arr[6] * 3600 * 24;
+                ret += arr[7] * 3600 * 240; 
+
+                ret += arr[8] * 3600 * 24 * 31;
+                ret += arr[9] * 3600 * 24 * 310;
+
+                ret += (arr[10]-4) * 3600 * 24 * 31 * 12;
+                ret += (arr[11]-2) * 3600 * 24 * 31 * 120; 
+
+		return ret;
+        }
+
+        public SaveData Save(bool auto)
         {
 		SaveData saveData = new SaveData();
                 saveData.PlayInfo.scene = SceneManager.GetActiveScene().name;
 		saveData.PlayInfo.hp = GameManager.instance.GetPlayer().GetComponent<PlayerController>().hp;
-		saveData.PlayInfo._saveDate = DateTime.Now.ToString("yy.MM.dd (HH:mm)");
-                saveData.PlayInfo._playTime = GameManager.instance._playTime;
-                 
+		saveData.PlayInfo._saveDate = DateTime.Now.ToString("yy.MM.dd (HH:mm:ss)");
+		if (auto) saveData.PlayInfo._saveDate = "[auto] " + saveData.PlayInfo._saveDate;
+
+		saveData.PlayInfo._playTime = GameManager.instance._playTime;
+                saveData.PlayInfo._date = GetDate(DateTime.Now.ToString("yy.MM.dd.HH.mm.ss"));
+
 		for (int i = 0; i < _inventory._items.Count; i++)
                 {
                         ItemSO item = _inventory._items[i];
@@ -165,6 +221,8 @@ public class PlayInfo
 {
         public string scene;
 	public string _saveDate;
+
+        public long _date;
 	public int _playTime;
 	public int hp;
 }

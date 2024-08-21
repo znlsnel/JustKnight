@@ -10,7 +10,6 @@ public class ItemSO : ScriptableObject
 	[NonSerialized] public RectTransform _rectTransform;
 	public Texture2D _itemIcon;
 	public string _name;
-	public string _itemCode;
 
 	[TextArea(3, 10)]
 	public string _description;
@@ -75,9 +74,11 @@ public class ItemSO : ScriptableObject
 public class SkillAttribute
 {
 	public SkillAttribute() { }
-	public SkillAttribute(EPlayerStatus type) {
+	public SkillAttribute(EPlayerStatus type, int value = -1) {
 		effectType = type;
-	}
+		if (value != -1)
+			this.value = value;
+	} 
 	[SerializeField] public EPlayerStatus effectType = EPlayerStatus.Damage;
 	[Space(10)]
 

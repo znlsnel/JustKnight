@@ -109,30 +109,57 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		return _usedSlotCnt == _itemSlotCnt; 
 	}
 
-	public  void AddItem(ItemSO item)
+	public void AddItem(ItemSO item, int slotIdx = -1)
         {
                 if (_usedSlotCnt >= _itemSlotCnt)
                         return;
 
-		for (int i = _equipSlotCount; i <  _slots.Count; i++)
+		if (slotIdx == -1)
 		{
-
-			if (_items[i] == null && _slots[i] != _wastebasket)
+			for (int i = _equipSlotCount; i < _slots.Count; i++)
 			{
-				_usedSlotCnt++; 
-				_items[i] = item;
-
-				item.InitItem();
-				Sprite newSprite = Sprite.Create(item._itemIcon,
-					 new Rect(0, 0, item._itemIcon.width, item._itemIcon.height),
-					 new Vector2(0.5f, 0.5f));
-
-				_slots[i].GetComponent<ItemSlot>().SetImage(newSprite, item);
-
-				return;
+				if (_items[i] == null && _slots[i] != _wastebasket)
+				{
+					slotIdx = i;
+					break;
+				}
 			}
 		}
+
+		_usedSlotCnt++; 
+		_items[slotIdx] = item; 
+
+		item.InitItem();
+		Sprite newSprite = Sprite.Create(item._itemIcon,
+				new Rect(0, 0, item._itemIcon.width, item._itemIcon.height),
+				new Vector2(0.5f, 0.5f));
+		 
+		_slots[slotIdx].GetComponent<ItemSlot>().SetImage(newSprite, item);
+
+		if (slotIdx < _equipSlotCount)
+			_items[slotIdx].EquipItem();
+
+		return;
+	
         }
+
+	public void ResetInventory()
+	{
+		_usedSlotCnt = 0;
+
+		for (int i = 0; i < 6; i++)
+			_items[i]?.UnequipItem();
+
+		for (int i = 0; i < _slots.Count; i++)
+		{
+			if (_slots[i] != _wastebasket)
+			{
+				_items[i] = null;
+				_slots[i].GetComponent<ItemSlot>().SetImage(null, null);
+			}
+		} 
+		_statusText.text = PlayerStatus.instance.GetStatus();
+	}
 
 
         void OnButtonDown(int idx)
@@ -188,14 +215,10 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 
 	void OnButtonEnter(int idx)
 	{
-
-
 		_horverSlotIdx = idx;
 	}
-
 	void OnButtonExit(int idx) 
 	{
-
 		_horverSlotIdx = -1; 
 	}
 

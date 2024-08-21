@@ -54,18 +54,18 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 	}
 	public void AddDialogue(EpisodeSO dialogue)
 	{
-		if (_episodes.ContainsKey(dialogue.npcName + dialogue.episodeName))
+		if (_episodes.ContainsKey(dialogue.episodeCode))
 			return;
 
-		_episodes.Add(dialogue.npcName + dialogue.episodeName, dialogue);  
+		_episodes.Add(dialogue.episodeCode, dialogue);  
 	}
 
 	public void UpdateQuestDialogue(ref EpisodeSO dialogue)
 	{
-		if (!_episodes.ContainsKey(dialogue.npcName + dialogue.episodeName))
+		if (!_episodes.ContainsKey(dialogue.episodeCode))
 			return;
 		 
-		dialogue = _episodes[dialogue.npcName + dialogue.episodeName]; 
+		dialogue = _episodes[dialogue.episodeCode]; 
 	}
 
 	public bool RegisteEpisodes(List<EpisodeSO> episodes)
@@ -188,5 +188,19 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 		if (!active)
 			InputManager.instance._interactionHandler.Cancel();
 
+	}
+
+	public void ResetEpisode()
+	{
+		_episodes.Clear();
+
+		_nameText.text = "";
+		_npcScript.text = "";
+
+		 _episode = null;
+		_dialogue = null;
+
+		 if (_updateScript != null)
+			StopCoroutine( _updateScript );
 	}
 }

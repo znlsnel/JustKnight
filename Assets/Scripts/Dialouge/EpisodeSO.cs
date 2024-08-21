@@ -33,6 +33,8 @@ public class EpisodeSO : ScriptableObject
 	public Action _onChangeState;
 
 	[NonSerialized] EDialogueState state = EDialogueState.PENDING_ACCEPTANCE;
+	public string episodeCode { get { return npcName + episodeName;} }
+
 	public EDialogueState _state
 	{ 
 		get {return state; } 
@@ -122,7 +124,10 @@ public class EpisodeSO : ScriptableObject
 			case EResponseType.RECEIVE_QUEST:
 				_state = EDialogueState.IN_PROGRESS;
 				if (quest != null)
+				{
+					quest.questState = EQuestState.IN_PROGRESS;
 					QuestManager.instance.RegisterQuest(quest);
+				}
 				break; 
 
 			case EResponseType.REJECT:

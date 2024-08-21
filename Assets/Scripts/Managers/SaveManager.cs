@@ -6,15 +6,18 @@ using System.IO;
 using System.Linq;
 using Unity.IO.LowLevel.Unsafe;
 using Unity.Mathematics;
+using UnityEditor.PackageManager.Requests;
 using UnityEditor.SearchService;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SaveManager : Singleton<SaveManager>
 {
         public Dictionary<string, SaveData> _savedFiles = new Dictionary<string, SaveData>(); 
-        public Dictionary<string, QuestSO> _quests = new Dictionary<string, QuestSO>();
+
         public Dictionary<string, EpisodeSO> _episodes = new Dictionary<string, EpisodeSO>();
+        public Dictionary<string, QuestSO> _quests = new Dictionary<string, QuestSO>();
         public Dictionary<string, ItemSO> _items = new Dictionary<string, ItemSO>(); 
 
         Vector3 position; 
@@ -28,6 +31,7 @@ public class SaveManager : Singleton<SaveManager>
         InventoryManager _inventory;
         DialogueManager _dialogue;
         QuestManager _quest;
+        QuestUI _questUI;
         SaveUI _saveUI;
 
 	void Start()
@@ -36,15 +40,97 @@ public class SaveManager : Singleton<SaveManager>
                 _dialogue = UIHandler.instance._dialogue.GetComponent<DialogueManager>();
                 _quest = QuestManager.instance;
                 _saveUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._saveUI;
-		
+		_questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI;
 
 		LoadAllSaveData();
+                List<EpisodeSO> episodes = LoadAllAssetsInFolder<EpisodeSO>("Datas/episode");
+                List<QuestSO> quests = LoadAllAssetsInFolder<QuestSO>("Datas/episode");
+                List<ItemSO> items = LoadAllAssetsInFolder<ItemSO>("Datas/Items");
+
+                foreach (EpisodeSO episode in episodes)
+                        _episodes.Add(episode.episodeCode, episode);
+
+                foreach (QuestSO quest in quests)
+                        _quests.Add(quest.questCode, quest);
+
+                foreach (ItemSO item in items)
+                        _items.Add(item.name, item);
 	}
 
-	public void Load()
+	public void Load(SaveData saveData) 
 	{
-		
+                // Item
+                _inventory.ResetInventory();
+                foreach (ItemData itemData in saveData.itemDatas)
+                {
+                        ItemSO item = Instantiate<ItemSO>(_items[itemData.Name]);
+		        foreach (AttributeData data in  itemData.Effects)
+                        {
+                                item._effects.Add(new SkillAttribute(data.effectType, data.value));
+                        }
+                        _inventory.AddItem(item, itemData.Idx);
+		}
+
+                // episodes
+                _dialogue.ResetEpisode();
+                foreach (EpisodeData epiData in saveData.episodes)
+                {
+                        EpisodeSO episode = Instantiate<EpisodeSO>(_episodes[epiData.episodeCode]);
+                        episode._state = epiData.state;
+                        _dialogue.AddDialogue(episode);
+		}
+
+                // quests
+                _quest.ResetQuest();
+                foreach (QuestData questData in saveData.quests)
+                {
+                        QuestSO quest = Instantiate<QuestSO>(_quests[questData.questCode]);
+                        quest.questState = questData.state;
+			foreach (TaskData taskData in questData.taskData)
+                        {
+                                for (int i = 0; i < quest.tasks.Count; i++)
+                                {
+                                        if (quest.tasks[i].name == taskData.taskName)
+                                        {
+                                                quest.tasks[i].curCnt = taskData.curCnt;
+                                                break;
+					}
+				} 
+                        }
+
+			_quest.AddQuest(quest);
+                        _questUI.AddQuest(quest);
+		}
+
+
+                // scene Load
+                GameManager.instance.LoadScene(saveData.PlayInfo.scene);
+
+                // hp Setting
+                
+
+                // timer Setting
+                GameManager.instance._playTime = saveData.PlayInfo._playTime;
 	}
+
+        List<T> LoadAllAssetsInFolder<T>(string folderPath) where T : ScriptableObject
+	{
+                List<T> assets = new List<T>();
+		T[] loadedAssets = Resources.LoadAll<T>(folderPath);
+                if (loadedAssets != null)
+                        assets.AddRange(loadedAssets);
+
+		// 하위 폴더 검색
+		string[] subFolders = System.IO.Directory.GetDirectories(Application.dataPath + "/Resources/" + folderPath);
+
+		foreach (var subFolder in subFolders)
+		{
+			// 경로를 상대 경로로 변환
+			string relativePath = folderPath + "/" + System.IO.Path.GetFileName(subFolder);
+			assets.AddRange(LoadAllAssetsInFolder<T>(relativePath));
+		}
+		return assets; 
+        }
 
         public void DeleteSaveFile(string fileName)
         {
@@ -84,33 +170,15 @@ public class SaveManager : Singleton<SaveManager>
         
         long GetDate(string date)
         {
-
 		long ret = 0;
-                int idx = date.Length - 1;
+		int[] arr = date.Where(char.IsDigit).Select(c => c - '0').Reverse().ToArray();
 
-                // yy MM DD hh mm ss
-                List<int> arr = new List<int>(); 
-                for (int i = idx; i >= 0; i--)
-                        if (date[i] >= '0' && date[i] <= '9')
-				arr.Add((int)(date[i] - '0'));
-
-                ret += arr[0];
-                ret += arr[1] * 10;
-
-		ret += arr[2] * 60;
-                ret += arr[3] * 600;
-
-                ret += arr[4] * 3600;
-                ret += arr[5] * 36000;
-
-                ret += arr[6] * 3600 * 24;
-                ret += arr[7] * 3600 * 240; 
-
-                ret += arr[8] * 3600 * 24 * 31;
-                ret += arr[9] * 3600 * 24 * 310;
-
-                ret += (arr[10]-4) * 3600 * 24 * 31 * 12;
-                ret += (arr[11]-2) * 3600 * 24 * 31 * 120; 
+		ret += arr[0] + arr[1] * 10; // 초
+		ret += (arr[2] + arr[3] * 10) * 60; // 분
+		ret += (arr[4] + arr[5] * 10) * 3600; // 시간
+		ret += (arr[6] + arr[7] * 10) * 86400; // 일
+		ret += (arr[8] + arr[9] * 10) * 86400 * 31; // 월
+		ret += ((arr[10] - 4) + (arr[11] - 2) * 10) * 86400 * 31 * 12; // 년
 
 		return ret;
         }
@@ -157,7 +225,7 @@ public class SaveManager : Singleton<SaveManager>
                 foreach (var data in _dialogue._episodes) 
                 {
 			EpisodeData episode = new EpisodeData();
-                        episode.idx = data.Key;
+                        episode.episodeCode = data.Key;
                         episode.state = data.Value._state;  
 
 			saveData.episodes.Add(episode);		
@@ -165,13 +233,13 @@ public class SaveManager : Singleton<SaveManager>
                 foreach (var data in _quest._quests)
                 {
                         QuestData quest = new QuestData();
-                        quest.idx = data.Key;
+                        quest.questCode = data.Key;
                         quest.state = data.Value.questState;
 
                         foreach (QuestTaskSO questTask in data.Value.tasks)
                         {
 				TaskData task = new TaskData();
-                                task.idx = questTask.name;
+                                task.taskName = questTask.name;
                                 task.curCnt = questTask.curCnt;
                                 quest.taskData.Add(task);
 			}
@@ -256,14 +324,14 @@ public class AttributeData
 [Serializable]
 public class EpisodeData
 {
-        public string idx;
+        public string episodeCode;
 	public EDialogueState state;
 }
 
 [Serializable]
 public class QuestData
 {
-	public string idx;
+	public string questCode;
 	public EQuestState state;
 	public List<TaskData> taskData = new List<TaskData>();
 }
@@ -271,6 +339,6 @@ public class QuestData
 [Serializable]
 public class TaskData
 {
-	public string idx;
+	public string taskName;
 	public int curCnt;
 }

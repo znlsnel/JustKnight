@@ -46,7 +46,7 @@ public class QuestUI : MonoBehaviour, IMenuUI
 	#endregion
 
 
-	Dictionary<QuestSO, GameObject> _questObject = new Dictionary<QuestSO, GameObject>();
+	Dictionary<QuestSO, GameObject> _questSlots = new Dictionary<QuestSO, GameObject>();
 	Dictionary<EQuestMenuType, Tuple<GameObject, Button>> _questMenus = new Dictionary<EQuestMenuType, Tuple<GameObject, Button>>();
 
 	Color _questMenuColor;
@@ -97,7 +97,23 @@ public class QuestUI : MonoBehaviour, IMenuUI
 		}
 	}
 
-
+	EQuestMenuType ConvertType(EQuestState state)
+	{
+		EQuestMenuType type = EQuestMenuType.PENDING;
+		switch (state)
+		{ 
+			case EQuestState.AWAITING:
+				type = EQuestMenuType.PENDING;
+				break;
+			case EQuestState.IN_PROGRESS:
+				type = EQuestMenuType.INPROGRESS;
+				break;
+			case EQuestState.COMPLETED:
+				type = EQuestMenuType.COMPLETED;
+				break;
+		}
+		return type;
+	}
 
 
 	// if you don't send anything as a factor, this function will empty the quest text
@@ -127,26 +143,28 @@ public class QuestUI : MonoBehaviour, IMenuUI
 	}
 	
 
-	public void AddQuest(EQuestMenuType type, QuestSO quest)
+	public void AddQuest(QuestSO quest)
 	{
-		if (quest == null || _questObject.ContainsKey(quest))
+		if (quest == null || _questSlots.ContainsKey(quest))
 			return;
 
 		GameObject gm = Instantiate<GameObject>(_questSlotPrefab);
 		gm.GetComponent<QuestSlotManager>().SetQuestSlot(quest);
 
-		_questObject.Add(quest, gm);
-
+		_questSlots.Add(quest, gm);
+		 
+		EQuestMenuType type = ConvertType(quest.questState);
 		gm.transform.SetParent(GetQuestParent(type).transform);
 		gm.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 		
 	}
 
-	public void MoveToQuestList(EQuestMenuType type, QuestSO quest, bool display = false) 
+	public void MoveToQuestList(QuestSO quest, bool display = false) 
 	{
-		
+		EQuestMenuType type = ConvertType(quest.questState);
+
 		GameObject gm;
-		if (_questObject.TryGetValue(quest, out gm)) 
+		if (_questSlots.TryGetValue(quest, out gm)) 
 		{
 			gm.transform.SetParent(GetQuestParent(type).transform); 
 			gm.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);	
@@ -161,13 +179,11 @@ public class QuestUI : MonoBehaviour, IMenuUI
 	public void DisplayingQuestCheck(QuestSO quest, bool check)
 	{
 		GameObject gm;
-		if (_questObject.TryGetValue(quest, out gm))
+		if (_questSlots.TryGetValue(quest, out gm))
 		{
 			gm.GetComponent<QuestSlotManager>()._checkBoxText.gameObject.SetActive(check);
 		}
 	}
-
-
 	public void ActiveMenu(bool active)
 	{
 		UIHandler.instance.CloseAllUI(gameObject, active);
@@ -177,13 +193,10 @@ public class QuestUI : MonoBehaviour, IMenuUI
 			UpdateQuestInfo(); 
 		}
 	}
-
 	public void LoadSuccessUI(string rewardDescription)
 	{
  		_successUI.GetComponent<QuestSuccessUIManager>()?.OpenSuccessUI(rewardDescription); 
 	}
-
-
 	void OnQuestList(EQuestMenuType type)
 	{
 		foreach (EQuestMenuType t in Enum.GetValues(typeof(EQuestMenuType)))
@@ -201,5 +214,13 @@ public class QuestUI : MonoBehaviour, IMenuUI
 			tp.Item2.image.color = color;
 
 		}
+	}
+	public void ResetQuestUI()
+	{
+
+		foreach (var questSlot in _questSlots.Values)
+			Destroy(questSlot);
+		
+		_questSlots.Clear();
 	}
 }

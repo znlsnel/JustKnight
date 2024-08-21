@@ -31,6 +31,7 @@ public class QuestSO : ScriptableObject
 	[NonSerialized] public EQuestState questState = EQuestState.AWAITING;
 
 	[NonSerialized] public HashSet<Action> _onClear = new HashSet<Action>();
+	public string questCode { get { return npcName + questName; } }
 
 	public bool isClear 
 	{ 

@@ -57,10 +57,11 @@ public class QuestManager : Singleton<QuestManager>
 
 	public void AddQuest(QuestSO quest)
 	{
-		if (quest == null || _quests.ContainsKey(quest.npcName + quest.questName))
+		if (quest == null || _quests.ContainsKey(quest.questCode))
 			return;
 
-		_quests.Add(quest.npcName + quest.questName, quest); 
+		_quests.Add(quest.questCode, quest);
+		_questUI.AddQuest(quest);
 		foreach (QuestTaskSO task in quest.tasks)
 		{
 			HashSet<QuestSO> myQuests;
@@ -73,13 +74,13 @@ public class QuestManager : Singleton<QuestManager>
 				_tasks.Add(new QuestInfo(task.category, task.target), myQuests);
 			}
 		}
+
 	}
 
 	public void RegisterQuest(QuestSO quest)
 	{
 		quest = UpdateQuestData(quest); 
-		_questUI.MoveToQuestList(EQuestMenuType.INPROGRESS, quest, true);
-		quest.questState = EQuestState.IN_PROGRESS;
+		_questUI.MoveToQuestList(quest, true);
 	}
 
 	public void RemoveQuestTasks(QuestSO quest)
@@ -103,21 +104,29 @@ public class QuestManager : Singleton<QuestManager>
 
 	public void CompleteQuest(QuestSO quest, string rewardInfo)
 	{
+		quest.questState = EQuestState.COMPLETED;
+		foreach (Action action in quest._onClear)
+			action?.Invoke();
+		quest._onClear = null;
+
 		_questUI.LoadSuccessUI(rewardInfo);
-		_questUI.MoveToQuestList(EQuestMenuType.COMPLETED, quest);
+		_questUI.MoveToQuestList(quest);
 
 		Utils.instance.SetTimer(() => _displayQuest.RemoveQuest(quest), 1.5f);
 
 		QuestManager.instance.RemoveQuestTasks(quest);
-		quest.questState = EQuestState.COMPLETED;
-
-		foreach (Action action in quest._onClear)
-			action?.Invoke();
-		quest._onClear = null;
 	}
 
 	public QuestSO UpdateQuestData(QuestSO quest)
 	{
-		return _quests[quest.npcName + quest.questName]; 
+		return _quests[quest.questCode]; 
+	}
+
+	public void ResetQuest()
+	{
+		_quests.Clear();
+		_displayQuest.ResetDisplayQuest();
+		_tasks.Clear();
+		_questUI.ResetQuestUI();
 	}
 }

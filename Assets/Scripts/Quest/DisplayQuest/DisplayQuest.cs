@@ -83,4 +83,18 @@ public class DisplayQuest : MonoBehaviour
                         } 
                 }
         }
+
+        public void ResetDisplayQuest()
+        {
+
+                for (int i = 0; i < 3; i++)
+                {
+			_questSlots[i].SetActive(false);
+                        _quests[i] = null;
+		} 
+
+                foreach (GameObject obj in _questObject.Values)
+                        Destroy(obj);
+                _questObject.Clear();
+	}
 }

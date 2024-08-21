@@ -50,7 +50,6 @@ public class NpcManager : MonoBehaviour
 	{
 		QuestManager.instance.AddQuest(episode.quest);
 		_dialogueManager.AddDialogue(episode);
-		_questUI.AddQuest(EQuestMenuType.PENDING, episode.quest);
 		canStartQuest = true;
 
 		// TODO State UI Ç¥½Ã

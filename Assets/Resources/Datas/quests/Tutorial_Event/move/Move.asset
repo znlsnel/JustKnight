@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Move
   m_EditorClassIdentifier: 
   npcName: System
+  episodeName: "\uCE90\uB9AD\uD130 \uC6C0\uC9C1\uC774\uAE30"
   quest: {fileID: 11400000, guid: a383d76339087894b86987a624f9e3d4, type: 2}
   preQuest: {fileID: 0}
   pendingDialogue: {fileID: 11400000, guid: eaa8c715014ea5945ab8c989cbc836ad, type: 2}

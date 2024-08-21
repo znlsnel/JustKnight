@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: episode
   m_EditorClassIdentifier: 
   npcName: System
+  episodeName: "\uAD6C\uB974\uAE30 \uB3D9\uC791"
   quest: {fileID: 11400000, guid: d34659ac626019949b8896a148c7927d, type: 2}
   preQuest: {fileID: 0}
   pendingDialogue: {fileID: 11400000, guid: cc47fb2855aeb9b4f97a28596f36ea19, type: 2}

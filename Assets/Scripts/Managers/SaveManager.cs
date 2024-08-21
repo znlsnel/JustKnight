@@ -48,8 +48,9 @@ public class SaveManager : Singleton<SaveManager>
 
         public void DeleteSaveFile(string fileName)
         {
-                File.Delete(Application.dataPath + "/SaveDatas/" + fileName + ".json"); 
-        }
+                File.Delete(Application.dataPath + "/SaveDatas/" + fileName + ".json");  
+                File.Delete(Application.dataPath + "/SaveDatas/" + fileName + ".json.meta");
+	}
 
         public void LoadAllSaveData()
         {
@@ -114,10 +115,18 @@ public class SaveManager : Singleton<SaveManager>
 		return ret;
         }
 
-        public SaveData Save(bool auto)
+        public SaveData Save(bool auto, string fileName = "")
         {
-		SaveData saveData = new SaveData();
-                saveData.PlayInfo.scene = SceneManager.GetActiveScene().name;
+                SaveData saveData;
+		if (fileName == "")
+			fileName = GenerateStringID();
+
+                if (_savedFiles.ContainsKey(fileName))
+			saveData = _savedFiles[fileName];
+
+		saveData = new SaveData();
+
+		saveData.PlayInfo.scene = SceneManager.GetActiveScene().name;
 		saveData.PlayInfo.hp = GameManager.instance.GetPlayer().GetComponent<PlayerController>().hp;
 		saveData.PlayInfo._saveDate = DateTime.Now.ToString("yy.MM.dd (HH:mm:ss)");
 		if (auto) saveData.PlayInfo._saveDate = "[auto] " + saveData.PlayInfo._saveDate;
@@ -170,11 +179,13 @@ public class SaveManager : Singleton<SaveManager>
 		}
 		string jsonString = JsonUtility.ToJson(saveData, true);
 
-                string fileName = GenerateStringID();
+               
 		saveData.fileName = fileName; 
 		string path = Application.dataPath + "/SaveDatas/" + fileName +".json";  
 		File.WriteAllText(path, jsonString);
-                _savedFiles.Add(fileName, saveData);
+
+		if (!_savedFiles.ContainsKey(fileName)) 
+			_savedFiles.Add(fileName, saveData);
 
                 return saveData;
 	}

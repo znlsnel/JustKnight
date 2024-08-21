@@ -55,12 +55,13 @@ public class SaveUI : MonoBehaviour
 
 	public void OnOverWrite()
 	{
-
+		SaveData saveData = SaveManager.instance.Save(false, _selected.fileName);
+		_selectedObject.GetComponent<SaveDataSlot>().InitSaveSlot(false, saveData); 
 	}
 
 	public void OnDelete()
 	{
-		Debug.Log("DEDE");
+		Debug.Log(_selected.fileName);
 		SaveManager.instance.DeleteSaveFile(_selected.fileName);
 		_selected = null;
 		SelectSaveData(null);

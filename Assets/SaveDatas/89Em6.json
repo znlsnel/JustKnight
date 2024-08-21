@@ -1,0 +1,119 @@
+{
+    "itemDatas": [],
+    "episodes": [
+        {
+            "idx": "System캐릭터 움직이기",
+            "state": 2
+        },
+        {
+            "idx": "System실전 전투",
+            "state": 0
+        },
+        {
+            "idx": "System구르기 동작",
+            "state": 0
+        },
+        {
+            "idx": "System벽 점프",
+            "state": 0
+        },
+        {
+            "idx": "System벽 오르기",
+            "state": 0
+        },
+        {
+            "idx": "System튜토리얼 종료",
+            "state": 0
+        },
+        {
+            "idx": "System공격, 막기 동작",
+            "state": 0
+        }
+    ],
+    "quests": [
+        {
+            "idx": "System캐릭터 움직이기",
+            "state": 1,
+            "taskData": [
+                {
+                    "idx": "TASK_moveLeft",
+                    "curCnt": 0
+                },
+                {
+                    "idx": "TASK_moveRight",
+                    "curCnt": 0
+                },
+                {
+                    "idx": "TASK_Jump",
+                    "curCnt": 0
+                }
+            ]
+        },
+        {
+            "idx": "System실전 전투",
+            "state": 0,
+            "taskData": [
+                {
+                    "idx": "Task_Kill",
+                    "curCnt": 0
+                },
+                {
+                    "idx": "Task_Shield",
+                    "curCnt": 0
+                }
+            ]
+        },
+        {
+            "idx": "System구르기 동작 해보기",
+            "state": 0,
+            "taskData": [
+                {
+                    "idx": "task",
+                    "curCnt": 0
+                }
+            ]
+        },
+        {
+            "idx": "System벽 점프 해보기",
+            "state": 0,
+            "taskData": [
+                {
+                    "idx": "task",
+                    "curCnt": 0
+                }
+            ]
+        },
+        {
+            "idx": "System벽 오르기",
+            "state": 0,
+            "taskData": [
+                {
+                    "idx": "task",
+                    "curCnt": 0
+                }
+            ]
+        },
+        {
+            "idx": "System공격, 막기 해보기",
+            "state": 0,
+            "taskData": [
+                {
+                    "idx": "task",
+                    "curCnt": 0
+                },
+                {
+                    "idx": "task 1",
+                    "curCnt": 0
+                }
+            ]
+        }
+    ],
+    "PlayInfo": {
+        "scene": "Tutorial",
+        "_saveDate": "24.08.21 (15:11:40)",
+        "_date": 23296300,
+        "_playTime": 3,
+        "hp": 3
+    },
+    "fileName": ""
+}

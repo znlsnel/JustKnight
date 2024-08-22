@@ -100,7 +100,7 @@ public class NpcManager : MonoBehaviour
 			yield return new WaitForSeconds(0.5f);
 		
 		if (isAutoStart)
-		{
+		{ 
 			if (_dialogueManager.RegisteEpisodes(_dialogues))
 				_onDialogue?.Invoke(); 
 			yield break ;

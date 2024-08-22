@@ -50,7 +50,7 @@ public class SaveUI : MonoBehaviour
 
 	public void OnLoad()
 	{
-		 
+		SaveManager.instance.Load(_selected);
 	}
 
 	public void OnOverWrite()

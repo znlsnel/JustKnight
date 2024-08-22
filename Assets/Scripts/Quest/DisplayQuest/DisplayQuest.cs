@@ -90,10 +90,9 @@ public class DisplayQuest : MonoBehaviour
                 for (int i = 0; i < 3; i++)
                 {
 			_questSlots[i].SetActive(false);
-                        _quests[i] = null;
-		} 
+		}
 
-                foreach (GameObject obj in _questObject.Values)
+		foreach (GameObject obj in _questObject.Values)
                         Destroy(obj);
                 _questObject.Clear();
 	}

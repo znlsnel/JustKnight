@@ -16,18 +16,24 @@ public class QuestBarrier : MonoBehaviour
 	}
 	private void Start()
 	{
-		_unlockQuest._onClear.Add(ClearCheck); 
+		QuestManager.instance.UpdateQuestData(ref _unlockQuest);
+		_unlockQuest._onClear.Add(ClearCheck);
+
+		if (_unlockQuest.isClear)
+			ClearCheck(); 
 	}
+	
+
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (isClear)
+		if (_unlockQuest.isClear || isClear)
 			return;
 
 		_stopUI?.SetActive(true); 
 	}
 	private void OnCollisionExit2D(Collision2D collision)
 	{
-		if (isClear)
+		if (_unlockQuest.isClear || isClear)
 		{
 			if (_stopUI?.activeSelf == true)
 				_stopUI?.SetActive(false);
@@ -41,14 +47,10 @@ public class QuestBarrier : MonoBehaviour
 
 	void ClearCheck()
 	{
-		_unlockQuest = QuestManager.instance.UpdateQuestData(_unlockQuest);
 		isClear = true;
 
 		if (_stopUI?.activeSelf == true)
 			Utils.instance.SetTimer(() => _stopUI?.SetActive(false), 0.5f); 
 		Utils.instance.SetTimer(() => gameObject.SetActive(false), 0.5f);
-
-
-
 	}
 }

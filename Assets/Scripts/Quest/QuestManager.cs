@@ -79,7 +79,7 @@ public class QuestManager : Singleton<QuestManager>
 
 	public void RegisterQuest(QuestSO quest)
 	{
-		quest = UpdateQuestData(quest); 
+		 UpdateQuestData(ref quest); 
 		_questUI.MoveToQuestList(quest, true);
 	}
 
@@ -117,9 +117,10 @@ public class QuestManager : Singleton<QuestManager>
 		QuestManager.instance.RemoveQuestTasks(quest);
 	}
 
-	public QuestSO UpdateQuestData(QuestSO quest)
+	public void UpdateQuestData(ref QuestSO quest)
 	{
-		return _quests[quest.questCode]; 
+		if (_quests.ContainsKey(quest.questCode))
+			quest = _quests[quest.questCode];  
 	}
 
 	public void ResetQuest()

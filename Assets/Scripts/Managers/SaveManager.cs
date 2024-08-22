@@ -1,16 +1,12 @@
-using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Unity.IO.LowLevel.Unsafe;
-using Unity.Mathematics;
-using UnityEditor.PackageManager.Requests;
-using UnityEditor.SearchService;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+
 
 public class SaveManager : Singleton<SaveManager>
 {
@@ -42,6 +38,7 @@ public class SaveManager : Singleton<SaveManager>
                 _saveUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._saveUI;
 		_questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI;
 
+                
 		LoadAllSaveData();
                 List<EpisodeSO> episodes = LoadAllAssetsInFolder<EpisodeSO>("Datas/episode");
                 List<QuestSO> quests = LoadAllAssetsInFolder<QuestSO>("Datas/episode");
@@ -55,6 +52,7 @@ public class SaveManager : Singleton<SaveManager>
 
                 foreach (ItemSO item in items)
                         _items.Add(item.name, item);
+                
 	}
 
 	public void Load(SaveData saveData) 
@@ -120,19 +118,10 @@ public class SaveManager : Singleton<SaveManager>
                 if (loadedAssets != null)
                         assets.AddRange(loadedAssets);
 
-		// 하위 폴더 검색
-		string[] subFolders = System.IO.Directory.GetDirectories(Application.dataPath + "/Resources/" + folderPath);
-
-		foreach (var subFolder in subFolders)
-		{
-			// 경로를 상대 경로로 변환
-			string relativePath = folderPath + "/" + System.IO.Path.GetFileName(subFolder);
-			assets.AddRange(LoadAllAssetsInFolder<T>(relativePath));
-		}
 		return assets; 
         }
 
-        public void DeleteSaveFile(string fileName)
+	public void DeleteSaveFile(string fileName)
         {
                 File.Delete(Application.dataPath + "/SaveDatas/" + fileName + ".json");  
                 File.Delete(Application.dataPath + "/SaveDatas/" + fileName + ".json.meta");
@@ -185,15 +174,11 @@ public class SaveManager : Singleton<SaveManager>
 
         public SaveData Save(bool auto, string fileName = "")
         {
-                SaveData saveData;
-		if (fileName == "")
-			fileName = GenerateStringID();
+		if (fileName == "") 
+                        fileName = GenerateStringID(); 
 
-                if (_savedFiles.ContainsKey(fileName))
-			saveData = _savedFiles[fileName];
-
-		saveData = new SaveData();
-
+                SaveData saveData = _savedFiles.ContainsKey(fileName) ? _savedFiles[fileName] : new SaveData();
+		saveData.fileName = fileName; 
 		saveData.PlayInfo.scene = SceneManager.GetActiveScene().name;
 		saveData.PlayInfo.hp = GameManager.instance.GetPlayer().GetComponent<PlayerController>().hp;
 		saveData.PlayInfo._saveDate = DateTime.Now.ToString("yy.MM.dd (HH:mm:ss)");
@@ -245,11 +230,11 @@ public class SaveManager : Singleton<SaveManager>
 			}
                         saveData.quests.Add(quest);
 		}
-		string jsonString = JsonUtility.ToJson(saveData, true);
 
                
-		saveData.fileName = fileName; 
 		string path = Application.dataPath + "/SaveDatas/" + fileName +".json";  
+
+		string jsonString = JsonUtility.ToJson(saveData, true);
 		File.WriteAllText(path, jsonString);
 
 		if (!_savedFiles.ContainsKey(fileName)) 

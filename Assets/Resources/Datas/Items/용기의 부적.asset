@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53793262b41bbd141b3b86f1cb98fa33, type: 3}
   m_Name: "\uC6A9\uAE30\uC758 \uBD80\uC801"
   m_EditorClassIdentifier: 
-  _itemIcon: {fileID: 2800000, guid: 74188c415cb23a7419698120d00ae9cc, type: 3}
+  _itemIcon: {fileID: 2800000, guid: f594033f6c650cb488a07c12fef1ae87, type: 3}
   _name: "\uC6A9\uAE30\uC758 \uBD80\uC801"
   _description: "\uC6A9\uAE30\uC758 \uBD80\uC801\uC774\uB2E4. \uC774 \uBD80\uC801\uC744
     \uC18C\uC9C0\uD558\uBA74 \uAC15\uD55C \uC6A9\uAE30\uB97C \uAC16\uAC8C\uB418\uC5B4\n\uAE30\uBCF8

@@ -87,7 +87,7 @@ public class MonsterGenerator : MonoBehaviour
                 {
                         if (_endCondition != null)
                         {
-                                _endCondition = QuestManager.instance.UpdateQuestData(_endCondition);
+                                 QuestManager.instance.UpdateQuestData(ref _endCondition);
                                 if (_endCondition.isClear)
                                 {
                                         gameObject.SetActive(false);

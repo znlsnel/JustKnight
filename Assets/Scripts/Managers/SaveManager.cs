@@ -62,7 +62,9 @@ public class SaveManager : Singleton<SaveManager>
                 foreach (ItemData itemData in saveData.itemDatas)
                 {
                         ItemSO item = Instantiate<ItemSO>(_items[itemData.Name]);
-		        foreach (AttributeData data in  itemData.Effects)
+                        item._effects.Clear();
+
+			foreach (AttributeData data in  itemData.Effects)
                         {
                                 item._effects.Add(new SkillAttribute(data.effectType, data.value));
                         }

@@ -73,7 +73,9 @@ public class NpcManager : MonoBehaviour
 			{
 				EpisodeSO episode = _dialogues[i];
 				_dialogueManager.UpdateQuestDialogue(ref episode);
-				if (episode.GetDialogue(false) != null) 
+				_dialogues[i] = episode;
+
+				if (_dialogues[i].GetDialogue(false) != null) 
 				{
 					flag = true;
 					break;

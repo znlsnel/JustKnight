@@ -85,7 +85,7 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 			if (ep.GetDialogue(false) == null || (ep.preQuest != null &&  ep.preQuest.questState != EQuestState.COMPLETED) )
 				continue;
 			  
-			startableIdxs.Add(idx);			
+			startableIdxs.Add(idx);
 		} 
 		
 		if (startableIdxs.Count == 1)

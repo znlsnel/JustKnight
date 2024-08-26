@@ -34,13 +34,14 @@ public class NpcManager : MonoBehaviour
 		{
 			EpisodeSO episode = _dialogues[i];
 			_dialogueManager.UpdateQuestDialogue(ref episode);
+			_questManager.UpdateQuestData(ref episode.quest);
+			_questManager.UpdateQuestData(ref episode.preQuest);
 
 			if (episode.preQuest == null || episode.preQuest.questState == EQuestState.COMPLETED)
 				InitDialogue(episode);
 			else
 				episode.preQuest._onClear.Add(()=>InitDialogue(episode));
 		}
-
 
 		// EVENT라면 안보이게
 		if (isEventNpc) GetComponent<SpriteRenderer>().sortingOrder = -1;
@@ -75,13 +76,18 @@ public class NpcManager : MonoBehaviour
 				_dialogueManager.UpdateQuestDialogue(ref episode);
 				_dialogues[i] = episode;
 
-				if (_dialogues[i].GetDialogue(false) != null) 
+				if (_dialogues[i].preQuest != null)
+					QuestManager.instance.UpdateQuestData(ref _dialogues[i].preQuest); 
+
+				if (_dialogues[i].GetDialogue(false) != null && (_dialogues[i].preQuest == null ||_dialogues[i].preQuest.questState == EQuestState.COMPLETED)) 
 				{
 					flag = true;
+					canStartQuest = true;
 					break;
 				}
 			} 
-
+			
+			
 			if (!flag)
 			{
 				InputManager.instance._interactionHandler.Remove(gameObject);
@@ -92,9 +98,6 @@ public class NpcManager : MonoBehaviour
 				yield return new WaitForSeconds(0.5f);
 		}
 	}
-
-
-	//Collision을 체크하는 방식으로 변경 (현재는 오류가 있음 )
 	IEnumerator StartConversation(GameObject target)
 	{
 		StartCoroutine(CheckQuestAvailability());

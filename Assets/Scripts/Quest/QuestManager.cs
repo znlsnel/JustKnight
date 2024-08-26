@@ -119,7 +119,7 @@ public class QuestManager : Singleton<QuestManager>
 
 	public void UpdateQuestData(ref QuestSO quest)
 	{
-		if (_quests.ContainsKey(quest.questCode))
+		if (quest != null && _quests.ContainsKey(quest.questCode))
 			quest = _quests[quest.questCode];  
 	}
 

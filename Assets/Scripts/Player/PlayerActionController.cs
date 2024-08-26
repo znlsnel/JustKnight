@@ -74,13 +74,14 @@ public class PlayerActionController : MonoBehaviour
 		return true;
 	}
 	 
-	IEnumerator RegisterCooldown(float time, Action finishAction = null)
-	{ 
-		while (_animCtrl.GetCurAnimLength() == 1.0f) // 1.0f는 잘못된 길이의 기본값이라고 가정
+	IEnumerator RegisterCooldown(float time, Action finishAction = null, int cnt = 2)
+	{
+		
+		while (cnt-- > 0) // 1.0f는 잘못된 길이의 기본값이라고 가정
 			yield return null; // 다음 프레임까지 대기
 
 		float animLength = _animCtrl.GetCurAnimLength();
-		 
+		Debug.Log(animLength);
 		yield return new WaitForSeconds(animLength);
 		_activeState = EActiveState.Awaiting;
 		_animCtrl.PlayAnimation();

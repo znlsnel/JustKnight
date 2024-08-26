@@ -26,6 +26,7 @@ public class SaveManager : Singleton<SaveManager>
 
         InventoryManager _inventory;
         DialogueManager _dialogue;
+        DisplayQuest _displayQuest;
         QuestManager _quest;
         QuestUI _questUI;
         SaveUI _saveUI;
@@ -37,8 +38,9 @@ public class SaveManager : Singleton<SaveManager>
                 _quest = QuestManager.instance;
                 _saveUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._saveUI;
 		_questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI;
+		_displayQuest = UIHandler.instance._displayQuest.GetComponent<DisplayQuest>();
 
-                
+
 		LoadAllSaveData();
                 List<EpisodeSO> episodes = LoadAllAssetsInFolder<EpisodeSO>("Datas/episode");
                 List<QuestSO> quests = LoadAllAssetsInFolder<QuestSO>("Datas/episode");
@@ -99,6 +101,9 @@ public class SaveManager : Singleton<SaveManager>
                         }
 
 			_quest.AddQuest(quest);
+                      if (quest.questState != EQuestState.AWAITING)
+                                _quest.RegisterQuest(quest, questData.isDisplaying);
+                            
                         _questUI.AddQuest(quest);
 		}
 
@@ -225,8 +230,9 @@ public class SaveManager : Singleton<SaveManager>
                         QuestData quest = new QuestData();
                         quest.questCode = data.Key;
                         quest.state = data.Value.questState;
+			quest.isDisplaying = _displayQuest.IsQuestStored(data.Value);
 
-                        foreach (QuestTaskSO questTask in data.Value.tasks)
+			foreach (QuestTaskSO questTask in data.Value.tasks)
                         {
 				TaskData task = new TaskData();
                                 task.taskName = questTask.name;
@@ -326,6 +332,7 @@ public class QuestData
 	public string questCode;
 	public EQuestState state;
 	public List<TaskData> taskData = new List<TaskData>();
+        public bool isDisplaying;
 }
 
 [Serializable]

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DisplayQuestTaskManager : MonoBehaviour
+public class DisplayQuestTask : MonoBehaviour
 {
 	public Text _questDescription;
 	public Text _questState;

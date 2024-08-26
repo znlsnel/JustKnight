@@ -45,11 +45,7 @@ public class QuestSlotManager : MonoBehaviour
 		{
 			_displayQuest.AddQuest(_quest);
 			_checkBoxText.gameObject.SetActive(true);
-
-
-		}
-
-
+		} 
 	}
 
 }

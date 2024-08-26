@@ -126,7 +126,7 @@ public class EpisodeSO : ScriptableObject
 				if (quest != null)
 				{
 					quest.questState = EQuestState.IN_PROGRESS;
-					QuestManager.instance.RegisterQuest(quest);
+					QuestManager.instance.RegisterQuest(quest, true);
 				}
 				break; 
 

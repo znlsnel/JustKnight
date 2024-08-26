@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8910362895570428802}
   - component: {fileID: 3957988900901721497}
   - component: {fileID: 2013866132801324956}
-  - component: {fileID: 1648436262862183002}
+  - component: {fileID: 4202725155241579359}
   m_Layer: 5
   m_Name: UI_DisplayQuestSlot
   m_TagString: Untagged
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1648436262862183002
+--- !u!114 &4202725155241579359
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,7 +87,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1608151624548082074}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a8025d23ac7a4d49bf6d2dd6c95f57d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b722838065b38b4994c28df33952922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _questTitle: {fileID: 5311077140740643536}

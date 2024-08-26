@@ -62,6 +62,13 @@ public class QuestManager : Singleton<QuestManager>
 
 		_quests.Add(quest.questCode, quest);
 		_questUI.AddQuest(quest);
+	}
+
+	public void RegisterQuest(QuestSO quest, bool displaying = false)
+	{
+		 UpdateQuestData(ref quest); 
+		_questUI.MoveToQuestList(quest, displaying);
+		  
 		foreach (QuestTaskSO task in quest.tasks)
 		{
 			HashSet<QuestSO> myQuests;
@@ -74,13 +81,6 @@ public class QuestManager : Singleton<QuestManager>
 				_tasks.Add(new QuestInfo(task.category, task.target), myQuests);
 			}
 		}
-
-	}
-
-	public void RegisterQuest(QuestSO quest)
-	{
-		 UpdateQuestData(ref quest); 
-		_questUI.MoveToQuestList(quest, true);
 	}
 
 	public void RemoveQuestTasks(QuestSO quest)

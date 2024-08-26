@@ -1,0 +1,292 @@
+{
+    "itemDatas": [
+        {
+            "Name": "검은 신발",
+            "Idx": 6,
+            "Effects": [
+                {
+                    "effectType": 7,
+                    "value": 1
+                },
+                {
+                    "effectType": 8,
+                    "value": 3
+                },
+                {
+                    "effectType": 1,
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "Name": "고양이 머리띠",
+            "Idx": 7,
+            "Effects": [
+                {
+                    "effectType": 1,
+                    "value": 3
+                },
+                {
+                    "effectType": 4,
+                    "value": 1
+                },
+                {
+                    "effectType": 2,
+                    "value": 2
+                },
+                {
+                    "effectType": 6,
+                    "value": 1
+                },
+                {
+                    "effectType": 8,
+                    "value": 5
+                },
+                {
+                    "effectType": 1,
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "Name": "용기의 부적",
+            "Idx": 8,
+            "Effects": [
+                {
+                    "effectType": 1,
+                    "value": 1
+                },
+                {
+                    "effectType": 0,
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "Name": "검은 신발",
+            "Idx": 9,
+            "Effects": [
+                {
+                    "effectType": 7,
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "Name": "고양이 머리띠",
+            "Idx": 10,
+            "Effects": [
+                {
+                    "effectType": 5,
+                    "value": 2
+                },
+                {
+                    "effectType": 5,
+                    "value": 2
+                },
+                {
+                    "effectType": 4,
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "Name": "용기의 부적",
+            "Idx": 11,
+            "Effects": [
+                {
+                    "effectType": 1,
+                    "value": 1
+                },
+                {
+                    "effectType": 0,
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "Name": "검은 신발",
+            "Idx": 12,
+            "Effects": [
+                {
+                    "effectType": 7,
+                    "value": 1
+                },
+                {
+                    "effectType": 5,
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "Name": "고양이 머리띠",
+            "Idx": 13,
+            "Effects": [
+                {
+                    "effectType": 9,
+                    "value": 5
+                }
+            ]
+        },
+        {
+            "Name": "용기의 부적",
+            "Idx": 14,
+            "Effects": [
+                {
+                    "effectType": 1,
+                    "value": 1
+                },
+                {
+                    "effectType": 0,
+                    "value": 1
+                },
+                {
+                    "effectType": 2,
+                    "value": 5
+                }
+            ]
+        }
+    ],
+    "episodes": [
+        {
+            "episodeCode": "System캐릭터 움직이기",
+            "state": 0
+        },
+        {
+            "episodeCode": "System실전 전투",
+            "state": 2
+        },
+        {
+            "episodeCode": "System구르기 동작",
+            "state": 0
+        },
+        {
+            "episodeCode": "System벽 점프",
+            "state": 0
+        },
+        {
+            "episodeCode": "System벽 오르기",
+            "state": 0
+        },
+        {
+            "episodeCode": "System튜토리얼 종료",
+            "state": 3
+        },
+        {
+            "episodeCode": "System공격, 막기 동작",
+            "state": 0
+        },
+        {
+            "episodeCode": "그럼바크빌곤트 상단과의 조우",
+            "state": 0
+        }
+    ],
+    "quests": [
+        {
+            "questCode": "System캐릭터 움직이기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "TASK_moveLeft",
+                    "curCnt": 0
+                },
+                {
+                    "taskName": "TASK_moveRight",
+                    "curCnt": 0
+                },
+                {
+                    "taskName": "TASK_Jump",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System실전 전투",
+            "state": 1,
+            "taskData": [
+                {
+                    "taskName": "Task_Kill",
+                    "curCnt": 3
+                },
+                {
+                    "taskName": "Task_Shield",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": true
+        },
+        {
+            "questCode": "System구르기 동작 해보기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System벽 점프 해보기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System벽 오르기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System공격, 막기 해보기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                },
+                {
+                    "taskName": "task 1",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "김덕배김촌장 찾아가기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        }
+    ],
+    "PlayInfo": {
+        "scene": "Ch1_Town",
+        "_saveDate": "24.08.26 (14:07:46)",
+        "_date": 23724466,
+        "_playTime": 0,
+        "hp": 3,
+        "position": {
+            "x": -30.79865264892578,
+            "y": -4.60017204284668,
+            "z": 0.0
+        }
+    },
+    "fileName": "684cg"
+}

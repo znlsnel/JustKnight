@@ -4,7 +4,7 @@ using UnityEditor.Callbacks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DisplayQuestSlotManager : MonoBehaviour
+public class DisplayQuestSlot : MonoBehaviour
 {
 	public Text _questTitle;
 	public List<GameObject> _questTasks = new List<GameObject>();
@@ -18,7 +18,7 @@ public class DisplayQuestSlotManager : MonoBehaviour
 			if (quest.tasks.Count > i)
 			{
 				_questTasks[i].SetActive(true);
-				_questTasks[i].GetComponent<DisplayQuestTaskManager>().SetQuestInfo(quest.tasks[i].taskTitle, quest.tasks[i].curCnt, quest.tasks[i].targetCnt);
+				_questTasks[i].GetComponent<DisplayQuestTask>().SetQuestInfo(quest.tasks[i].taskTitle, quest.tasks[i].curCnt, quest.tasks[i].targetCnt);
 			} 
 			else 
 			{

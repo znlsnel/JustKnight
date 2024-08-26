@@ -75,7 +75,7 @@ public class DisplayQuest : MonoBehaviour
                         if (_quests.Count > i)
                         { 
                                 _questSlots[i].SetActive(true);
-                                _questSlots[i].GetComponent<DisplayQuestSlotManager>().SetQuestSlot(_quests[i]);
+                                _questSlots[i].GetComponent<DisplayQuestSlot>().SetQuestSlot(_quests[i]);
 			}
 			else 
                         {
@@ -92,8 +92,9 @@ public class DisplayQuest : MonoBehaviour
 			_questSlots[i].SetActive(false);
 		}
 
-		foreach (GameObject obj in _questObject.Values)
-                        Destroy(obj);
-                _questObject.Clear();
+		for (int i = 0; i < _quests.Count; i++)
+		{
+                        RemoveQuest(_quests[i]);
+		}
 	}
 }

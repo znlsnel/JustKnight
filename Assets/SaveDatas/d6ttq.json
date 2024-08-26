@@ -1,36 +1,48 @@
 {
     "itemDatas": [
         {
-            "Name": "고양이 머리띠",
+            "Name": "검은 신발",
             "Idx": 6,
             "Effects": [
                 {
-                    "effectType": 5,
-                    "value": 3
-                }
-            ]
-        },
-        {
-            "Name": "용기의 부적",
-            "Idx": 7,
-            "Effects": [
-                {
-                    "effectType": 1,
+                    "effectType": 7,
                     "value": 1
                 },
                 {
-                    "effectType": 0,
-                    "value": 1
+                    "effectType": 8,
+                    "value": 2
+                },
+                {
+                    "effectType": 9,
+                    "value": 5
                 }
             ]
         },
         {
             "Name": "검은 신발",
-            "Idx": 8,
+            "Idx": 7,
             "Effects": [
                 {
                     "effectType": 7,
                     "value": 1
+                }
+            ]
+        },
+        {
+            "Name": "고양이 머리띠",
+            "Idx": 8,
+            "Effects": [
+                {
+                    "effectType": 7,
+                    "value": 3
+                },
+                {
+                    "effectType": 9,
+                    "value": 4
+                },
+                {
+                    "effectType": 5,
+                    "value": 5
                 }
             ]
         },
@@ -45,44 +57,12 @@
                 {
                     "effectType": 0,
                     "value": 1
-                },
-                {
-                    "effectType": 0,
-                    "value": 1
-                }
-            ]
-        },
-        {
-            "Name": "고양이 머리띠",
-            "Idx": 10,
-            "Effects": [
-                {
-                    "effectType": 3,
-                    "value": 3
-                }
-            ]
-        },
-        {
-            "Name": "검은 신발",
-            "Idx": 11,
-            "Effects": [
-                {
-                    "effectType": 7,
-                    "value": 1
-                },
-                {
-                    "effectType": 0,
-                    "value": 3
-                },
-                {
-                    "effectType": 6,
-                    "value": 1
                 }
             ]
         },
         {
             "Name": "용기의 부적",
-            "Idx": 12,
+            "Idx": 10,
             "Effects": [
                 {
                     "effectType": 1,
@@ -90,6 +70,54 @@
                 },
                 {
                     "effectType": 0,
+                    "value": 1
+                },
+                {
+                    "effectType": 8,
+                    "value": 2
+                }
+            ]
+        },
+        {
+            "Name": "용기의 부적",
+            "Idx": 11,
+            "Effects": [
+                {
+                    "effectType": 1,
+                    "value": 1
+                },
+                {
+                    "effectType": 0,
+                    "value": 1
+                },
+                {
+                    "effectType": 0,
+                    "value": 1
+                },
+                {
+                    "effectType": 5,
+                    "value": 5
+                },
+                {
+                    "effectType": 9,
+                    "value": 3
+                }
+            ]
+        },
+        {
+            "Name": "고양이 머리띠",
+            "Idx": 12,
+            "Effects": [
+                {
+                    "effectType": 1,
+                    "value": 1
+                },
+                {
+                    "effectType": 6,
+                    "value": 1
+                },
+                {
+                    "effectType": 6,
                     "value": 1
                 }
             ]
@@ -99,11 +127,15 @@
             "Idx": 13,
             "Effects": [
                 {
-                    "effectType": 0,
+                    "effectType": 2,
+                    "value": 4
+                },
+                {
+                    "effectType": 6,
                     "value": 1
                 },
                 {
-                    "effectType": 4,
+                    "effectType": 6,
                     "value": 1
                 }
             ]
@@ -115,6 +147,14 @@
                 {
                     "effectType": 7,
                     "value": 1
+                },
+                {
+                    "effectType": 9,
+                    "value": 5
+                },
+                {
+                    "effectType": 7,
+                    "value": 5
                 }
             ]
         }
@@ -146,6 +186,10 @@
         },
         {
             "episodeCode": "System공격, 막기 동작",
+            "state": 0
+        },
+        {
+            "episodeCode": "그럼바크빌곤트 상단과의 조우",
             "state": 0
         }
     ],
@@ -225,14 +269,29 @@
                     "curCnt": 0
                 }
             ]
+        },
+        {
+            "questCode": "김덕배김촌장 찾아가기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ]
         }
     ],
     "PlayInfo": {
-        "scene": "Tutorial",
-        "_saveDate": "24.08.22 (19:06:00)",
-        "_date": 23396760,
+        "scene": "Ch1_Town",
+        "_saveDate": "24.08.26 (12:49:47)",
+        "_date": 23719787,
         "_playTime": 0,
-        "hp": 2
+        "hp": 3,
+        "position": {
+            "x": -20.687301635742189,
+            "y": -4.601557731628418,
+            "z": 0.0
+        }
     },
-    "fileName": "DPkcZ"
+    "fileName": "d6ttq"
 }

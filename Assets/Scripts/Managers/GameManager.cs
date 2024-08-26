@@ -14,7 +14,7 @@ public class GameManager : Singleton<GameManager>
 	[SerializeField] GameObject _playerPrefab;
 	GameObject _player; 
 	Camera _camera;
-	public Action _onSceneInit;
+	public Action _onNextScene;
 	FadeEffectManager _fadeEffect;
 
 	[NonSerialized] public int _playTime; 
@@ -68,9 +68,10 @@ public class GameManager : Singleton<GameManager>
 		_player.transform.position = gen.transform.position;
 		_fadeEffect.PlayFadeIn();
 
-		_onSceneInit?.Invoke();
+		_onNextScene?.Invoke();
+		_onNextScene = null;
 	}
-	   
+
 	public void LoadScene(string sceneName) 
 	{
 		_fadeEffect.PlayFadeOut();

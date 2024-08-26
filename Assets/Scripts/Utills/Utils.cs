@@ -6,15 +6,19 @@ using UnityEngine;
 
 public class Utils : Singleton<Utils>
 {
-	public Coroutine SetTimer(Action act, float second)
+	public Coroutine SetTimer(Action act, float second = 0.0f)
 	{
 		return StartCoroutine(Execute(act, second));
 	}
 	 
 	private IEnumerator Execute(Action act, float second)
 	{
-		yield return new WaitForSeconds(second); 
-		act.Invoke(); 
+		if (second == 0.0f)
+			yield return new WaitForEndOfFrame();
+		else
+			yield return new WaitForSeconds(second); 
+
+		act.Invoke();  
 	}
 
 } 

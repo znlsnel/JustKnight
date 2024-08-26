@@ -106,11 +106,13 @@ public class SaveManager : Singleton<SaveManager>
                 // scene Load
                 GameManager.instance.LoadScene(saveData.PlayInfo.scene);
 
-                // hp Setting
-                
+                // player Setting
+                GameManager.instance._onNextScene += () => { GameManager.instance.GetPlayer().transform.position = saveData.PlayInfo.position; };
+                GameManager.instance._onNextScene += () => { GameManager.instance.GetPlayer().GetComponent<PlayerController>().hp = saveData.PlayInfo.hp; };
 
-                // timer Setting
-                GameManager.instance._playTime = saveData.PlayInfo._playTime;
+
+		// timer Setting
+		GameManager.instance._playTime = saveData.PlayInfo._playTime;
 	}
 
         List<T> LoadAllAssetsInFolder<T>(string folderPath) where T : ScriptableObject
@@ -188,6 +190,7 @@ public class SaveManager : Singleton<SaveManager>
 
 		saveData.PlayInfo._playTime = GameManager.instance._playTime;
                 saveData.PlayInfo._date = GetDate(DateTime.Now.ToString("yy.MM.dd.HH.mm.ss"));
+                saveData.PlayInfo.position = GameManager.instance.GetPlayer().transform.position;
 
 		for (int i = 0; i < _inventory._items.Count; i++)
                 {
@@ -286,11 +289,13 @@ public class SaveData
 public class PlayInfo
 {
         public string scene;
-	public string _saveDate;
+	public string _saveDate; 
 
         public long _date;
 	public int _playTime;
+
 	public int hp;
+        public Vector3 position; 
 }
 
 [Serializable]

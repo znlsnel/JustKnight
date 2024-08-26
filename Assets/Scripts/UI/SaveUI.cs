@@ -20,10 +20,12 @@ public class SaveUI : MonoBehaviour
 
 	SaveData _selected = null;
 	GameObject _selectedObject;
+	MainMenu _menu;
 
 	float lastSaveTime = 0.0f;
 	private void Start()
 	{
+		_menu = UIHandler.instance._mainMenu.GetComponent<MainMenu>();	
 		SelectSaveData(null);
 	}
 
@@ -51,6 +53,7 @@ public class SaveUI : MonoBehaviour
 	public void OnLoad()
 	{
 		SaveManager.instance.Load(_selected);
+		_menu.CloseMenu();
 	}
 
 	public void OnOverWrite()

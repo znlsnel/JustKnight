@@ -2772,70 +2772,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2009174030 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3004416864802387988, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
-  m_PrefabInstance: {fileID: 4983558181046015798}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2009174039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2009174030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5359084fbfb85f744be3605fe9846a13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2009174047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2009174030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
---- !u!114 &2009174048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2009174030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!114 &2009174056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2009174030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2767bd02288a3cb448d30e442fd461d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2062018864
 GameObject:
   m_ObjectHideFlags: 0
@@ -3162,10 +3098,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6875532847682818787, guid: b820a4b8231866446b7895b3a14374e0, type: 3}
     - target: {fileID: 120232734221705836, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
-      propertyPath: _questUI
-      value: 
-      objectReference: {fileID: 1099497523838755359, guid: bd238b034ecc74042941d2fc58031687, type: 3}
-    - target: {fileID: 120232734221705836, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
       propertyPath: _mainMenu
       value: 
       objectReference: {fileID: 8128465400994920941, guid: c0680f1db8d6e7b4dad97d780d91d201, type: 3}
@@ -3173,10 +3105,6 @@ PrefabInstance:
       propertyPath: _playerUI
       value: 
       objectReference: {fileID: 6858208880696852724, guid: fa8fdb4905f3362498db76cddc4b18a0, type: 3}
-    - target: {fileID: 120232734221705836, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
-      propertyPath: _questMenu
-      value: 
-      objectReference: {fileID: 1099497523838755359, guid: bd238b034ecc74042941d2fc58031687, type: 3}
     - target: {fileID: 120232734221705836, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
       propertyPath: _displayQuest
       value: 
@@ -3232,19 +3160,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3004416864802387988, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2009174039}
-    - targetCorrespondingSourceObject: {fileID: 3004416864802387988, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2009174048}
-    - targetCorrespondingSourceObject: {fileID: 3004416864802387988, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2009174047}
-    - targetCorrespondingSourceObject: {fileID: 3004416864802387988, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2009174056}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

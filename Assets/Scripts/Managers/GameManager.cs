@@ -10,24 +10,21 @@ public class GameManager : Singleton<GameManager>
 {
 
 	// Start is called before the first frame update
-//	MonsterGenerator _monsterGenerator;
 	[SerializeField] GameObject _playerPrefab;
 	GameObject _player; 
 	Camera _camera;
 	public Action _onNextScene;
 	FadeEffectManager _fadeEffect;
 
-	[NonSerialized] public int _playTime; 
+	[NonSerialized] public int _playTime;
 
-	public override void Awake() 
+	public override void Awake()
 	{
-	        base.Awake();
+		base.Awake();
 
-		//_monsterGenerator = gameObject.AddComponent<MonsterGenerator>();
 		_camera = Camera.main;
 		DontDestroyOnLoad(_camera);
 		UnityEngine.SceneManagement.SceneManager.sceneLoaded += InitGameScene;
-
 	}
 
 	IEnumerator UpdateTime()
@@ -53,7 +50,8 @@ public class GameManager : Singleton<GameManager>
 	} 
 	 
 	private void InitGameScene(Scene scene, LoadSceneMode mode)
-	{ 
+	{
+		Debug.Log("InitGameScene called: " + scene.name);
 		GameObject gen = GameObject.FindWithTag("PlayerGenPos");
 		if (gen == null)
 			return;
@@ -64,12 +62,15 @@ public class GameManager : Singleton<GameManager>
 		{
 			_player = Instantiate<GameObject>(_playerPrefab);
 			DontDestroyOnLoad(_player); 
-		}
+		} 
 		_player.transform.position = gen.transform.position;
 		_fadeEffect.PlayFadeIn();
 
+
 		_onNextScene?.Invoke();
 		_onNextScene = null;
+
+		
 	}
 
 	public void LoadScene(string sceneName) 

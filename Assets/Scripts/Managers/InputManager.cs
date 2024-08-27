@@ -57,7 +57,12 @@ public class InputManager : Singleton<InputManager>
 		if (freeze)
 		{
 			_characterActionMap.Disable();
-			Rigidbody2D rigid = GameManager.instance.GetPlayer().GetComponent<PlayerMovementController>()._rigidbody;
+
+			GameObject player = GameManager.instance.GetPlayer();
+			if (player == null)
+				return;
+
+			Rigidbody2D rigid = player.GetComponent<PlayerMovementController>()._rigidbody;
 			Vector3 temp = rigid.velocity;
 			temp.x /= 2.0f; 
 			rigid.velocity = temp;

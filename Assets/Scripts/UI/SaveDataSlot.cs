@@ -7,28 +7,24 @@ using UnityEngine.UI;
 
 public class SaveDataSlot : MonoBehaviour
 {
-	SaveUI _saveUI;
-	SaveData _data;
+	public Action _onSlotClick;
+	public SaveData _data;
 
 	public TextMeshProUGUI _date;
 	public TextMeshProUGUI _playTime;
 	 
-	private void Start()
-	{
-		_saveUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._saveUI;
-		
-	}
 	public void onClick()
 	{
-		_saveUI.SelectSaveData(_data, gameObject);
+		
+		_onSlotClick?.Invoke();
 	}
 
-	public void InitSaveSlot(bool auto, SaveData saveData = null)
+	public void InitSaveSlot(SaveData saveData, Action act = null)
 	{
-		if (saveData == null)
-			saveData =  SaveManager.instance.Save(auto);  
-		_data = saveData;
+		if (act != null)
+			_onSlotClick = act;
 
+		_data = saveData;
 		_date.text = saveData.PlayInfo._saveDate;
 
 		int playTime = saveData.PlayInfo._playTime;

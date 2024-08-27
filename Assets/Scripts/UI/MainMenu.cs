@@ -13,6 +13,7 @@ public enum EMenuType : int
 
 public class MainMenu : MonoBehaviour
 {
+	public GameObject _backGround;
         public GameObject _inventory;
         public GameObject _quest;
         public GameObject _save;

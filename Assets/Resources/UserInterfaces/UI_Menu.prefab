@@ -10665,6 +10665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4281c03b7ab12542a0835d19e4c7bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _backGround: {fileID: 7147953409443263751}
   _inventory: {fileID: 5737296454207893230}
   _quest: {fileID: 734427420754736040}
   _save: {fileID: 4995588571044680789}

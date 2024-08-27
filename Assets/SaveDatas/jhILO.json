@@ -1,0 +1,130 @@
+{
+    "itemDatas": [],
+    "episodes": [
+        {
+            "episodeCode": "System캐릭터 움직이기",
+            "state": 0
+        },
+        {
+            "episodeCode": "System실전 전투",
+            "state": 2
+        },
+        {
+            "episodeCode": "System구르기 동작",
+            "state": 0
+        },
+        {
+            "episodeCode": "System벽 점프",
+            "state": 0
+        },
+        {
+            "episodeCode": "System벽 오르기",
+            "state": 0
+        },
+        {
+            "episodeCode": "System튜토리얼 종료",
+            "state": 0
+        },
+        {
+            "episodeCode": "System공격, 막기 동작",
+            "state": 0
+        }
+    ],
+    "quests": [
+        {
+            "questCode": "System캐릭터 움직이기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "TASK_moveLeft",
+                    "curCnt": 0
+                },
+                {
+                    "taskName": "TASK_moveRight",
+                    "curCnt": 0
+                },
+                {
+                    "taskName": "TASK_Jump",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System실전 전투",
+            "state": 1,
+            "taskData": [
+                {
+                    "taskName": "Task_Kill",
+                    "curCnt": 0
+                },
+                {
+                    "taskName": "Task_Shield",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": true
+        },
+        {
+            "questCode": "System구르기 동작 해보기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System벽 점프 해보기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System벽 오르기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System공격, 막기 해보기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                },
+                {
+                    "taskName": "task 1",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        }
+    ],
+    "PlayInfo": {
+        "scene": "Tutorial",
+        "_saveDate": "24.08.27 (13:10:52)",
+        "_date": 23807452,
+        "_playTime": 0,
+        "hp": 3,
+        "position": {
+            "x": 36.58000183105469,
+            "y": -4.565000534057617,
+            "z": 0.0
+        }
+    },
+    "fileName": "jhILO"
+}

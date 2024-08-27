@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class SaveUI : MonoBehaviour
 {
 	public GameObject _saveSlotPrefab;
@@ -35,7 +36,7 @@ public class SaveUI : MonoBehaviour
 			return;
 		lastSaveTime = Time.time;	 
 
-		OnSave(auto, null );  
+		OnSave(auto, null);  
 	}
 	public void OnSave(bool auto, SaveData saveData)
 	{
@@ -44,9 +45,13 @@ public class SaveUI : MonoBehaviour
 		GameObject slot = Instantiate<GameObject>(_saveSlotPrefab);
 		slot.transform.SetParent(_slotParent.transform);
 		slot.transform.localScale = Vector3.one;
-		slot.transform.SetSiblingIndex(0); 
+		slot.transform.SetSiblingIndex(0);
 
-		slot.GetComponent<SaveDataSlot>().InitSaveSlot(auto, saveData);
+		if (saveData == null) 
+			saveData = SaveManager.instance.Save(auto);
+
+		SaveDataSlot sds = slot.GetComponent<SaveDataSlot>(); 
+		sds.InitSaveSlot(saveData, ()=> { SelectSaveData(sds._data, slot); });
 	}
 
 
@@ -59,7 +64,7 @@ public class SaveUI : MonoBehaviour
 	public void OnOverWrite()
 	{
 		SaveData saveData = SaveManager.instance.Save(false, _selected.fileName);
-		_selectedObject.GetComponent<SaveDataSlot>().InitSaveSlot(false, saveData); 
+		_selectedObject.GetComponent<SaveDataSlot>().InitSaveSlot(saveData); 
 	}
 
 	public void OnDelete()
@@ -104,5 +109,15 @@ public class SaveUI : MonoBehaviour
 		_loadButton.enabled = _selected != null;
 		_overwriteButton.enabled = _selected != null;
 		_deleteButton.enabled = _selected != null; 
+	}
+
+	public void SetSaveButtonActive(bool active)
+	{
+		Color color = Color.white;
+		if (!active)
+			color.a *= 0.5f;
+		 
+		_saveButton.image.color = color;
+		_saveButton.enabled = !active;
 	}
 }

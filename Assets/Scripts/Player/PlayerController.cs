@@ -104,7 +104,11 @@ public class PlayerController : MonoBehaviour
 		Instantiate(_SlideDust, _collMan._sensorFrontTop.gameObject.transform.position, new Quaternion());
 	}
 
+	public void InitCharacter(Vector3 pos, int hp)
+	{
+		this.hp = hp;
+		transform.position = pos;
+	}
 
 
-	
 } 

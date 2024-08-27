@@ -59,62 +59,69 @@ public class SaveManager : Singleton<SaveManager>
 
 	public void Load(SaveData saveData) 
 	{
-                // Item
-                _inventory.ResetInventory();
-                foreach (ItemData itemData in saveData.itemDatas)
-                {
-                        ItemSO item = Instantiate<ItemSO>(_items[itemData.Name]);
-                        item._effects.Clear();
+		// scene Load	
+		GameManager.instance.LoadScene(saveData.PlayInfo.scene);
 
-			foreach (AttributeData data in  itemData.Effects)
-                        {
-                                item._effects.Add(new SkillAttribute(data.effectType, data.value));
-                        }
-                        _inventory.AddItem(item, itemData.Idx);
-		}
 
-                // episodes
-                _dialogue.ResetEpisode();
-                foreach (EpisodeData epiData in saveData.episodes)
-                {
-                        EpisodeSO episode = Instantiate<EpisodeSO>(_episodes[epiData.episodeCode]);
-                        episode._state = epiData.state;
-                        _dialogue.AddDialogue(episode);
-		}
 
-                // quests
-                _quest.ResetQuest();
-                foreach (QuestData questData in saveData.quests)
-                {
-                        QuestSO quest = Instantiate<QuestSO>(_quests[questData.questCode]);
-                        quest.questState = questData.state;
-			foreach (TaskData taskData in questData.taskData)
-                        {
-                                for (int i = 0; i < quest.tasks.Count; i++)
-                                {
-                                        if (quest.tasks[i].name == taskData.taskName)
-                                        {
-                                                quest.tasks[i].curCnt = taskData.curCnt;
-                                                break;
+		// player Setting
+		GameManager.instance._onNextScene += () =>
+		{
+			Utils.instance.SetTimer(() =>
+			{
+				GameManager.instance.GetPlayer().transform.position = saveData.PlayInfo.position;
+				GameManager.instance.GetPlayer().GetComponent<PlayerController>().hp = saveData.PlayInfo.hp;
+			});
+
+
+			// Item
+			_inventory.ResetInventory();
+			foreach (ItemData itemData in saveData.itemDatas)
+			{
+				ItemSO item = Instantiate<ItemSO>(_items[itemData.Name]);
+				item._effects.Clear();
+
+				foreach (AttributeData data in itemData.Effects)
+				{
+					item._effects.Add(new SkillAttribute(data.effectType, data.value));
+				}
+				_inventory.AddItem(item, itemData.Idx);
+			}
+
+			// episodes
+			_dialogue.ResetEpisode();
+			foreach (EpisodeData epiData in saveData.episodes)
+			{
+				EpisodeSO episode = Instantiate<EpisodeSO>(_episodes[epiData.episodeCode]);
+				episode._state = epiData.state;
+				_dialogue.AddDialogue(episode);
+			}
+
+			// quests
+			_quest.ResetQuest();
+			foreach (QuestData questData in saveData.quests)
+			{
+				QuestSO quest = Instantiate<QuestSO>(_quests[questData.questCode]);
+				quest.questState = questData.state;
+				foreach (TaskData taskData in questData.taskData)
+				{
+					for (int i = 0; i < quest.tasks.Count; i++)
+					{
+						if (quest.tasks[i].name == taskData.taskName)
+						{
+							quest.tasks[i].curCnt = taskData.curCnt;
+							break;
+						}
 					}
-				} 
-                        }
+				}
 
-			_quest.AddQuest(quest);
-                      if (quest.questState != EQuestState.AWAITING)
-                                _quest.RegisterQuest(quest, questData.isDisplaying);
-                            
-                        _questUI.AddQuest(quest);
-		}
+				_quest.AddQuest(quest);
+				if (quest.questState != EQuestState.AWAITING)
+					_quest.RegisterQuest(quest, questData.isDisplaying);
 
-
-                // scene Load
-                GameManager.instance.LoadScene(saveData.PlayInfo.scene);
-
-                // player Setting
-                GameManager.instance._onNextScene += () => { GameManager.instance.GetPlayer().transform.position = saveData.PlayInfo.position; };
-                GameManager.instance._onNextScene += () => { GameManager.instance.GetPlayer().GetComponent<PlayerController>().hp = saveData.PlayInfo.hp; };
-
+				_questUI.AddQuest(quest);
+			}
+		};
 
 		// timer Setting
 		GameManager.instance._playTime = saveData.PlayInfo._playTime;

@@ -14,6 +14,7 @@ public class GameManager : Singleton<GameManager>
 	GameObject _player; 
 	Camera _camera;
 	public Action _onNextScene;
+	public Action _onEveryScene;
 	FadeEffectManager _fadeEffect;
 
 	[NonSerialized] public int _playTime;
@@ -69,8 +70,9 @@ public class GameManager : Singleton<GameManager>
 
 		_onNextScene?.Invoke();
 		_onNextScene = null;
+		_onEveryScene?.Invoke();
 
-		
+
 	}
 
 	public void LoadScene(string sceneName) 

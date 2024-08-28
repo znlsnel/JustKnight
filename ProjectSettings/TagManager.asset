@@ -8,6 +8,7 @@ TagManager:
   - BackGround
   - MonsterGenerator
   - NPC
+  - CameraBound
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Tile
   - Barrier
   - MonsterArea
-  - 
+  - Camera
   - 
   - 
   - 

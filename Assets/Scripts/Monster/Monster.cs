@@ -146,8 +146,12 @@ public abstract class Monster : MonoBehaviour
         public virtual void Update()
         {                
 		UpdateState();
-		_hpSlider.gameObject.transform.position = _hpPos.position; 
-	}  
+		_hpSlider.gameObject.transform.position = _hpPos.position;
+
+		Debug.Log($"_isObstacleAhead : {_isObstacleAhead}");
+
+
+	}
 
 	protected virtual void FixedUpdate()
 	{ 

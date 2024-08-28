@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,11 +10,13 @@ using Scene = UnityEngine.SceneManagement.Scene;
 public class CameraManager : MonoBehaviour
 {
 	static bool isAwake = false;
-        // Start is called before the first frame update 
-       GameObject _player;
-	Animator _anim;
 
-	[SerializeField] float yOffet = 2.0f;
+	[SerializeField] CinemachineVirtualCamera _virtualCamera;
+	[SerializeField] CinemachineConfiner2D _confiner;
+
+	GameObject _player;
+	Animator _anim; 
+
 	private void Awake()
 	{
 		if (isAwake)
@@ -21,17 +24,25 @@ public class CameraManager : MonoBehaviour
 			Destroy(gameObject);
 			return;
 		}
-
+		 
 		isAwake = true;
-		_anim = GetComponent<Animator>();	
+		_anim = GetComponent<Animator>();
+		DontDestroyOnLoad(_virtualCamera.gameObject);
 	} 
 
 	void Start()
 	{
-
+		GameManager.instance._onNextScene += () => { _virtualCamera.Follow = GameManager.instance.GetPlayer().transform;};
+		GameManager.instance._onEveryScene += FindCameraBoundingBox;
 	}
 
-    // Update is called once per frame
+	public void FindCameraBoundingBox() 
+	{
+		GameObject bound = GameObject.FindWithTag("CameraBound");
+		_confiner.m_BoundingShape2D = bound.GetComponent<PolygonCollider2D>();
+	}
+
+	// Update is called once per frame
 	void Update()
 	{
 		 
@@ -45,29 +56,11 @@ public class CameraManager : MonoBehaviour
 			_anim.Play("CameraShake_Left");
 		else
 			_anim.Play("CameraShake_Right");
-
 	} 
 
 
 	void AE_EndShake()
 	{
-	//	test = false;
+
 	}
-
-	private void LateUpdate()     
-	{ 
-	//	if (test) return; 
-		if (_player == null )
-		{
-			_player = GameManager.instance.GetPlayer();
-			return;
-		}
-		 
-		Vector3 nextPosX = _player.transform.position;
-		nextPosX.y -= yOffet;
-		nextPosX.z = -10.0f;
-		transform.position = nextPosX;	  
-	}
-
-
 }

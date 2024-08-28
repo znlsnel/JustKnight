@@ -52,7 +52,6 @@ public class GameManager : Singleton<GameManager>
 	 
 	private void InitGameScene(Scene scene, LoadSceneMode mode)
 	{
-		Debug.Log("InitGameScene called: " + scene.name);
 		GameObject gen = GameObject.FindWithTag("PlayerGenPos");
 		if (gen == null)
 			return;

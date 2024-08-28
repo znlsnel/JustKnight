@@ -118,6 +118,6 @@ public class SaveUI : MonoBehaviour
 			color.a *= 0.5f;
 		 
 		_saveButton.image.color = color;
-		_saveButton.enabled = !active;
+		_saveButton.enabled = active;
 	}
 }

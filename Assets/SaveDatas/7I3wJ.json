@@ -23,10 +23,14 @@
         },
         {
             "episodeCode": "System튜토리얼 종료",
-            "state": 0
+            "state": 3
         },
         {
             "episodeCode": "System공격, 막기 동작",
+            "state": 0
+        },
+        {
+            "episodeCode": "그럼바크빌곤트 상단과의 조우",
             "state": 0
         }
     ],
@@ -112,19 +116,30 @@
                 }
             ],
             "isDisplaying": false
+        },
+        {
+            "questCode": "김덕배김촌장 찾아가기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
         }
     ],
     "PlayInfo": {
-        "scene": "Tutorial",
-        "_saveDate": "24.08.27 (13:10:52)",
-        "_date": 23807452,
+        "scene": "Ch1_Town",
+        "_saveDate": "24.08.28 (18:39:00)",
+        "_date": 23913540,
         "_playTime": 0,
         "hp": 3,
         "position": {
-            "x": 36.58000183105469,
-            "y": -4.565000534057617,
+            "x": -21.82077407836914,
+            "y": -4.600488662719727,
             "z": 0.0
         }
     },
-    "fileName": "jhILO"
+    "fileName": "7I3wJ"
 }

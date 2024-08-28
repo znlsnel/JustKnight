@@ -32,17 +32,39 @@ public class CameraManager : MonoBehaviour
 
 	void Start()
 	{
-		GameManager.instance._onNextScene += () => { _virtualCamera.Follow = GameManager.instance.GetPlayer().transform;};
-		GameManager.instance._onEveryScene += FindCameraBoundingBox;
+		GameManager.instance._onNextScene += () => { 
+			_virtualCamera.Follow = GameManager.instance.GetPlayer().transform;
+			GameManager.instance.GetPlayer().GetComponent<PlayerMovementController>()._onPlayerLookDirChanged += (int dir) =>
+			{
+				float value = 1.2f * dir;
+
+				CinemachineFramingTransposer framingTransposer = _virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+				framingTransposer.m_TrackedObjectOffset.x = value;
+			};
+		};
+		GameManager.instance._onEveryScene += InitCamera; 
 	}
 
-	public void FindCameraBoundingBox() 
+
+	public void InitCamera()  
 	{
-		GameObject bound = GameObject.FindWithTag("CameraBound");
-		_confiner.m_BoundingShape2D = bound.GetComponent<PolygonCollider2D>();
+		Camera[] allCameras = FindObjectsOfType<Camera>();
+		foreach(Camera cam in allCameras)
+		{
+			if (cam.gameObject != gameObject)
+				Destroy(cam.gameObject);
+		}
+
+		PolygonCollider2D bound = FindObjectOfType<PolygonCollider2D>();
+		_confiner.m_BoundingShape2D = null; 
+		_confiner.m_BoundingShape2D = bound;
+
+		float value = 1.2f * GameManager.instance.GetPlayer().transform.localScale.x;
+		CinemachineFramingTransposer framingTransposer = _virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+		framingTransposer.m_TrackedObjectOffset.x = value;
 	}
 
-	// Update is called once per frame
+
 	void Update()
 	{
 		 

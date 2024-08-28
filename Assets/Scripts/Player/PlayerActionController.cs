@@ -81,7 +81,7 @@ public class PlayerActionController : MonoBehaviour
 			yield return null; // 다음 프레임까지 대기
 
 		float animLength = _animCtrl.GetCurAnimLength();
-		Debug.Log(animLength);
+		//Debug.Log(animLength);
 		yield return new WaitForSeconds(animLength);
 		_activeState = EActiveState.Awaiting;
 		_animCtrl.PlayAnimation();

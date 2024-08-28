@@ -148,8 +148,6 @@ public abstract class Monster : MonoBehaviour
 		UpdateState();
 		_hpSlider.gameObject.transform.position = _hpPos.position;
 
-		Debug.Log($"_isObstacleAhead : {_isObstacleAhead}");
-
 
 	}
 

@@ -15,7 +15,27 @@ public class PlayerMovementController : MonoBehaviour
 	PlayerCollisionManager _playerCollision;
 	PlayerStatus _status;
 
-	bool _isWallClimb = false; 
+	bool _isWallClimb = false;
+
+	int characterLookDir;
+	int _characterLookDir 
+	{ 
+		get 
+		{ 
+			return characterLookDir; 
+		}
+		set
+		{
+			if (value == characterLookDir)
+				return;
+			 
+			characterLookDir = value;
+			_onPlayerLookDirChanged?.Invoke(characterLookDir); 
+		} 
+	}
+	public Action<int> _onPlayerLookDirChanged;
+
+
 	private void Start() 
 	{
 		_playerController = GetComponent<PlayerController>();	
@@ -84,9 +104,9 @@ public class PlayerMovementController : MonoBehaviour
 		 
 		if (_actionController._activeState != EActiveState.Shield && _playerController._playerState != EPlayerState.Death)
 		{
-			int dir = moveDir > 0 ? 1 : -1;
+			_characterLookDir = moveDir > 0 ? 1 : -1;
 			Vector3 scale = gameObject.transform.localScale;
-			gameObject.transform.localScale = new Vector3(Mathf.Abs(scale.x) * dir, scale.y, scale.z);
+			gameObject.transform.localScale = new Vector3(Mathf.Abs(scale.x) * _characterLookDir, scale.y, scale.z); 
 		}
 		
 		// 공중에 있을 때에도 약간의 이동이 되야하면서

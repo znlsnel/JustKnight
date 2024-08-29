@@ -41,7 +41,12 @@ public class StartMenu : MonoBehaviour
 
 	public void OnGameQuit()
         {
-		Debug.Log("OnGameQuit");
+		Application.Quit();
+
+		// 유니티 에디터에서 플레이 모드 종료
+#if UNITY_EDITOR
+		UnityEditor.EditorApplication.isPlaying = false;
+#endif
 
 	}
 }

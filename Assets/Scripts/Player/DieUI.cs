@@ -4,27 +4,8 @@ using UnityEngine;
 
 public class DieUI : MonoBehaviour
 {
+        [SerializeField] GameObject _startMenu;
         Animator _anim;
-
-        GameObject player;
-        GameObject _player 
-        {
-                get
-                {
-                        if (player == null)
-                                player = GameManager.instance.GetPlayer();
-                        return player;
-                }
-        }
-	PlayerController _playerCtrl
-        {
-                get 
-                { 
-                        if (_player == null)
-                                return null;
-                        return _player.GetComponent<PlayerController>();
-                }
-        }
 
     // Start is called before the first frame update
         void Start()
@@ -40,6 +21,16 @@ public class DieUI : MonoBehaviour
                 _anim.Play("open"); 
         }
 
+        public void AE_EndOpenAnim() 
+        {
+                StartMenu.instance.ActiveStartMenu(true);
+                GameManager.instance._onNextScene += () =>
+                {
+                        GameManager.instance.GetPlayer().GetComponent<PlayerController>()._playerState = EPlayerState.Idle;
+                        InputManager.instance.Freezz(false);
+                        gameObject.SetActive(false); 
+                };
+        }
 
    
 }

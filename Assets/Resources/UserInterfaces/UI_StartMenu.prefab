@@ -850,7 +850,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 612360827140977293}
-        m_TargetAssemblyTypeName: startMenuManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: StartMenu, Assembly-CSharp
         m_MethodName: OnNewGameButton
         m_Mode: 1
         m_Arguments:
@@ -983,7 +983,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 612360827140977293}
-        m_TargetAssemblyTypeName: startMenuManager, Assembly-CSharp
+        m_TargetAssemblyTypeName: StartMenu, Assembly-CSharp
         m_MethodName: OnGameQuit
         m_Mode: 1
         m_Arguments:

@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: "\uBE4C\uACE4\uD2B8"
   episodeName: "\uADF8\uB78C\uBC14\uD2B8 \uCC3E\uAE30"
-  episodeCode: QLFRHSXM_qolkc
   quest: {fileID: 11400000, guid: 621e6c89c4e515245a22ed7c22b07193, type: 2}
   preQuest: {fileID: 11400000, guid: 779067e940b49014fb8cdd822b865c05, type: 2}
   pendingDialogue: {fileID: 11400000, guid: 8caae0f482f3a4e43a10a15347309277, type: 2}

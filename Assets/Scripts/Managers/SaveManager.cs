@@ -73,9 +73,9 @@ public class SaveManager : Singleton<SaveManager>
 				GameManager.instance.GetPlayer().GetComponent<PlayerController>().hp = saveData.PlayInfo.hp;
 			});
 
+			GameManager.instance.ResetGame();
 
 			// Item
-			_inventory.ResetInventory();
 			foreach (ItemData itemData in saveData.itemDatas)
 			{
 				ItemSO item = Instantiate<ItemSO>(_items[itemData.Name]);
@@ -87,18 +87,14 @@ public class SaveManager : Singleton<SaveManager>
 				}
 				_inventory.AddItem(item, itemData.Idx);
 			}
-
 			// episodes
-			_dialogue.ResetEpisode();
 			foreach (EpisodeData epiData in saveData.episodes)
 			{
 				EpisodeSO episode = Instantiate<EpisodeSO>(_episodes[epiData.episodeCode]);
 				episode._state = epiData.state;
 				_dialogue.AddDialogue(episode);
 			}
-
 			// quests
-			_quest.ResetQuest();
 			foreach (QuestData questData in saveData.quests)
 			{
 				QuestSO quest = Instantiate<QuestSO>(_quests[questData.questCode]);
@@ -141,7 +137,7 @@ public class SaveManager : Singleton<SaveManager>
         {
                 File.Delete(Application.dataPath + "/SaveDatas/" + fileName + ".json");  
                 File.Delete(Application.dataPath + "/SaveDatas/" + fileName + ".json.meta");
-	}
+	} 
 
         public void LoadAllSaveData()
         {
@@ -193,7 +189,15 @@ public class SaveManager : Singleton<SaveManager>
 		if (fileName == "") 
                         fileName = GenerateStringID(); 
 
-                SaveData saveData = _savedFiles.ContainsKey(fileName) ? _savedFiles[fileName] : new SaveData();
+                SaveData saveData =  new SaveData();
+		if (_savedFiles.ContainsKey(fileName))
+		{
+			saveData = _savedFiles[fileName];
+			saveData.episodes.Clear();
+			saveData.quests.Clear();	
+			saveData.itemDatas.Clear();
+		}
+		 
 		saveData.fileName = fileName; 
 		saveData.PlayInfo.scene = SceneManager.GetActiveScene().name;
 		saveData.PlayInfo.hp = GameManager.instance.GetPlayer().GetComponent<PlayerController>().hp;

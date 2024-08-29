@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.VisualScripting;
+using UnityEditor.PackageManager.Requests;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -18,6 +19,10 @@ public class GameManager : Singleton<GameManager>
 	FadeEffectManager _fadeEffect;
 
 	[NonSerialized] public int _playTime;
+	InventoryManager _inventory;
+	DialogueManager _dialogue;
+	QuestManager _quest;
+
 
 	public override void Awake()
 	{
@@ -40,6 +45,10 @@ public class GameManager : Singleton<GameManager>
 
 	void Start()   
 	{
+		_inventory = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._inventoryManager;
+		_dialogue = UIHandler.instance._dialogue.GetComponent<DialogueManager>();
+		_quest = QuestManager.instance;
+
 		_fadeEffect = UIHandler.instance._fadeEffect.GetComponentInChildren<FadeEffectManager>();
 		StartCoroutine(UpdateTime()); 
 	} 
@@ -83,8 +92,14 @@ public class GameManager : Singleton<GameManager>
 		{
 			UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
 		}; 
-	} 
+	}
 
+	public void ResetGame()
+	{
+		_inventory.ResetInventory();
+		_dialogue.ResetEpisode();
+		_quest.ResetQuest();
+	}
 	// Update is called once per frame
 	void Update()
 	{

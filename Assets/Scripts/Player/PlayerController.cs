@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 	InputManager _inputManager;
 	PlayerActionController _actionController;
 	PlayerMovementController _movementController;
-	PlayerStatus _effectManager;
+	PlayerStatus _playerStatus;
 
 	public GameObject _SlideDust;
 
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 		set 
 		{  
 			_hp = value;
-			_playerUI.UpdateHpBar(_hp, _effectManager.GetValue(EPlayerStatus.HP)); 
+			_playerUI.UpdateHpBar(_hp, _playerStatus.GetValue(EPlayerStatus.HP)); 
 		}
 	}
 
@@ -85,17 +85,21 @@ public class PlayerController : MonoBehaviour
 		_animController = gameObject.AddComponent<PlayerAnimCtrl>(); 
 		_actionController = gameObject.AddComponent<PlayerActionController>();
 		_movementController = gameObject.AddComponent<PlayerMovementController>();
+
+		_playerUI = UIHandler.instance._playerUI.GetComponent<PlayerUI>();
+		_playerUI.gameObject.SetActive(true);
+
 		_inputManager = InputManager.instance;
+
 	}
 	 
 	void Start()
 	{
 		_collMan = gameObject.GetComponent<PlayerCollisionManager>();
-		_effectManager = PlayerStatus.instance;
-		_playerUI = UIHandler.instance._playerUI.GetComponent<PlayerUI>();
-		_playerUI.gameObject.SetActive(true);
+		_playerStatus = PlayerStatus.instance;
 		
-		_hp = _effectManager.GetValue(EPlayerStatus.HP);    
+		
+		_hp = _playerStatus.GetValue(EPlayerStatus.HP);    
 		_playerUI.UpdateHpBar(_hp, _hp);
 	}
 

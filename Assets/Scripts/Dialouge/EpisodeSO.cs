@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [Serializable]
-public enum EDialogueState
+public enum EEpisodeState
 {
 	PENDING_ACCEPTANCE,
 	REJECTED,
@@ -32,10 +32,10 @@ public class EpisodeSO : ScriptableObject
 	public DialogueSO completedDialogue; // 퀘스트 완료 이후 DialogueSO
 	public Action _onChangeState;
 
-	[NonSerialized] EDialogueState state = EDialogueState.PENDING_ACCEPTANCE;
+	[NonSerialized] EEpisodeState state = EEpisodeState.PENDING_ACCEPTANCE;
 	public string episodeCode { get { return npcName + episodeName;} }
 
-	public EDialogueState _state
+	public EEpisodeState _state
 	{ 
 		get {return state; } 
 		set 
@@ -67,28 +67,28 @@ public class EpisodeSO : ScriptableObject
 		  
 		curPage = init ? 0 : curPage; 
 
-		if (_state == EDialogueState.IN_PROGRESS && (quest == null || quest.isClear))
-			_state = EDialogueState.AWAITING_COMPLETION;
+		if (_state == EEpisodeState.IN_PROGRESS && (quest == null || quest.isClear))
+			_state = EEpisodeState.AWAITING_COMPLETION;
 		
 		switch (_state)
 		{
-			case EDialogueState.PENDING_ACCEPTANCE: 
+			case EEpisodeState.PENDING_ACCEPTANCE: 
 				curDialogue = pendingDialogue; // 몬스터 잡아줘
 				break;
 
-			case EDialogueState.REJECTED:
+			case EEpisodeState.REJECTED:
 				curDialogue = rejectedDialogue; // 거절하지 말고 잡아줘
 				break;
 
-			case EDialogueState.IN_PROGRESS:
+			case EEpisodeState.IN_PROGRESS:
 				curDialogue =  progressDialogue; // 저 몬스터를 잡아야해!
 				break;
 
-			case EDialogueState.AWAITING_COMPLETION: 
+			case EEpisodeState.AWAITING_COMPLETION: 
 				curDialogue = awaitingDialogue; // 고마워 보상이야!
 				break;
 
-			case EDialogueState.COMPLETED:
+			case EEpisodeState.COMPLETED:
 				curDialogue =  completedDialogue; // 저번에는 고마웠어!
 				break;
 
@@ -117,12 +117,12 @@ public class EpisodeSO : ScriptableObject
 				{
 					string reward = quest.reward != null ? quest.reward.GetReward() : "";
 					QuestManager.instance.CompleteQuest(quest, reward);
-					_state = EDialogueState.COMPLETED; 
+					_state = EEpisodeState.COMPLETED; 
 				}
 				break;
 
 			case EResponseType.RECEIVE_QUEST:
-				_state = EDialogueState.IN_PROGRESS;
+				_state = EEpisodeState.IN_PROGRESS;
 				if (quest != null)
 				{
 					quest.questState = EQuestState.IN_PROGRESS;
@@ -131,7 +131,7 @@ public class EpisodeSO : ScriptableObject
 				break; 
 
 			case EResponseType.REJECT:
-				_state = EDialogueState.REJECTED;
+				_state = EEpisodeState.REJECTED;
 				return true;
 
 		};

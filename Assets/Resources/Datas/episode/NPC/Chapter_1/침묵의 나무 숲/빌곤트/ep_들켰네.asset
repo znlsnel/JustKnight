@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab0f38a0c871e5d4ca33a79c7c903ba1, type: 3}
-  m_Name: "ep_\uC9C4\uC2E4\uC18D\uC73C\uB85C"
+  m_Name: "ep_\uB4E4\uCF30\uB124"
   m_EditorClassIdentifier: 
-  npcName: "\uADF8\uB7FC\uBC14\uD06C"
-  episodeName: "\uC9C4\uC2E4\uC18D\uC73C\uB85C"
-  quest: {fileID: 11400000, guid: f55384021cffd3746bc39fb2b47aafa7, type: 2}
+  npcName: "\uBE4C\uACE4\uD2B8"
+  episodeName: "\uB4E4\uCF30\uB124"
+  quest: {fileID: 0}
   preQuest: {fileID: 0}
-  pendingDialogue: {fileID: 11400000, guid: 16bb0be2c42e0874c91e7a35af408150, type: 2}
+  pendingDialogue: {fileID: 11400000, guid: 68820037318dd8245a0b2729cbcfccd2, type: 2}
   rejectedDialogue: {fileID: 0}
   progressDialogue: {fileID: 0}
   awaitingDialogue: {fileID: 0}

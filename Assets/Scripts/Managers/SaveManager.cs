@@ -334,7 +334,7 @@ public class AttributeData
 public class EpisodeData
 {
         public string episodeCode;
-	public EDialogueState state;
+	public EEpisodeState state;
 }
 
 [Serializable]

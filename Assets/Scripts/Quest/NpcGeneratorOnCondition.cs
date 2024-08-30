@@ -8,8 +8,12 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 public class NpcGeneratorOnCondition : MonoBehaviour
 {
         [SerializeField] GameObject _npc;
+
         [SerializeField] QuestSO _quest;
-	[SerializeField] EQuestState _state; 
+	[SerializeField] EQuestState _questState;
+
+	[SerializeField] EpisodeSO _episode;
+	[SerializeField] EEpisodeState _episodeState; 
 
 	SpriteRenderer _spriteRenderer;
 	void Start()
@@ -32,18 +36,22 @@ public class NpcGeneratorOnCondition : MonoBehaviour
 
 	bool Check()
 	{
-		if (_quest == null)
-			return true;
+		if (_quest != null)
+			QuestManager.instance.UpdateQuestData(ref _quest);
+		if (_episode != null)
+			UIHandler.instance._dialogue.GetComponent<DialogueManager>().UpdateQuestDialogue(ref _episode);
 
-		QuestManager.instance.UpdateQuestData(ref _quest);
-
-		if (_quest.questState == _state)
+		if ((_quest != null && _quest.questState == _questState) || (_episode != null && _episode._state == _episodeState) ) 
 		{
 			transform.localScale = Vector3.one;
-			Instantiate<GameObject>(_npc, transform);
-			gameObject.SetActive(false);
+			_npc.SetActive(true);
+			_npc.GetComponent<DisappearOnCondition>()?.StartCheck();
+			   
+			gameObject.SetActive(false); 
 			return true;
 		}
+		else if (_npc.activeSelf == true)
+			_npc.SetActive(false);
 
 		return false;
 	}

@@ -28,28 +28,28 @@ public class NpcStateUI : MonoBehaviour
 		ENpcStateType type = ENpcStateType.NONE;
 		if (episode.GetDialogue(false) != null)
 		{
-			EDialogueState state = episode._state;
+			EEpisodeState state = episode._state;
 			switch (state)
 			{
-				case EDialogueState.PENDING_ACCEPTANCE:
-				case EDialogueState.REJECTED:
+				case EEpisodeState.PENDING_ACCEPTANCE:
+				case EEpisodeState.REJECTED:
 					{
 						type = ENpcStateType.QUEST;
 						break;
 					}
 
-				case EDialogueState.IN_PROGRESS:
+				case EEpisodeState.IN_PROGRESS:
 					{
 						type = ENpcStateType.TALKING;
 						break;
 					}
-				case EDialogueState.COMPLETED:
+				case EEpisodeState.COMPLETED:
 					{
 						type = ENpcStateType.NONE;
 						break;
 					}
 
-				case EDialogueState.AWAITING_COMPLETION:
+				case EEpisodeState.AWAITING_COMPLETION:
 					{
 						type = ENpcStateType.REWARD;
 						break;

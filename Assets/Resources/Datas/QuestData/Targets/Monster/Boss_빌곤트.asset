@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 667e4d8782078aa438f573b7f653cfb3, type: 3}
-  m_Name: "\uAE40\uCD0C\uC7A5"
+  m_Name: "Boss_\uBE4C\uACE4\uD2B8"
   m_EditorClassIdentifier: 
   _name: 
   target: 

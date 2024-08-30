@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5729f79f84dc08549a85fd3cedda5001, type: 3}
   m_Name: task
   m_EditorClassIdentifier: 
-  category: {fileID: 11400000, guid: ed17eee6497195748a30a8c7097c5f2b, type: 2}
-  taskTitle: "\uADF8\uB78C\uBC14\uD2B8 \uCC3E\uAE30"
+  category: {fileID: 11400000, guid: bd9a71b806bdf4b45ab114c16b1cedea, type: 2}
+  taskTitle: KillBOSS
   action: {fileID: 11400000, guid: cc6c2c95205bce645beb130f96e09eb4, type: 2}
-  target: {fileID: 11400000, guid: 9de3499419d140b419fa757097911233, type: 2}
+  target: {fileID: 11400000, guid: fe81d0169b49d624b94233c3f4469761, type: 2}
   targetCnt: 1

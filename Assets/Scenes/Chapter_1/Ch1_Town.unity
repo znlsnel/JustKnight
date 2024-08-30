@@ -3405,7 +3405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4248525702310717770, guid: fe0794e22faba854399a3b344b305bbd, type: 3}
       propertyPath: m_Name
-      value: "NPC\uAE40\uB355\uBC30"
+      value: "\uADF8\uB7FC\uBC14\uD06C"
       objectReference: {fileID: 0}
     - target: {fileID: 8675171148034411582, guid: fe0794e22faba854399a3b344b305bbd, type: 3}
       propertyPath: _dialogues.Array.data[0]
@@ -3414,8 +3414,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4248525702310717770, guid: fe0794e22faba854399a3b344b305bbd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5814047897498709063}
   m_SourcePrefab: {fileID: 100100000, guid: fe0794e22faba854399a3b344b305bbd, type: 3}
+--- !u!1 &5814047897498709062 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4248525702310717770, guid: fe0794e22faba854399a3b344b305bbd, type: 3}
+  m_PrefabInstance: {fileID: 5814047897498709061}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5814047897498709063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5814047897498709062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee231f0200ef3ea45af4c8084887ae78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _quest: {fileID: 11400000, guid: 779067e940b49014fb8cdd822b865c05, type: 2}
+  _condition: 0
 --- !u!1001 &7802882736558518650
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3434,7 +3456,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5950452557866930818, guid: 909a8599f75a4b641a051186489dabe3, type: 3}
       propertyPath: m_Name
-      value: "NPC\uCD0C\uC7A5"
+      value: "\uBE4C\uACE4\uD2B8"
       objectReference: {fileID: 0}
     - target: {fileID: 8848418812753467237, guid: 909a8599f75a4b641a051186489dabe3, type: 3}
       propertyPath: m_LocalPosition.x

@@ -23,7 +23,6 @@ public class NpcManager : MonoBehaviour
 	bool canStartQuest = false;
 
 
-
 	void Start()
         { 
 		_questUI = _questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI;

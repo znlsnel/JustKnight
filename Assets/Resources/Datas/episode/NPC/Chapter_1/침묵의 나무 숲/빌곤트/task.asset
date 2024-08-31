@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: task
   m_EditorClassIdentifier: 
   category: {fileID: 11400000, guid: bd9a71b806bdf4b45ab114c16b1cedea, type: 2}
-  taskTitle: KillBOSS
+  taskTitle: "\uBE4C\uACE4\uD2B8 \uC81C\uC555"
   action: {fileID: 11400000, guid: cc6c2c95205bce645beb130f96e09eb4, type: 2}
   target: {fileID: 11400000, guid: fe81d0169b49d624b94233c3f4469761, type: 2}
   targetCnt: 1

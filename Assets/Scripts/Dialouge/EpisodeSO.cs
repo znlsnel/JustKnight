@@ -67,7 +67,7 @@ public class EpisodeSO : ScriptableObject
 		  
 		curPage = init ? 0 : curPage; 
 
-		if (_state == EEpisodeState.IN_PROGRESS && (quest == null || quest.isClear))
+		if (_state == EEpisodeState.IN_PROGRESS && (quest != null && quest.isClear))
 			_state = EEpisodeState.AWAITING_COMPLETION;
 		
 		switch (_state)

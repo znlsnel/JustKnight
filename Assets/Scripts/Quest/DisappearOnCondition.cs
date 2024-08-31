@@ -10,11 +10,10 @@ public class DisappearOnCondition : MonoBehaviour
 	// Start is called before the first frame update
 
 	[SerializeField] QuestSO _quest;
-	
 	[SerializeField] EpisodeSO _episode; 
 	[SerializeField] EEpisodeState _episodeState;
 	 
-	public void StartCheck()
+	public void StartCheck()  
         {
 		StartCoroutine(UpdateCheck(Check)); 
 	}

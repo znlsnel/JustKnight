@@ -8,7 +8,9 @@ public class MonsterGenerator : MonoBehaviour
 {
 	public GameObject _monsterPrefab;
 	public int _monsterLimit = 0; 
+
         public QuestSO _endCondition;
+        public QuestSO _startCondition;
           
 	ObjectPool<GameObject> _monsterPool;
 
@@ -58,6 +60,9 @@ public class MonsterGenerator : MonoBehaviour
          
 	void Start()
         {
+                if (_startCondition != null)
+                        return;
+
 		while (_spawnedCnt  < _monsterLimit)
 		{
 			StartCoroutine(GenMonster());
@@ -82,9 +87,10 @@ public class MonsterGenerator : MonoBehaviour
          
     // Update is called once per frame
         void Update()
-        { 
-                if (_spawnedCnt <  _monsterLimit / 2)
-                {
+        {
+                int genCondition = _monsterLimit > 1 ? _monsterLimit / 2 : _monsterLimit; 
+                if (_spawnedCnt < genCondition)
+                { 
                         if (_endCondition != null)
                         {
                                  QuestManager.instance.UpdateQuestData(ref _endCondition);
@@ -93,7 +99,11 @@ public class MonsterGenerator : MonoBehaviour
                                         gameObject.SetActive(false);
                                         return;
                                 }
-                        }        
+                        }
+
+                        if (_startCondition != null && _startCondition.questState != EQuestState.IN_PROGRESS)
+                                return;
+
                         while (_spawnedCnt < _monsterLimit)
                         {  
 				StartCoroutine(GenMonster(UnityEngine.Random.Range(0.1f, 2.0f)));

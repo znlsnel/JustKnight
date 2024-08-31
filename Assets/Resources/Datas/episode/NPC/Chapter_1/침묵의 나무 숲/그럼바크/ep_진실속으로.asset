@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: "\uADF8\uB7FC\uBC14\uD06C"
   episodeName: "\uC9C4\uC2E4\uC18D\uC73C\uB85C"
-  quest: {fileID: 11400000, guid: f55384021cffd3746bc39fb2b47aafa7, type: 2}
+  quest: {fileID: 0}
   preQuest: {fileID: 0}
   pendingDialogue: {fileID: 11400000, guid: 16bb0be2c42e0874c91e7a35af408150, type: 2}
   rejectedDialogue: {fileID: 0}

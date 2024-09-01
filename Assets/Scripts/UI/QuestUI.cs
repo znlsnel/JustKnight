@@ -102,13 +102,13 @@ public class QuestUI : MonoBehaviour, IMenuUI
 		EQuestMenuType type = EQuestMenuType.PENDING;
 		switch (state)
 		{ 
-			case EQuestState.AWAITING:
+			case EQuestState.PENDING:
 				type = EQuestMenuType.PENDING;
 				break;
 			case EQuestState.IN_PROGRESS:
 				type = EQuestMenuType.INPROGRESS;
 				break;
-			case EQuestState.COMPLETED:
+			case EQuestState.ENDED:
 				type = EQuestMenuType.COMPLETED;
 				break;
 		}
@@ -153,7 +153,7 @@ public class QuestUI : MonoBehaviour, IMenuUI
 
 		_questSlots.Add(quest, gm);
 		 
-		EQuestMenuType type = ConvertType(quest.questState);
+		EQuestMenuType type = ConvertType(quest._state);
 		gm.transform.SetParent(GetQuestParent(type).transform);
 		gm.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 		
@@ -161,7 +161,7 @@ public class QuestUI : MonoBehaviour, IMenuUI
 
 	public void MoveToQuestList(QuestSO quest, bool display = false) 
 	{
-		EQuestMenuType type = ConvertType(quest.questState);
+		EQuestMenuType type = ConvertType(quest._state);
 
 		GameObject gm;
 		if (_questSlots.TryGetValue(quest, out gm)) 

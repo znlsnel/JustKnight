@@ -82,7 +82,7 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 			EpisodeSO ep = episodes[idx]; 
 			UpdateQuestDialogue(ref ep); 
 
-			if (ep.GetDialogue(false) == null || (ep.preQuest != null &&  ep.preQuest.questState != EQuestState.COMPLETED) )
+			if (ep.GetDialogue(false) == null || (ep.preQuest != null &&  ep.preQuest._state != EQuestState.ENDED) )
 				continue;
 			  
 			startableIdxs.Add(idx);

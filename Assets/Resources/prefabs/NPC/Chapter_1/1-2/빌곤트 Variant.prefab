@@ -61,6 +61,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -267237626, guid: 79bb0e6e911380548af554f6b79b9f16, type: 3}
     - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
+      propertyPath: isAutoStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       propertyPath: _dialogues.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 5f2a4c3550acb3d449e141b9d0cf69e7, type: 2}

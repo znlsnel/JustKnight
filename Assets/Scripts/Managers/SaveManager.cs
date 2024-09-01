@@ -98,7 +98,7 @@ public class SaveManager : Singleton<SaveManager>
 			foreach (QuestData questData in saveData.quests)
 			{
 				QuestSO quest = Instantiate<QuestSO>(_quests[questData.questCode]);
-				quest.questState = questData.state;
+				quest._state = questData.state;
 				foreach (TaskData taskData in questData.taskData)
 				{
 					for (int i = 0; i < quest.tasks.Count; i++)
@@ -112,7 +112,7 @@ public class SaveManager : Singleton<SaveManager>
 				}
 
 				_quest.AddQuest(quest);
-				if (quest.questState != EQuestState.AWAITING)
+				if (quest._state != EQuestState.PENDING)
 					_quest.RegisterQuest(quest, questData.isDisplaying);
 
 				_questUI.AddQuest(quest);
@@ -240,7 +240,7 @@ public class SaveManager : Singleton<SaveManager>
                 {
                         QuestData quest = new QuestData();
                         quest.questCode = data.Key;
-                        quest.state = data.Value.questState;
+                        quest.state = data.Value._state;
 			quest.isDisplaying = _displayQuest.IsQuestStored(data.Value);
 
 			foreach (QuestTaskSO questTask in data.Value.tasks)

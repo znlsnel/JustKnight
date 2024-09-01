@@ -104,7 +104,7 @@ public class QuestManager : Singleton<QuestManager>
 
 	public void CompleteQuest(QuestSO quest, string rewardInfo)
 	{
-		quest.questState = EQuestState.COMPLETED;
+		quest._state = EQuestState.ENDED;
 		foreach (Action action in quest._onClear)
 			action?.Invoke();
 		quest._onClear = null;

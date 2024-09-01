@@ -6,11 +6,12 @@ using UnityEngine.PlayerLoop;
 
 public enum EQuestState
 {
-	AWAITING,
+	PENDING,
 	IN_PROGRESS,
-	COMPLETED
+	COMPLETED,
+	ENDED
 }
-
+ 
 [CreateAssetMenu(fileName = "NewQuest", menuName = "new Quest", order = 1)]
 public class QuestSO : ScriptableObject
 {
@@ -27,8 +28,23 @@ public class QuestSO : ScriptableObject
 	public bool isAutoComplete;
 
 	[NonSerialized] private bool clear = false;
-	 
-	[NonSerialized] public EQuestState questState = EQuestState.AWAITING;
+
+	EQuestState questState = EQuestState.PENDING;
+	public EQuestState _state
+	{
+		get { return questState; }
+		set
+		{
+			if (value == questState)
+				return;
+
+			questState = value;
+			_onChangeState?.Invoke();
+		}
+	}
+
+	public Action _onChangeState;
+
 
 	[NonSerialized] public HashSet<Action> _onClear = new HashSet<Action>();
 	public string questCode { get { return npcName + questName; } }

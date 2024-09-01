@@ -36,7 +36,7 @@ public class NpcManager : MonoBehaviour
 			_questManager.UpdateQuestData(ref episode.quest);
 			_questManager.UpdateQuestData(ref episode.preQuest);
 
-			if (episode.preQuest == null || episode.preQuest.questState == EQuestState.COMPLETED)
+			if (episode.preQuest == null || episode.preQuest._state == EQuestState.ENDED)
 				InitDialogue(episode);
 			else
 				episode.preQuest._onClear.Add(()=>InitDialogue(episode));
@@ -78,7 +78,7 @@ public class NpcManager : MonoBehaviour
 				if (_dialogues[i].preQuest != null)
 					QuestManager.instance.UpdateQuestData(ref _dialogues[i].preQuest); 
 
-				if (_dialogues[i].GetDialogue(false) != null && (_dialogues[i].preQuest == null ||_dialogues[i].preQuest.questState == EQuestState.COMPLETED)) 
+				if (_dialogues[i].GetDialogue(false) != null && (_dialogues[i].preQuest == null ||_dialogues[i].preQuest._state == EQuestState.ENDED)) 
 				{
 					flag = true;
 					canStartQuest = true;

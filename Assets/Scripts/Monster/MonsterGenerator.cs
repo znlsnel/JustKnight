@@ -101,7 +101,7 @@ public class MonsterGenerator : MonoBehaviour
                                 }
                         }
 
-                        if (_startCondition != null && _startCondition.questState != EQuestState.IN_PROGRESS)
+                        if (_startCondition != null && _startCondition._state != EQuestState.IN_PROGRESS)
                                 return;
 
                         while (_spawnedCnt < _monsterLimit)

@@ -42,26 +42,19 @@ public class QuestReporter : MonoBehaviour
 			QuestSO quest = taskInfo.Item1;
 			QuestTaskSO task = taskInfo.Item2;
 
-			if (quest.questState != EQuestState.IN_PROGRESS)
+			if (quest._state != EQuestState.IN_PROGRESS)
 				continue;
 
 			task.curCnt = task.action.Run(task.curCnt, successCount);
-			if (quest.isAutoComplete && task.curCnt >= task.targetCnt)
+			if (task.curCnt >= task.targetCnt)
 			{
-				bool isClear = true;
-				foreach (QuestTaskSO t in quest.tasks)
+				if (quest.isClear)
 				{
-					if (t.curCnt < t.targetCnt)
-					{
-						isClear = false;
-						break; 
-					}
-				}
-				if (isClear)
-				{
-					QuestManager.instance.CompleteQuest(quest, "");
-					
-				}
+					if (quest.isAutoComplete)
+						QuestManager.instance.CompleteQuest(quest, "");
+					else
+						quest._state = EQuestState.COMPLETED;
+				} 
 			}
 		}
 		if (taskInfos.Count > 0)

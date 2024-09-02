@@ -121,9 +121,11 @@ public class QuestManager : Singleton<QuestManager>
 	{
 		if (quest == null)
 			return;
-		 
+
 		if (_quests.ContainsKey(quest.questCode))
-			quest = _quests[quest.questCode];  
+			quest = _quests[quest.questCode];
+		else
+			quest._state = EQuestState.PENDING;
 	}
 
 	public void ResetQuest()

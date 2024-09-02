@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\uADF8\uB7FC\uBC14\uD06C(chapter_1-2) Variant"
       objectReference: {fileID: 0}
+    - target: {fileID: 3068755330031266945, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5091171931418441748, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       propertyPath: m_FlipX
       value: 1

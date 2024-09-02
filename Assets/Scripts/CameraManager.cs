@@ -33,7 +33,6 @@ public class CameraManager : MonoBehaviour
 	void Start()
 	{
 		GameManager.instance._onNextScene += () => { 
-			_virtualCamera.Follow = GameManager.instance.GetPlayer().transform;
 			GameManager.instance.GetPlayer().GetComponent<PlayerMovementController>()._onPlayerLookDirChanged += (int dir) =>
 			{
 				float value = 1.2f * dir;
@@ -54,6 +53,20 @@ public class CameraManager : MonoBehaviour
 			if (cam.gameObject != gameObject)
 				Destroy(cam.gameObject);
 		}
+
+		//CinemachineVirtualCamera[] vcs =  FindObjectsOfType<CinemachineVirtualCamera>();
+		//foreach (CinemachineVirtualCamera cam in vcs)
+		//{
+		//	if (_virtualCamera != cam)
+		//	{
+		//		Destroy(_virtualCamera);
+		//		DontDestroyOnLoad(cam.gameObject);
+
+		//		_virtualCamera = cam;
+		//	}
+		//}
+
+		_virtualCamera.Follow = GameManager.instance.GetPlayer().transform;
 
 		PolygonCollider2D bound = FindObjectOfType<PolygonCollider2D>();
 		_confiner.m_BoundingShape2D = null; 

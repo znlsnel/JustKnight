@@ -16,13 +16,15 @@ public class QuestStateCheckor : MonoBehaviour
 		if (_quest._state == _state)
 			_action?.Invoke();
 		else
-			_quest._onChangeState += () =>
-			{
-				if (_quest._state == _state)
-				{
-					_action?.Invoke();
-				}
-			};
-		
-	} 
+			_quest._onChangeState += ACTION;
+	}
+	 
+	void ACTION()
+	{
+		if (_quest._state == _state)
+		{ 
+			_action?.Invoke();
+			_quest._onChangeState -= ACTION;
+		}
+	}
 } 

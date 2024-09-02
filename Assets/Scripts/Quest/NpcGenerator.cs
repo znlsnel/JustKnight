@@ -9,19 +9,20 @@ public class NpcGenerator : MonoBehaviour
 {
         [SerializeField] GameObject _npc;
 
-	SpriteRenderer _spriteRenderer;
+	private void Awake()
+	{ 
+	//	_npc.SetActive(false);
+	}
+
 	void Start()
 	{
-		_spriteRenderer = GetComponent<SpriteRenderer>();
-		_spriteRenderer.enabled = false; 
+		_npc.SetActive(false);
 	}
 
 	public void GenNPC()
 	{
 		transform.localScale = Vector3.one;
-		_npc.SetActive(true);
-		_npc.GetComponent<DisappearOnCondition>()?.StartCheck();
-			   
-		gameObject.SetActive(false);
+		_npc.SetActive(true);			   
+		gameObject.SetActive(false); 
 	}
 }

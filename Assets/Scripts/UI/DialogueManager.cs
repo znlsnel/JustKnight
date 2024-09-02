@@ -33,6 +33,7 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 	UnityEvent _completeScript = new UnityEvent();
 
 	Action _onResponButton;
+	Action _onEndDialogue;
 
 	private void Awake()   
 	{ 
@@ -68,7 +69,7 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 		dialogue = _episodes[dialogue.episodeCode]; 
 	}
 
-	public bool RegisteEpisodes(List<EpisodeSO> episodes)
+	public bool RegisteEpisodes(List<EpisodeSO> episodes, UnityEvent action = null)
 	{
 		ActiveMenu(true);
 
@@ -101,7 +102,8 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 				_onResponButton += () => { Destroy(_responseSlot); };
 			}
 		}
-			
+		_onEndDialogue = () => { action?.Invoke(); }; 
+
 		return startableIdxs.Count > 0;
 	}
 
@@ -169,6 +171,8 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 		if (_episode.UpdateState(_dialogue, id) ||_episode.isEndPage(_dialogue))
 		{
 			ActiveMenu(false); 
+			_onEndDialogue?.Invoke();
+			_onEndDialogue = null;
 			return; 
 		}
 		_episode.curPage++;

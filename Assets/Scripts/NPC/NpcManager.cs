@@ -11,6 +11,7 @@ public class NpcManager : MonoBehaviour
 	[SerializeField] public List<EpisodeSO> _dialogues;
 	[SerializeField] NpcStateUI _npcStateUI;
 	[Space(10)]  public UnityEvent _onDialogue;
+	[Space(10)]  public UnityEvent _onEndDialogue;
 	[Space(10)]  public bool isAutoStart = false;
 	[SerializeField] bool isEventNpc = false;
 
@@ -105,14 +106,14 @@ public class NpcManager : MonoBehaviour
 		
 		if (isAutoStart)
 		{ 
-			if (_dialogueManager.RegisteEpisodes(_dialogues))
+			if (_dialogueManager.RegisteEpisodes(_dialogues, _onEndDialogue))
 				_onDialogue?.Invoke(); 
 			yield break ;
 		}
 
 		InputManager.instance._interactionHandler.AddIAction(gameObject, () =>
 		{
-			if (_dialogueManager.RegisteEpisodes(_dialogues))
+			if (_dialogueManager.RegisteEpisodes(_dialogues, _onEndDialogue))
 			{
 				_onDialogue?.Invoke();
 

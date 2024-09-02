@@ -18,14 +18,15 @@ public class EpisodeStateCheckor : MonoBehaviour
 		if (_episode._state == _state)
 			_action?.Invoke();
 		else
-			_episode._onChangeState += () =>
-			{
-				if (_episode._state == _state)
-				{
-					_action?.Invoke();
-				}
-			};
-		
-		 
+			_episode._onChangeState += ACTION;
 	}  
+
+	void ACTION()
+	{
+		if (_episode._state == _state)
+		{
+			_action?.Invoke();
+			_episode._onChangeState -= ACTION; 
+		}
+	}
 }

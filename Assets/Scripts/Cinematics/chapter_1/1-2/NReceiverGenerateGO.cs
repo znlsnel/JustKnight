@@ -11,6 +11,7 @@ public class NReceiverGenerateGO : MonoBehaviour, INotificationReceiver
 
 	public void OnNotify(Playable origin, INotification notification, object context)
 	{
+		Debug.Log("이벤트 수신: ");
 		if (notification is MK_GenerateGameObject gen)
 		{
 			Debug.Log("이벤트 수신: ");

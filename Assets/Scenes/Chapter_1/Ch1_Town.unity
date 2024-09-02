@@ -3418,6 +3418,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4248525702310717770, guid: fe0794e22faba854399a3b344b305bbd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5814047897498709063}
+    - targetCorrespondingSourceObject: {fileID: 4248525702310717770, guid: fe0794e22faba854399a3b344b305bbd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5814047897498709064}
   m_SourcePrefab: {fileID: 100100000, guid: fe0794e22faba854399a3b344b305bbd, type: 3}
 --- !u!1 &5814047897498709062 stripped
 GameObject:
@@ -3436,7 +3439,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee231f0200ef3ea45af4c8084887ae78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5814047897498709064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5814047897498709062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acdbe6beab075da4a98c20b0f94398cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _quest: {fileID: 11400000, guid: 779067e940b49014fb8cdd822b865c05, type: 2}
+  _state: 2
+  _action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5814047897498709063}
+        m_TargetAssemblyTypeName: NPCDisabler, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &7802882736558518650
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3522,7 +3553,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee231f0200ef3ea45af4c8084887ae78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _quest: {fileID: 11400000, guid: 621e6c89c4e515245a22ed7c22b07193, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

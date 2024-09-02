@@ -119,13 +119,17 @@ public class QuestManager : Singleton<QuestManager>
 
 	public void UpdateQuestData(ref QuestSO quest)
 	{
-		if (quest != null && _quests.ContainsKey(quest.questCode))
+		if (quest == null)
+			return;
+		 
+		if (_quests.ContainsKey(quest.questCode))
 			quest = _quests[quest.questCode];  
 	}
 
 	public void ResetQuest()
 	{
-		_quests.Clear();
+		_quests.Clear(); 
+		 
 		_displayQuest.ResetDisplayQuest();
 		_tasks.Clear();
 		_questUI.ResetQuestUI();

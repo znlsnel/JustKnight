@@ -29,8 +29,8 @@ public class QuestSO : ScriptableObject
 
 	[NonSerialized] private bool clear = false;
 
-	EQuestState questState = EQuestState.PENDING;
-	public EQuestState _state
+	[NonSerialized] EQuestState questState = EQuestState.PENDING;
+	public EQuestState _state 
 	{
 		get { return questState; }
 		set

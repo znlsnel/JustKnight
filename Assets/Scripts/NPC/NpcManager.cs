@@ -31,8 +31,10 @@ public class NpcManager : MonoBehaviour
 		_questManager = QuestManager.instance;
 
 		for (int i = 0; i < _dialogues.Count; i++)
-		{
+		{ 
 			EpisodeSO episode = _dialogues[i];
+			episode._state = EEpisodeState.PENDING_ACCEPTANCE;
+
 			_dialogueManager.UpdateQuestDialogue(ref episode);
 			_questManager.UpdateQuestData(ref episode.quest);
 			_questManager.UpdateQuestData(ref episode.preQuest);

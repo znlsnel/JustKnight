@@ -481,11 +481,11 @@ MonoBehaviour:
   _initHp: 3
   _dropItems:
   - item: {fileID: 11400000, guid: 2bd6e27ae9ff49942bb426d454ece902, type: 2}
-    dropRate: 99
+    dropRate: 3
   - item: {fileID: 11400000, guid: 5098296329a2abc48b24530601fa378e, type: 2}
-    dropRate: 99
+    dropRate: 3
   - item: {fileID: 11400000, guid: d6b834f3dc379b14d9ef1088521c3cd3, type: 2}
-    dropRate: 99
+    dropRate: 3
 --- !u!114 &-6580656372969123405
 MonoBehaviour:
   m_ObjectHideFlags: 0

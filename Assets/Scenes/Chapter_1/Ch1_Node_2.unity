@@ -642,6 +642,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1725101603718796190, guid: 4da7378cdc334674fb00bea7db001109, type: 3}
+      propertyPath: m_Radius
+      value: 8.69
+      objectReference: {fileID: 0}
     - target: {fileID: 4160981233264798017, guid: 4da7378cdc334674fb00bea7db001109, type: 3}
       propertyPath: m_LocalPosition.x
       value: -26.41972
@@ -682,16 +686,87 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6012530736038644178, guid: 4da7378cdc334674fb00bea7db001109, type: 3}
+      propertyPath: _onEndDialogue.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012530736038644178, guid: 4da7378cdc334674fb00bea7db001109, type: 3}
+      propertyPath: _onEndDialogue.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012530736038644178, guid: 4da7378cdc334674fb00bea7db001109, type: 3}
+      propertyPath: _onEndDialogue.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 731048744}
+    - target: {fileID: 6012530736038644178, guid: 4da7378cdc334674fb00bea7db001109, type: 3}
+      propertyPath: _onEndDialogue.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012530736038644178, guid: 4da7378cdc334674fb00bea7db001109, type: 3}
+      propertyPath: _onEndDialogue.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Execute
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012530736038644178, guid: 4da7378cdc334674fb00bea7db001109, type: 3}
+      propertyPath: _onEndDialogue.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: NPCDisabler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012530736038644178, guid: 4da7378cdc334674fb00bea7db001109, type: 3}
+      propertyPath: _onEndDialogue.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1288418130785496230, guid: 4da7378cdc334674fb00bea7db001109, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 731048745}
   m_SourcePrefab: {fileID: 100100000, guid: 4da7378cdc334674fb00bea7db001109, type: 3}
 --- !u!1 &731048743 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1288418130785496230, guid: 4da7378cdc334674fb00bea7db001109, type: 3}
   m_PrefabInstance: {fileID: 731048742}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &731048744 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 262998041516215050, guid: 4da7378cdc334674fb00bea7db001109, type: 3}
+  m_PrefabInstance: {fileID: 731048742}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731048743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee231f0200ef3ea45af4c8084887ae78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &731048745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731048743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acdbe6beab075da4a98c20b0f94398cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _quest: {fileID: 11400000, guid: f55384021cffd3746bc39fb2b47aafa7, type: 2}
+  _state: 1
+  _action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 731048744}
+        m_TargetAssemblyTypeName: NPCDisabler, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &741795115
 GameObject:
   m_ObjectHideFlags: 0

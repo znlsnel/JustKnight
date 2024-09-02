@@ -25,7 +25,7 @@ public class basicMonster : Monster
 		}
 		
 		isAttack = true;
-		PlayAnimation("Attack1");
+		PlayAnimation("Attack1"); 
 		_lastAttackTime = 0.0f;
 
 		StartCoroutine(RegisterCoolTime(() => { isAttack = false; })); 

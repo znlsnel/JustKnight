@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
+using UnityEngine.UIElements;
 
 public class NReceiverGenerateGO : MonoBehaviour, INotificationReceiver
 {
-	[SerializeField] GameObject _prefab;
+	[SerializeField] GameObject _go;
 	[SerializeField] Transform _transform;
 
 	public void OnNotify(Playable origin, INotification notification, object context)
@@ -20,8 +21,9 @@ public class NReceiverGenerateGO : MonoBehaviour, INotificationReceiver
 		}
 	}
 
-	void TriggerBilgontAppearance()
+	public void TriggerBilgontAppearance()
 	{
-		Instantiate<GameObject>(_prefab, _transform); 
+		_go.SetActive(true);
+		_go.transform.position = _transform.position; 
 	}
 }

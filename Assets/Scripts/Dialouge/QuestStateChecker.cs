@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class QuestStateCheckor : MonoBehaviour
+public class QuestStateChecker : MonoBehaviour
 {
 	[SerializeField] QuestSO _quest;
 	[SerializeField] EQuestState _state;

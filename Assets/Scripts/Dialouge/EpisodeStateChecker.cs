@@ -4,7 +4,7 @@ using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EpisodeStateCheckor : MonoBehaviour
+public class EpisodeStateChecker : MonoBehaviour
 {
 	[SerializeField] EpisodeSO _episode;
 	[SerializeField] EEpisodeState _state;

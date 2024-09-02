@@ -12756,6 +12756,9 @@ MonoBehaviour:
   _onDialogue:
     m_PersistentCalls:
       m_Calls: []
+  _onEndDialogue:
+    m_PersistentCalls:
+      m_Calls: []
   isAutoStart: 1
   isEventNpc: 1
 --- !u!61 &169549926
@@ -12991,6 +12994,9 @@ MonoBehaviour:
   _onDialogue:
     m_PersistentCalls:
       m_Calls: []
+  _onEndDialogue:
+    m_PersistentCalls:
+      m_Calls: []
   isAutoStart: 1
   isEventNpc: 1
 --- !u!61 &357036723
@@ -13224,6 +13230,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 418eaca9cc9b2e34ea794e768c0491da, type: 2}
   _npcStateUI: {fileID: 0}
   _onDialogue:
+    m_PersistentCalls:
+      m_Calls: []
+  _onEndDialogue:
     m_PersistentCalls:
       m_Calls: []
   isAutoStart: 1
@@ -14355,6 +14364,9 @@ MonoBehaviour:
   _onDialogue:
     m_PersistentCalls:
       m_Calls: []
+  _onEndDialogue:
+    m_PersistentCalls:
+      m_Calls: []
   isAutoStart: 1
   isEventNpc: 1
 --- !u!61 &1685599330
@@ -14605,6 +14617,9 @@ MonoBehaviour:
   _onDialogue:
     m_PersistentCalls:
       m_Calls: []
+  _onEndDialogue:
+    m_PersistentCalls:
+      m_Calls: []
   isAutoStart: 1
   isEventNpc: 1
 --- !u!61 &1791251562
@@ -14739,6 +14754,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e3d6db673d8abd1408d73ea53fd04851, type: 2}
   _npcStateUI: {fileID: 0}
   _onDialogue:
+    m_PersistentCalls:
+      m_Calls: []
+  _onEndDialogue:
     m_PersistentCalls:
       m_Calls: []
   isAutoStart: 1
@@ -15630,7 +15648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8875407409645299773, guid: dc594eb07fb86414ba6db5fc9e4f1e31, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 36.58
+      value: -16.07
       objectReference: {fileID: 0}
     - target: {fileID: 8875407409645299773, guid: dc594eb07fb86414ba6db5fc9e4f1e31, type: 3}
       propertyPath: m_LocalPosition.y

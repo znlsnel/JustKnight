@@ -2946,6 +2946,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_StartMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 3699500176092072716, guid: 48b671c98a9f0aa49aacc5fcc925f68c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -0.000012397766
+      objectReference: {fileID: 0}
+    - target: {fileID: 3699500176092072716, guid: 48b671c98a9f0aa49aacc5fcc925f68c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3931996092848632611, guid: 48b671c98a9f0aa49aacc5fcc925f68c, type: 3}
       propertyPath: m_Pivot.x
       value: 0

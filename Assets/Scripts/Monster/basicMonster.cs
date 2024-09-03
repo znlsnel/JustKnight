@@ -6,8 +6,7 @@ using UnityEngine;
 public class basicMonster : Monster
 {
 	// Start is called before the first frame update
-	public int AttackCnt = 1;
-	int curAttackAnim = 1;
+
 
 	public override void OnAttack()
 	{
@@ -39,6 +38,13 @@ public class basicMonster : Monster
 	public override void OnDeath()
 	{
 		 
+	}
+
+	public override void Update()
+	{
+		base.Update();
+		_hpSlider.gameObject.transform.position = _hpPos.position;
+
 	}
 
 }

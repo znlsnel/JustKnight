@@ -275,8 +275,8 @@ GameObject:
   - component: {fileID: 4147805909343299357}
   - component: {fileID: 4455033915772326846}
   - component: {fileID: 6746229186084961170}
-  - component: {fileID: 905818480702986533}
   - component: {fileID: -6580656372969123405}
+  - component: {fileID: 8471909018029788613}
   m_Layer: 6
   m_Name: "Boss\uBE4C\uACE4\uD2B8"
   m_TagString: Untagged
@@ -438,7 +438,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.15, y: 0.88}
   m_Size: {x: 0.87, y: 1.76}
   m_Direction: 0
---- !u!114 &905818480702986533
+--- !u!114 &-6580656372969123405
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -447,7 +447,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 7739430645761651898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94b97004b8251634fa49ac5e62a63f63, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ed8ef8022628f444bad0d266749b75e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reportInfos:
+  - category: {fileID: 11400000, guid: bd9a71b806bdf4b45ab114c16b1cedea, type: 2}
+    target: {fileID: 11400000, guid: fe81d0169b49d624b94233c3f4469761, type: 2}
+  successCount: 1
+  _enterCollider:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &8471909018029788613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7739430645761651898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b282080b95763154a8bb5567e24cbdb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _wallSensor: {fileID: 933660080494091708}
@@ -477,27 +496,13 @@ MonoBehaviour:
   _waitingTime: 1
   _moveTime: 2
   _playerTrackableRange: 3
-  _initHp: 10
+  _initHp: 15
   _dropItems:
+  - item: {fileID: 11400000, guid: d6b834f3dc379b14d9ef1088521c3cd3, type: 2}
+    dropRate: 20
+  - item: {fileID: 11400000, guid: 5098296329a2abc48b24530601fa378e, type: 2}
+    dropRate: 20
   - item: {fileID: 11400000, guid: 2bd6e27ae9ff49942bb426d454ece902, type: 2}
-    dropRate: 2
+    dropRate: 20
   AttackCnt: 2
---- !u!114 &-6580656372969123405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7739430645761651898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ed8ef8022628f444bad0d266749b75e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reportInfos:
-  - category: {fileID: 11400000, guid: bd9a71b806bdf4b45ab114c16b1cedea, type: 2}
-    target: {fileID: 11400000, guid: fe81d0169b49d624b94233c3f4469761, type: 2}
-  successCount: 1
-  _enterCollider:
-    m_PersistentCalls:
-      m_Calls: []
+  curAttackAnim: 1

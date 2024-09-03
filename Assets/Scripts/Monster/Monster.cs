@@ -41,6 +41,7 @@ public abstract class Monster : MonoBehaviour
 	public Transform _hpPos;
 	public GameObject _damageUIPrefab; 
 	DamageUI _damageUI;
+	protected Slider _hpSlider;
 
 	[Space(10)]
 	public float _moveSpeed = 1.0f;
@@ -69,12 +70,12 @@ public abstract class Monster : MonoBehaviour
 		}
 	}
 
-	Slider _hpSlider;
 
 	[NonSerialized] public Action _onAttackBlocked;
 	public Action _onDestroy;
 
-	
+	public int AttackCnt = 1;
+	public int curAttackAnim = 1;
 
 	public virtual void Awake()
 	{
@@ -144,8 +145,7 @@ public abstract class Monster : MonoBehaviour
         public virtual void Update()
         {                
 		UpdateState();
-		_hpSlider.gameObject.transform.position = _hpPos.position;
-
+		 
 
 	}
 
@@ -286,6 +286,7 @@ public abstract class Monster : MonoBehaviour
 			return;
 
 		_hp -= damage;
+
 		_damageUI.SetDamage(damage); 
 		if (_hpSlider != null)
 			_hpSlider.value = (float)_hp / _initHp;
@@ -305,7 +306,13 @@ public abstract class Monster : MonoBehaviour
 				_state = MonsterState.Death;
 				_onDead?.Invoke();
 			}
+			else
+			{
+				_state = MonsterState.Chasing;
+			}
 		})); 	
+
+		
 	}
 
 	void DropItem()

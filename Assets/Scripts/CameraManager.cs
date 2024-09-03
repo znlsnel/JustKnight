@@ -54,18 +54,6 @@ public class CameraManager : MonoBehaviour
 				Destroy(cam.gameObject);
 		}
 
-		//CinemachineVirtualCamera[] vcs =  FindObjectsOfType<CinemachineVirtualCamera>();
-		//foreach (CinemachineVirtualCamera cam in vcs)
-		//{
-		//	if (_virtualCamera != cam)
-		//	{
-		//		Destroy(_virtualCamera);
-		//		DontDestroyOnLoad(cam.gameObject);
-
-		//		_virtualCamera = cam;
-		//	}
-		//}
-
 		_virtualCamera.Follow = GameManager.instance.GetPlayer().transform;
 
 		PolygonCollider2D bound = FindObjectOfType<PolygonCollider2D>();
@@ -75,6 +63,32 @@ public class CameraManager : MonoBehaviour
 		float value = 1.2f * GameManager.instance.GetPlayer().transform.localScale.x;
 		CinemachineFramingTransposer framingTransposer = _virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
 		framingTransposer.m_TrackedObjectOffset.x = value;
+
+		// Cinemachine Transposer 가져오기
+		var transposer = _virtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+
+		if (transposer != null)
+		{
+			// 카메라가 한 번에 이동하도록 Damping을 0으로 설정
+			float x = transposer.m_XDamping;
+			float y  = transposer.m_YDamping;
+			float z = transposer.m_ZDamping;
+
+			transposer.m_XDamping = 0.0f;
+			transposer.m_YDamping = 0.0f;
+			transposer.m_ZDamping = 0.0f;
+
+			// 원하는 위치로 카메라 이동
+
+			Utils.instance.SetTimer(() =>
+			{
+				transposer.m_XDamping = x;
+				transposer.m_YDamping = y;
+				transposer.m_ZDamping = z;
+			}, 0.1f);
+		}
+
+
 	}
 
 

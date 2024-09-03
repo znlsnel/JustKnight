@@ -28,6 +28,9 @@ public class DamageUI : MonoBehaviour
 
 	public void SetDamage(int damage)
 	{
+		if (damage == 0)
+			return;
+
 		if (!gameObject.activeSelf)
 			gameObject.SetActive(true);
 

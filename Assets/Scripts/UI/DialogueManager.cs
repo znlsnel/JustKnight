@@ -14,10 +14,12 @@ using UnityEngine.UIElements;
 using TMPro;
 using System.Text.RegularExpressions;
 
-public class DialogueManager : MonoBehaviour , IMenuUI
+public class DialogueManager : MonoBehaviour, IMenuUI
 {
 	string _ncpName;
-	public Dictionary<string, EpisodeSO> _episodes = new Dictionary<string, EpisodeSO>();
+	Dictionary<string, EpisodeSO> _episodes = new Dictionary<string, EpisodeSO>();
+	public Dictionary<string, EpisodeSO> episodes { get { return _episodes; } }
+
 
 	[SerializeField] TextMeshProUGUI _nameText;
 	[SerializeField] TextMeshProUGUI _npcScript;
@@ -64,7 +66,10 @@ public class DialogueManager : MonoBehaviour , IMenuUI
 	public void UpdateQuestDialogue(ref EpisodeSO dialogue)
 	{
 		if (!_episodes.ContainsKey(dialogue.episodeCode))
+		{
+			dialogue._state = EEpisodeState.PENDING_ACCEPTANCE;
 			return;
+		}
 		 
 		dialogue = _episodes[dialogue.episodeCode]; 
 	}

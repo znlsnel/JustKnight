@@ -228,7 +228,8 @@ public class SaveManager : Singleton<SaveManager>
                         itemData.Idx = i; 
 			saveData.itemDatas.Add(itemData);		
                 }
-                foreach (var data in _dialogue._episodes) 
+
+                foreach (var data in _dialogue.episodes) 
                 {
 			EpisodeData episode = new EpisodeData();
                         episode.episodeCode = data.Key;
@@ -236,6 +237,7 @@ public class SaveManager : Singleton<SaveManager>
 
 			saveData.episodes.Add(episode);		
 		}
+
                 foreach (var data in _quest._quests)
                 {
                         QuestData quest = new QuestData();

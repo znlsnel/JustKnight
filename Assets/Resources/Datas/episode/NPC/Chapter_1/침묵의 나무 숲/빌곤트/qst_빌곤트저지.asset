@@ -22,4 +22,4 @@ MonoBehaviour:
   reward: {fileID: 0}
   isCancelable: 0
   isSavable: 0
-  isAutoComplete: 0
+  isAutoComplete: 1

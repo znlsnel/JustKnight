@@ -468,7 +468,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _hpUI: {fileID: 4092315220699470826, guid: 0dc23e343c48b8248b55c473eee952e2, type: 3}
+  _hpUI: {fileID: 3785407030755466279, guid: ab4d650efb2487b42846b3e2f2602032, type: 3}
   _hpPos: {fileID: 2093257071435537575}
   _damageUIPrefab: {fileID: 6373609993812512058, guid: 3f5f67a0734eee84497670a1299cf13e, type: 3}
   _moveSpeed: 1
@@ -477,11 +477,11 @@ MonoBehaviour:
   _waitingTime: 1
   _moveTime: 2
   _playerTrackableRange: 3
-  _hp: 3
-  _initHp: 3
+  _initHp: 10
   _dropItems:
   - item: {fileID: 11400000, guid: 2bd6e27ae9ff49942bb426d454ece902, type: 2}
-    dropRate: 99
+    dropRate: 2
+  AttackCnt: 2
 --- !u!114 &-6580656372969123405
 MonoBehaviour:
   m_ObjectHideFlags: 0

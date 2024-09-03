@@ -51,7 +51,7 @@ public abstract class Monster : MonoBehaviour
 	public float _playerTrackableRange = 3.0f;
 
 	[Space(10)]
-	public int _hp = 3;
+	int _hp = 3;
 	public int _initHp = 3;
 	public List<DropItem> _dropItems;
 
@@ -98,14 +98,12 @@ public abstract class Monster : MonoBehaviour
 		gameObject.transform.position = new Vector3(pos.x, pos.y + transform.localScale.y / 2, pos.z);
 		_state = MonsterState.Waiting;
 
-		 
 		_animator.speed = 1.0f; 
 		_hp = _initHp; 
-
-		if (_hpSlider != null )
-		{
+		 
+		if (_hpSlider != null ) 
 			_hpSlider.value = (float)_hp / _initHp; 
-		}
+		
 		 
 		gameObject.SetActive(true);
 		_hpUI.SetActive(true);
@@ -188,7 +186,7 @@ public abstract class Monster : MonoBehaviour
 				PlayAnimation("Walk");
 				OnMove();
 				break;
-			case MonsterState.Attack:
+			case MonsterState.Attack: 
 				OnAttack();
 				break;
 			case MonsterState.Death:
@@ -302,7 +300,7 @@ public abstract class Monster : MonoBehaviour
 		{
 			isHit = false;
 			if (_hp <= 0)
-			{
+			{ 
 				DropItem();
 				_state = MonsterState.Death;
 				_onDead?.Invoke();

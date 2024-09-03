@@ -477,7 +477,6 @@ MonoBehaviour:
   _waitingTime: 1
   _moveTime: 2
   _playerTrackableRange: 3
-  _hp: 3
   _initHp: 3
   _dropItems:
   - item: {fileID: 11400000, guid: 2bd6e27ae9ff49942bb426d454ece902, type: 2}
@@ -486,6 +485,7 @@ MonoBehaviour:
     dropRate: 3
   - item: {fileID: 11400000, guid: d6b834f3dc379b14d9ef1088521c3cd3, type: 2}
     dropRate: 3
+  AttackCnt: 2
 --- !u!114 &-6580656372969123405
 MonoBehaviour:
   m_ObjectHideFlags: 0

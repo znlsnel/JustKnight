@@ -6,6 +6,9 @@ using UnityEngine;
 public class basicMonster : Monster
 {
 	// Start is called before the first frame update
+	public int AttackCnt = 1;
+	int curAttackAnim = 1;
+
 	public override void OnAttack()
 	{
 		if (isPlayerDead || _isPlayerInAttackRange == false)
@@ -25,8 +28,10 @@ public class basicMonster : Monster
 		}
 		
 		isAttack = true;
-		PlayAnimation("Attack1"); 
-		_lastAttackTime = 0.0f;
+		PlayAnimation($"Attack{curAttackAnim}"); 
+		curAttackAnim = ((curAttackAnim + 1) % AttackCnt) + 1;   
+
+		_lastAttackTime = 0.0f; 
 
 		StartCoroutine(RegisterCoolTime(() => { isAttack = false; })); 
 	} 

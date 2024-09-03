@@ -557,6 +557,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &727018159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 727018160}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &727018160
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727018159}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -19.09333, y: 1.3810678, z: -0.06907193}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &986142249
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,9 +915,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1503686292603803056, guid: 854284676b3a30645aed79a45c22fa7a, type: 3}
+      propertyPath: destScene
+      value: 
+      objectReference: {fileID: 102900000, guid: 885d6c4a32e7e2f4eafec32e3b77427e, type: 3}
+    - target: {fileID: 1503686292603803056, guid: 854284676b3a30645aed79a45c22fa7a, type: 3}
       propertyPath: _destScene
       value: 
       objectReference: {fileID: 102900000, guid: 885d6c4a32e7e2f4eafec32e3b77427e, type: 3}
+    - target: {fileID: 2940131813558543729, guid: 854284676b3a30645aed79a45c22fa7a, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8068434248761136781, guid: 854284676b3a30645aed79a45c22fa7a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -23.406105
@@ -929,7 +968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8590201793075758889, guid: 854284676b3a30645aed79a45c22fa7a, type: 3}
       propertyPath: m_Name
-      value: Portal
+      value: 1-1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1315,6 +1354,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1503686292603803056, guid: 854284676b3a30645aed79a45c22fa7a, type: 3}
+      propertyPath: destScene
+      value: 
+      objectReference: {fileID: 102900000, guid: 3b1bff815c2c67740bae64a0207ea156, type: 3}
+    - target: {fileID: 1503686292603803056, guid: 854284676b3a30645aed79a45c22fa7a, type: 3}
       propertyPath: _destScene
       value: 
       objectReference: {fileID: 102900000, guid: 3b1bff815c2c67740bae64a0207ea156, type: 3}
@@ -1364,7 +1407,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8590201793075758889, guid: 854284676b3a30645aed79a45c22fa7a, type: 3}
       propertyPath: m_Name
-      value: Portal (1)
+      value: 1-3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3676,3 +3719,4 @@ SceneRoots:
   - {fileID: 1072372970}
   - {fileID: 273546290}
   - {fileID: 986142251}
+  - {fileID: 727018160}

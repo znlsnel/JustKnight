@@ -250,6 +250,7 @@ public class PlayerActionController : MonoBehaviour
 
 	public void OnHit(GameObject monster, int damage = 1)
 	{
+		
 		if (Time.time - _lastHitTime < _damageCooldown || 
 			_activeState == EActiveState.Roll || 
 			_playerController._playerState == EPlayerState.Death)
@@ -269,7 +270,7 @@ public class PlayerActionController : MonoBehaviour
 
 		bool avoid = UnityEngine.Random.Range(0, 100) < PlayerStatus.instance.GetValue(EPlayerStatus.AvoidanceRate);
 
-		if (!avoid)
+		if (false && !avoid)
 		{
 			_playerController.hp -= Mathf.Max(0, damage - _status.GetValue(EPlayerStatus.Armor));
 

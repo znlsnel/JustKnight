@@ -2456,6 +2456,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &1489003341 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3004416864802387988, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
+  m_PrefabInstance: {fileID: 4983558181046015798}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1489003353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489003341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b6c6595161d9d040936764541e948d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audios:
+  - {fileID: 8300000, guid: 2fb2b5c48f49da74eb9d076b874fc160, type: 3}
+  - {fileID: 8300000, guid: 75809951836972743baf521ade23dca0, type: 3}
+  _randomAudios: []
 --- !u!1 &1510944601
 GameObject:
   m_ObjectHideFlags: 0
@@ -3405,7 +3426,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3004416864802387988, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1489003353}
   m_SourcePrefab: {fileID: 100100000, guid: 20cb76ef96bc99e49aab2992eeb1c2a0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

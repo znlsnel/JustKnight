@@ -907,6 +907,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8bd9bff7f1d67704ebb4849c9437ecc5, type: 3}
   - {fileID: 8300000, guid: a8af7b2916b45a547b2dc46b745e14bf, type: 3}
   - {fileID: 8300000, guid: 628d696e86867c34098c1d05a6376d0f, type: 3}
+  _randomAudios:
+  - {fileID: 8300000, guid: 44737e645aa918043b3d8cab5d1511bc, type: 3}
+  - {fileID: 8300000, guid: 302595b93370c52408825d7fb07d09be, type: 3}
+  - {fileID: 8300000, guid: 0b8aed54efbbfa946af2f31d3d92f9cd, type: 3}
+  - {fileID: 8300000, guid: 16627ace4424d91498eb01bb4028a449, type: 3}
+  - {fileID: 8300000, guid: 32d4132b6bada6b48ac1474c5b84a1f5, type: 3}
+  - {fileID: 8300000, guid: 6bd33082282efa240ae4942ba4e11422, type: 3}
 --- !u!4 &8300312879205510169 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8413529789942519730, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}

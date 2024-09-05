@@ -22,6 +22,7 @@ public class GameManager : Singleton<GameManager>
 	InventoryManager _inventory;
 	DialogueManager _dialogue;
 	QuestManager _quest;
+	AudioReporter _audioReporter;
 
 
 	public override void Awake()
@@ -47,10 +48,13 @@ public class GameManager : Singleton<GameManager>
 	{
 		_inventory = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._inventoryManager;
 		_dialogue = UIHandler.instance._dialogue.GetComponent<DialogueManager>();
+		_audioReporter = GetComponent<AudioReporter>();
 		_quest = QuestManager.instance;
 
 		_fadeEffect = UIHandler.instance._fadeEffect.GetComponentInChildren<FadeEffectManager>();
-		StartCoroutine(UpdateTime()); 
+		StartCoroutine(UpdateTime());
+
+		//_audioReporter.PlayAnimationSound(0);  
 	} 
 
 	public GameObject GetPlayer()

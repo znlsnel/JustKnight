@@ -15,7 +15,7 @@ public class AudioManager : Singleton<AudioManager>
 
 		_audioSource = gameObject.AddComponent<AudioSource>();
 	}
-	public void PlaySound(AudioClip audio)
+	public void PlaySound(AudioClip audio)  
 	{ 
 		_audioSource.PlayOneShot(audio, _sfxVolum);
 	}

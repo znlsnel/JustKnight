@@ -27,7 +27,7 @@ public abstract class Monster : MonoBehaviour
 	protected GameObject _player;
 	protected Rigidbody2D _rigid;
 	protected Animator _animator;
-	protected MonsterState _state = MonsterState.Waiting; 
+	protected MonsterState _state = MonsterState.Waiting;
 	protected bool _isPlayerInAttackRange { get { return CheckSensor(_attackSensor, "Player"); } }
 	protected bool _isObstacleAhead { get { return CheckSensor(_wallSensor) || !CheckSensor(_groundSensor); } }
 
@@ -39,20 +39,21 @@ public abstract class Monster : MonoBehaviour
 	public UnityEvent _onDead;
 	public GameObject _hpUI;
 	public Transform _hpPos;
-	public GameObject _damageUIPrefab; 
+	public GameObject _damageUIPrefab;
 	DamageUI _damageUI;
 	protected Slider _hpSlider;
 
 	[Space(10)]
 	public float _moveSpeed = 1.0f;
 	public float _attackCoolTime = 1.0f;
-	public float _attackRange = 3.0f; 
+	public float _attackRange = 3.0f;
 	public float _waitingTime = 1.0f;
 	public float _moveTime = 2.0f;
 	public float _playerTrackableRange = 3.0f;
 
 	[Space(10)]
 	int _hp = 3;
+	public int monsterHp {get {return _hp;}} 
 	public int _initHp = 3;
 	public List<DropItem> _dropItems;
 
@@ -75,8 +76,8 @@ public abstract class Monster : MonoBehaviour
 	public Action _onDestroy;
 
 	public int AttackCnt = 1;
-	public int curAttackAnim = 1;
-
+	[NonSerialized] public int curAttackAnim = 1;
+	 
 	public virtual void Awake()
 	{
 		_hp = _initHp; 
@@ -280,7 +281,7 @@ public abstract class Monster : MonoBehaviour
 
 	public abstract void OnAttack();
 	Coroutine endHit = null;
-        public void OnHit(GameObject attacker, int damage)
+        public virtual void OnHit(GameObject attacker, int damage)
         {
 		if (_hp <= 0)
 			return;
@@ -292,7 +293,9 @@ public abstract class Monster : MonoBehaviour
 			_hpSlider.value = (float)_hp / _initHp;
 
 
-		PlayAnimation("Hit");   
+		if (!isAttack) 
+			PlayAnimation("Hit");   
+		 
 		isHit = true;
 		if (endHit != null)
 			StopCoroutine(endHit);

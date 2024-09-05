@@ -270,7 +270,7 @@ public class PlayerActionController : MonoBehaviour
 
 		bool avoid = UnityEngine.Random.Range(0, 100) < PlayerStatus.instance.GetValue(EPlayerStatus.AvoidanceRate);
 
-		if (false && !avoid)
+		if (false && !avoid) 
 		{
 			_playerController.hp -= Mathf.Max(0, damage - _status.GetValue(EPlayerStatus.Armor));
 

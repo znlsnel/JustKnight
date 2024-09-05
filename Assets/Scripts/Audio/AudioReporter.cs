@@ -6,6 +6,7 @@ public class AudioReporter : MonoBehaviour
 {
         // Start is called before the first frame update
         [SerializeField] AudioClip[] _audios;
+        [SerializeField] AudioClip[] _randomAudios; 
 
 	public void ReportSound(int soundIndex)
 	{
@@ -20,4 +21,10 @@ public class AudioReporter : MonoBehaviour
 	{
 		ReportSound(soundIndex);
 	}
+
+	public void PlayRandom()
+	{
+		int idx = Random.Range(0, _audios.Length - 1);
+		AudioManager.instance.PlaySound(_randomAudios[idx]);
+	} 
 }

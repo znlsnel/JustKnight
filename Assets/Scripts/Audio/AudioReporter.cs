@@ -17,7 +17,7 @@ public class AudioReporter : MonoBehaviour
 	}
 
 	// Animation Event에서 호출할 함수
-	public void PlayAnimationSound(int soundIndex)
+	public void PlaySound(int soundIndex)
 	{
 		ReportSound(soundIndex);
 	}

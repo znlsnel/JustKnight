@@ -86,23 +86,27 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 4526fdc66a8d7614696463505174f91d, type: 2}
     - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       propertyPath: _onDialogue.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       propertyPath: _onDialogue.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
+      propertyPath: _onDialogue.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9101409241519376483}
+    - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       propertyPath: _onDialogue.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       propertyPath: _onDialogue.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Report
+      value: PlaySound
       objectReference: {fileID: 0}
     - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       propertyPath: _onDialogue.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: QuestReporter, Assembly-CSharp
+      value: AudioReporter, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7496176817423665653, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
       propertyPath: _onDialogue.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -142,3 +146,14 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9101409241519376483 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -8769464094020798880, guid: fa5d17575ff3bc44aa4a443ce186d977, type: 3}
+  m_PrefabInstance: {fileID: 8647520025858588163}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5950452557866930818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b6c6595161d9d040936764541e948d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

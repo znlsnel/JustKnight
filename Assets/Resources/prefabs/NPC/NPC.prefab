@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5091171931418441748}
   - component: {fileID: 3208747685123216313}
   - component: {fileID: 7496176817423665653}
+  - component: {fileID: -8769464094020798880}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -139,9 +140,39 @@ MonoBehaviour:
   _npcStateUI: {fileID: 8741120605885149612}
   _onDialogue:
     m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8769464094020798880}
+        m_TargetAssemblyTypeName: AudioReporter, Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onEndDialogue:
+    m_PersistentCalls:
       m_Calls: []
   isAutoStart: 0
   isEventNpc: 0
+--- !u!114 &-8769464094020798880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068755330031266945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b6c6595161d9d040936764541e948d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audios:
+  - {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
+  _randomAudios: []
 --- !u!1001 &7021676630212410904
 PrefabInstance:
   m_ObjectHideFlags: 0

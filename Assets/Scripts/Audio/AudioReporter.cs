@@ -8,7 +8,7 @@ public class AudioReporter : MonoBehaviour
         [SerializeField] AudioClip[] _audios;
         [SerializeField] AudioClip[] _randomAudios; 
 
-	public void ReportSound(int soundIndex)
+	void ReportSound(int soundIndex)
 	{
 		if (soundIndex >= 0 && soundIndex < _audios.Length)
 		{

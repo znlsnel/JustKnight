@@ -263,6 +263,7 @@ public class PlayerActionController : MonoBehaviour
 			if (mm != null)
 			{
 				mm._onAttackBlocked = () => { mm.OnHit(gameObject, _status.GetValue(EPlayerStatus.ShieldDamage)); };
+				
 				_playerController.qr_successShield?.Invoke(); 
 			} 
 			return; 

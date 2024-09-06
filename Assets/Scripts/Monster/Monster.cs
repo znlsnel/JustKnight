@@ -77,6 +77,8 @@ public abstract class Monster : MonoBehaviour
 
 	public int AttackCnt = 1;
 	[NonSerialized] public int curAttackAnim = 1;
+
+	[SerializeField] UnityEvent _onDamaged;
 	 
 	public virtual void Awake()
 	{

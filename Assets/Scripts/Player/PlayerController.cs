@@ -80,10 +80,10 @@ public class PlayerController : MonoBehaviour
 	} 
 
 	private void Awake() 
-	{
+	{ 
 		
 		_animController = gameObject.AddComponent<PlayerAnimCtrl>(); 
-		_actionController = gameObject.AddComponent<PlayerActionController>();
+		_actionController = gameObject.GetComponent<PlayerActionController>();
 		_movementController = gameObject.AddComponent<PlayerMovementController>();
 
 		_playerUI = UIHandler.instance._playerUI.GetComponent<PlayerUI>();

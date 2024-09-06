@@ -277,6 +277,7 @@ GameObject:
   - component: {fileID: 6746229186084961170}
   - component: {fileID: 905818480702986533}
   - component: {fileID: -6580656372969123405}
+  - component: {fileID: -258967895153675983}
   m_Layer: 6
   m_Name: Skeleton
   m_TagString: Untagged
@@ -468,6 +469,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: -258967895153675983}
+        m_TargetAssemblyTypeName: AudioReporter, Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _hpUI: {fileID: 4092315220699470826, guid: 0dc23e343c48b8248b55c473eee952e2, type: 3}
   _hpPos: {fileID: 2093257071435537575}
   _damageUIPrefab: {fileID: 6373609993812512058, guid: 3f5f67a0734eee84497670a1299cf13e, type: 3}
@@ -505,3 +518,18 @@ MonoBehaviour:
   _enterCollider:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-258967895153675983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7739430645761651898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b6c6595161d9d040936764541e948d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audios:
+  - {fileID: 8300000, guid: f781329df2bc3004db37304deb67de73, type: 3}
+  _randomAudios: []

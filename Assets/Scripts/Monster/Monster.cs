@@ -41,7 +41,7 @@ public abstract class Monster : MonoBehaviour
 	public Transform _hpPos;
 	public GameObject _damageUIPrefab;
 	DamageUI _damageUI;
-	protected Slider _hpSlider;
+	[SerializeField] MonsterEffect _effect;
 
 	[Space(10)]
 	public float _moveSpeed = 1.0f;
@@ -57,8 +57,13 @@ public abstract class Monster : MonoBehaviour
 	public int _initHp = 3;
 	public List<DropItem> _dropItems;
 
+	[Space(10)]
+	[SerializeField] UnityEvent _onDamaged;
+	public int AttackCnt = 1;
+
 	float _lastwaitTime = 0.0f;
 	float _lastMoveTime = 0.0f;
+	protected Slider _hpSlider;
 	protected float _lastAttackTime = 0.0f;
 
 	protected bool isHit = false;
@@ -71,14 +76,12 @@ public abstract class Monster : MonoBehaviour
 		}
 	}
 
-
-	[NonSerialized] public Action _onAttackBlocked;
+	public Action _onAttackBlocked;
 	public Action _onDestroy;
 
-	public int AttackCnt = 1;
+
 	[NonSerialized] public int curAttackAnim = 1;
 
-	[SerializeField] UnityEvent _onDamaged;
 	 
 	public virtual void Awake()
 	{
@@ -283,7 +286,12 @@ public abstract class Monster : MonoBehaviour
 
 	public abstract void OnAttack();
 	Coroutine endHit = null;
-        public virtual void OnHit(GameObject attacker, int damage)
+	
+
+	float lastHitTime = 0.0f;
+	[SerializeField] float HitDelay = 1.0f;
+
+        public virtual void OnHit(GameObject attacker, int damage, bool isBlocked = false)
         {
 		if (_hp <= 0)
 			return;
@@ -291,13 +299,16 @@ public abstract class Monster : MonoBehaviour
 		_hp -= damage;
 
 		_damageUI.SetDamage(damage); 
-		if (_hpSlider != null)
+		if (_hpSlider != null) 
 			_hpSlider.value = (float)_hp / _initHp;
 
-
-		if (!isAttack) 
-			PlayAnimation("Hit");   
-		 
+		_effect?.PlayAnim("Hit", true); 
+		if (Time.time - lastHitTime > HitDelay || isBlocked)
+		{
+			PlayAnimation("Hit"); 
+			lastHitTime = Time.time; 
+		}
+		  
 		isHit = true;
 		if (endHit != null)
 			StopCoroutine(endHit);

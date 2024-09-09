@@ -262,7 +262,7 @@ public class PlayerActionController : MonoBehaviour
 			Monster mm= monster.GetComponent<Monster>();
 			if (mm != null)
 			{
-				mm._onAttackBlocked = () => { mm.OnHit(gameObject, _status.GetValue(EPlayerStatus.ShieldDamage)); };
+				mm._onAttackBlocked = () => { mm.OnHit(gameObject, _status.GetValue(EPlayerStatus.ShieldDamage), true); };
 				
 				_playerController.qr_successShield?.Invoke(); 
 			} 
@@ -271,7 +271,7 @@ public class PlayerActionController : MonoBehaviour
 
 		bool avoid = UnityEngine.Random.Range(0, 100) < PlayerStatus.instance.GetValue(EPlayerStatus.AvoidanceRate);
 
-		if (false && !avoid) 
+		if (!avoid) 
 		{
 			_playerController.hp -= Mathf.Max(0, damage - _status.GetValue(EPlayerStatus.Armor));
 

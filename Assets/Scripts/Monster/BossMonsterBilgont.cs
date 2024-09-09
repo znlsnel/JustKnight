@@ -35,15 +35,6 @@ public class BossMonsterBilgont : BossMonster
 		StartCoroutine(RegisterCoolTime(() => { isAttack = false; }));
 	}
 
-	public override void OnHit(GameObject attacker, int damage)
-	{
-		base.OnHit(attacker, damage);
-
-		//if (monsterHp < _initHp / 2)
-		//{
-		//	attackState = 2;
-		//}
-	}
 
 	public void AE_Pattern1()
 	{

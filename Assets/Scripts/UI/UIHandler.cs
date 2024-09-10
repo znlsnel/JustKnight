@@ -33,8 +33,8 @@ public class UIHandler : Singleton<UIHandler>
 		InstantiateAndAssign(ref _dialogue);
 		InstantiateAndAssign(ref _displayQuest);
 		InstantiateAndAssign(ref _playerUI);
-		InstantiateAndAssign(ref _fpsUI);
-		InstantiateAndAssign(ref _dieUI);
+		//InstantiateAndAssign(ref _fpsUI);
+		InstantiateAndAssign(ref _dieUI); 
 	}
 
 	private void InstantiateAndAssign(ref GameObject instance)

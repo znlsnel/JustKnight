@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 90
+  m_Text: 
 --- !u!1 &6858208880696852724
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,9 +203,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3386544962966940973}
     m_Modifications:
+    - target: {fileID: 1122407515144878, guid: 4d60074dd110e4fdda7cd238bb49b116, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1275598617408868, guid: 4d60074dd110e4fdda7cd238bb49b116, type: 3}
       propertyPath: m_Name
       value: M_HpBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 1495425798055718, guid: 4d60074dd110e4fdda7cd238bb49b116, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567916390998794, guid: 4d60074dd110e4fdda7cd238bb49b116, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1665593283481074, guid: 4d60074dd110e4fdda7cd238bb49b116, type: 3}
       propertyPath: m_Name
@@ -234,6 +246,10 @@ PrefabInstance:
     - target: {fileID: 114048767772505138, guid: 4d60074dd110e4fdda7cd238bb49b116, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114124634560202888, guid: 4d60074dd110e4fdda7cd238bb49b116, type: 3}
+      propertyPath: m_Color.a
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114124634560202888, guid: 4d60074dd110e4fdda7cd238bb49b116, type: 3}
       propertyPath: m_Color.b
@@ -276,6 +292,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114373188955762032, guid: 4d60074dd110e4fdda7cd238bb49b116, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114373188955762032, guid: 4d60074dd110e4fdda7cd238bb49b116, type: 3}
       propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
@@ -286,6 +306,10 @@ PrefabInstance:
     - target: {fileID: 114373188955762032, guid: 4d60074dd110e4fdda7cd238bb49b116, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114373188955762032, guid: 4d60074dd110e4fdda7cd238bb49b116, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 2.18
       objectReference: {fileID: 0}
     - target: {fileID: 114406687190877408, guid: 4d60074dd110e4fdda7cd238bb49b116, type: 3}
       propertyPath: m_Type

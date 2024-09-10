@@ -79,7 +79,7 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 			Text t = child.GetComponentInChildren<Text>(); 
 			if (t != null)
 			{
-				t.text = " - ";
+				t.text = ""; 
 				_slots.Add(child.gameObject);  
 			}
 

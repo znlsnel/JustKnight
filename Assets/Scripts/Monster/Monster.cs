@@ -303,7 +303,7 @@ public abstract class Monster : MonoBehaviour
 			_hpSlider.value = (float)_hp / _initHp;
 
 		_effect?.PlayAnim("Hit", true); 
-		if (Time.time - lastHitTime > HitDelay || isBlocked)
+		if (Time.time - lastHitTime > HitDelay || isBlocked || _hp == 0)
 		{
 			PlayAnimation("Hit"); 
 			lastHitTime = Time.time; 
@@ -312,12 +312,14 @@ public abstract class Monster : MonoBehaviour
 		isHit = true;
 		if (endHit != null)
 			StopCoroutine(endHit);
-			
+		
+
 		endHit = StartCoroutine(RegisterCoolTime(() => 
 		{
 			isHit = false;
 			if (_hp <= 0)
-			{ 
+			{
+
 				DropItem();
 				_state = MonsterState.Death;
 				_onDead?.Invoke();
@@ -359,8 +361,7 @@ public abstract class Monster : MonoBehaviour
 	}
         void AE_EndDeath()
         {
-		_hpUI.SetActive(false);
-		_animator.speed = 0.0f;
+		_animator.speed = 0.0f; _hpUI.SetActive(false);
 		Utils.instance.SetTimer(() => { _onDestroy?.Invoke(); }, 1.5f); 
 	}
 

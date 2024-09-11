@@ -16,7 +16,7 @@ MonoBehaviour:
   episodeName: "\uC0DD\uBA85\uC758\uC740\uC778"
   quest: {fileID: 11400000, guid: 699a1d26ce9c59c44b8e1ed326d1a088, type: 2}
   preQuest: {fileID: 0}
-  pendingDialogue: {fileID: 0}
+  pendingDialogue: {fileID: 11400000, guid: 96530f3bf451e39469953120facdac88, type: 2}
   rejectedDialogue: {fileID: 0}
   progressDialogue: {fileID: 0}
   awaitingDialogue: {fileID: 0}

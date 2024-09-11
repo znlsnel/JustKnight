@@ -31,11 +31,11 @@ public class QuestSlotManager : MonoBehaviour
 
 	}   
 
-	public void AddDisplayQuest()
+	public void AddDisplayQuest(bool destory = false)
 	{
 		bool isDisplayed = _displayQuest.IsQuestStored(_quest);
 
-		if (isDisplayed)
+		if (destory || isDisplayed)
 		{
 			_displayQuest.RemoveQuest(_quest);
 			_checkBoxText.gameObject.SetActive(false);

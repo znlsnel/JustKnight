@@ -46,7 +46,7 @@ public class StartMenu : Singleton<StartMenu>
 			Utils.instance.SetTimer(() =>
 			{
 				PlayerController pc = GameManager.instance.GetPlayer().GetComponent<PlayerController>();
-				pc.hp = PlayerStatus.instance.GetValue(EPlayerStatus.HP);
+				pc.hp = PlayerStats.instance.GetValue(EPlayerStatus.HP);
 				GameManager.instance._playTime = 0;
 			}, 0.1f);
 		};

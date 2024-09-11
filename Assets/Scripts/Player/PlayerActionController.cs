@@ -28,7 +28,7 @@ public class PlayerActionController : MonoBehaviour
 	PlayerController _playerController;
 	InputManager _inputManager;
 	PlayerCollisionManager _playerCollision;
-	PlayerStatus _status;
+	PlayerStats _stats;
 
 	public EActiveState _activeState = EActiveState.Awaiting;
 
@@ -47,7 +47,7 @@ public class PlayerActionController : MonoBehaviour
 		_playerCollision = GetComponent<PlayerCollisionManager>();
 		_animCtrl = GetComponent<PlayerAnimCtrl>();
 		_inputManager = InputManager.instance;
-		_status = PlayerStatus.instance;
+		_stats = PlayerStats.instance;
 
 		_inputManager.BindInputAction("Attack", () => InputAttack(true), () => InputAttack(false));
 		_inputManager.BindInputAction("Shield", () => InputShield(true), ()=>InputShield(false)); 
@@ -122,14 +122,14 @@ public class PlayerActionController : MonoBehaviour
 			_attackCombo = (_attackCombo + 1) % 3;
 			_playerController._playerState = EPlayerState.Idle;
 			_animCtrl.PlayAnimation($"Attack{_attackCombo + 1}");
-			_animCtrl.anim.speed = (float)PlayerStatus.instance.GetValue(EPlayerStatus.AttackSpeed) * 0.01f;
+			_animCtrl.anim.speed = (float)PlayerStats.instance.GetValue(EPlayerStatus.AttackSpeed) * 0.01f;
 			_playerController.qr_attack?.Invoke();
 
 
 		}
 		 
 
-		float coolTime = _playerController._attackDelay * (float)PlayerStatus.instance.GetValue(EPlayerStatus.AttackSpeed) * 0.01f;
+		float coolTime = _playerController._attackDelay * (float)PlayerStats.instance.GetValue(EPlayerStatus.AttackSpeed) * 0.01f;
 		yield return StartCoroutine(RegisterCooldown(coolTime, () => {
 			_isAttackable = true;
 			_animCtrl.anim.speed = 1.0f;
@@ -161,7 +161,7 @@ public class PlayerActionController : MonoBehaviour
 
 		float moveDir = isSideJump ? InputManager.instance.GetInputAction("Move").ReadValue<float>() * - 4.0f : 0.0f;
 
-		float jumpSize = _playerController._jumpPower * (float)PlayerStatus.instance.GetValue(EPlayerStatus.jumpPower) * 0.01f;
+		float jumpSize = _playerController._jumpPower * (float)PlayerStats.instance.GetValue(EPlayerStatus.jumpPower) * 0.01f;
 		rb.AddForce(new Vector2(moveDir, jumpSize), ForceMode2D.Impulse);
 		_animCtrl.PlayAnimation("Jump"); 
 	}
@@ -215,10 +215,10 @@ public class PlayerActionController : MonoBehaviour
 			Monster mc = c.gameObject.GetComponent<Monster>();
 			if (mc != null)
 			{
-				mc.OnHit(gameObject, _status.GetValue(EPlayerStatus.Damage));
-				bool dubbleAttack = UnityEngine.Random.Range(0, 100) < PlayerStatus.instance.GetValue(EPlayerStatus.DubbleAttackRate);
+				mc.OnHit(gameObject, _stats.GetValue(EPlayerStatus.Damage));
+				bool dubbleAttack = UnityEngine.Random.Range(0, 100) < PlayerStats.instance.GetValue(EPlayerStatus.DubbleAttackRate);
 				if (dubbleAttack)
-					Utils.instance.SetTimer(() => { mc.OnHit(gameObject, _status.GetValue(EPlayerStatus.Damage));}, 0.1f );
+					Utils.instance.SetTimer(() => { mc.OnHit(gameObject, _stats.GetValue(EPlayerStatus.Damage));}, 0.1f );
 			}
 		}
 	}
@@ -262,18 +262,18 @@ public class PlayerActionController : MonoBehaviour
 			Monster mm= monster.GetComponent<Monster>();
 			if (mm != null)
 			{
-				mm._onAttackBlocked = () => { mm.OnHit(gameObject, _status.GetValue(EPlayerStatus.ShieldDamage), true); };
+				mm._onAttackBlocked = () => { mm.OnHit(gameObject, _stats.GetValue(EPlayerStatus.ShieldDamage), true); };
 				
 				_playerController.qr_successShield?.Invoke(); 
 			} 
 			return; 
 		}
 
-		bool avoid = UnityEngine.Random.Range(0, 100) < PlayerStatus.instance.GetValue(EPlayerStatus.AvoidanceRate);
+		bool avoid = UnityEngine.Random.Range(0, 100) < PlayerStats.instance.GetValue(EPlayerStatus.AvoidanceRate);
 
 		if (!avoid) 
 		{
-			_playerController.hp -= Mathf.Max(0, damage - _status.GetValue(EPlayerStatus.Armor));
+			_playerController.hp -= Mathf.Max(0, damage - _stats.GetValue(EPlayerStatus.Armor));
 
 			CameraManager cm = Camera.main.GetComponent<CameraManager>();
 			cm?.ShakeCamera(monster.transform.position.x < gameObject.transform.position.x);

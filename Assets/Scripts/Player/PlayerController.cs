@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 	InputManager _inputManager;
 	PlayerActionController _actionController;
 	PlayerMovementController _movementController;
-	PlayerStatus _playerStatus;
+	PlayerStats _playerStats;
 
 	public GameObject _SlideDust;
 
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 		set 
 		{  
 			_hp = value;
-			_playerUI.UpdateHpBar(_hp, _playerStatus.GetValue(EPlayerStatus.HP)); 
+			_playerUI.UpdateHpBar(_hp, _playerStats.GetValue(EPlayerStatus.HP)); 
 		}
 	}
 
@@ -96,10 +96,10 @@ public class PlayerController : MonoBehaviour
 	void Start()
 	{
 		_collMan = gameObject.GetComponent<PlayerCollisionManager>();
-		_playerStatus = PlayerStatus.instance;
+		_playerStats = PlayerStats.instance;
 		
 		
-		_hp = _playerStatus.GetValue(EPlayerStatus.HP);    
+		_hp = _playerStats.GetValue(EPlayerStatus.HP);    
 		_playerUI.UpdateHpBar(_hp, _hp);
 	}
 

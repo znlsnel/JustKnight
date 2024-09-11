@@ -16,5 +16,5 @@ MonoBehaviour:
   - text: "<color=yellow>\uADF8\uB78C\uBC14\uD06C</color>\uB140\uC11D \uB3C4\uB300\uCCB4
       \uC5B4\uB514\uB85C \uAC04\uAC74\uC9C0.."
     player:
-    - text: "[\uD655\uC778]"
+    - text: "\uD655\uC778"
       state: 0

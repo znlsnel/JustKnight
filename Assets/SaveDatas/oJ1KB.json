@@ -1,0 +1,145 @@
+{
+    "itemDatas": [],
+    "episodes": [
+        {
+            "episodeCode": "System캐릭터 움직이기",
+            "state": 2
+        },
+        {
+            "episodeCode": "System실전 전투",
+            "state": 0
+        },
+        {
+            "episodeCode": "System구르기 동작",
+            "state": 0
+        },
+        {
+            "episodeCode": "System벽 점프",
+            "state": 0
+        },
+        {
+            "episodeCode": "System벽 오르기",
+            "state": 0
+        },
+        {
+            "episodeCode": "System튜토리얼 종료",
+            "state": 2
+        },
+        {
+            "episodeCode": "System공격, 막기 동작",
+            "state": 0
+        },
+        {
+            "episodeCode": "그럼바크빌곤트 상단과의 조우",
+            "state": 0
+        }
+    ],
+    "quests": [
+        {
+            "questCode": "System캐릭터 움직이기",
+            "state": 1,
+            "taskData": [
+                {
+                    "taskName": "TASK_moveLeft",
+                    "curCnt": 1
+                },
+                {
+                    "taskName": "TASK_moveRight",
+                    "curCnt": 0
+                },
+                {
+                    "taskName": "TASK_Jump",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": true
+        },
+        {
+            "questCode": "System실전 전투",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "Task_Kill",
+                    "curCnt": 0
+                },
+                {
+                    "taskName": "Task_Shield",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System구르기 동작 해보기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System벽 점프 해보기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System벽 오르기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System공격, 막기 해보기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                },
+                {
+                    "taskName": "task 1",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "김덕배김촌장 찾아가기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        }
+    ],
+    "PlayInfo": {
+        "scene": "Ch1_Node_1",
+        "_saveDate": "24.09.10 (20:45:19)",
+        "_date": 25044319,
+        "_playTime": 0,
+        "hp": 3,
+        "position": {
+            "x": -22.386314392089845,
+            "y": -4.600250244140625,
+            "z": 0.0
+        }
+    },
+    "fileName": "oJ1KB"
+}

@@ -158,7 +158,7 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 				_slots[i].GetComponent<ItemSlot>().SetImage(null, null);
 			}
 		} 
-		_statusText.text = PlayerStatus.instance.GetStatus();
+		_statusText.text = PlayerStats.instance.GetStatus();
 	}
 
 
@@ -302,7 +302,7 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 		else
 			_items[idx]?.EquipItem();
 
-		_statusText.text = PlayerStatus.instance.GetStatus();
+		_statusText.text = PlayerStats.instance.GetStatus();
 
 	}
 
@@ -353,7 +353,7 @@ public class InventoryManager : MonoBehaviour, IMenuUI
 
 	public void OnStatus()
 	{
-		_statusText.text = PlayerStatus.instance.GetStatus();
+		_statusText.text = PlayerStats.instance.GetStatus();
 
 		_status.SetActive(true);
 	}

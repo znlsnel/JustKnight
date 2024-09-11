@@ -167,11 +167,12 @@ public class QuestUI : MonoBehaviour, IMenuUI
 		if (_questSlots.TryGetValue(quest, out gm)) 
 		{
 			gm.transform.SetParent(GetQuestParent(type).transform); 
-			gm.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);	
+			gm.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
-			if (display)
+			
+			if (type == EQuestMenuType.COMPLETED|| display)
 			{
-				gm.GetComponent<QuestSlotManager>().AddDisplayQuest();
+				gm.GetComponent<QuestSlotManager>().AddDisplayQuest(type == EQuestMenuType.COMPLETED);
 			}
 		}  
 	}

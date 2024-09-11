@@ -13,7 +13,7 @@ public class PlayerMovementController : MonoBehaviour
 	PlayerAnimCtrl _animCtrl;
 	PlayerActionController _actionController;
 	PlayerCollisionManager _playerCollision;
-	PlayerStatus _status;
+	PlayerStats _stats;
 
 	bool _isWallClimb = false;
 
@@ -85,7 +85,7 @@ public class PlayerMovementController : MonoBehaviour
 		  
 		if (_playerController._playerState == EPlayerState.Move && _actionController._activeState != EActiveState.Roll)
 		{
-			float moveSize = _playerController._playerSpeed * (float)PlayerStatus.instance.GetValue(EPlayerStatus.MoveSpeed) * 0.01f;
+			float moveSize = _playerController._playerSpeed * (float)PlayerStats.instance.GetValue(EPlayerStatus.MoveSpeed) * 0.01f;
 			_rigidbody.velocity = new Vector2(moveDir * moveSize, _rigidbody.velocity.y);
 
 			if (moveDir > 0)

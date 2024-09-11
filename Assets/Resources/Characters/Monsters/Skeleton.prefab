@@ -495,11 +495,19 @@ MonoBehaviour:
   _initHp: 3
   _dropItems:
   - item: {fileID: 11400000, guid: 2bd6e27ae9ff49942bb426d454ece902, type: 2}
-    dropRate: 3
+    dropRate: 99
   - item: {fileID: 11400000, guid: 5098296329a2abc48b24530601fa378e, type: 2}
-    dropRate: 3
+    dropRate: 99
   - item: {fileID: 11400000, guid: d6b834f3dc379b14d9ef1088521c3cd3, type: 2}
-    dropRate: 3
+    dropRate: 99
+  - item: {fileID: 11400000, guid: 5c85165d9948cba4b9f3cad4a546d68d, type: 2}
+    dropRate: 99
+  - item: {fileID: 11400000, guid: 5e0f18ec2486e484b8c6a7c56438e33d, type: 2}
+    dropRate: 99
+  - item: {fileID: 11400000, guid: 7756c8f66fe8d3d4b8ccb539a50b80c6, type: 2}
+    dropRate: 99
+  - item: {fileID: 11400000, guid: d8c08fd3f7927bf44beccf345b7e847b, type: 2}
+    dropRate: 99
   _onDamaged:
     m_PersistentCalls:
       m_Calls: []

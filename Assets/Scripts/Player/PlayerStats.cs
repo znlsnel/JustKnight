@@ -46,8 +46,14 @@ public class PlayerStats : Singleton<PlayerStats>
 			at.addValue += value;
 			if (type == EPlayerStatus.HP)
 			{
-				PlayerController pc = GameManager.instance.GetPlayer().GetComponent<PlayerController>();
-				pc.hp = pc.hp; 
+				Utils.instance.SetTimer(
+					() => {
+						PlayerController pc = GameManager.instance.GetPlayer().GetComponent<PlayerController>();
+						pc.hp = pc.hp;
+
+					}, 0.1f);
+
+
 			}
 		}
 	}

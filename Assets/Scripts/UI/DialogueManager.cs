@@ -74,6 +74,10 @@ public class DialogueManager : MonoBehaviour, IMenuUI
 		dialogue = _episodes[dialogue.episodeCode]; 
 	}
 
+	public EpisodeSO GetCurEpisode()
+	{
+		return _episode;
+	}
 	public bool RegisteEpisodes(List<EpisodeSO> episodes, UnityEvent action = null)
 	{
 		ActiveMenu(true);

@@ -1695,6 +1695,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1673144463500999693, guid: 9c46a8152f47b464780d4ca2b7fea0a9, type: 3}
+      propertyPath: _dialogues.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673144463500999693, guid: 9c46a8152f47b464780d4ca2b7fea0a9, type: 3}
+      propertyPath: _dialogues.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 060633cb5d996de4ea9bd891f06a6508, type: 2}
+    - target: {fileID: 1673144463500999693, guid: 9c46a8152f47b464780d4ca2b7fea0a9, type: 3}
       propertyPath: _onEndDialogue.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -1797,6 +1805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playableDirectors:
   - {fileID: 694484980}
+  episode: {fileID: 11400000, guid: a258e1a09e8aaa648a27f8a959670833, type: 2}
 --- !u!1001 &1652446454
 PrefabInstance:
   m_ObjectHideFlags: 0

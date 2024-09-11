@@ -97,9 +97,9 @@ public class EpisodeSO : ScriptableObject
 		}
 
 		return curDialogue;
-	} 
+	}
 
-	//It returns true when the dialogue is finished,
+	// It returns true when the dialogue has finished 
 	public bool UpdateState(DialogueSO dialogue, int playerIdx)
 	{
 		EResponseType rspState = dialogue.npc[curPage].player[playerIdx].state; 

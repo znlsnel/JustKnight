@@ -10,14 +10,14 @@ public class basicMonster : Monster
 
 	public override void OnAttack()
 	{
+		if (isAttack)
+			return;
+		
 		if (isPlayerDead || _isPlayerInAttackRange == false)
 		{
 			_state = MonsterState.Chasing;
 			return;
 		}
-
-		if (isAttack)
-			return;
 		 
 		_lastAttackTime += Time.deltaTime;
 		if (_lastAttackTime < _attackCoolTime)
@@ -40,11 +40,17 @@ public class basicMonster : Monster
 		 
 	}
 
+	public override void InitMonster(Vector3 pos)
+	{
+		base.InitMonster(pos);
+		_hpSlider.gameObject.transform.position = _hpPos.position; 
+
+	}
+
 	public override void Update()
 	{
 		base.Update();
 		_hpSlider.gameObject.transform.position = _hpPos.position;
-
 	}
 
 }

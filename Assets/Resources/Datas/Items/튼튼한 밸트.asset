@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\uD2BC\uD2BC\uD55C \uBC38\uD2B8"
   m_EditorClassIdentifier: 
   _itemIcon: {fileID: 2800000, guid: 6858a15e5082cf34b9ee3167e90403d3, type: 3}
-  _name: "\uD2BC\uD2BC\uD55C \uBCA8\uD2B8"
+  _name: "\uD2BC\uD2BC\uD55C \uBC38\uD2B8"
   _description: "\uD2BC\uD2BC\uD55C \uBCA8\uD2B8\uC774\uB2E4. \uCC29\uC6A9\uC2DC
     <color=yellow>\uBC29\uC5B4\uB825\uACFC Hp\uAC00 \uC18C\uD3ED \uC0C1\uC2B9\uD55C\uB2E4.</color>"
   _effects:

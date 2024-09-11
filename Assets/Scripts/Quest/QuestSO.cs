@@ -68,7 +68,6 @@ public class QuestSO : ScriptableObject
 				return false; 
 		}
 
-		
 		return true;
 	}
 }

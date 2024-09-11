@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab0f38a0c871e5d4ca33a79c7c903ba1, type: 3}
   m_Name: "ep_\uB4E4\uCF30\uB124"
   m_EditorClassIdentifier: 
-  npcName: "\uBE4C\uACE4\uD2B8"
+  npcName: "\uAC15\uB3C4"
   episodeName: "\uB4E4\uCF30\uB124"
   quest: {fileID: 11400000, guid: f55384021cffd3746bc39fb2b47aafa7, type: 2}
   preQuest: {fileID: 0}

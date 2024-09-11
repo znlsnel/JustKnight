@@ -113,7 +113,7 @@ public abstract class Monster : MonoBehaviour
 		
 		 
 		gameObject.SetActive(true);
-		_hpUI.SetActive(true);
+		Utils.instance.SetTimer(()=>_hpUI.SetActive(true));
 	}
 
 
@@ -151,28 +151,20 @@ public abstract class Monster : MonoBehaviour
         public virtual void Update()
         {                
 		UpdateState();
-		 
-
 	}
 
 	protected virtual void FixedUpdate()
-	{ 
-		UpdateMovement();
-	}
-
-	void UpdateMovement()
 	{
-		bool movable = !isHit && (_state == MonsterState.Move || _state ==  MonsterState.Chasing) && _isObstacleAhead == false;
-		  
+		bool movable = !isHit && (_state == MonsterState.Move || _state == MonsterState.Chasing) && _isObstacleAhead == false;
+
 		if (movable)
 		{
-			Vector3 vel = _rigid.velocity; 
-
-			_rigid.velocity = new Vector3(transform.localScale.x * _moveSpeed, vel.y, vel.x); 
+			Vector3 vel = _rigid.velocity;
+			_rigid.velocity = new Vector3(transform.localScale.x * _moveSpeed, vel.y, vel.x);
 		}
 	}
+
 	
-	string curAnim = "";
         public void UpdateState(string name = "") 
         {
 		if (isHit)
@@ -203,6 +195,7 @@ public abstract class Monster : MonoBehaviour
 				break;
 		}
 	}
+	string curAnim = "";
 
 	public void PlayAnimation(string nextAnim)
 	{		 
@@ -213,16 +206,36 @@ public abstract class Monster : MonoBehaviour
 		_animator.Play(curAnim);
 	}
 
+	// 뒤 돌기를 1초에 한번씩만 할 수 있게 하기
+
+	float lastTurnTime = 0.0f;
+	float turnDelay = 0.5f;
+	void LookPlayer()
+	{
+		float dist = _player.transform.position.x - transform.position.x;
+		bool isLookingAtPlayer = (_player.transform.position.x - transform.position.x) * transform.localScale.x > 0;
+		if (Mathf.Abs(dist) < 0.2f || isLookingAtPlayer || Time.time - lastTurnTime < turnDelay)
+			return;
+		 
+		lastTurnTime = Time.time;
+
+		Vector3 scale = transform.localScale;
+		scale.x *= -1;
+		transform.localScale = scale;
+
+	}
+
 	public virtual void OnChasing()
 	{
+		LookPlayer();
 		// 플레이어를 바라보며 달리기
-		bool isLookingAtPlayer = (_player.transform.position.x - transform.position.x) * transform.localScale.x > 0;
-		if (!isLookingAtPlayer)
-		{
-			Vector3 scale = transform.localScale;
-			scale.x *= -1;
-			transform.localScale =	scale; 
-		}
+		//bool isLookingAtPlayer = (_player.transform.position.x - transform.position.x) * transform.localScale.x > 0;
+		//if (!isLookingAtPlayer)
+		//{
+		//	Vector3 scale = transform.localScale;
+		//	scale.x *= -1;
+		//	transform.localScale =	scale; 
+		//}
 
 		// 장애물에 걸렸다면
 		if (_isObstacleAhead || isPlayerDead)

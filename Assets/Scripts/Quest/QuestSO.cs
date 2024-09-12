@@ -27,24 +27,21 @@ public class QuestSO : ScriptableObject
 	public bool isSavable;
 	public bool isAutoComplete;
 
+	public Action _onChangeState;
+
 	[NonSerialized] public HashSet<Action> _onClear = new HashSet<Action>();
 	[NonSerialized] EQuestState questState = EQuestState.PENDING;
-	[NonSerialized] private bool clear = false;
-	public Action _onChangeState;
 
 	public string questCode { get { return npcName + questName; } }
 	public bool isClear
 	{
 		get 
 		{
-			if (clear == true)
-				return true;
-
 			foreach (QuestTaskSO task in tasks)
 				if (task.curCnt < task.targetCnt)
 					return false; 
 
-			return clear = true;
+			return  true;
 		}
 	} 
 

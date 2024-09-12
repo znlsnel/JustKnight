@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b88bc0992cb7f48825016a50227719, type: 3}
   m_Name: "qst_\uBE4C\uACE4\uD2B8 \uC0C1\uB2E8\uACFC\uC758 \uC870\uC6B0"
   m_EditorClassIdentifier: 
-  npcName: "\uAE40\uB355\uBC30"
-  questName: "\uAE40\uCD0C\uC7A5 \uCC3E\uC544\uAC00\uAE30"
-  description: "\uB9C8\uC744\uC740 \uC704\uAE30 \uC0C1\uD669\uC785\uB2C8\uB2E4. \uAE40\uB355\uBC30\uB294
-    \uB9C8\uC744\uC758 \uCD0C\uC7A5\uC744 \uCC3E\uC544\uAC00 \uB3C4\uC6C0\uC744 \uB2EC\uB77C\uACE0
-    \uD569\uB2C8\uB2E4."
+  npcName: "\uADF8\uB7FC\uBC14\uD06C"
+  questName: "\uBE4C\uACE4\uD2B8 \uCC3E\uC544\uAC00\uAE30"
+  description: "\uBE4C\uACE4\uD2B8\uB97C \uCC3E\uC544\uAC00 \uBE4C\uACE4\uD2B8\uC0C1\uB2E8\uC744
+    \uB3C4\uC640\uC8FC\uC138\uC694"
   tasks:
   - {fileID: 11400000, guid: 3f29b94e5f3e4274b96c4020bb9039fc, type: 2}
   reward: {fileID: 0}

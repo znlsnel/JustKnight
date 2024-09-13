@@ -1,0 +1,206 @@
+{
+    "itemDatas": [
+        {
+            "Name": "튼튼한 밸트",
+            "Idx": 6,
+            "Effects": [
+                {
+                    "effectType": 3,
+                    "value": 1
+                },
+                {
+                    "effectType": 0,
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "Name": "검은 신발",
+            "Idx": 7,
+            "Effects": [
+                {
+                    "effectType": 7,
+                    "value": 1
+                },
+                {
+                    "effectType": 8,
+                    "value": 5
+                }
+            ]
+        },
+        {
+            "Name": "행운의 깃털",
+            "Idx": 8,
+            "Effects": [
+                {
+                    "effectType": 5,
+                    "value": 5
+                },
+                {
+                    "effectType": 4,
+                    "value": 2
+                },
+                {
+                    "effectType": 9,
+                    "value": 4
+                }
+            ]
+        },
+        {
+            "Name": "튼튼한 밸트",
+            "Idx": 9,
+            "Effects": [
+                {
+                    "effectType": 3,
+                    "value": 1
+                },
+                {
+                    "effectType": 0,
+                    "value": 1
+                }
+            ]
+        }
+    ],
+    "episodes": [
+        {
+            "episodeCode": "System캐릭터 움직이기",
+            "state": 2
+        },
+        {
+            "episodeCode": "System실전 전투",
+            "state": 0
+        },
+        {
+            "episodeCode": "System구르기 동작",
+            "state": 0
+        },
+        {
+            "episodeCode": "System벽 점프",
+            "state": 0
+        },
+        {
+            "episodeCode": "System벽 오르기",
+            "state": 0
+        },
+        {
+            "episodeCode": "System튜토리얼 종료",
+            "state": 0
+        },
+        {
+            "episodeCode": "System공격, 막기 동작",
+            "state": 0
+        },
+        {
+            "episodeCode": "그럼바크빌곤트 상단과의 조우",
+            "state": 0
+        }
+    ],
+    "quests": [
+        {
+            "questCode": "System캐릭터 움직이기",
+            "state": 3,
+            "taskData": [
+                {
+                    "taskName": "TASK_moveLeft",
+                    "curCnt": 8
+                },
+                {
+                    "taskName": "TASK_moveRight",
+                    "curCnt": 7
+                },
+                {
+                    "taskName": "TASK_Jump",
+                    "curCnt": 1
+                }
+            ],
+            "isDisplaying": true
+        },
+        {
+            "questCode": "System실전 전투",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "Task_Kill",
+                    "curCnt": 0
+                },
+                {
+                    "taskName": "Task_Shield",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System구르기 동작 해보기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System벽 점프 해보기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System벽 오르기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "System공격, 막기 해보기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                },
+                {
+                    "taskName": "task 1",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        },
+        {
+            "questCode": "그럼바크빌곤트 찾아가기",
+            "state": 0,
+            "taskData": [
+                {
+                    "taskName": "task",
+                    "curCnt": 0
+                }
+            ],
+            "isDisplaying": false
+        }
+    ],
+    "PlayInfo": {
+        "scene": "Ch1_Node_1",
+        "_saveDate": "24.09.12 (20:08:06)",
+        "_date": 25214886,
+        "_playTime": 1,
+        "hp": 2,
+        "position": {
+            "x": 14.581686019897461,
+            "y": 2.3986284732818605,
+            "z": 0.0
+        }
+    },
+    "fileName": "ZbbA6"
+}

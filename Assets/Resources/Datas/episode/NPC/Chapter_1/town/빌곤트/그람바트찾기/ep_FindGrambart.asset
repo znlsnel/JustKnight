@@ -18,6 +18,6 @@ MonoBehaviour:
   preQuest: {fileID: 11400000, guid: 779067e940b49014fb8cdd822b865c05, type: 2}
   pendingDialogue: {fileID: 11400000, guid: 8caae0f482f3a4e43a10a15347309277, type: 2}
   rejectedDialogue: {fileID: 11400000, guid: ec6bb585842a4874a930bee99194c208, type: 2}
-  progressDialogue: {fileID: 11400000, guid: 5f786c25d853bd4409fd8ffeb633e479, type: 2}
-  awaitingDialogue: {fileID: 0}
+  inProgressDialogue: {fileID: 11400000, guid: 5f786c25d853bd4409fd8ffeb633e479, type: 2}
+  awaitingCompletionDialogue: {fileID: 0}
   completedDialogue: {fileID: 0}

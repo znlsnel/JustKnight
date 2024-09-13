@@ -8,13 +8,12 @@ using UnityEngine.Events;
 public class QuestTaskSO : ScriptableObject
 {
 	public CategorySO category;
-
-	public string taskTitle;
+	public TargetSO target;
+	public TaskActionSO action;
 
 	[Space(10)]
-	public TaskActionSO action;
-	public TargetSO target;
-	 
+	public string taskTitle;
 	public int targetCnt;
+
 	[NonSerialized] public int curCnt = 0;
 }

@@ -1625,7 +1625,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3758403958562340165}
         m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
         m_MethodName: OnRemoveCancelButton
         m_Mode: 1
@@ -2874,7 +2874,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3758403958562340165}
         m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
         m_MethodName: OnRemoveItemButton
         m_Mode: 1

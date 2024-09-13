@@ -7,30 +7,22 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new Item", menuName = "Item/new Item", order = 1)]
 public class ItemSO : ScriptableObject
 {
-	[NonSerialized] public RectTransform _rectTransform;
+	[NonSerialized] public int level;
+
 	public Texture2D _itemIcon;
 	public string _name;
 
 	[TextArea(3, 10)]
 	public string _description;
-	[NonSerialized] public int level;
 
 	public List<SkillAttribute> _effects; 
 
 	public void InitItem()
 	{
-		int rand = UnityEngine.Random.Range(0, 101);
-		level = rand > 95 ? 5 : rand > 90 ? 4 : rand > 60 ? 3 : rand > 30 ? 2 : 1;
-		if (level == 5) 
-		{
-			rand = UnityEngine.Random.Range(0, 11);
-			level += rand <= 5 ? 0 : rand - 5;
-		}
-		level = Mathf.Max(level, _effects.Count);
+		level = GenLevel();
+		
 
-		int cnt = level - _effects.Count;
-		 
-		while (cnt-- > 0)
+		for (int i = 0; i < level - _effects.Count; i++)
 		{
 			EPlayerStatus type = (EPlayerStatus)UnityEngine.Random.Range(0, (int)EPlayerStatus.Count);
 			SkillAttribute sa = new SkillAttribute(type);
@@ -45,8 +37,15 @@ public class ItemSO : ScriptableObject
 			sa.InitSkillAttribute();
 			_description += "\n" + sa.descript;
 		}
+	}
 
-		
+	int GenLevel()
+	{
+		int ret = 1, range = 9;
+		while (range > 1 && UnityEngine.Random.Range(0, range--) >= 1)
+			ret++; 
+
+		return ret = Mathf.Max(ret, _effects.Count);
 	}
 
 	public void EquipItem()

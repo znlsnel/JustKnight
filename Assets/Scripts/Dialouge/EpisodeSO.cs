@@ -22,13 +22,15 @@ public class EpisodeSO : ScriptableObject
 	public string npcName = "";
 	public string episodeName = "";
 
+	[Space(10)]
 	public QuestSO quest;
 	public QuestSO preQuest;
+	[Space(10)]
 
 	public DialogueSO pendingDialogue;   // 퀘스트 수락 전 DialogueSO
 	public DialogueSO rejectedDialogue;  // 퀘스트 거절 DialogueSO
-	public DialogueSO progressDialogue;  // 퀘스트 진행 중 DialogueSO
-	public DialogueSO awaitingDialogue;  // 퀘스트 완료 대기 DialogueSO
+	public DialogueSO inProgressDialogue;  // 퀘스트 진행 중 DialogueSO
+	public DialogueSO awaitingCompletionDialogue;  // 퀘스트 완료 대기 DialogueSO
 	public DialogueSO completedDialogue; // 퀘스트 완료 이후 DialogueSO
 	public Action _onChangeState;
 
@@ -54,13 +56,8 @@ public class EpisodeSO : ScriptableObject
 	}
 
 	[NonSerialized] DialogueSO curDialogue;
-
 	[NonSerialized] public int curPage = 0;
 
-	private void OnEnable()
-	{
-		
-	}
 	public DialogueSO GetDialogue(bool init = true)
 	{
 		bool isClear = quest != null ? quest.isClear : false;
@@ -81,11 +78,11 @@ public class EpisodeSO : ScriptableObject
 				break;
 
 			case EEpisodeState.IN_PROGRESS:
-				curDialogue =  progressDialogue; // 저 몬스터를 잡아야해!
+				curDialogue =  inProgressDialogue; // 저 몬스터를 잡아야해!
 				break;
 
 			case EEpisodeState.AWAITING_COMPLETION: 
-				curDialogue = awaitingDialogue; // 고마워 보상이야!
+				curDialogue = awaitingCompletionDialogue; // 고마워 보상이야!
 				break;
 
 			case EEpisodeState.COMPLETED:
@@ -104,7 +101,6 @@ public class EpisodeSO : ScriptableObject
 	{
 		EResponseType rspState = dialogue.npc[curPage].player[playerIdx].state; 
 		
-		 
 		switch (rspState)
 		{
 			case EResponseType.CONTINUE:
@@ -114,21 +110,23 @@ public class EpisodeSO : ScriptableObject
 				return true; 
 
 			case EResponseType.GET_REWARD:
-				{
-					string reward = quest.reward != null ? quest.reward.GetReward() : "";
-					QuestManager.instance.CompleteQuest(quest, reward);
-					_state = EEpisodeState.COMPLETED; 
-				}
-				break;
+			{
+				string reward = quest.reward != null ? quest.reward.GetReward() : "";
+				QuestManager.instance.CompleteQuest(quest, reward);
+				_state = EEpisodeState.COMPLETED; 
+			}
+			break;
 
 			case EResponseType.RECEIVE_QUEST:
+			{
 				_state = EEpisodeState.IN_PROGRESS;
 				if (quest != null)
 				{
 					quest._state = EQuestState.IN_PROGRESS;
 					QuestManager.instance.RegisterQuest(quest, true);
 				}
-				break; 
+			}
+			break; 
 
 			case EResponseType.REJECT:
 				_state = EEpisodeState.REJECTED;

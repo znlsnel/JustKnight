@@ -26,7 +26,6 @@ public class QuestManager : Singleton<QuestManager>
 	private Dictionary<QuestInfo, HashSet<QuestSO>> _tasks = new Dictionary<QuestInfo, HashSet<QuestSO>>();
 	public Dictionary<string, QuestSO> _quests = new Dictionary<string, QuestSO>();
 	
-
 	DisplayQuest _displayQuest;
 	QuestUI _questUI;
 	 
@@ -77,7 +76,6 @@ public class QuestManager : Singleton<QuestManager>
 			else
 			{
 				myQuests = new HashSet<QuestSO> { quest };
-
 				_tasks.Add(new QuestInfo(task.category, task.target), myQuests);
 			}
 		}

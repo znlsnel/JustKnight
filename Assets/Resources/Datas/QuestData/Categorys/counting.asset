@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aae04da4646564c47a6fd71fae8212ce, type: 3}
-  m_Name: c_Counting
+  m_Name: counting
   m_EditorClassIdentifier: 
   codeName: counting
   displayName: counting

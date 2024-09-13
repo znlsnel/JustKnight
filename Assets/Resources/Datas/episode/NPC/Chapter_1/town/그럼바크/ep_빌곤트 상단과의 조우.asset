@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: "\uADF8\uB7FC\uBC14\uD06C"
   episodeName: "\uBE4C\uACE4\uD2B8 \uC0C1\uB2E8\uACFC\uC758 \uC870\uC6B0"
-  episodeCode: RMFJAQKZM_qweiops
   quest: {fileID: 11400000, guid: 87724b97dccc11c40aafeaac4999b608, type: 2}
   preQuest: {fileID: 0}
   pendingDialogue: {fileID: 11400000, guid: 48ff385cca865b443bba5dc4861249cc, type: 2}
   rejectedDialogue: {fileID: 11400000, guid: a46116e25da82f748b9544d97ab8908c, type: 2}
-  progressDialogue: {fileID: 11400000, guid: 102a7b7b46ebfed4cb1be2e98e39efbc, type: 2}
-  awaitingDialogue: {fileID: 0}
+  inProgressDialogue: {fileID: 11400000, guid: 102a7b7b46ebfed4cb1be2e98e39efbc, type: 2}
+  awaitingCompletionDialogue: {fileID: 0}
   completedDialogue: {fileID: 0}

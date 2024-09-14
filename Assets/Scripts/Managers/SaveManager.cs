@@ -300,7 +300,6 @@ public class SaveData
         public PlayInfo PlayInfo = new PlayInfo();
 
         public string fileName;
-
 }
 
 

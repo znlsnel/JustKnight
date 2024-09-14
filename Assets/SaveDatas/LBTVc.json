@@ -1,93 +1,101 @@
 {
     "itemDatas": [
         {
-            "Name": "가죽 신발",
-            "Idx": 0,
-            "Effects": [
-                {
-                    "effectType": 7,
-                    "value": 3
-                },
-                {
-                    "effectType": 7,
-                    "value": 2
-                },
-                {
-                    "effectType": 0,
-                    "value": 3
-                }
-            ]
-        },
-        {
-            "Name": "낡은 칼",
-            "Idx": 1,
-            "Effects": [
-                {
-                    "effectType": 1,
-                    "value": 2
-                },
-                {
-                    "effectType": 8,
-                    "value": 7
-                },
-                {
-                    "effectType": 7,
-                    "value": 3
-                }
-            ]
-        },
-        {
-            "Name": "용기의 부적",
-            "Idx": 2,
-            "Effects": [
-                {
-                    "effectType": 1,
-                    "value": 1
-                },
-                {
-                    "effectType": 0,
-                    "value": 1
-                }
-            ]
-        },
-        {
-            "Name": "용기의 부적",
+            "Name": "튼튼한 밸트",
             "Idx": 6,
             "Effects": [
                 {
-                    "effectType": 1,
-                    "value": 1
-                },
-                {
-                    "effectType": 0,
-                    "value": 1
-                },
-                {
-                    "effectType": 3,
-                    "value": 5
-                }
-            ]
-        },
-        {
-            "Name": "튼튼한 밸트",
-            "Idx": 7,
-            "Effects": [
-                {
                     "effectType": 3,
                     "value": 1
                 },
                 {
                     "effectType": 0,
                     "value": 1
+                },
+                {
+                    "effectType": 2,
+                    "value": 4
+                },
+                {
+                    "effectType": 0,
+                    "value": 2
+                },
+                {
+                    "effectType": 4,
+                    "value": 2
                 }
             ]
         },
         {
             "Name": "검은 신발",
-            "Idx": 8,
+            "Idx": 7,
             "Effects": [
                 {
                     "effectType": 7,
+                    "value": 1
+                },
+                {
+                    "effectType": 8,
+                    "value": 5
+                }
+            ]
+        },
+        {
+            "Name": "행운의 깃털",
+            "Idx": 8,
+            "Effects": [
+                {
+                    "effectType": 5,
+                    "value": 5
+                },
+                {
+                    "effectType": 4,
+                    "value": 2
+                },
+                {
+                    "effectType": 9,
+                    "value": 4
+                },
+                {
+                    "effectType": 8,
+                    "value": 2
+                },
+                {
+                    "effectType": 8,
+                    "value": 2
+                },
+                {
+                    "effectType": 4,
+                    "value": 1
+                }
+            ]
+        },
+        {
+            "Name": "튼튼한 밸트",
+            "Idx": 9,
+            "Effects": [
+                {
+                    "effectType": 3,
+                    "value": 1
+                },
+                {
+                    "effectType": 0,
+                    "value": 1
+                },
+                {
+                    "effectType": 4,
+                    "value": 1
+                },
+                {
+                    "effectType": 3,
+                    "value": 4
+                },
+                {
+                    "effectType": 6,
+                    "value": 1
+                },
+                {
+                    "effectType": 6,
                     "value": 1
                 }
             ]
@@ -100,27 +108,27 @@
         },
         {
             "episodeCode": "System실전 전투",
-            "state": 2
+            "state": 0
         },
         {
             "episodeCode": "System구르기 동작",
-            "state": 2
+            "state": 0
         },
         {
             "episodeCode": "System벽 점프",
-            "state": 2
+            "state": 0
         },
         {
             "episodeCode": "System벽 오르기",
-            "state": 2
+            "state": 0
         },
         {
             "episodeCode": "System튜토리얼 종료",
-            "state": 2
+            "state": 0
         },
         {
             "episodeCode": "System공격, 막기 동작",
-            "state": 3
+            "state": 0
         },
         {
             "episodeCode": "그럼바크빌곤트 상단과의 조우",
@@ -128,15 +136,7 @@
         },
         {
             "episodeCode": "빌곤트빌곤트 상단 돕기",
-            "state": 4
-        },
-        {
-            "episodeCode": "빌곤트그람바트 찾기",
             "state": 2
-        },
-        {
-            "episodeCode": "그럼바크진실속으로",
-            "state": 0
         }
     ],
     "quests": [
@@ -146,11 +146,11 @@
             "taskData": [
                 {
                     "taskName": "TASK_moveLeft",
-                    "curCnt": 1
+                    "curCnt": 8
                 },
                 {
                     "taskName": "TASK_moveRight",
-                    "curCnt": 4
+                    "curCnt": 7
                 },
                 {
                     "taskName": "TASK_Jump",
@@ -161,69 +161,69 @@
         },
         {
             "questCode": "System실전 전투",
-            "state": 3,
+            "state": 0,
             "taskData": [
                 {
                     "taskName": "Task_Kill",
-                    "curCnt": 3
+                    "curCnt": 0
                 },
                 {
                     "taskName": "Task_Shield",
-                    "curCnt": 3
+                    "curCnt": 0
                 }
             ],
             "isDisplaying": false
         },
         {
             "questCode": "System구르기 동작 해보기",
-            "state": 3,
+            "state": 0,
             "taskData": [
                 {
                     "taskName": "task",
-                    "curCnt": 1
+                    "curCnt": 0
                 }
             ],
             "isDisplaying": false
         },
         {
             "questCode": "System벽 점프 해보기",
-            "state": 3,
+            "state": 0,
             "taskData": [
                 {
                     "taskName": "task",
-                    "curCnt": 3
+                    "curCnt": 0
                 }
             ],
             "isDisplaying": false
         },
         {
             "questCode": "System벽 오르기",
-            "state": 3,
+            "state": 0,
             "taskData": [
                 {
                     "taskName": "task",
-                    "curCnt": 1
+                    "curCnt": 0
                 }
             ],
             "isDisplaying": false
         },
         {
             "questCode": "System공격, 막기 해보기",
-            "state": 3,
+            "state": 0,
             "taskData": [
                 {
                     "taskName": "task",
-                    "curCnt": 7
+                    "curCnt": 0
                 },
                 {
                     "taskName": "task 1",
-                    "curCnt": 2
+                    "curCnt": 0
                 }
             ],
             "isDisplaying": false
         },
         {
-            "questCode": "김덕배김촌장 찾아가기",
+            "questCode": "그럼바크빌곤트 찾아가기",
             "state": 3,
             "taskData": [
                 {
@@ -235,17 +235,6 @@
         },
         {
             "questCode": "빌곤트빌곤트 상단 돕기",
-            "state": 3,
-            "taskData": [
-                {
-                    "taskName": "task",
-                    "curCnt": 20
-                }
-            ],
-            "isDisplaying": false
-        },
-        {
-            "questCode": "빌곤트그람바트 찾기",
             "state": 1,
             "taskData": [
                 {
@@ -257,14 +246,14 @@
         }
     ],
     "PlayInfo": {
-        "scene": "Ch1_Node_2",
-        "_saveDate": "24.09.11 (16:14:08)",
-        "_date": 25114448,
-        "_playTime": 6,
+        "scene": "Ch1_Town",
+        "_saveDate": "24.09.13 (17:31:41)",
+        "_date": 25291901,
+        "_playTime": 8,
         "hp": 2,
         "position": {
-            "x": -25.591617584228517,
-            "y": -2.6043214797973635,
+            "x": -20.40134048461914,
+            "y": -4.600020408630371,
             "z": 0.0
         }
     },

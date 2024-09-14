@@ -21,7 +21,6 @@ public class ItemSO : ScriptableObject
 	{
 		level = GenLevel();
 		
-
 		for (int i = 0; i < level - _effects.Count; i++)
 		{
 			EPlayerStatus type = (EPlayerStatus)UnityEngine.Random.Range(0, (int)EPlayerStatus.Count);

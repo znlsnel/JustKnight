@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class MonsterGenerator : MonoBehaviour
+public class MonsterSpawner : MonoBehaviour
 {
 	public GameObject _monsterPrefab;
 	public int _monsterLimit = 0; 

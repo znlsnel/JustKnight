@@ -13,11 +13,11 @@ public class QuestSlotManager : MonoBehaviour
 
 	QuestSO _quest;
 	QuestUI _questUI;
-	DisplayQuest _displayQuest;
+	QuestTracker _questTracker;
 	private void Awake()
 	{
 		_questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI;
-		_displayQuest = UIHandler.instance._displayQuest.GetComponent<DisplayQuest>(); 
+		_questTracker = UIHandler.instance._displayQuest.GetComponent<QuestTracker>(); 
 	}
 
 	public void SetQuestSlot(QuestSO quest, bool displaying = false)
@@ -33,17 +33,17 @@ public class QuestSlotManager : MonoBehaviour
 
 	public void AddDisplayQuest(bool destory = false)
 	{
-		bool isDisplayed = _displayQuest.IsQuestStored(_quest);
+		bool isDisplayed = _questTracker.IsQuestStored(_quest);
 
 		if (destory || isDisplayed)
 		{
-			_displayQuest.RemoveQuest(_quest);
+			_questTracker.RemoveQuest(_quest);
 			_checkBoxText.gameObject.SetActive(false);
 			_questUI.DisplayingQuestCheck(_quest, false);
 		}
 		else
 		{
-			_displayQuest.AddQuest(_quest);
+			_questTracker.AddQuest(_quest);
 			_checkBoxText.gameObject.SetActive(true);
 		} 
 	}

@@ -26,12 +26,12 @@ public class QuestManager : Singleton<QuestManager>
 	private Dictionary<QuestInfo, HashSet<QuestSO>> _tasks = new Dictionary<QuestInfo, HashSet<QuestSO>>();
 	public Dictionary<string, QuestSO> _quests = new Dictionary<string, QuestSO>();
 	
-	DisplayQuest _displayQuest;
+	QuestTracker _qusetTracker;
 	QuestUI _questUI;
 	 
 	private void Start()
 	{
-		_displayQuest = UIHandler.instance._displayQuest.GetComponent<DisplayQuest>(); 
+		_qusetTracker = UIHandler.instance._displayQuest.GetComponent<QuestTracker>(); 
 		_questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI; 
 	}
 	public List<Tuple<QuestSO, QuestTaskSO>> GetQuest(CategorySO category, TargetSO target)
@@ -110,7 +110,7 @@ public class QuestManager : Singleton<QuestManager>
 		_questUI.LoadSuccessUI(rewardInfo);
 		_questUI.MoveToQuestList(quest);
 
-		Utils.instance.SetTimer(() => _displayQuest.RemoveQuest(quest), 1.5f);
+		Utils.instance.SetTimer(() => _qusetTracker.RemoveQuest(quest), 1.5f);
 
 		QuestManager.instance.RemoveQuestTasks(quest);
 	}
@@ -130,7 +130,7 @@ public class QuestManager : Singleton<QuestManager>
 	{
 		_quests.Clear(); 
 		 
-		_displayQuest.ResetDisplayQuest();
+		_qusetTracker.ResetDisplayQuest();
 		_tasks.Clear();
 		_questUI.ResetQuestUI();
 	}

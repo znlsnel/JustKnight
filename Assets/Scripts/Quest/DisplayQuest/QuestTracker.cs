@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class DisplayQuest : MonoBehaviour 
+public class QuestTracker : MonoBehaviour 
 {
         public List<GameObject> _questSlots = new List<GameObject>();
         public List<QuestSO> _quests = new List<QuestSO>();
@@ -75,7 +75,7 @@ public class DisplayQuest : MonoBehaviour
                         if (_quests.Count > i)
                         { 
                                 _questSlots[i].SetActive(true);
-                                _questSlots[i].GetComponent<DisplayQuestSlot>().SetQuestSlot(_quests[i]);
+                                _questSlots[i].GetComponent<QuestTrackerSlot>().SetQuestSlot(_quests[i]);
 			}
 			else 
                         {

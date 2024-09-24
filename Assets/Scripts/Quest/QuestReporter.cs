@@ -17,12 +17,12 @@ public class QuestReporter : MonoBehaviour
 	public int successCount = 1;
 	public UnityEvent _enterCollider;
 
-	DisplayQuest _displayQuest;
+	QuestTracker _questTracker;
 	QuestUI _questUI;
 
 	private void Start()
 	{
-		_displayQuest = UIHandler.instance._displayQuest.GetComponent<DisplayQuest>();
+		_questTracker = UIHandler.instance._displayQuest.GetComponent<QuestTracker>();
 		_questUI =  UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI;
 	}
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -59,7 +59,7 @@ public class QuestReporter : MonoBehaviour
 		}
 		if (taskInfos.Count > 0)
 		{
-			_displayQuest.UpdateDisplayQuestSlot();
+			_questTracker.UpdateDisplayQuestSlot();
 			_questUI.UpdateQuestInfo();
 		}
 

@@ -26,7 +26,7 @@ public class SaveManager : Singleton<SaveManager>
 
         InventoryManager _inventory;
         DialogueManager _dialogue;
-        DisplayQuest _displayQuest;
+        QuestTracker _questTracker;
         QuestManager _quest;
         QuestUI _questUI;
         SaveUI _saveUI;
@@ -38,7 +38,7 @@ public class SaveManager : Singleton<SaveManager>
                 _quest = QuestManager.instance;
                 _saveUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._saveUI;
 		_questUI = UIHandler.instance._mainMenu.GetComponent<MainMenu>()._questUI;
-		_displayQuest = UIHandler.instance._displayQuest.GetComponent<DisplayQuest>();
+		_questTracker = UIHandler.instance._displayQuest.GetComponent<QuestTracker>();
 
 
 		LoadAllSaveData();
@@ -243,7 +243,7 @@ public class SaveManager : Singleton<SaveManager>
                         QuestData quest = new QuestData();
                         quest.questCode = data.Key;
                         quest.state = data.Value._state;
-			quest.isDisplaying = _displayQuest.IsQuestStored(data.Value);
+			quest.isDisplaying = _questTracker.IsQuestStored(data.Value);
 
 			foreach (QuestTaskSO questTask in data.Value.tasks)
                         {

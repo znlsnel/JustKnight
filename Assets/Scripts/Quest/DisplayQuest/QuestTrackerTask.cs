@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DisplayQuestTask : MonoBehaviour
+public class QuestTrackerTask : MonoBehaviour
 {
 	public Text _questDescription;
 	public Text _questState;
-
+	 
 	/// <summary>
 	/// Display in the format [current/target], If 'target' is -1, display [¹Ì¿Ï·á]. 
 	/// </summary> 

@@ -78,7 +78,12 @@ https://github.com/user-attachments/assets/f338777c-0301-46d6-8f13-b037795c317b
 ##  [![Link](https://img.shields.io/badge/Link-%23181717.svg?&style=for-the-badge&logo=github&logoColor=white)](https://github.com/znlsnel/JustKnight/blob/main/Assets/Scripts/Inventory/InventoryManager.cs) - 인벤토리, 아이템 시스템
 - 아이템을 보관하고 장착할 수 있는 UI를 만들었습니다. <br>
   아이템의 정보와 현재 플레이어의 상태를 확인하는 기능을 만들었습니다.<br><br>
-https://github.com/user-attachments/assets/6dc61edb-48a6-4cc3-9926-f43028ecb7c6
+![image](https://github.com/user-attachments/assets/d86da71b-b228-4262-ba5e-1bb8be152685)
+<br><br>
+
+- [![Link](https://img.shields.io/badge/Link-%23181717.svg?&style=for-the-badge&logo=github&logoColor=white)](https://github.com/znlsnel/JustKnight/blob/main/Assets/Scripts/Inventory/ItemSO.cs) - 아이템도 Scriptable Object를 이용하여 쉽게 제작할 수 있게 했습니다.<br>
+  아이템 아이콘, 아이템 설명, 기본 속성을 설정할 수 있게 했습니다. <br>
+![image](https://github.com/user-attachments/assets/ae86a655-e324-4c4d-8721-6ead555f68ec)
 
 
 <br><br>

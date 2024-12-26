@@ -14,32 +14,31 @@
 
 # 핵심 로직
 ## 목차
-- 퀘스트 시스템 <br>
-- NPC 대화 시스템 <br>
-- 인벤토리, 아이템 시스템 ,br>
-- 저장 기능 <br>
-- 카메라 로직 <br>
+- 퀘스트 시스템 
+- NPC 대화 시스템 
+- 인벤토리, 아이템 시스템 
+- 저장 기능
+- 카메라 로직 
 - 몬스터 생성기
 
 <br> <br>
 ## 퀘스트 시스템
-- 모든 퀘스트 데이터를 Scriptable Object로 관리하여 쉽게 제작이 가능하도록 했습니다. <br>
-
+- 모든 퀘스트 데이터를 Scriptable Object로 관리하여 쉽게 제작이 가능하도록 했습니다. <br> <br>
   ![QuestSO](https://github.com/user-attachments/assets/078e9e25-1e0f-4308-97e6-709bdb28fe73)
 
-- 퀘스트의 내용과 보상을 Scriptable Object로 제작하여 퀘스트를 조립할 수 있게 했습니다.<br>
+- 퀘스트의 내용과 보상을 Scriptable Object로 제작하여 퀘스트를 조립할 수 있게 했습니다.<br> <br>
   ![Quest Task SO](https://github.com/user-attachments/assets/2cf5132d-c6ca-4c6d-8454-6ed77ef74891)
 
 - 퀘스트 진행도를 체크하는 부분은 Quest Reporter에서 담당하도록 했습니다. <br>
-  몬스터가 죽을 때, 점프를 할 때, UI를 오픈할 때 등, 진행되는 퀘스트의 카테고리와 타겟을 Key로 하여 진행도를 업데이트 했습니다.<br>
+  몬스터가 죽을 때, 점프를 할 때, UI를 오픈할 때 등, 진행되는 퀘스트의 카테고리와 타겟을 Key로 하여 진행도를 업데이트 했습니다.<br><br>
   ![Quest Reporter](https://github.com/user-attachments/assets/a14c4b73-c1f9-4561-a16c-e0b65416936c)
 
 
 ### 퀘스트 UI
-- 진행 가능한 퀘스트, 진행중인 퀘스트, 완료된 퀘스트를 확인할 수 있는 UI를 만들었습니다. <br>
+- 진행 가능한 퀘스트, 진행중인 퀘스트, 완료된 퀘스트를 확인할 수 있는 UI를 만들었습니다. <br> <br>
   ![Quest UI](https://github.com/user-attachments/assets/97ab28e1-f3ff-44da-a4ee-8bffd37a4c94)
 
-- 체크 버튼을 누르면 플레이 중에도 항상 확인 할 수 있도록 추가 UI를 만들었습니다. <br>
+- 체크 버튼을 누르면 플레이 중에도 항상 확인 할 수 있도록 추가 UI를 만들었습니다. <br> <br>
   ![Quest Tracker UI](https://github.com/user-attachments/assets/05b109bf-b9f3-486c-8940-f8e4af4736f4)
 
  <br> <br>
@@ -71,8 +70,9 @@
   
 <br><br>
 ## 카메라 로직
-- 카메라가 특정 영역을 넘어서지 못하도록 하였습니다. 할로우 나이트의 카메라 로직을 따라서 구현했습니다.<br><br>
-https://github.com/user-attachments/assets/ee1559ed-eb44-4917-9367-a6c8c8d20996
+- 카메라가 특정 영역을 넘어서지 못하도록 하였습니다. 할로우 나이트의 카메라 로직을 따라서 구현했습니다.<br>
+https://github.com/user-attachments/assets/4a0eeb99-4142-4877-baa0-ca2112a5feb0
+
 
 
 <br><br>

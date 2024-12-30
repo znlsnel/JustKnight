@@ -96,7 +96,7 @@ https://github.com/user-attachments/assets/f338777c-0301-46d6-8f13-b037795c317b
   
 <br><br>
 ## 카메라 로직
-- 카메라가 특정 영역을 넘어서지 못하도록 하였습니다. 할로우 나이트의 카메라 로직을 따라서 구현했습니다.<br>
+- 카메라가 설정해놓은 영역 밖을 넘어서지 못하도록 했습니다.<br>
 https://github.com/user-attachments/assets/4a0eeb99-4142-4877-baa0-ca2112a5feb0
 
 

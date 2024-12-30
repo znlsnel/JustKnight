@@ -64,14 +64,14 @@
 
 
 - [![Link](https://img.shields.io/badge/Link-%23181717.svg?&style=for-the-badge&logo=github&logoColor=white)](https://github.com/znlsnel/JustKnight/blob/main/Assets/Scripts/Player/InteractionHandler.cs) - F키를 눌러서 상호작용 할 수 있게 했습니다.<br>
-  https://github.com/user-attachments/assets/904be2f6-4b37-45ca-b302-12b5b6998c9e
+[![Video](https://github.com/user-attachments/assets/40a23027-e7c1-4c1c-bc54-459a1978c1d8)](https://www.youtube.com/watch?time_continue=0&v=WwCU-n6C5Wg&embeds_referring_euri=https%3A%2F%2Fwww.notion.so%2F&source_ve_path=MjM4NTE)
   <br><br>
-  
+
+
 
 ### [![Link](https://img.shields.io/badge/Link-%23181717.svg?&style=for-the-badge&logo=github&logoColor=white)](https://github.com/znlsnel/JustKnight/blob/main/Assets/Scripts/Dialouge/DialogueStateChecker.cs) - 대화 상태 체커  
 - 대화 상태를 체크하는 컴포넌트를 만들어서 상태에 따라 시네마틱과 같은 특정 동작을 실행할 수 있도록 했습니다.<br>
- <br>
-https://github.com/user-attachments/assets/f338777c-0301-46d6-8f13-b037795c317b
+[![Video](https://github.com/user-attachments/assets/24cd93b7-d0fd-41b0-8c3d-cc59dae6d927)](https://www.youtube.com/watch?time_continue=0&v=34veS5yo5cg&embeds_referring_euri=https%3A%2F%2Fwww.notion.so%2F&source_ve_path=MjM4NTE)
 
 <br><br>
 
@@ -97,12 +97,12 @@ https://github.com/user-attachments/assets/f338777c-0301-46d6-8f13-b037795c317b
 <br><br>
 ## 카메라 로직
 - 카메라가 설정해놓은 영역 밖을 넘어서지 못하도록 했습니다.<br>
-https://github.com/user-attachments/assets/4a0eeb99-4142-4877-baa0-ca2112a5feb0
+[![Video](https://github.com/user-attachments/assets/31ec017d-e354-4783-9721-21037d58c1d9)](https://www.youtube.com/watch?time_continue=0&v=RsXFIq6IcdQ&embeds_referring_euri=https%3A%2F%2Fwww.notion.so%2F&source_ve_path=MjM4NTE)
 
 
 ### [![Link](https://img.shields.io/badge/Link-%23181717.svg?&style=for-the-badge&logo=github&logoColor=white)](https://github.com/znlsnel/JustKnight/blob/main/Assets/Scripts/Managers/GameManager.cs) - 씬 전환 페이드 시스템
 - 옵저버 패턴을 이용하여 씬이 바뀌면 페이드 인 아웃이 실행 되도록 하였습니다.<br>
-https://github.com/user-attachments/assets/13353ceb-f0f9-49cd-b7e0-7008caf6537f
+[![Video](https://github.com/user-attachments/assets/1e497e8e-1acc-4901-96e0-cb225f01bffb)](https://www.youtube.com/watch?time_continue=0&v=zWQYYEdtQ5o&embeds_referring_euri=https%3A%2F%2Fwww.notion.so%2F&source_ve_path=MjM4NTE)
 
 
 
